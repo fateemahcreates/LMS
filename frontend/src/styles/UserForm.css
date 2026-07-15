@@ -1,0 +1,87 @@
+/* ==========================================
+   User Form
+========================================== */
+
+.user-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* ==========================================
+   Inputs & Select
+========================================== */
+
+.user-form input,
+.user-form select {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #dbe3ec;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  background: #ffffff;
+  color: #1e293b;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.user-form input:focus,
+.user-form select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+/* ==========================================
+   Button
+========================================== */
+
+.user-form button {
+  grid-column: span 2;
+
+  padding: 14px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.user-form button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.user-form button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* ==========================================
+   Placeholder
+========================================== */
+
+.user-form input::placeholder {
+  color: #94a3b8;
+}
+
+/* ==========================================
+   Responsive
+========================================== */
+
+@media (max-width: 768px) {
+  .user-form {
+    grid-template-columns: 1fr;
+  }
+
+  .user-form button {
+    grid-column: span 1;
+  }
+}

@@ -1,0 +1,185 @@
+/* ===========================
+   NAVBAR
+=========================== */
+
+.navbar {
+  height: 75px;
+
+  background: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 30px;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  position: sticky;
+  top: 0;
+
+  z-index: 900;
+}
+
+/* ===========================
+   LEFT SECTION
+=========================== */
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* ===========================
+   MENU BUTTON
+=========================== */
+
+.menu-btn {
+  width: 44px;
+  height: 44px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #eff6ff;
+  color: #2563eb;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  font-size: 1.2rem;
+
+  transition: all .3s ease;
+}
+
+.menu-btn:hover {
+  background: #2563eb;
+  color: white;
+}
+
+/* ===========================
+   LOGO
+=========================== */
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  font-size: 1.3rem;
+  font-weight: 700;
+
+  color: #0f172a;
+}
+
+.logo-icon {
+  color: #2563eb;
+  font-size: 1.8rem;
+}
+
+/* ===========================
+   RIGHT SECTION
+=========================== */
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ===========================
+   NOTIFICATION
+=========================== */
+
+.notification-btn {
+  width: 44px;
+  height: 44px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #f1f5f9;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: .3s;
+}
+
+.notification-btn:hover {
+  background: #2563eb;
+  color: white;
+}
+
+.notification-btn svg {
+  font-size: 1.2rem;
+}
+
+/* ===========================
+   USER
+=========================== */
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-icon {
+  font-size: 2.5rem;
+  color: #2563eb;
+}
+
+.user-details h4 {
+  margin: 0;
+  font-size: .95rem;
+  color: #0f172a;
+}
+
+.user-details span {
+  font-size: .82rem;
+  color: #64748b;
+}
+
+/* ===========================
+   TABLET
+=========================== */
+
+@media (max-width: 992px) {
+
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .user-details {
+    display: none;
+  }
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media (max-width: 768px) {
+
+  .navbar {
+    padding: 0 15px;
+  }
+
+  .navbar-logo span {
+    display: none;
+  }
+
+  .navbar-right {
+    gap: 10px;
+  }
+
+}

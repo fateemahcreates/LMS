@@ -1,0 +1,345 @@
+/* ==========================================
+   Course Table
+========================================== */
+
+.course-table{
+    width:100%;
+    background:#fff;
+    border-radius:18px;
+    overflow:hidden;
+}
+
+/* ==========================================
+   Header
+========================================== */
+
+.table-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:24px 28px;
+    border-bottom:1px solid #edf2f7;
+}
+
+.table-header h2{
+    font-size:1.4rem;
+    color:#0f172a;
+    font-weight:700;
+}
+
+.table-header p{
+    color:#64748b;
+    margin-top:4px;
+}
+
+.course-total{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:#eff6ff;
+    color:#2563eb;
+    padding:12px 18px;
+    border-radius:12px;
+    font-weight:600;
+}
+
+.course-total svg{
+    font-size:18px;
+}
+
+/* ==========================================
+   Search
+========================================== */
+
+.search-box{
+    position:relative;
+    padding:22px 28px;
+}
+
+.search-box input{
+    width:100%;
+    padding:14px 18px 14px 48px;
+    border:1px solid #dbe3ee;
+    border-radius:12px;
+    outline:none;
+    transition:.3s;
+    font-size:15px;
+}
+
+.search-box input:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 4px rgba(37,99,235,.08);
+}
+
+.search-icon{
+    position:absolute;
+    left:44px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#94a3b8;
+}
+
+/* ==========================================
+   Table
+========================================== */
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:900px;
+}
+
+thead{
+    background:#f8fafc;
+}
+
+th{
+    padding:18px;
+    text-align:left;
+    font-size:14px;
+    color:#475569;
+    font-weight:700;
+    white-space:nowrap;
+}
+
+td{
+    padding:18px;
+    border-top:1px solid #edf2f7;
+    color:#334155;
+    vertical-align:middle;
+}
+
+tbody tr{
+    transition:.25s;
+}
+
+tbody tr:hover{
+    background:#f8fbff;
+}
+
+/* ==========================================
+   Course Info
+========================================== */
+
+.course-info{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.course-image{
+    width:60px;
+    height:60px;
+    border-radius:12px;
+    object-fit:cover;
+    background:#e2e8f0;
+}
+
+.course-title{
+    font-weight:700;
+    color:#0f172a;
+}
+
+.course-description{
+    font-size:13px;
+    color:#64748b;
+    margin-top:5px;
+    line-height:1.5;
+}
+
+/* ==========================================
+   Level Badge
+========================================== */
+
+.level-badge{
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:600;
+    background:#eef2ff;
+    color:#4338ca;
+}
+
+/* ==========================================
+   Price
+========================================== */
+
+.price{
+    font-weight:700;
+    color:#16a34a;
+}
+
+/* ==========================================
+   Students
+========================================== */
+
+.student-count{
+    font-weight:600;
+    color:#2563eb;
+}
+
+/* ==========================================
+   Status
+========================================== */
+
+.status{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:7px 14px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.status.active{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.status.draft{
+    background:#fef3c7;
+    color:#b45309;
+}
+
+.status.archived{
+    background:#fee2e2;
+    color:#b91c1c;
+}
+
+/* ==========================================
+   Buttons
+========================================== */
+
+.action-buttons{
+    display:flex;
+    gap:10px;
+}
+
+.edit-btn,
+.delete-btn{
+    width:38px;
+    height:38px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.25s;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.edit-btn{
+    background:#eff6ff;
+    color:#2563eb;
+}
+
+.edit-btn:hover{
+    background:#2563eb;
+    color:#fff;
+}
+
+.delete-btn{
+    background:#fef2f2;
+    color:#dc2626;
+}
+
+.delete-btn:hover{
+    background:#dc2626;
+    color:#fff;
+}
+
+/* ==========================================
+   Empty State
+========================================== */
+
+.empty-state{
+    padding:70px 20px;
+    text-align:center;
+}
+
+.empty-icon{
+    font-size:70px;
+    color:#cbd5e1;
+    margin-bottom:20px;
+}
+
+.empty-state h3{
+    color:#334155;
+    margin-bottom:8px;
+}
+
+.empty-state p{
+    color:#94a3b8;
+}
+
+/* ==========================================
+   Responsive
+========================================== */
+
+@media(max-width:992px){
+
+.table-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:18px;
+}
+
+.search-box{
+    padding:20px;
+}
+
+.search-icon{
+    left:36px;
+}
+
+}
+
+@media(max-width:768px){
+
+.course-table{
+    border-radius:14px;
+}
+
+th,
+td{
+    padding:14px;
+}
+
+.course-image{
+    width:50px;
+    height:50px;
+}
+
+.course-title{
+    font-size:14px;
+}
+
+.course-description{
+    display:none;
+}
+
+.mobile-courses{
+    display:none;
+}
+
+@media(max-width:900px){
+
+.table-wrapper{
+    display:none;
+}
+
+.mobile-courses{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+}
+
+}

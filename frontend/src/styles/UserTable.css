@@ -1,0 +1,158 @@
+/* ==========================================
+   User Table Container
+========================================== */
+
+.user-table-container {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+}
+
+/* ==========================================
+   Table
+========================================== */
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  min-width: 800px;
+}
+
+/* ==========================================
+   Table Head
+========================================== */
+
+.user-table thead {
+  background: #f1f5f9;
+}
+
+.user-table th {
+  padding: 16px;
+  text-align: left;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #334155;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* ==========================================
+   Table Body
+========================================== */
+
+.user-table td {
+  padding: 16px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.user-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.user-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* ==========================================
+   Empty Row
+========================================== */
+
+.empty-row {
+  text-align: center;
+  padding: 30px;
+  color: #94a3b8;
+}
+
+/* ==========================================
+   Role Badges
+========================================== */
+
+.role-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.role-admin {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.role-student {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.role-instructor {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+/* ==========================================
+   Status Badges
+========================================== */
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-active {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.status-inactive {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.status-suspended {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* ==========================================
+   Delete Button
+========================================== */
+
+.delete-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #ef4444;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+}
+
+/* ==========================================
+   Responsive
+========================================== */
+
+@media (max-width: 768px) {
+  .user-table th,
+  .user-table td {
+    padding: 12px;
+    font-size: 0.85rem;
+  }
+
+  .delete-btn {
+    width: 100%;
+  }
+}

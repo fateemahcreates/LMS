@@ -1,0 +1,163 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f1f5f9;
+  font-family: Inter, Arial, sans-serif;
+  color: #0f172a;
+}
+
+/* App wrapper */
+.App {
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* NAV */
+nav {
+  background: #697fb1;
+  color: white;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #1e293b;
+}
+
+/* DASHBOARD WRAPPER */
+.dashboard {
+  padding: 30px;
+  width: 100%;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+/* HEADER */
+.dashboard-header {
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.dashboard-header p {
+  color: #64748b;
+  margin-top: 8px;
+}
+
+/* STATS GRID */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 24px;
+  border-radius: 18px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 15px rgba(15, 23, 42, 0.05),
+              0 4px 6px rgba(15, 23, 42, 0.05);
+  transition: transform 0.25s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+}
+
+/* MAIN LAYOUT */
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+/* SECTIONS */
+.form-section,
+.table-section {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  min-width: 0;
+}
+
+/* EMPTY STATE */
+.empty-state {
+  margin-top: 40px;
+  padding: 50px;
+  text-align: center;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  color: #64748b;
+}
+
+/* =========================
+   RESPONSIVE BREAKPOINTS
+   ========================= */
+
+/* Tablet */
+@media (max-width: 1100px) {
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+
+  .form-section {
+    order: 1;
+  }
+
+  .table-section {
+    order: 2;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 16px;
+  }
+
+  .dashboard-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-header p {
+    font-size: 0.95rem;
+  }
+  table {
+  width: max-content;
+  min-width: 750px;
+  border-collapse: collapse;
+}
+  .form-section {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .table-section {
+  min-width: 0;
+  overflow: hidden;
+}
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .dashboard-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .form-section,
+  .table-section {
+    padding: 12px;
+  }
+}

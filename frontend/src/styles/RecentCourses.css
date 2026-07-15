@@ -1,0 +1,229 @@
+/* ==========================================
+   Recent Courses Card
+========================================== */
+
+.recent-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* ==========================================
+   Header
+========================================== */
+
+.recent-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.recent-header h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.recent-header span {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #2563eb;
+  color: #fff;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* ==========================================
+   Course List
+========================================== */
+
+.recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ==========================================
+   Course Item
+========================================== */
+
+.recent-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 16px;
+  border-radius: 14px;
+
+  border: 1px solid transparent;
+
+  transition: 0.3s ease;
+}
+
+.recent-item:hover {
+  background: #f8fafc;
+  border-color: #dbeafe;
+  transform: translateY(-2px);
+}
+
+/* ==========================================
+   Course Icon
+========================================== */
+
+.course-avatar {
+  width: 52px;
+  height: 52px;
+
+  border-radius: 50%;
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #3b82f6
+  );
+
+  color: #fff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 1.2rem;
+
+  flex-shrink: 0;
+}
+
+/* ==========================================
+   Course Information
+========================================== */
+
+.course-info {
+  flex: 1;
+}
+
+.course-info h4 {
+  font-size: 1rem;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.course-info p {
+  color: #64748b;
+  font-size: .9rem;
+  margin-bottom: 4px;
+}
+
+.course-info small {
+  display: inline-block;
+
+  padding: 4px 10px;
+
+  border-radius: 20px;
+
+  background: #eff6ff;
+  color: #2563eb;
+
+  font-size: .75rem;
+  font-weight: 600;
+}
+
+/* ==========================================
+   Status Badge
+========================================== */
+
+.course-status {
+  padding: 6px 12px;
+  border-radius: 30px;
+
+  font-size: .75rem;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.course-status.active {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.course-status.draft {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.course-status.archived {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* ==========================================
+   Empty State
+========================================== */
+
+.empty-recent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 60px 20px;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  color: #2563eb;
+  margin-bottom: 18px;
+}
+
+.empty-recent p {
+  color: #64748b;
+}
+
+/* ==========================================
+   Responsive
+========================================== */
+
+@media (max-width: 768px) {
+
+  .recent-card {
+    padding: 18px;
+  }
+
+  .recent-item {
+    flex-wrap: wrap;
+  }
+
+  .course-avatar {
+    width: 46px;
+    height: 46px;
+    font-size: 1rem;
+  }
+
+  .course-info h4 {
+    font-size: .95rem;
+  }
+
+  .course-info p {
+    font-size: .85rem;
+  }
+
+  .course-status {
+    margin-left: 62px;
+  }
+
+}

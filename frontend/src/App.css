@@ -1,0 +1,29 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Inter,sans-serif;
+  background:#f8fafc;
+  overflow-x:hidden;
+}
+
+.app{
+  display:flex;
+}
+
+.main-wrapper{
+  flex:1;
+  min-height:100vh;
+  transition:margin-left .35s ease;
+}
+
+.main-wrapper.sidebar-open{
+  margin-left:260px;
+}
+
+.main-wrapper.sidebar-closed{
+  margin-left:0;
+}

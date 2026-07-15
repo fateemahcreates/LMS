@@ -1,0 +1,192 @@
+/* ===========================
+   Student Dashboard
+=========================== */
+
+.student-dashboard {
+  min-height: 100vh;
+  padding: 30px;
+  background: #f8fafc;
+}
+
+/* ===========================
+   Header
+=========================== */
+
+.student-header {
+  margin-bottom: 30px;
+}
+
+.student-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.student-header p {
+  color: #64748b;
+  font-size: 1rem;
+}
+
+/* ===========================
+   Statistics Grid
+=========================== */
+
+.student-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+/* ===========================
+   Cards
+=========================== */
+
+.student-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.student-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 35px rgba(37, 99, 235, 0.12);
+}
+
+.student-icon {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.student-card h3 {
+  font-size: 1rem;
+  color: #64748b;
+  margin-bottom: 10px;
+}
+
+.student-card h1 {
+  font-size: 2.3rem;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.student-card p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+/* ===========================
+   Icon Colors
+=========================== */
+
+.blue {
+  color: #2563eb;
+}
+
+.green {
+  color: #16a34a;
+}
+
+.orange {
+  color: #ea580c;
+}
+
+.purple {
+  color: #7c3aed;
+}
+
+/* ===========================
+   Future Sections
+=========================== */
+
+.student-section {
+  margin-top: 40px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 25px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
+}
+
+.student-section h3 {
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.student-section p {
+  color: #64748b;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width: 992px) {
+  .student-dashboard {
+    padding: 20px;
+  }
+
+  .student-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .student-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .student-header h2 {
+    font-size: 1.7rem;
+  }
+
+  .student-card {
+    padding: 22px;
+  }
+
+  .student-card h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .student-dashboard {
+    padding: 15px;
+  }
+
+  .student-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .student-header p {
+    font-size: 0.9rem;
+  }
+
+  .student-card {
+    padding: 18px;
+  }
+
+  .student-dashboard {
+  padding: 30px;
+}
+
+.student-dashboard-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+@media (max-width: 992px) {
+  .student-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .student-dashboard {
+    padding: 20px;
+  }
+}  
+}

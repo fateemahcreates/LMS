@@ -1,0 +1,104 @@
+/* ==========================================
+   Users Page
+========================================== */
+
+.users-page {
+  padding: 30px;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+/* ==========================================
+   Header
+========================================== */
+
+.users-header {
+  margin-bottom: 30px;
+}
+
+.users-header h2 {
+  font-size: 2rem;
+  color: #0f172a;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.users-header p {
+  color: #64748b;
+  font-size: 1rem;
+}
+
+/* ==========================================
+   Sections
+========================================== */
+
+.user-form-section,
+.user-table-section {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 28px;
+  margin-bottom: 30px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+}
+
+/* ==========================================
+   Section Header
+========================================== */
+
+.section-header {
+  margin-bottom: 24px;
+}
+
+.section-header h3 {
+  font-size: 1.3rem;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.section-header p {
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+/* ==========================================
+   Responsive
+========================================== */
+
+@media (max-width: 768px) {
+  .users-page {
+    padding: 20px;
+  }
+
+  .user-form-section,
+  .user-table-section {
+    padding: 20px;
+  }
+
+  .users-header h2 {
+    font-size: 1.7rem;
+  }
+
+  .section-header h3 {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .users-page {
+    padding: 15px;
+  }
+
+  .users-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .users-header p {
+    font-size: 0.9rem;
+  }
+
+  .user-form-section,
+  .user-table-section {
+    padding: 16px;
+  }
+}

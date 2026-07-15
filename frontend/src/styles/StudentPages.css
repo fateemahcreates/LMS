@@ -1,0 +1,30 @@
+.student-page{
+    padding:30px;
+}
+
+.page-header{
+    margin-bottom:30px;
+}
+
+.page-header h1{
+    font-size:2rem;
+    color:#0f172a;
+    margin-bottom:10px;
+}
+
+.page-header p{
+    color:#64748b;
+    font-size:1rem;
+}
+
+@media(max-width:768px){
+
+.student-page{
+padding:20px;
+}
+
+.page-header h1{
+font-size:1.6rem;
+}
+
+}
