@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/api",
-});
+  baseURL: "https://lms-zcd2.vercel.app/api", //baseURL: "http://localhost:5000/api",
+});  
 
 // Attach JWT token to every request
 api.interceptors.request.use(

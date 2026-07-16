@@ -9,6 +9,7 @@ import {
   FaChartPie,
   FaUserGraduate,
   FaBookOpen,
+  FaClipboardList,
   FaUsers,
   FaCog,
   FaTimes,
@@ -106,6 +107,11 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
           <NavLink to="/enrollments">
     <FaClipboardCheck />
     <span>Enrollments</span>
+</NavLink>
+
+<NavLink to="/assignments">
+  <FaClipboardList />
+  <span>Assignments</span>
 </NavLink>
 
           <NavLink

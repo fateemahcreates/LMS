@@ -1,0 +1,222 @@
+/* ==========================================
+   ASSIGNMENT FORM
+========================================== */
+
+.assignment-form {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 35px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+}
+
+/* ==========================================
+   FORM HEADER
+========================================== */
+
+.form-header {
+  margin-bottom: 30px;
+}
+
+.form-header h2 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.form-header p {
+  color: #64748b;
+  line-height: 1.6;
+}
+
+/* ==========================================
+   INPUT GROUP
+========================================== */
+
+.input-group {
+  margin-bottom: 22px;
+}
+
+.input-group label {
+  display: block;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+/* ==========================================
+   INPUT WRAPPER
+========================================== */
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 18px;
+  color: #94a3b8;
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+/* ==========================================
+   INPUTS
+========================================== */
+
+.input-wrapper input,
+.input-wrapper select,
+.input-wrapper textarea {
+  width: 100%;
+  padding: 14px 18px 14px 50px;
+  border: 1px solid #dbe4ee;
+  border-radius: 12px;
+  background: #ffffff;
+  font-size: 0.95rem;
+  color: #1e293b;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.input-wrapper textarea {
+  resize: vertical;
+  min-height: 140px;
+  padding-top: 16px;
+}
+
+/* ==========================================
+   FOCUS
+========================================== */
+
+.input-wrapper input:focus,
+.input-wrapper select:focus,
+.input-wrapper textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+/* ==========================================
+   PLACEHOLDER
+========================================== */
+
+.input-wrapper input::placeholder,
+.input-wrapper textarea::placeholder {
+  color: #94a3b8;
+}
+
+/* ==========================================
+   SELECT
+========================================== */
+
+.input-wrapper select {
+  cursor: pointer;
+}
+
+/* ==========================================
+   TEXTAREA
+========================================== */
+
+.textarea-wrapper {
+  align-items: flex-start;
+}
+
+.textarea-wrapper .input-icon {
+  top: 18px;
+}
+
+/* ==========================================
+   SUBMIT BUTTON
+========================================== */
+
+.submit-btn {
+  width: 100%;
+  margin-top: 15px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #1d4ed8
+  );
+
+  color: white;
+  border: none;
+  border-radius: 14px;
+
+  padding: 15px;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(37, 99, 235, 0.3);
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
+}
+
+.submit-btn svg {
+  font-size: 1rem;
+}
+
+/* ==========================================
+   DISABLED BUTTON
+========================================== */
+
+.submit-btn:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 768px) {
+  .assignment-form {
+    padding: 22px;
+  }
+
+  .form-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .submit-btn {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .assignment-form {
+    padding: 18px;
+  }
+
+  .input-wrapper input,
+  .input-wrapper select,
+  .input-wrapper textarea {
+    padding-left: 45px;
+    font-size: 0.9rem;
+  }
+
+  .input-icon {
+    left: 15px;
+  }
+}

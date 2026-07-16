@@ -1,0 +1,297 @@
+/* ==========================================
+   ASSIGNMENT TABLE
+========================================== */
+
+.assignment-table-container {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 25px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.table-header h2 {
+  font-size: 1.4rem;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.table-header span {
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 8px 14px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* ==========================================
+   RESPONSIVE TABLE
+========================================== */
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.assignment-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 950px;
+}
+
+/* ==========================================
+   HEAD
+========================================== */
+
+.assignment-table thead {
+  background: #f8fafc;
+}
+
+.assignment-table th {
+  padding: 16px;
+  text-align: left;
+  color: #475569;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* ==========================================
+   BODY
+========================================== */
+
+.assignment-table td {
+  padding: 18px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.assignment-table tbody tr {
+  transition: all 0.25s ease;
+}
+
+.assignment-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* ==========================================
+   TITLE
+========================================== */
+
+.assignment-title {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.assignment-title strong {
+  color: #0f172a;
+  font-size: 0.98rem;
+}
+
+.assignment-title small {
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* ==========================================
+   DATE
+========================================== */
+
+.table-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #475569;
+}
+
+/* ==========================================
+   STATUS BADGES
+========================================== */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 8px 14px;
+
+  border-radius: 30px;
+
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.status-badge.active {
+  background: rgba(34, 197, 94, .12);
+  color: #16a34a;
+}
+
+.status-badge.closed {
+  background: rgba(239, 68, 68, .12);
+  color: #dc2626;
+}
+
+/* ==========================================
+   SUBMISSION BADGES
+========================================== */
+
+.submission-badge {
+  display: inline-block;
+
+  padding: 8px 14px;
+
+  border-radius: 30px;
+
+  font-size: .82rem;
+  font-weight: 600;
+}
+
+.submission-badge.online {
+  background: rgba(37,99,235,.12);
+  color: #2563eb;
+}
+
+.submission-badge.physical {
+  background: rgba(249,115,22,.12);
+  color: #ea580c;
+}
+
+/* ==========================================
+   ACTION BUTTONS
+========================================== */
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn,
+.delete-btn {
+  width: 38px;
+  height: 38px;
+
+  border: none;
+  border-radius: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  transition: .25s;
+}
+
+.edit-btn {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.edit-btn:hover {
+  background: #2563eb;
+  color: white;
+}
+
+.delete-btn {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+  color: white;
+}
+
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+.empty-state {
+  text-align: center;
+  padding: 70px 20px;
+}
+
+.empty-icon {
+  font-size: 70px;
+  color: #cbd5e1;
+  margin-bottom: 20px;
+}
+
+.empty-state h3 {
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  color: #64748b;
+  max-width: 450px;
+  margin: auto;
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+.table-responsive::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 30px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 992px) {
+
+  .assignment-table {
+    min-width: 900px;
+  }
+
+}
+
+@media (max-width:768px){
+
+  .assignment-table-container{
+    padding:20px;
+  }
+
+  .table-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+  }
+
+}
+
+@media (max-width:480px){
+
+  .assignment-table-container{
+    padding:15px;
+  }
+
+  .table-header h2{
+    font-size:1.2rem;
+  }
+
+}

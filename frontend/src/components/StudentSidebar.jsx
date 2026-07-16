@@ -103,12 +103,12 @@ function StudentSidebar({
   </NavLink>
 
   <NavLink
-    to="/assignments"
-    onClick={closeSidebar}
-  >
-    <FaClipboardList />
-    <span>Assignments</span>
-  </NavLink>
+  to="/student/assignments"
+  onClick={closeSidebar}
+>
+  <FaClipboardList />
+  <span>Assignments</span>
+</NavLink>
 
   <NavLink
     to="/announcements"

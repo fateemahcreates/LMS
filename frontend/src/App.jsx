@@ -29,6 +29,7 @@ import Students from "./Pages/Students";
 import Courses from "./Pages/Courses";
 import Users from "./Pages/Users";
 import Settings from "./Pages/Settings";
+import AdminAssignments from "./Pages/Assignments";
 
 // ===========================
 // Student Pages
@@ -36,7 +37,7 @@ import Settings from "./Pages/Settings";
 import StudentDashboard from "./Pages/StudentDashboard";
 import BrowseCourses from "./Pages/student/BrowseCourses";
 import MyCourses from "./Pages/student/MyCourses";
-import Assignments from "./Pages/student/Assignments";
+import StudentAssignments from "./Pages/student/Assignments";
 import Announcements from "./Pages/student/Announcements";
 import Certification from "./Pages/student/Certification";
 import StudentProfile from "./Pages/student/StudentProfile";
@@ -95,6 +96,15 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+         <Route
+  path="/assignments"
+  element={
+    <ProtectedRoute allowedRoles={["admin"]}>
+      <AdminAssignments />
+    </ProtectedRoute>
+  }
+/>
 
           <Route
             path="/users"
@@ -159,14 +169,13 @@ function App() {
           />
 
           <Route
-            path="/assignments"
-            element={
-              <ProtectedRoute allowedRoles={["student"]}>
-                <Assignments />
-              </ProtectedRoute>
-            }
-          />
-
+  path="/student/assignments"
+  element={
+    <ProtectedRoute allowedRoles={["student"]}>
+      <StudentAssignments />
+    </ProtectedRoute>
+  }
+/>
           <Route
             path="/announcements"
             element={
