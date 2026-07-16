@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://lms-zcd2.vercel.app/api", //baseURL: "http://localhost:5000/api",
+ baseURL: import.meta.env.VITE_API_URL, //baseURL: "http://localhost:5000/api",
 });  
 
 // Attach JWT token to every request
