@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://lms-backend-g9mp.onrender.com",
+  baseURL: "https://lms-backend-g9mp.onrender.com/api",
 });
 
 export default api;

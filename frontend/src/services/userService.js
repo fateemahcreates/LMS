@@ -1,49 +1,29 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:5000/api/users";
-
-// ==========================================
-// Axios Instance
-// Automatically attaches JWT token
-// ==========================================
-const api = axios.create({
-  baseURL: API_URL,
-});
-
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-
-  return config;
-});
+import api from "./api";
 
 // ==========================================
 // GET ALL USERS
 // ==========================================
 export const getUsers = () => {
-  return api.get("/");
+  return api.get("/users");
 };
 
 // ==========================================
 // CREATE USER
 // ==========================================
 export const createUser = (data) => {
-  return api.post("/", data);
+  return api.post("/users", data);
 };
 
 // ==========================================
 // UPDATE USER
 // ==========================================
 export const updateUser = (id, data) => {
-  return api.put(`/${id}`, data);
+  return api.put(`/users/${id}`, data);
 };
 
 // ==========================================
 // DELETE USER
 // ==========================================
 export const deleteUser = (id) => {
-  return api.delete(`/${id}`);
+  return api.delete(`/users/${id}`);
 };
