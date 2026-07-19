@@ -2,10 +2,17 @@ const mongoose = require("mongoose");
 
 const submissionSchema = new mongoose.Schema(
   {
-    // Student who submitted
+    // Student
     student: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
+    },
+
+    // Assignment being submitted
+    assignment: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Assignment",
       required: true,
     },
 
@@ -16,33 +23,19 @@ const submissionSchema = new mongoose.Schema(
       required: true,
     },
 
-    // Optional link to an admin-created assignment
-    assignment: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Assignment",
-      default: null,
-    },
-
-    // Student title
-    title: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-
-    // Student description
+    // Student's optional note
     description: {
       type: String,
       default: "",
     },
 
-    // Uploaded file
+    // Uploaded answer
     file: {
       type: String,
       required: true,
     },
 
-    // Submission workflow
+    // Submission status
     status: {
       type: String,
       enum: [
@@ -53,7 +46,7 @@ const submissionSchema = new mongoose.Schema(
       default: "Pending",
     },
 
-    // Admin grading
+    // Grade
     score: {
       type: Number,
       default: null,

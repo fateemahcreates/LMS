@@ -38,6 +38,15 @@ router.get(
   getMySubmissions
 );
 
+
+// View Academy Assignments (for students)
+router.get(
+  "/academy",
+  protect,
+  authorize("student"),
+  getAcademyAssignments
+);
+
 // =======================================
 // ADMIN ROUTES
 // =======================================

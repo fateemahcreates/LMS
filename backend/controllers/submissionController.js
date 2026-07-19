@@ -9,19 +9,34 @@ const submitAssignment = async (req, res) => {
     const {
       course,
       assignment,
-      title,
       description,
     } = req.body;
+
+    // Validate assignment
+    if (!assignment) {
+      return res.status(400).json({
+        message: "Assignment is required.",
+      });
+    }
+
+    // Prevent duplicate submissions
+    const existingSubmission = await Submission.findOne({
+      student: req.user._id,
+      assignment,
+    });
+
+    if (existingSubmission) {
+      return res.status(400).json({
+        message: "You have already submitted this assignment.",
+      });
+    }
 
     const submission = await Submission.create({
       student: req.user._id,
       course,
-      assignment: assignment || null,
-      title,
+      assignment,
       description,
-      file: req.file
-        ? req.file.filename
-        : "",
+      file: req.file ? req.file.filename : "",
     });
 
     res.status(201).json({
@@ -37,7 +52,6 @@ const submitAssignment = async (req, res) => {
     });
   }
 };
-
 // ==========================================
 // STUDENT GETS THEIR SUBMISSIONS
 // GET /api/submissions/my
@@ -49,7 +63,7 @@ const getMySubmissions = async (req, res) => {
       student: req.user._id,
     })
       .populate("course", "title")
-      .populate("assignment", "title")
+      .populate("assignment", "title dueDate totalMarks")
       .sort({
         createdAt: -1,
       });
@@ -81,7 +95,7 @@ const getAllSubmissions = async (req, res) => {
 
       .populate("course", "title")
 
-      .populate("assignment", "title")
+      .populate("assignment", "title dueDate totalMarks")
 
       .sort({
         createdAt: -1,

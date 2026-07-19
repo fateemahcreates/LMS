@@ -10,6 +10,7 @@ const courseRoutes = require("./routes/courseRoutes");
 const enrollmentRoutes = require("./routes/enrollmentRoutes");
 const assignmentRoutes = require("./routes/assignmentRoutes");
 const submissionRoutes = require("./routes/submissionRoutes");
+const announcementRoutes = require("./routes/announcementRoutes");
 const path = require("path");
 
 
@@ -32,6 +33,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/enrollments", enrollmentRoutes);
 app.use("/api/assignments", assignmentRoutes);
 app.use("/api/submissions", submissionRoutes);
+app.use("/api/announcements", announcementRoutes);
+
 
 app.get("/", (req, res) => {
   res.send("LMS API Running...");
