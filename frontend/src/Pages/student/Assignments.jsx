@@ -11,7 +11,7 @@ import { getCourses } from "../../services/courseService";
 import {
   submitAssignment,
   getMySubmissions,
-} from "../../services/submissionService";
+} from "../../services/SubmissionService";
 
 import {
   getAssignments,
