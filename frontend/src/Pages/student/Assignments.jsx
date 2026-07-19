@@ -11,7 +11,11 @@ import { getCourses } from "../../services/courseService";
 import {
   submitAssignment,
   getMySubmissions,
-  getAcademyAssignments, } from "../../services/SubmissionService"; 
+} from "../../services/submissionService";
+
+import {
+  getAssignments,
+} from "../../services/assignmentService";
 
 import "../../styles/StudentAssignments.css";
 
@@ -27,6 +31,9 @@ function Assignments() {
     description: "",
     file: null,
   });
+
+  const [selectedAssignment, setSelectedAssignment] =
+  useState(null);
 
   // =====================================
   // Load Courses
@@ -56,9 +63,28 @@ function Assignments() {
     }
   };
 
+ const loadAcademyAssignments = async () => {
+  try {
+    const res = await getAssignments();
+
+    console.log("Assignments from backend:", res.data);
+
+    setAcademyAssignments(res.data);
+
+  } catch (error) {
+    console.error(error);
+
+    if (error.response) {
+      console.log("Status:", error.response.status);
+      console.log("Response:", error.response.data);
+    }
+  }
+};
+
   useEffect(() => {
     loadCourses();
     loadSubmissions();
+    loadAcademyAssignments();
   }, []);
 
   
@@ -83,6 +109,9 @@ function Assignments() {
     });
   };
 
+
+
+
   // =====================================
   // Submit Assignment
   // =====================================
@@ -98,10 +127,14 @@ function Assignments() {
       const data = new FormData();
 
       data.append("course", formData.course);
-      data.append("title", formData.title);
-      data.append("description", formData.description);
-      data.append("file", formData.file);
 
+if (selectedAssignment) {
+  data.append("assignment", selectedAssignment._id);
+}
+
+data.append("title", formData.title);
+data.append("description", formData.description);
+data.append("file", formData.file);
       await submitAssignment(data);
 
       alert("Assignment submitted successfully!");
@@ -112,7 +145,8 @@ function Assignments() {
         description: "",
         file: null,
       });
-
+     
+      setSelectedAssignment(null);
       document.getElementById("assignment-file").value = "";
 
       loadSubmissions();
@@ -130,6 +164,10 @@ function Assignments() {
   return (
     <main className="student-assignments">
 
+
+
+      
+
       {/* =======================================
           PAGE HEADER
       ======================================== */}
@@ -142,7 +180,69 @@ function Assignments() {
           grading progress.
         </p>
       </div>
+       
 
+       <div className="assignment-card">
+
+  <h2>📚 Academy Assignments</h2>
+  <p>Total assignments: {academyAssignments.length}</p>
+
+  {academyAssignments.length === 0 ? (
+
+    <p>No assignments available.</p>
+
+  ) : (
+
+    academyAssignments.map((assignment) => (
+
+  <div
+    key={assignment._id}
+    className="academy-assignment"
+  >
+    <h3>{assignment.title}</h3>
+
+    <p>{assignment.description}</p>
+
+    <p>
+      <strong>Course:</strong>{" "}
+      {assignment.course?.title}
+    </p>
+
+    <p>
+      <strong>Due:</strong>{" "}
+      {new Date(
+        assignment.dueDate
+      ).toLocaleDateString()}
+    </p>
+
+    <button
+      className="submit-btn"
+      type="button"
+      onClick={() => {
+        setSelectedAssignment(assignment);
+
+        setFormData({
+          ...formData,
+          course: assignment.course?._id,
+          title: assignment.title,
+          description: assignment.description,
+        });
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }}
+    >
+      Submit Assignment
+    </button>
+
+  </div>
+
+))
+  )}
+
+</div>
       {/* =======================================
           SUBMISSION FORM
       ======================================== */}

@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 
 import StudentSidebar from "./StudentSidebar";
 import StudentNavbar from "./StudentNavbar";
+import "..//styles/StudentLayout.css";
 
 function StudentLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);

@@ -232,13 +232,15 @@ if (res.data.user.role === "admin") {
     </Link>
   </p>
 
-  <div className="demo-account">
-    <h4>Demo Account</h4>
+ {/*
+<div className="demo-account">
+  <h4>Demo Account</h4>
 
-    <p>Email: admin@lms.com</p>
+  <p>Email: admin@lms.com</p>
 
-    <p>Password: Password@123</p>
-  </div>
+  <p>Password: Password@123</p>
+</div>
+*/}
 
 </div>
 

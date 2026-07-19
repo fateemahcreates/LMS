@@ -10,6 +10,7 @@ import {
   FaUserGraduate,
   FaBookOpen,
   FaClipboardList,
+  FaBullhorn,
   FaUsers,
   FaCog,
   FaTimes,
@@ -112,6 +113,14 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
 <NavLink to="/assignments">
   <FaClipboardList />
   <span>Assignments</span>
+</NavLink>
+
+<NavLink
+  to="/admin/announcements"
+  onClick={() => setSidebarOpen(false)}
+>
+  <FaBullhorn />
+  <span>Announcements</span>
 </NavLink>
 
           <NavLink

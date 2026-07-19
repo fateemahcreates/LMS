@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 
 import AssignmentForm from "../components/AssignmentForm";
 import AssignmentTable from "../components/AssignmentTable";
+import StudentSubmissionTable from "../components/StudentSubmissionTable";
+
 
 import {
   getAssignments,
   createAssignment,
   updateAssignment,
   deleteAssignment,
+  getAllSubmissions,
 } from "../services/assignmentService";
 
 import "../styles/Assignments.css";
@@ -15,6 +18,7 @@ import "../styles/Assignments.css";
 function Assignments() {
   const [assignments, setAssignments] = useState([]);
   const [editingAssignment, setEditingAssignment] = useState(null);
+  const [submissions, setSubmissions] = useState([]);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -40,9 +44,27 @@ function Assignments() {
     }
   };
 
-  useEffect(() => {
-    fetchAssignments();
-  }, []);
+  const fetchSubmissions = async () => {
+  try {
+    const res = await getAllSubmissions();
+
+    console.log("Admin Submissions:", res.data);
+
+    setSubmissions(res.data);
+
+  } catch (error) {
+    console.error(error);
+
+    if (error.response) {
+      console.log(error.response.data);
+    }
+  }
+};
+
+ useEffect(() => {
+  fetchAssignments();
+  fetchSubmissions();
+}, []);
 
   // ==========================
   // Handle Input
@@ -59,6 +81,7 @@ function Assignments() {
   // Submit
   // ==========================
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -86,6 +109,7 @@ function Assignments() {
       setEditingAssignment(null);
 
       fetchAssignments();
+      fetchSubmissions();
 
     } catch (error) {
       console.error(error);
@@ -122,6 +146,7 @@ function Assignments() {
     await deleteAssignment(id);
 
     fetchAssignments();
+    fetchSubmissions();
   };
 
   return (
@@ -150,6 +175,10 @@ function Assignments() {
         handleDelete={handleDelete}
       />
 
+      <StudentSubmissionTable
+  submissions={submissions}
+  onGrade={() => {}}
+/>
     </main>
   );
 }

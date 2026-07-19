@@ -30,6 +30,7 @@ import Courses from "./Pages/Courses";
 import Users from "./Pages/Users";
 import Settings from "./Pages/Settings";
 import AdminAssignments from "./Pages/Assignments";
+import AdminAnnouncements from "./Pages/Announcements";
 
 // ===========================
 // Student Pages
@@ -102,6 +103,15 @@ function App() {
   element={
     <ProtectedRoute allowedRoles={["admin"]}>
       <AdminAssignments />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/announcements"
+  element={
+    <ProtectedRoute allowedRoles={["admin"]}>
+      <AdminAnnouncements />
     </ProtectedRoute>
   }
 />

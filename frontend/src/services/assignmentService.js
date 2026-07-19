@@ -34,3 +34,10 @@ export const updateAssignment = (id, data) =>
 
 export const deleteAssignment = (id) =>
   api.delete(`/assignments/${id}`);
+
+// ===============================
+// GET ALL STUDENT SUBMISSIONS
+// ===============================
+
+export const getAllSubmissions = () =>
+  api.get("/submissions");

@@ -43,12 +43,12 @@
 .table-responsive {
   width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
 }
-
 .assignment-table {
   width: 100%;
-  border-collapse: collapse;
-  min-width: 950px;
+  min-width: 760px;
 }
 
 /* ==========================================
@@ -258,6 +258,96 @@
   background: transparent;
 }
 
+
+/* ==========================
+   Tablet
+========================== */
+
+@media (max-width: 768px) {
+
+  .assignment-table-container {
+    padding: 18px;
+  }
+
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .assignment-table {
+    min-width: 700px;
+  }
+
+  .assignment-table th,
+  .assignment-table td {
+    padding: 14px;
+    font-size: .9rem;
+  }
+
+  .action-buttons {
+    gap: 8px;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+}
+
+/* ==========================
+   Mobile
+========================== */
+
+@media (max-width:480px){
+
+  .assignment-table-container{
+    padding:15px;
+  }
+
+  .table-header h2{
+    font-size:1.15rem;
+  }
+
+  .table-header span{
+    font-size:.75rem;
+    padding:6px 10px;
+  }
+
+  .assignment-table{
+    min-width:650px;
+  }
+
+  .assignment-table th,
+  .assignment-table td{
+    padding:12px;
+    font-size:.82rem;
+    white-space:nowrap;
+  }
+
+  .assignment-title strong{
+    font-size:.9rem;
+  }
+
+  .assignment-title small{
+    font-size:.8rem;
+  }
+
+  .status-badge,
+  .submission-badge{
+    padding:6px 10px;
+    font-size:.75rem;
+  }
+
+  .edit-btn,
+  .delete-btn{
+    width:32px;
+    height:32px;
+  }
+
+}
 /* ==========================================
    RESPONSIVE
 ========================================== */

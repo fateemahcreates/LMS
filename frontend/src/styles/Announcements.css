@@ -1,0 +1,310 @@
+/* ===========================================
+   PAGE
+=========================================== */
+
+.announcements-page {
+  padding: 30px;
+}
+
+.page-header {
+  margin-bottom: 30px;
+}
+
+.page-header h1 {
+  font-size: 2rem;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.page-header p {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+/* ===========================================
+   FORM CARD
+=========================================== */
+
+.announcement-form-card,
+.announcement-table-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 25px rgba(0,0,0,.06);
+}
+
+.announcement-form-card h2,
+.announcement-table-card h2 {
+  margin-bottom: 20px;
+  color: #111827;
+}
+
+/* ===========================================
+   FORM
+=========================================== */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 20px;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 12px 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: .95rem;
+  transition: .25s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+}
+
+textarea {
+  resize: vertical;
+}
+
+.checkbox-group {
+  margin: 20px 0;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.checkbox-group input {
+  width: 18px;
+  height: 18px;
+}
+
+/* ===========================================
+   BUTTON
+=========================================== */
+
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.submit-btn:hover {
+  background: #1d4ed8;
+}
+
+/* ===========================================
+   TABLE
+=========================================== */
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.table-count {
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-weight: 600;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.announcement-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.announcement-table th {
+  background: #f9fafb;
+  color: #374151;
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.announcement-table td {
+  padding: 16px 15px;
+  border-top: 1px solid #f1f5f9;
+  vertical-align: top;
+}
+
+.announcement-table tr:hover {
+  background: #fafafa;
+}
+
+/* ===========================================
+   BADGES
+=========================================== */
+
+.type-badge,
+.status-badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 40px;
+  font-size: .8rem;
+  font-weight: 600;
+}
+
+/* Types */
+
+.general {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.assignment {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.exam {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.holiday {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+.course-update {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+/* Status */
+
+.active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.archived {
+  background: #e5e7eb;
+  color: #4b5563;
+}
+
+/* ===========================================
+   PIN
+=========================================== */
+
+.pinned {
+  color: #f59e0b;
+  font-weight: bold;
+}
+
+/* ===========================================
+   ACTION BUTTONS
+=========================================== */
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.action-buttons button {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.pin-btn {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.edit-btn {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.delete-btn {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.action-buttons button:hover {
+  transform: translateY(-2px);
+}
+
+/* ===========================================
+   EMPTY STATE
+=========================================== */
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #6b7280;
+}
+
+.empty-state h3 {
+  margin-bottom: 10px;
+}
+
+/* ===========================================
+   RESPONSIVE
+=========================================== */
+
+@media (max-width:900px) {
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width:768px) {
+
+  .announcements-page {
+    padding: 20px;
+  }
+
+  .announcement-form-card,
+  .announcement-table-card {
+    padding: 18px;
+  }
+
+  .page-header h1 {
+    font-size: 1.6rem;
+  }
+
+}

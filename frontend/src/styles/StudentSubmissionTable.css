@@ -1,0 +1,27 @@
+.submission-table-container {
+  margin-top: 40px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.08);
+}
+
+.submission-table-container h2 {
+  margin-bottom: 20px;
+}
+
+.submission-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.submission-table th,
+.submission-table td {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.submission-table th {
+  background: #f7f7f7;
+}

@@ -20,3 +20,6 @@ export const getMySubmissions = () =>
 
 export const getAcademyAssignments = () =>
   api.get("/submissions/academy");
+
+export const getAllSubmissions = () =>
+  api.get("/submissions");
