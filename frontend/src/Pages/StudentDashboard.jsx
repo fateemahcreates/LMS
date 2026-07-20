@@ -4,6 +4,7 @@ import StudentHero from "../components/student/StudentHero";
 import StudentStats from "../components/student/StudentStats";
 import StudentProfileCard from "../components/student/StudentProfileCard";
 import StudentCourses from "../components/student/StudentCourses";
+import LatestAnnouncements from "../components/LatestAnnouncements";
 
 import { getStudentProfile } from "../services/studentServices";
 
@@ -47,10 +48,12 @@ function StudentDashboard() {
       <StudentStats student={student} />
 
       <div className="student-dashboard-grid">
-        <StudentProfileCard student={student} />
+  <StudentProfileCard student={student} />
 
-        <StudentCourses student={student} />
-      </div>
+  <StudentCourses student={student} />
+</div>
+
+<LatestAnnouncements />
     </main>
   );
 }

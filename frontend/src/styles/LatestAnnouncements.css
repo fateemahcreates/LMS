@@ -1,0 +1,145 @@
+/* ==========================================
+   Latest Announcements
+========================================== */
+
+.latest-announcements {
+  background: #fff;
+  border-radius: 18px;
+  padding: 25px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  margin-top: 25px;
+}
+
+.latest-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.latest-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #1f2937;
+  font-size: 1.2rem;
+}
+
+.empty-announcements {
+  text-align: center;
+  color: #9ca3af;
+  padding: 30px 0;
+}
+
+.announcement-card {
+  padding: 18px;
+  border: 1px solid #f1f5f9;
+  border-radius: 14px;
+  margin-bottom: 18px;
+  transition: 0.3s ease;
+}
+
+.announcement-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,.08);
+}
+
+.announcement-card:last-child {
+  margin-bottom: 0;
+}
+
+.announcement-card h3 {
+  margin: 10px 0;
+  color: #111827;
+  font-size: 1rem;
+}
+
+.announcement-card p {
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.announcement-card small {
+  color: #9ca3af;
+}
+
+/* ==========================================
+   Badges
+========================================== */
+
+.announcement-badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 50px;
+  font-size: .75rem;
+  font-weight: 600;
+}
+
+.general {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.assignment {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.exam {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.holiday {
+  background: #ede9fe;
+  color: #7c3aed;
+}
+
+.course-update {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.view-all-btn{
+    text-decoration:none;
+    color:#2563eb;
+    font-weight:600;
+    transition:.3s;
+}
+
+.view-all-btn:hover{
+    color:#1d4ed8;
+}
+
+.announcement-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:10px 0;
+}
+
+.new-badge{
+    background:#ef4444;
+    color:white;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:.7rem;
+    font-weight:700;
+}
+
+/* ==========================================
+   Mobile
+========================================== */
+
+@media (max-width:768px) {
+
+  .latest-announcements {
+    padding: 20px;
+  }
+
+  .latest-header h2 {
+    font-size: 1rem;
+  }
+
+}

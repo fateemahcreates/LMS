@@ -22,3 +22,7 @@ export const deleteStudent = (id) =>
 // GET LOGGED-IN STUDENT PROFILE
 export const getStudentProfile = () =>
   api.get("/students/profile");
+
+// UPDATE LOGGED-IN STUDENT PROFILE
+export const updateStudentProfile = (data) =>
+  api.put("/students/profile", data);

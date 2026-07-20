@@ -50,13 +50,13 @@ function Announcements() {
   // ==========================
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+  const { name, value, type, checked } = e.target;
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  setFormData({
+    ...formData,
+    [name]: type === "checkbox" ? checked : value,
+  });
+};
 
   // ==========================
   // Submit
