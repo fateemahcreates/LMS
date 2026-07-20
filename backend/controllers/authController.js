@@ -22,23 +22,47 @@ const registerUser = async (req, res) => {
         message: "User already exists.",
       });
     }
+    
+    // ==============================
+// Generate Student ID
+// ==============================
 
+const year = new Date().getFullYear();
+
+const lastStudent = await User.findOne({
+  studentId: { $exists: true },
+}).sort({ createdAt: -1 });
+
+let nextNumber = 1;
+
+if (lastStudent) {
+  const lastId = lastStudent.studentId;
+
+  const number = parseInt(lastId.split("-")[3], 10);
+
+  nextNumber = number + 1;
+}
+
+const studentId = `GMT-STU-${year}-${String(nextNumber).padStart(4, "0")}`;
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await User.create({
-    name,
-    email,
-   password: hashedPassword,
+   const user = await User.create({
+  name,
+  email,
+  password: hashedPassword,
+  role: "student",
+  studentId,
 });
 
     res.status(201).json({
       message: "User registered successfully.",
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
+     user: {
+  id: user._id,
+  studentId: user.studentId,
+  name: user.name,
+  email: user.email,
+  role: user.role,
+},
     });
 
   } catch (error) {
@@ -92,11 +116,12 @@ const loginUser = async (req, res) => {
       message: "Login Successful",
       token,
       user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
+  id: user._id,
+  studentId: user.studentId,
+  name: user.name,
+  email: user.email,
+  role: user.role,
+},
     });
 
   } catch (error) {

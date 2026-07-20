@@ -11,14 +11,14 @@ const {
 } = require("../middleware/roleMiddleware");
 
 const {
-getStudents,
-createStudent,
-updateStudent,
-deleteStudent,
-getStudentProfile,
-getStudentStats
-}=require("../controllers/studentController");
-
+  getStudents,
+  createStudent,
+  updateStudent,
+  deleteStudent,
+  getStudentProfile,
+  updateStudentProfile,
+  getStudentStats,
+} = require("../controllers/studentController");
 // ==========================
 // Admin Routes
 // ==========================
@@ -42,6 +42,13 @@ router.get(
 protect,
 authorize("student"),
 getStudentStats
+);
+
+router.put(
+  "/profile",
+  protect,
+  authorize("student"),
+  updateStudentProfile
 );
 
 router.put(

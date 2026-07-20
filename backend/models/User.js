@@ -52,6 +52,47 @@ const userSchema = new mongoose.Schema(
       enum: ["active", "inactive", "suspended"],
       default: "inactive",
     },
+    studentId: {
+  type: String,
+  unique: true,
+  sparse: true,
+},
+
+phone: {
+  type: String,
+  default: "",
+},
+
+gender: {
+  type: String,
+  enum: ["Male", "Female", "Other"],
+  default: "",
+},
+
+dateOfBirth: {
+  type: Date,
+  default: null,
+},
+
+nationality: {
+  type: String,
+  default: "",
+},
+
+address: {
+  type: String,
+  default: "",
+},
+
+bio: {
+  type: String,
+  default: "",
+},
+
+avatar: {
+  type: String,
+  default: "",
+},
   },
   {
     timestamps: true,

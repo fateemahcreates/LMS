@@ -160,6 +160,63 @@ const getStudentProfile = async (req, res) => {
 };
 
 // ==========================================
+// UPDATE LOGGED-IN STUDENT PROFILE
+// PUT /api/students/profile
+// ==========================================
+
+const updateStudentProfile = async (req, res) => {
+  try {
+    const {
+      name,
+      phone,
+      department,
+      faculty,
+      level,
+      semester,
+    } = req.body;
+
+    const student = await Student.findOne({
+      user: req.user._id,
+    });
+
+    if (!student) {
+      return res.status(404).json({
+        message: "Student profile not found.",
+      });
+    }
+
+    // Update User information
+    await User.findByIdAndUpdate(student.user, {
+      name,
+    });
+
+    // Update Student information
+    student.phone = phone;
+    student.department = department;
+    student.faculty = faculty;
+    student.level = level;
+    student.semester = semester;
+
+    await student.save();
+
+    const updatedStudent = await Student.findById(student._id)
+      .populate("user", "name email role");
+
+    res.status(200).json({
+      message: "Profile updated successfully.",
+      student: updatedStudent,
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Server Error",
+    });
+  }
+};
+
+// ==========================================
 // GET STUDENT DASHBOARD STATS
 // GET /api/students/stats
 // ==========================================
@@ -306,12 +363,11 @@ const deleteStudent = async (req, res) => {
 };
 
 module.exports = {
-
-createStudent,
-getStudents,
-updateStudent,
-deleteStudent,
-getStudentProfile,
-getStudentStats
-
+  createStudent,
+  getStudents,
+  updateStudent,
+  deleteStudent,
+  getStudentProfile,
+  updateStudentProfile,
+  getStudentStats,
 };
