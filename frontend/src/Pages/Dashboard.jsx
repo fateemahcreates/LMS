@@ -6,6 +6,7 @@ import RecentCourses from "../components/RecentCourses";
 
 import { getStudents } from "../services/studentServices";
 import { getCourses } from "../services/courseService";
+import { notify } from "../utils/notify";
 
 import "../styles/Dashboard.css";
 
@@ -22,26 +23,24 @@ function Dashboard() {
   // ==========================
 
   const fetchStudents = async () => {
-    try {
-      const res = await getStudents();
-      setStudents(res.data);
-    } catch (error) {
-      console.error("Error fetching students:", error);
-    }
-  };
+  try {
+    const res = await getStudents();
+    setStudents(res.data);
+  } catch (error) {
+    console.error(error);
+    notify.apiError(error);
+  }
+};
 
-  // ==========================
-  // Fetch Courses
-  // ==========================
-
-  const fetchCourses = async () => {
-    try {
-      const res = await getCourses();
-      setCourses(res.data);
-    } catch (error) {
-      console.error("Error fetching courses:", error);
-    }
-  };
+const fetchCourses = async () => {
+  try {
+    const res = await getCourses();
+    setCourses(res.data);
+  } catch (error) {
+    console.error(error);
+    notify.apiError(error);
+  }
+};
 
   // ==========================
   // Load Dashboard Data

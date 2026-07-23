@@ -1,4 +1,5 @@
 import "../../styles/StudentProfileCard.css";
+import { useNavigate } from "react-router-dom";
 
 import {
   FaUserGraduate,
@@ -13,16 +14,30 @@ import {
 
 function StudentProfileCard({ student }) {
   const user = student?.user || {};
+  const navigate = useNavigate();
 
   return (
     <div className="student-profile-card">
       {/* Header */}
       <div className="profile-header">
-        <div className="profile-avatar">
-          {user.name
-            ? user.name.charAt(0).toUpperCase()
-            : "S"}
-        </div>
+       <div className="profile-avatar">
+
+  {user.avatar ? (
+
+    <img
+      src={user.avatar}
+      alt={user.name}
+    />
+
+  ) : (
+
+    user.name
+      ? user.name.charAt(0).toUpperCase()
+      : "S"
+
+  )}
+
+</div>
 
         <div>
           <h2>{user.name || "Student Name"}</h2>
@@ -46,52 +61,54 @@ function StudentProfileCard({ student }) {
         </div>
 
         <div className="profile-item">
-          <FaBuilding />
+  <FaBuilding />
 
-          <div>
-            <span>Department</span>
+  <div>
+    <span>Learning Track</span>
 
-            <strong>
-              {student?.department || "--"}
-            </strong>
-          </div>
-        </div>
-
-        <div className="profile-item">
-          <FaUniversity />
-
-          <div>
-            <span>Faculty</span>
-
-            <strong>
-              {student?.faculty || "--"}
-            </strong>
-          </div>
-        </div>
+    <strong>
+      {student?.learningTrack || "Not Assigned"}
+    </strong>
+  </div>
+</div>
 
         <div className="profile-item">
-          <FaLayerGroup />
+  <FaUniversity />
 
-          <div>
-            <span>Level</span>
+  <div>
+    <span>Current Course</span>
 
-            <strong>
-              {student?.level || "--"}
-            </strong>
-          </div>
-        </div>
+    <strong>
+      {student?.currentCourse || "Not Enrolled"}
+    </strong>
+  </div>
+</div>
 
         <div className="profile-item">
-          <FaCalendarAlt />
+  <FaLayerGroup />
 
-          <div>
-            <span>Semester</span>
+  <div>
+    <span>Course Duration</span>
 
-            <strong>
-              {student?.semester || "--"}
-            </strong>
-          </div>
-        </div>
+    <strong>
+      {student?.courseDuration || "--"}
+    </strong>
+  </div>
+</div>
+
+        <div className="profile-item">
+  <FaCalendarAlt />
+
+  <div>
+    <span>Enrolled On</span>
+
+    <strong>
+      {student?.createdAt
+        ? new Date(student.createdAt).toLocaleDateString()
+        : "--"}
+    </strong>
+  </div>
+</div>
 
         <div className="profile-item">
           <FaEnvelope />
@@ -134,7 +151,10 @@ function StudentProfileCard({ student }) {
             : "Active Student"}
         </div>
 
-        <button className="profile-btn">
+       <button
+  className="profile-btn"
+  onClick={() => navigate("/profile")}
+>
           <FaUserGraduate />
 
           View Full Profile

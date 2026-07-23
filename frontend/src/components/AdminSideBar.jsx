@@ -1,8 +1,7 @@
 import "../styles/SideBar.css";
 
 import { NavLink, useNavigate } from "react-router-dom";
-import { FaClipboardCheck } from "react-icons/fa";
-
+import { notify } from "../utils/notify";
 
 import {
   FaGraduationCap,
@@ -15,6 +14,8 @@ import {
   FaCog,
   FaTimes,
   FaSignOutAlt,
+  FaClipboardCheck,
+  FaCertificate,
 } from "react-icons/fa";
 
 function SideBar({ sidebarOpen, setSidebarOpen }) {
@@ -24,22 +25,28 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
   // Logout
   // ==========================
   const handleLogout = () => {
-    const confirmLogout = window.confirm(
-      "Are you sure you want to logout?"
-    );
 
-    if (!confirmLogout) return;
+    notify.confirmLogout(() => {
 
-    // Remove saved login data
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+      // Remove saved login data
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
 
-    // Close sidebar on mobile
-    setSidebarOpen(false);
+      // Close sidebar
+      setSidebarOpen(false);
 
-    // Redirect to login
-    navigate("/login");
+      // Notification
+      notify.info("You have been logged out.");
+
+      // Redirect after toast displays
+      setTimeout(() => {
+        navigate("/login");
+      }, 800);
+
+    });
+
   };
+
 
   return (
     <>
@@ -51,20 +58,30 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
         />
       )}
 
+
       <aside
         className={`sidebar ${
           sidebarOpen ? "open" : ""
         }`}
       >
+
+
         {/* ==========================
             Sidebar Header
         ========================== */}
 
         <div className="sidebar-header">
+
           <div className="sidebar-logo">
+
             <FaGraduationCap className="logo-icon" />
-            <span>LMS Portal</span>
+
+            <span>
+              LMS Portal
+            </span>
+
           </div>
+
 
           <button
             className="close-btn"
@@ -72,7 +89,10 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
           >
             <FaTimes />
           </button>
+
         </div>
+
+
 
         {/* ==========================
             Navigation
@@ -80,66 +100,119 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
 
         <nav className="sidebar-nav">
 
+
           <NavLink
             to="/"
             end
             onClick={() => setSidebarOpen(false)}
           >
             <FaChartPie />
-            <span>Dashboard</span>
+            <span>
+              Dashboard
+            </span>
           </NavLink>
+
+
 
           <NavLink
             to="/students"
             onClick={() => setSidebarOpen(false)}
           >
             <FaUserGraduate />
-            <span>Students</span>
+            <span>
+              Students
+            </span>
           </NavLink>
+
+
 
           <NavLink
             to="/courses"
             onClick={() => setSidebarOpen(false)}
           >
             <FaBookOpen />
-            <span>Courses</span>
+            <span>
+              Courses
+            </span>
           </NavLink>
 
-          <NavLink to="/enrollments">
-    <FaClipboardCheck />
-    <span>Enrollments</span>
-</NavLink>
 
-<NavLink to="/assignments">
-  <FaClipboardList />
-  <span>Assignments</span>
-</NavLink>
 
-<NavLink
-  to="/admin/announcements"
-  onClick={() => setSidebarOpen(false)}
->
-  <FaBullhorn />
-  <span>Announcements</span>
-</NavLink>
+          <NavLink
+            to="/enrollments"
+            onClick={() => setSidebarOpen(false)}
+          >
+            <FaClipboardCheck />
+            <span>
+              Enrollments
+            </span>
+          </NavLink>
+
+
+
+          <NavLink
+            to="/assignments"
+            onClick={() => setSidebarOpen(false)}
+          >
+            <FaClipboardList />
+            <span>
+              Assignments
+            </span>
+          </NavLink>
+
+
+
+          <NavLink
+            to="/admin/announcements"
+            onClick={() => setSidebarOpen(false)}
+          >
+            <FaBullhorn />
+            <span>
+              Announcements
+            </span>
+          </NavLink>
+
+
+
+          <NavLink
+            to="/admin/certificates"
+            onClick={() => setSidebarOpen(false)}
+          >
+            <FaCertificate />
+            <span>
+              Certificates
+            </span>
+          </NavLink>
+
+
 
           <NavLink
             to="/users"
             onClick={() => setSidebarOpen(false)}
           >
             <FaUsers />
-            <span>Users</span>
+            <span>
+              Users
+            </span>
           </NavLink>
+
+
 
           <NavLink
             to="/settings"
             onClick={() => setSidebarOpen(false)}
           >
             <FaCog />
-            <span>Settings</span>
+            <span>
+              Settings
+            </span>
           </NavLink>
 
+
         </nav>
+
+
+
 
         {/* ==========================
             Footer
@@ -147,23 +220,39 @@ function SideBar({ sidebarOpen, setSidebarOpen }) {
 
         <div className="sidebar-footer">
 
+
           <button
             className="logout-btn"
             onClick={handleLogout}
           >
+
             <FaSignOutAlt />
-            <span>Logout</span>
+
+            <span>
+              Logout
+            </span>
+
           </button>
 
-          <p>LMS Portal</p>
 
-          <small>Version 1.0</small>
+
+          <p>
+            LMS Portal
+          </p>
+
+
+          <small>
+            Version 1.0
+          </small>
+
 
         </div>
+
 
       </aside>
     </>
   );
 }
+
 
 export default SideBar;

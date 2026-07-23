@@ -1,0 +1,179 @@
+/* ==========================================
+   Certificate Table
+========================================== */
+
+.certificate-table {
+  margin-top: 35px;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.certificate-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* ==========================================
+   Header
+========================================== */
+
+.certificate-table thead {
+  background: #2563eb;
+}
+
+.certificate-table th {
+  padding: 18px;
+  color: white;
+  text-align: left;
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ==========================================
+   Body
+========================================== */
+
+.certificate-table td {
+  padding: 18px;
+  border-bottom: 1px solid #eef2f7;
+  color: #374151;
+  font-size: 0.94rem;
+  vertical-align: middle;
+}
+
+.certificate-table tbody tr {
+  transition: 0.25s;
+}
+
+.certificate-table tbody tr:hover {
+  background: #f8fbff;
+}
+
+/* ==========================================
+   Status Badge
+========================================== */
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 16px;
+  border-radius: 30px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status.pending {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.status.approved {
+  background: #ecfdf5;
+  color: #15803d;
+}
+
+.status.rejected {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+/* ==========================================
+   Action Buttons
+========================================== */
+
+.certificate-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.certificate-actions button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
+  transition: 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.view-btn {
+  background: #3b82f6;
+}
+
+.view-btn:hover {
+  background: #2563eb;
+}
+
+.approve-btn {
+  background: #16a34a;
+}
+
+.approve-btn:hover {
+  background: #15803d;
+}
+
+.reject-btn {
+  background: #ef4444;
+}
+
+.reject-btn:hover {
+  background: #dc2626;
+}
+
+.download-btn {
+  background: #7c3aed;
+}
+
+.download-btn:hover {
+  background: #6d28d9;
+}
+
+/* ==========================================
+   Empty State
+========================================== */
+
+.empty-row {
+  text-align: center;
+  padding: 40px;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* ==========================================
+   Responsive
+========================================== */
+
+@media (max-width: 1200px) {
+
+  .certificate-table {
+    overflow-x: auto;
+  }
+
+  .certificate-table table {
+    min-width: 1000px;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .certificate-table th,
+  .certificate-table td {
+    padding: 14px;
+    font-size: 0.88rem;
+  }
+
+  .certificate-actions button {
+    width: 36px;
+    height: 36px;
+  }
+
+}

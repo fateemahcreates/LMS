@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 import StudentForm from "../components/StudentsForm";
 import StudentTable from "../components/StudentTable";
+import { notify } from "../utils/notify";
 
 import {
   getStudents,
@@ -47,12 +48,10 @@ function Students() {
       setStudents(res.data);
 
 
-    } catch(error){
-
-      console.error(error);
-
-    }
-
+    } catch (error) {
+  console.error(error);
+  notify.apiError(error);
+}
   };
 
 
@@ -90,104 +89,72 @@ function Students() {
   // Update Student
   // ==========================
 
-  const handleSubmit = async(e)=>{
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    e.preventDefault();
+  if (
+    !formData.studentId ||
+    !formData.department ||
+    !formData.level ||
+    !formData.semester
+  ) {
+    notify.warning("Please fill in all required fields.");
+    return;
+  }
 
+  try {
+    await updateStudent(
+      editingStudent._id,
+      formData
+    );
 
-    try{
+    notify.success("Student updated successfully.");
 
+    setEditingStudent(null);
 
-      await updateStudent(
+    setFormData({
+      studentId: "",
+      department: "",
+      faculty: "",
+      level: "",
+      semester: "",
+      phone: "",
+    });
 
-        editingStudent._id,
+    fetchStudents();
 
-        formData
-
-      );
-
-
-
-      alert(
-        "Student updated successfully."
-      );
-
-
-
-      setEditingStudent(null);
-
-
-
-      setFormData({
-
-        studentId:"",
-        department:"",
-        faculty:"",
-        level:"",
-        semester:"",
-        phone:"",
-
-      });
-
-
-
-      fetchStudents();
-
-
-
-    }catch(error){
-
-      console.error(error);
-
-
-      alert(
-        error.response?.data?.message ||
-        "Update failed."
-      );
-
-    }
-
-
-  };
-
-
-
+  } catch (error) {
+    console.error(error);
+    notify.apiError(error);
+  }
+};
 
   // ==========================
   // Delete Student
   // ==========================
 
-  const handleDelete = async(id)=>{
+  const handleDelete = async (id) => {
+  const confirmDelete = window.confirm(
+    "Delete this student?"
+  );
 
+  if (!confirmDelete) {
+    notify.info("Deletion cancelled.");
+    return;
+  }
 
-    const confirmDelete =
-      window.confirm(
-        "Delete this student?"
-      );
+  try {
+    await deleteStudent(id);
 
+    notify.success("Student deleted successfully.");
 
-    if(!confirmDelete)
-      return;
+    fetchStudents();
 
-
-
-    try{
-
-
-      await deleteStudent(id);
-
-
-      fetchStudents();
-
-
-
-    }catch(error){
-
-      console.error(error);
-
-    }
-
-  };
+  } catch (error) {
+    console.error(error);
+    notify.apiError(error);
+  }
+};
 
 
 
@@ -199,7 +166,7 @@ function Students() {
 
   const handleEdit=(student)=>{
 
-
+   notify.info("Editing student profile.");
     setEditingStudent(student);
 
 

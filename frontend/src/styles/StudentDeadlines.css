@@ -1,0 +1,67 @@
+.student-deadlines{
+    background:#fff;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+}
+
+.deadlines-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.deadlines-header h2{
+    font-size:1.3rem;
+}
+
+.deadlines-header span{
+    color:#64748b;
+    font-size:.9rem;
+}
+
+.deadline-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid #eee;
+}
+
+.deadline-item:last-child{
+    border-bottom:none;
+}
+
+.deadline-item h3{
+    font-size:1rem;
+    color:#111827;
+    margin-bottom:6px;
+}
+
+.deadline-item p{
+    color:#6b7280;
+    font-size:.9rem;
+}
+
+.deadline-status{
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:.8rem;
+    font-weight:600;
+}
+
+.deadline-status.high{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+.deadline-status.medium{
+    background:#fef3c7;
+    color:#d97706;
+}
+
+.deadline-status.low{
+    background:#dcfce7;
+    color:#16a34a;
+}

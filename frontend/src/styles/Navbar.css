@@ -113,6 +113,18 @@
   transition: .3s;
 }
 
+.notification-icon {
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.notification-icon:hover {
+    color: #2563eb;
+}
+
 .notification-btn:hover {
   background: #2563eb;
   color: white;

@@ -20,6 +20,7 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import ForgotPassword from "./Pages/ForgotPassword";
 import Enrollments from "./Pages/Enrollments";
+import ResetPassword from "./Pages/ResetPassword";
 
 // ===========================
 // Admin Pages
@@ -31,7 +32,7 @@ import Users from "./Pages/Users";
 import Settings from "./Pages/Settings";
 import AdminAssignments from "./Pages/Assignments";
 import AdminAnnouncements from "./Pages/Announcements";
-
+import AdminCertificates from "./Pages/AdminCertificates";
 // ===========================
 // Student Pages
 // ===========================
@@ -64,6 +65,11 @@ function App() {
           path="/forgot-password"
           element={<ForgotPassword />}
         />
+
+        <Route
+  path="/reset-password/:token"
+  element={<ResetPassword />}
+/>
 
         {/* =====================================
                 ADMIN ROUTES
@@ -115,7 +121,14 @@ function App() {
     </ProtectedRoute>
   }
 />
-
+<Route
+  path="/admin/certificates"
+  element={
+    <ProtectedRoute allowedRoles={["admin"]}>
+      <AdminCertificates />
+    </ProtectedRoute>
+  }
+/>
           <Route
             path="/users"
             element={

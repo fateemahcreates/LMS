@@ -165,17 +165,34 @@ const handleSave = async () => {
 
           <div className="input-group">
 
-            <label>
-              <FaPhone />
-              Phone Number
-            </label>
+  <label>
+    <FaPhone />
+    Phone Number
+  </label>
 
-            <input
-              name="phone"
-              value={student.phone || ""}
-              disabled={!editing}
-              onChange={handleChange}
-            />
+  <input
+    name="phone"
+    value={student.phone || ""}
+    disabled={!editing}
+    onChange={handleChange}
+  />
+
+</div>
+
+<div className="input-group">
+
+  <label>
+    <FaIdCard />
+    Learning Track
+  </label>
+
+  <input
+    name="learningTrack"
+    value={student.learningTrack || ""}
+    disabled={!editing}
+    onChange={handleChange}
+  />
+
 
           </div>
 
@@ -197,20 +214,36 @@ const handleSave = async () => {
 
           <div className="input-group full-width">
 
-            <label>
-              <FaMapMarkerAlt />
-              Address
-            </label>
+  <label>
+    <FaMapMarkerAlt />
+    Address
+  </label>
 
-            <textarea
-              rows="3"
-              name="address"
-              value={student.address || ""}
-              disabled={!editing}
-              onChange={handleChange}
-            />
+  <textarea
+    rows="3"
+    name="address"
+    value={student.address || ""}
+    disabled={!editing}
+    onChange={handleChange}
+  />
 
-          </div>
+</div>
+
+<div className="input-group">
+
+  <label>
+    <FaIdCard />
+    Course Duration
+  </label>
+
+  <input
+    name="courseDuration"
+    value={student.courseDuration || ""}
+    disabled={!editing}
+    onChange={handleChange}
+  />
+
+</div>
 
           <div className="input-group full-width">
 

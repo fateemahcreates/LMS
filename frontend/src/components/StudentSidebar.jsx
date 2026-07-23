@@ -1,4 +1,5 @@
 import "../styles/SideBar.css";
+import { notify } from "../utils/notify";
 
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -23,17 +24,21 @@ function StudentSidebar({
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    const confirmLogout = window.confirm(
-      "Are you sure you want to logout?"
-    );
 
-    if (!confirmLogout) return;
+  notify.confirmLogout(() => {
 
     localStorage.removeItem("token");
     localStorage.removeItem("user");
 
-    navigate("/login");
-  };
+    notify.info("You have been logged out.");
+
+    setTimeout(() => {
+      navigate("/login");
+    }, 800);
+
+  });
+
+};
 
   const closeSidebar = () => {
     setSidebarOpen(false);

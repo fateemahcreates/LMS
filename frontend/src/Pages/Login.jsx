@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../services/authService";
+import { notify } from "../utils/notify";
 
 import "../styles/Login.css";
 
@@ -25,7 +26,6 @@ function Login() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   // ==========================
   // Handle Input Change
@@ -45,7 +45,12 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setError("");
+    // Frontend Validation
+    if (!formData.email || !formData.password) {
+      notify.warning("Please enter your email and password.");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -54,26 +59,31 @@ function Login() {
         password: formData.password,
       });
 
-      /// Save JWT Token
-localStorage.setItem("token", res.data.token);
+      // Save JWT Token
+      localStorage.setItem("token", res.data.token);
 
-// Save Logged-in User
-localStorage.setItem(
-  "user",
-  JSON.stringify(res.data.user)
-);
+      // Save Logged-in User
+      localStorage.setItem(
+        "user",
+        JSON.stringify(res.data.user)
+      );
 
-// Redirect based on role
-if (res.data.user.role === "admin") {
-  navigate("/");
-} else if (res.data.user.role === "student") {
-  navigate("/student");
-}
+      // Success Notification
+      notify.success("Login successful. Welcome back!");
+
+      // Redirect based on role
+      setTimeout(() => {
+        if (res.data.user.role === "admin") {
+          navigate("/");
+        } else if (res.data.user.role === "student") {
+          navigate("/student");
+        }
+      }, 800);
 
     } catch (error) {
-      setError(
+      notify.error(
         error.response?.data?.message ||
-        "Login failed. Please try again."
+          "Login failed. Please try again."
       );
     } finally {
       setLoading(false);
@@ -127,17 +137,9 @@ if (res.data.user.role === "admin") {
             </p>
           </div>
 
-          {/* Error Message */}
-          {error && (
-            <div className="login-error">
-              {error}
-            </div>
-          )}
-
           <form onSubmit={handleSubmit}>
 
             {/* Email */}
-
             <div className="input-group">
               <label>Email Address</label>
 
@@ -156,7 +158,6 @@ if (res.data.user.role === "admin") {
             </div>
 
             {/* Password */}
-
             <div className="input-group">
               <label>Password</label>
 
@@ -189,7 +190,6 @@ if (res.data.user.role === "admin") {
             </div>
 
             {/* Remember Me */}
-
             <div className="login-options">
               <label className="remember">
                 <input
@@ -203,12 +203,11 @@ if (res.data.user.role === "admin") {
               </label>
 
               <Link to="/forgot-password">
-  Forgot Password?
-</Link>
+                Forgot Password?
+              </Link>
             </div>
 
             {/* Login Button */}
-
             <button
               className="login-btn"
               type="submit"
@@ -225,24 +224,27 @@ if (res.data.user.role === "admin") {
 
           <div className="login-footer">
 
-  <p>
-    Don't have an account?
-    <Link to="/register" className="register-link">
-      Create Account
-    </Link>
-  </p>
+            <p>
+              Don't have an account?
+              <Link
+                to="/register"
+                className="register-link"
+              >
+                Create Account
+              </Link>
+            </p>
 
- {/*
-<div className="demo-account">
-  <h4>Demo Account</h4>
+            {/*
+            <div className="demo-account">
+              <h4>Demo Account</h4>
 
-  <p>Email: admin@lms.com</p>
+              <p>Email: admin@lms.com</p>
 
-  <p>Password: Password@123</p>
-</div>
-*/}
+              <p>Password: Password@123</p>
+            </div>
+            */}
 
-</div>
+          </div>
 
         </div>
 

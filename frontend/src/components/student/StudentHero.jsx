@@ -37,35 +37,41 @@ function StudentHero({ student }) {
           </span>
 
           <h1>
-            {greeting},{" "}
-            <span>{user.name || "Student"}</span> 👋
-          </h1>
-
+  {greeting},{" "}
+  <span>
+    {user?.name
+      ? user.name.split(" ")[0]
+      : "Student"}
+  </span>{" "}
+  👋
+</h1>
           <p>
             Welcome back! Here's an overview of your
             academic journey today.
           </p>
 
           <div className="hero-meta">
-            <div className="hero-meta-item">
-              <FaCalendarAlt />
-              <span>{today}</span>
-            </div>
 
-            <div className="hero-meta-item">
-              <FaGraduationCap />
-              <span>
-                {student?.department || "Department"}
-              </span>
-            </div>
+  <div className="hero-meta-item">
+    <FaCalendarAlt />
+    <span>{today}</span>
+  </div>
 
-            <div className="hero-meta-item">
-              <FaIdCard />
-              <span>
-                {student?.studentId || "Student ID"}
-              </span>
-            </div>
-          </div>
+  <div className="hero-meta-item">
+    <FaGraduationCap />
+    <span>
+      {student?.learningTrack || "Learning Track"}
+    </span>
+  </div>
+
+  <div className="hero-meta-item">
+    <FaIdCard />
+    <span>
+      {student?.studentId || "Student ID"}
+    </span>
+  </div>
+
+</div>
         </div>
 
         {/* Right */}
@@ -75,19 +81,20 @@ function StudentHero({ student }) {
               <FaBookOpen />
             </div>
 
-            <h3>{student?.level || "--"} Level</h3>
+            <h3>
+  {student?.currentCourse || "No Course Yet"}
+</h3>
 
-            <p>
-              {student?.semester ||
-                "Current Semester"}
-            </p>
+<p>
+  {student?.courseDuration || "Course Duration"}
+</p>
 
-            <small>
-              Status:{" "}
-              <strong>
-                {student?.status || "Active"}
-              </strong>
-            </small>
+<small>
+  Status:{" "}
+  <strong>
+    {student?.status || "Active"}
+  </strong>
+</small>
           </div>
         </div>
       </div>

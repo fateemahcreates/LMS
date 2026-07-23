@@ -1,0 +1,66 @@
+.student-announcements{
+    background:#fff;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+}
+
+.announcement-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.announcement-header h2{
+    font-size:1.3rem;
+}
+
+.announcement-header span{
+    color:#64748b;
+    font-size:.9rem;
+}
+
+.announcement-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid #eee;
+}
+
+.announcement-item:last-child{
+    border-bottom:none;
+}
+
+.announcement-left h3{
+    margin-top:8px;
+    font-size:1rem;
+    color:#111827;
+}
+
+.announcement-type{
+    padding:5px 12px;
+    border-radius:20px;
+    font-size:.75rem;
+    font-weight:600;
+}
+
+.assignment{
+    background:#dbeafe;
+    color:#2563eb;
+}
+
+.class{
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+.general{
+    background:#f3f4f6;
+    color:#374151;
+}
+
+.announcement-item small{
+    color:#6b7280;
+}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../services/authService";
+import { notify } from "../utils/notify";
 
 import "../styles/Register.css";
 
@@ -29,9 +30,10 @@ function Register() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
+  // ==========================
+  // Handle Input Change
+  // ==========================
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -39,14 +41,26 @@ function Register() {
     });
   };
 
+  // ==========================
+  // Handle Register
+  // ==========================
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setError("");
-    setSuccess("");
+    // Frontend Validation
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
+      notify.warning("Please fill in all required fields.");
+      return;
+    }
 
     if (formData.password !== formData.confirmPassword) {
-      return setError("Passwords do not match.");
+      notify.warning("Passwords do not match.");
+      return;
     }
 
     try {
@@ -58,30 +72,24 @@ function Register() {
         password: formData.password,
       });
 
-      setSuccess(
-        "Account created successfully. Please sign in."
+      notify.success(
+        "Account created successfully. Redirecting to login..."
       );
 
       setTimeout(() => {
         navigate("/login");
-      }, 1500);
+      }, 1200);
 
     } catch (error) {
-      setError(
-        error.response?.data?.message ||
-          "Registration failed."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+  notify.apiError(error);
+}
+  }
 
   return (
     <div className="register-page">
       <div className="register-container">
 
         {/* Left Side */}
-
         <div className="register-left">
 
           <div className="logo-circle">
@@ -117,35 +125,19 @@ function Register() {
         </div>
 
         {/* Right Side */}
-
         <div className="register-card">
 
           <div className="register-header">
-
             <h2>Create Account</h2>
 
             <p>
               Register as an administrator.
             </p>
-
           </div>
-
-          {error && (
-            <div className="register-error">
-              {error}
-            </div>
-          )}
-
-          {success && (
-            <div className="register-success">
-              {success}
-            </div>
-          )}
 
           <form onSubmit={handleSubmit}>
 
             {/* Name */}
-
             <div className="input-group">
 
               <label>Full Name</label>
@@ -168,7 +160,6 @@ function Register() {
             </div>
 
             {/* Email */}
-
             <div className="input-group">
 
               <label>Email Address</label>
@@ -191,7 +182,6 @@ function Register() {
             </div>
 
             {/* Password */}
-
             <div className="input-group">
 
               <label>Password</label>
@@ -217,9 +207,7 @@ function Register() {
                   type="button"
                   className="password-toggle"
                   onClick={() =>
-                    setShowPassword(
-                      !showPassword
-                    )
+                    setShowPassword(!showPassword)
                   }
                 >
                   {showPassword ? (
@@ -234,7 +222,6 @@ function Register() {
             </div>
 
             {/* Confirm Password */}
-
             <div className="input-group">
 
               <label>Confirm Password</label>

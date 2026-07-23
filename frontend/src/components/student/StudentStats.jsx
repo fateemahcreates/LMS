@@ -21,7 +21,23 @@ function StudentStats(){
 const [stats,setStats]=useState(null);
 
 
+useEffect(() => {
+  const fetchStats = async () => {
+    try {
+      console.log("Fetching student stats...");
 
+      const res = await getStudentStats();
+
+      console.log("API Response:", res.data);
+
+      setStats(res.data);
+    } catch (error) {
+      console.error("Stats Error:", error);
+    }
+  };
+
+  fetchStats();
+}, []);
 useEffect(()=>{
 
 
@@ -59,39 +75,35 @@ return <p>Loading stats...</p>;
 
 
 
-const cards=[
+const cards = [
 
-{
-title:"Enrolled Courses",
-value:stats.enrolledCourses,
-icon:<FaBookOpen/>,
-color:"blue"
-},
+  {
+    title: "My Courses",
+    value: stats.enrolledCourses,
+    icon: <FaBookOpen />,
+    color: "blue",
+  },
 
+  {
+    title: "Pending Assignments",
+    value: stats.pendingAssignments,
+    icon: <FaClipboardList />,
+    color: "orange",
+  },
 
-{
-title:"Pending Assignments",
-value:stats.pendingAssignments,
-icon:<FaClipboardList/>,
-color:"orange"
-},
+  {
+    title: "Performance",
+    value: stats.performance,
+    icon: <FaChartLine />,
+    color: "green",
+  },
 
-
-{
-title:"Attendance",
-value:stats.attendance,
-icon:<FaChartLine/>,
-color:"green"
-},
-
-
-{
-title:"Current GPA",
-value:stats.gpa,
-icon:<FaAward/>,
-color:"purple"
-}
-
+  {
+    title: "Certificates",
+    value: stats.certificates,
+    icon: <FaAward />,
+    color: "purple",
+  },
 
 ];
 
