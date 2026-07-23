@@ -1,81 +1,33 @@
-const mongoose = require("mongoose");
+const nodemailer = require("nodemailer");
 
-const userSchema = new mongoose.Schema(
-  {
-    // ==========================
-    // Basic Information
-    // ==========================
+const sendEmail = async ({
+  to,
+  subject,
+  html,
+}) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: process.env.EMAIL_HOST,
+      port: process.env.EMAIL_PORT,
+      secure: false,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
 
-    name: {
-      type: String,
-      required: [true, "Name is required"],
-      trim: true,
-    },
+    await transporter.sendMail({
+      from: `"GMT LMS" <${process.env.EMAIL_USER}>`,
+      to,
+      subject,
+      html,
+    });
 
-    email: {
-      type: String,
-      required: [true, "Email is required"],
-      unique: true,
-      lowercase: true,
-      trim: true,
-    },
-
-    password: {
-      type: String,
-      required: [true, "Password is required"],
-    },
-
-    // ==========================
-    // User Role
-    // ==========================
-
-    role: {
-      type: String,
-      enum: ["admin", "student", "instructor"],
-      default: "student",
-    },
-
-    // ==========================
-    // Account Verification
-    // ==========================
-
-    verified: {
-      type: Boolean,
-      default: false,
-    },
-
-    verificationToken: {
-      type: String,
-      default: null,
-    },
-
-    // ==========================
-    // Password Reset
-    // ==========================
-
-    resetPasswordToken: {
-      type: String,
-      default: null,
-    },
-
-    resetPasswordExpires: {
-      type: Date,
-      default: null,
-    },
-
-    // ==========================
-    // Account Status
-    // ==========================
-
-    status: {
-      type: String,
-      enum: ["active", "inactive", "suspended"],
-      default: "inactive",
-    },
-  },
-  {
-    timestamps: true,
+    console.log("Email sent successfully.");
+  } catch (error) {
+    console.error("Email Error:", error);
+    throw new Error("Unable to send email.");
   }
-);
+};
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = sendEmail;

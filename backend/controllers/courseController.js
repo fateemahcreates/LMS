@@ -66,10 +66,9 @@ const createCourse = async (req, res) => {
 // ==========================================
 const getCourses = async (req, res) => {
   try {
-    const courses = await Course.find()
-      .populate("instructor", "name email")
-      .sort({ createdAt: -1 });
-
+    const courses = await Course.find().sort({
+  createdAt: -1,
+});
     res.status(200).json(courses);
 
   } catch (error) {

@@ -11,6 +11,10 @@ const enrollmentRoutes = require("./routes/enrollmentRoutes");
 const assignmentRoutes = require("./routes/assignmentRoutes");
 const submissionRoutes = require("./routes/submissionRoutes");
 const announcementRoutes = require("./routes/announcementRoutes");
+const certificateRoutes = require("./routes/certificateRoutes");
+
+
+
 const path = require("path");
 
 
@@ -26,6 +30,7 @@ app.use(
   express.static(path.join(__dirname, "uploads"))
 );
 
+const dashboardRoutes = require("./routes/dashboardRoutes");
 app.use("/api/auth", authRoutes);
 app.use("/api/students", studentRoutes);
 app.use("/api/courses", courseRoutes);
@@ -34,6 +39,10 @@ app.use("/api/enrollments", enrollmentRoutes);
 app.use("/api/assignments", assignmentRoutes);
 app.use("/api/submissions", submissionRoutes);
 app.use("/api/announcements", announcementRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/certificates", certificateRoutes);
+
+
 
 
 app.get("/", (req, res) => {
