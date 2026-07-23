@@ -24,10 +24,13 @@ const sendEmail = async ({
     });
 
     console.log("Email sent successfully.");
-  } catch (error) {
-    console.error("Email Error:", error);
-    throw new Error("Unable to send email.");
-  }
+ } catch (error) {
+  console.error("========== EMAIL ERROR ==========");
+  console.error(error);
+  console.error("================================");
+
+  throw error;
+}
 };
 
 module.exports = sendEmail;
