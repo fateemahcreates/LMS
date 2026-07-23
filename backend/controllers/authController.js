@@ -82,13 +82,13 @@ await Student.create({
 },
     });
 
-  } catch (error) {
-    console.error(error);
+ } catch (error) {
+  console.error(error);
 
-    res.status(500).json({
-      message: "Server Error",
-    });
-  }
+  res.status(500).json({
+    message: error.message,
+  });
+}
 };
 
 // ==============================
