@@ -1,41 +1,45 @@
-const nodemailer = require("nodemailer");
+const axios = require("axios");
 
 const sendEmail = async ({ to, subject, html }) => {
   try {
+    await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
+          name: "GMT LMS",
+          email: "fateemahcreates@gmail.com", // Your verified sender email
+        },
 
-    console.log("========== SMTP CONFIG ==========");
-console.log("HOST:", process.env.EMAIL_HOST);
-console.log("PORT:", process.env.EMAIL_PORT);
-console.log("USER:", process.env.EMAIL_USER);
-console.log("=================================");
+        to: [
+          {
+            email: to,
+          },
+        ],
 
-    const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: Number(process.env.EMAIL_PORT),
-  secure: true, // <-- change to true
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+        subject,
 
-    // Verify SMTP connection
-    await transporter.verify();
-    console.log("✅ SMTP Connected Successfully");
-
-    // Send email
-    await transporter.sendMail({
-      from: `"GMT LMS" <${process.env.EMAIL_USER}>`,
-      to,
-      subject,
-      html,
-    });
+        htmlContent: html,
+      },
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     console.log("✅ Email sent successfully.");
   } catch (error) {
-    console.error("========== EMAIL ERROR ==========");
-    console.error(error);
+    console.error("========== BREVO ERROR ==========");
+
+    if (error.response) {
+      console.error(error.response.data);
+    } else {
+      console.error(error.message);
+    }
+
     console.error("================================");
+
     throw error;
   }
 };
