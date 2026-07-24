@@ -5,6 +5,8 @@ const Student = require("../models/Student");
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
 
+const welcomeEmail = require("../emails/welcomeEmail");
+
 // ==============================
 // Register User
 // ==============================
@@ -68,6 +70,14 @@ await Student.create({
   semester: "First Semester",
   phone: "",
   address: "",
+});
+
+const loginUrl = `${process.env.CLIENT_URL}/login`;
+
+await sendEmail({
+  to: user.email,
+  subject: "🎉 Welcome to GMT LMS",
+  html: welcomeEmail(user, studentId, loginUrl),
 });
 
 
