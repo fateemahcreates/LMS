@@ -6,6 +6,7 @@ const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
 
 const welcomeEmail = require("../emails/welcomeEmail");
+const generateStudentId = require("../utils/generateStudentId");
 
 // ==============================
 // Register User
@@ -31,24 +32,7 @@ const registerUser = async (req, res) => {
     // ==============================
 // Generate Student ID
 // ==============================
-
-const year = new Date().getFullYear();
-
-const lastStudent = await User.findOne({
-  studentId: { $exists: true },
-}).sort({ createdAt: -1 });
-
-let nextNumber = 1;
-
-if (lastStudent) {
-  const lastId = lastStudent.studentId;
-
-  const number = parseInt(lastId.split("-")[3], 10);
-
-  nextNumber = number + 1;
-}
-
-const studentId = `GMT-STU-${year}-${String(nextNumber).padStart(4, "0")}`;
+  const studentId = await generateStudentId();
     const hashedPassword = await bcrypt.hash(password, 10);
 
 // Create User
