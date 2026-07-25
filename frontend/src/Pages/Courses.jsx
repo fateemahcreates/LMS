@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { FaPlus, FaTimes } from "react-icons/fa";
 
 import CourseForm from "../components/CourseForm";
 import CourseTable from "../components/CourseTable";
+import { notify } from "../utils/notify";
 
 import {
   getCourses,
@@ -14,7 +16,7 @@ import "../styles/Courses.css";
 
 function Courses() {
   // ==========================================
-  // FORM STATE
+  // INITIAL FORM STATE
   // ==========================================
   const initialState = {
     title: "",
@@ -27,18 +29,21 @@ function Courses() {
     thumbnail: "",
     price: 0,
     status: "Draft",
+    topics: [],
   };
 
   const [formData, setFormData] = useState(initialState);
 
   const [courses, setCourses] = useState([]);
 
-  const [editingCourse, setEditingCourse] =
-    useState(null);
+  const [editingCourse, setEditingCourse] = useState(null);
+
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   // ==========================================
   // FETCH COURSES
   // ==========================================
+
   const fetchCourses = async () => {
     try {
       const res = await getCourses();
@@ -57,6 +62,7 @@ function Courses() {
   // ==========================================
   // HANDLE CHANGE
   // ==========================================
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -68,135 +74,243 @@ function Courses() {
   };
 
   // ==========================================
-  // HANDLE SUBMIT
+  // OPEN DRAWER
   // ==========================================
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    if (!formData.title || !formData.code) {
-      alert("Course title and code are required.");
-      return;
-    }
+  const handleNewCourse = () => {
+    setEditingCourse(null);
 
-    try {
-      if (editingCourse) {
-        await updateCourse(
-          editingCourse._id,
-          formData
-        );
+    setFormData(initialState);
 
-        setEditingCourse(null);
-
-      } else {
-        await createCourse(formData);
-      }
-
-      await fetchCourses();
-
-      setFormData(initialState);
-
-    } catch (error) {
-      console.error(error);
-
-      alert(
-        error.response?.data?.message ||
-          "Unable to save course."
-      );
-    }
+    setDrawerOpen(true);
   };
 
   // ==========================================
-  // HANDLE DELETE
+  // EDIT COURSE
   // ==========================================
-  const handleDelete = async (id) => {
-    if (
-      !window.confirm(
-        "Delete this course?"
-      )
-    )
-      return;
 
-    try {
-      await deleteCourse(id);
-
-      await fetchCourses();
-
-      if (
-        editingCourse &&
-        editingCourse._id === id
-      ) {
-        setEditingCourse(null);
-
-        setFormData(initialState);
-      }
-
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  // ==========================================
-  // HANDLE EDIT
-  // ==========================================
   const handleEdit = (course) => {
     setEditingCourse(course);
 
     setFormData({
       title: course.title || "",
       code: course.code || "",
-      description:
-        course.description || "",
-      category:
-        course.category || "Frontend",
-      instructor:
-        course.instructor || "",
-      duration:
-        course.duration || "",
-      level:
-        course.level || "Beginner",
-      thumbnail:
-        course.thumbnail || "",
-      price:
-        course.price || 0,
-      status:
-        course.status || "Draft",
+      description: course.description || "",
+      instructor: course.instructor || "",
+      duration: course.duration || "",
+      category: course.category || "Frontend",
+      level: course.level || "Beginner",
+      thumbnail: course.thumbnail || "",
+      price: course.price || 0,
+      status: course.status || "Draft",
+      topics: course.topics || [],
     });
+
+    setDrawerOpen(true);
   };
 
+  // ==========================================
+  // DELETE COURSE
+  // ==========================================
+
+  const handleDelete = async (id) => {
+  if (!window.confirm("Delete this course?")) return;
+
+  try {
+    await deleteCourse(id);
+
+    notify.success("Course deleted successfully.");
+
+    await fetchCourses();
+
+  } catch (error) {
+    console.error(error);
+
+    notify.error(
+      error.response?.data?.message ||
+      "Unable to delete course."
+    );
+  }
+};
+
+  // ==========================================
+  // SAVE COURSE
+  // ==========================================
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!formData.title || !formData.code) {
+    notify.warning(
+      "Course title and course code are required."
+    );
+    return;
+  }
+
+  try {
+    if (editingCourse) {
+      await updateCourse(
+        editingCourse._id,
+        formData
+      );
+
+      notify.success("Course updated successfully.");
+
+    } else {
+      await createCourse(formData);
+
+      notify.success("Course created successfully.");
+    }
+
+    await fetchCourses();
+
+    setDrawerOpen(false);
+
+    setEditingCourse(null);
+
+    setFormData(initialState);
+
+  } catch (error) {
+    console.error(error);
+
+    notify.error(
+      error.response?.data?.message ||
+      "Unable to save course."
+    );
+  }
+};
+
+  // ==========================================
+  // STATS
+  // ==========================================
+
+  const published = courses.filter(
+    (c) => c.status === "Published"
+  ).length;
+
+  const draft = courses.filter(
+    (c) => c.status === "Draft"
+  ).length;
+
+  const archived = courses.filter(
+    (c) => c.status === "Archived"
+  ).length;
+
   return (
-    <main className="dashboard">
+    <main className="courses-page">
 
-      <div className="dashboard-header">
-        <h2>Course Management</h2>
+      {/* HEADER */}
 
-        <p>
-          Create, organize and manage
-          academy courses.
-        </p>
+      <div className="page-header">
+
+        <div>
+
+          <h1>Course Management</h1>
+
+          <p>
+            Manage GMT Academy programmes,
+            instructors and course information.
+          </p>
+
+        </div>
+
+        <button
+          className="new-course-btn"
+          onClick={handleNewCourse}
+        >
+          <FaPlus />
+
+          New Course
+        </button>
+
       </div>
 
-      <div className="dashboard-content">
+      {/* STATS */}
 
-        <div className="form-section">
+      <div className="course-stats">
 
-          <CourseForm
-            formData={formData}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-            editingCourse={editingCourse}
-          />
+        <div className="stat-card">
+          <h2>{courses.length}</h2>
+          <span>Total Courses</span>
+        </div>
+
+        <div className="stat-card">
+          <h2>{published}</h2>
+          <span>Published</span>
+        </div>
+
+        <div className="stat-card">
+          <h2>{draft}</h2>
+          <span>Draft</span>
+        </div>
+
+        <div className="stat-card">
+          <h2>{archived}</h2>
+          <span>Archived</span>
+        </div>
+
+      </div>
+
+      {/* TABLE */}
+
+      <CourseTable
+        courses={courses}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+      />
+
+      {/* BACKDROP */}
+
+      {drawerOpen && (
+        <div
+          className="drawer-backdrop"
+          onClick={() =>
+            setDrawerOpen(false)
+          }
+        />
+      )}
+
+      {/* DRAWER */}
+
+      <div
+        className={`course-drawer ${
+          drawerOpen ? "open" : ""
+        }`}
+      >
+
+        <div className="drawer-header">
+
+          <div>
+
+            <h2>
+              {editingCourse
+                ? "Edit Course"
+                : "Create Course"}
+            </h2>
+
+            <p>
+              Configure course information.
+            </p>
+
+          </div>
+
+          <button
+            className="close-btn"
+            onClick={() =>
+              setDrawerOpen(false)
+            }
+          >
+            <FaTimes />
+          </button>
 
         </div>
 
-        <div className="table-section">
-
-          <CourseTable
-            courses={courses}
-            handleEdit={handleEdit}
-            handleDelete={handleDelete}
-          />
-
-        </div>
+        <CourseForm
+          formData={formData}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          editingCourse={editingCourse}
+        />
 
       </div>
 

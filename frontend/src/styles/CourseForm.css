@@ -1,142 +1,213 @@
-.course-form{
-    display:flex;
-    flex-direction:column;
-    gap:22px;
+/* ==========================================
+   COURSE FORM
+========================================== */
+
+.course-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 28px;
+  height: calc(100vh - 90px);
+  overflow-y: auto;
+  background: #fff;
 }
 
-.form-header h2{
-    font-size:1.6rem;
-    color:#0f172a;
-    margin-bottom:8px;
+/* ==========================================
+   FORM GRID
+========================================== */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
 }
 
-.form-header p{
-    color:#64748b;
-    line-height:1.6;
+.full-width {
+  grid-column: 1 / -1;
 }
 
-.input-group{
-    display:flex;
-    flex-direction:column;
-    gap:8px;
+/* ==========================================
+   INPUT GROUP
+========================================== */
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-textarea{
-    width:100%;
-    min-height:130px;
-    padding:16px;
-    border:1px solid #dbe3ee;
-    border-radius:12px;
-    resize:vertical;
-    font-size:15px;
-    font-family:inherit;
-    outline:none;
-    transition:.3s;
+.input-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1e293b;
 }
 
-textarea:focus{
-    border-color:#2563eb;
-    box-shadow:0 0 0 4px rgba(37,99,235,.08);
-}
-
-.input-group label{
-    font-size:.95rem;
-    font-weight:600;
-    color:#334155;
-}
+/* ==========================================
+   INPUT WRAPPER
+========================================== */
 
 .input-wrapper{
-    position:relative;
+    display:flex;
+    align-items:center;
+
+    height:56px;
+
+    background:#fff;
+
+    border:1px solid #dbe4f0;
+    border-radius:12px;
+
+    padding:0 16px;
+
+    overflow:hidden;
+
+    transition:.25s;
 }
 
-.input-icon{
-    position:absolute;
-    left:18px;
-    top:50%;
-    transform:translateY(-50%);
-    color:#94a3b8;
-    font-size:1rem;
+.input-wrapper:hover {
+  border-color: #3b82f6;
 }
+
+.input-wrapper:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+}
+
+.input-icon {
+  color: #64748b;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+/* ==========================================
+   INPUTS
+========================================== */
 
 .input-wrapper input,
-.input-wrapper select{
-    width:100%;
-    height:54px;
-    border:1px solid #dbe4ee;
-    border-radius:14px;
-    padding-left:50px;
-    padding-right:18px;
-    font-size:.95rem;
-    background:#fff;
-    transition:.3s;
+.input-wrapper select,
+.input-wrapper textarea {
+  width: 100%;
+  height: 100%;
+  border: 0 !important;
+  outline: 0;
+  background: transparent;
+  box-shadow: none !important;
+  appearance: none;
+  -webkit-appearance: none;
+  font-size: 15px;
+  color: #1e293b;
+  padding: 0 16px;
+  font-family: inherit;
 }
 
-.input-wrapper input:focus,
-.input-wrapper select:focus{
-    outline:none;
-    border-color:#2563eb;
-    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+.input-wrapper input::placeholder,
+.input-wrapper textarea::placeholder {
+  color: #94a3b8;
 }
 
-.submit-btn{
-    margin-top:12px;
-    height:54px;
-    border:none;
-    border-radius:14px;
-    background:#2563eb;
-    color:#fff;
-    font-size:1rem;
-    font-weight:600;
-    cursor:pointer;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:10px;
-
-    transition:.3s;
+.input-wrapper select {
+  cursor: pointer;
 }
 
-/* ==========================
-   Mobile Cards
-========================== */
+/* ==========================================
+   TEXTAREA
+========================================== */
 
-.mobile-courses{
-    display:none;
+.textarea-wrapper{
+    align-items:flex-start;
+    height:auto;
+    padding:16px;
 }
 
-@media (max-width:900px){
-
-.table-wrapper{
-    display:none;
+.textarea-wrapper textarea{
+    min-height:150px;
+    padding:0 0 0 12px;
 }
 
-.mobile-courses{
-    display:flex;
-    flex-direction:column;
-    gap:18px;
+textarea {
+  resize: vertical;
+  min-height: 140px;
+  line-height: 1.6;
 }
 
+/* ==========================================
+   SUBMIT BUTTON
+========================================== */
+
+.submit-btn {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  background: #2563eb;
+  color: white;
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  transition: 0.25s ease;
+  margin-top: 8px;
 }
-.submit-btn:hover{
-    background:#1d4ed8;
-    transform:translateY(-2px);
+
+.submit-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
 }
 
-.submit-btn:active{
-    transform:translateY(0);
+.submit-btn:active {
+  transform: translateY(0);
 }
 
-@media(max-width:768px){
+/* ==========================================
+   SCROLLBAR
+========================================== */
 
-    .course-form{
-        gap:18px;
-    }
+.course-form::-webkit-scrollbar {
+  width: 6px;
+}
 
-    .submit-btn{
-        width:100%;
-    }
+.course-form::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 20px;
+}
 
-    
+.course-form::-webkit-scrollbar-track {
+  background: transparent;
+}
 
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 992px) {
+  .course-form {
+    height: auto;
+    padding: 24px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .course-form {
+    padding: 20px;
+  }
+
+  .input-wrapper {
+    padding: 0 14px;
+  }
+
+  .submit-btn {
+    padding: 15px;
+    font-size: 14px;
+  }
 }

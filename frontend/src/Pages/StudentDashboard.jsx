@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import StudentHero from "../components/student/StudentHero";
 import StudentStats from "../components/student/StudentStats";
 import StudentProfileCard from "../components/student/StudentProfileCard";
-import StudentCourseProgress from "../components/student/StudentCourseProgress";
+import StudentProgressCard from "../components/student/StudentProgressCard";
   import StudentAnnouncements from "../components/student/StudentAnnouncements";
   import StudentDeadlines from "../components/student/StudentDeadlines";
 
 import { getStudentProfile } from "../services/studentServices";
+import { getMyCourses } from "../services/enrollmentService";
 
 import "../styles/StudentDashboard.css";
 
@@ -16,32 +17,42 @@ function StudentDashboard() {
 
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [currentEnrollment, setCurrentEnrollment] = useState(null);
 
   useEffect(() => {
 
     const fetchStudent = async () => {
+  try {
 
-      try {
+    const [studentRes, enrollmentRes] =
+      await Promise.all([
+        getStudentProfile(),
+        getMyCourses(),
+      ]);
 
-        const res = await getStudentProfile();
+    setStudent(studentRes.data);
 
-        setStudent(res.data);
+    const activeCourse =
+      enrollmentRes.data.find(
+        (enrollment) =>
+          enrollment.status !== "Completed"
+      ) || enrollmentRes.data[0];
 
-      } catch(error) {
+    setCurrentEnrollment(activeCourse);
 
-        console.error(
-          "Error loading student:",
-          error
-        );
+  } catch (error) {
 
-      } finally {
+    console.error(
+      "Error loading student dashboard:",
+      error
+    );
 
-        setLoading(false);
+  } finally {
 
-      }
+    setLoading(false);
 
-    };
+  }
+};
 
 
     fetchStudent();
@@ -87,8 +98,8 @@ function StudentDashboard() {
         />
 
 
-       <StudentCourseProgress
-  student={student}
+       <StudentProgressCard
+  enrollment={currentEnrollment}
 />
 <StudentAnnouncements />
 <StudentDeadlines />
