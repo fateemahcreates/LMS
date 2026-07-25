@@ -14,11 +14,16 @@ const enrollmentSchema = new mongoose.Schema(
       required: true,
     },
 
-    progress: {
-      type: Number,
-      default: 0,
-      min: 0,
-      max: 100,
+    // Automatically set when the student is enrolled
+    startDate: {
+      type: Date,
+      default: Date.now,
+    },
+
+    // Automatically calculated from the course duration
+    endDate: {
+      type: Date,
+      required: true,
     },
 
     status: {
@@ -27,6 +32,7 @@ const enrollmentSchema = new mongoose.Schema(
         "Enrolled",
         "In Progress",
         "Completed",
+        "Withdrawn",
       ],
       default: "Enrolled",
     },
@@ -43,6 +49,7 @@ const enrollmentSchema = new mongoose.Schema(
 
     completedAt: {
       type: Date,
+      default: null,
     },
   },
   {

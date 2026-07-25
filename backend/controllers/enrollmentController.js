@@ -31,10 +31,60 @@ const enrollCourse = async (req, res) => {
       });
     }
 
-    // Create enrollment
+    // ==========================================
+    // Calculate Start & End Dates
+    // ==========================================
+
+    const startDate = new Date();
+
+    // Expected format:
+    // "12 Weeks"
+    // "24 Weeks"
+    // "6 Months"
+
+    let endDate = new Date(startDate);
+
+    const duration = course.duration || "";
+
+    const value = parseInt(duration);
+
+    if (
+      duration.toLowerCase().includes("week")
+    ) {
+      endDate.setDate(
+        endDate.getDate() + value * 7
+      );
+
+    } else if (
+      duration.toLowerCase().includes("month")
+    ) {
+      endDate.setMonth(
+        endDate.getMonth() + value
+      );
+
+    } else if (
+      duration.toLowerCase().includes("day")
+    ) {
+      endDate.setDate(
+        endDate.getDate() + value
+      );
+
+    } else {
+      // Default to 12 weeks if duration is invalid
+      endDate.setDate(
+        endDate.getDate() + 84
+      );
+    }
+
+    // ==========================================
+    // Create Enrollment
+    // ==========================================
+
     const enrollment = await Enrollment.create({
       student: req.user._id,
       course: courseId,
+      startDate,
+      endDate,
     });
 
     res.status(201).json({
@@ -43,11 +93,13 @@ const enrollCourse = async (req, res) => {
     });
 
   } catch (error) {
+
     console.error(error);
 
     res.status(500).json({
       message: error.message,
     });
+
   }
 };
 
@@ -67,7 +119,59 @@ const getMyCourses = async (req, res) => {
         createdAt: -1,
       });
 
-    res.json(enrollments);
+    const today = new Date();
+
+    const data = enrollments.map((enrollment) => {
+      const startDate = new Date(enrollment.startDate);
+      const endDate = new Date(enrollment.endDate);
+
+      const totalDays = Math.max(
+        1,
+        Math.ceil(
+          (endDate - startDate) /
+            (1000 * 60 * 60 * 24)
+        )
+      );
+
+      const daysCompleted = Math.min(
+        totalDays,
+        Math.max(
+          0,
+          Math.ceil(
+            (today - startDate) /
+              (1000 * 60 * 60 * 24)
+          )
+        )
+      );
+
+      const daysRemaining = Math.max(
+        0,
+        Math.ceil(
+          (endDate - today) /
+            (1000 * 60 * 60 * 24)
+        )
+      );
+
+      const progress = Math.min(
+        100,
+        Math.max(
+          0,
+          Math.round(
+            (daysCompleted / totalDays) * 100
+          )
+        )
+      );
+
+      return {
+        ...enrollment.toObject(),
+        progress,
+        totalDays,
+        daysCompleted,
+        daysRemaining,
+      };
+    });
+
+    res.json(data);
 
   } catch (error) {
     console.error(error);
@@ -131,12 +235,71 @@ const getAllEnrollments = async (req, res) => {
   try {
     const enrollments = await Enrollment.find()
       .populate("student", "name email")
-      .populate("course", "title category")
-      .sort({ createdAt: -1 });
+      .populate(
+        "course",
+        "title category duration"
+      )
+      .sort({
+        createdAt: -1,
+      });
 
-    res.json(enrollments);
+    const today = new Date();
+
+    const data = enrollments.map((enrollment) => {
+      const startDate = new Date(enrollment.startDate);
+      const endDate = new Date(enrollment.endDate);
+
+      const totalDays = Math.max(
+        1,
+        Math.ceil(
+          (endDate - startDate) /
+            (1000 * 60 * 60 * 24)
+        )
+      );
+
+      const daysCompleted = Math.min(
+        totalDays,
+        Math.max(
+          0,
+          Math.ceil(
+            (today - startDate) /
+              (1000 * 60 * 60 * 24)
+          )
+        )
+      );
+
+      const daysRemaining = Math.max(
+        0,
+        Math.ceil(
+          (endDate - today) /
+            (1000 * 60 * 60 * 24)
+        )
+      );
+
+      const progress = Math.min(
+        100,
+        Math.max(
+          0,
+          Math.round(
+            (daysCompleted / totalDays) * 100
+          )
+        )
+      );
+
+      return {
+        ...enrollment.toObject(),
+        progress,
+        totalDays,
+        daysCompleted,
+        daysRemaining,
+      };
+    });
+
+    res.json(data);
 
   } catch (error) {
+    console.error(error);
+
     res.status(500).json({
       message: error.message,
     });
