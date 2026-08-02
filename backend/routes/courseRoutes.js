@@ -3,14 +3,6 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  protect,
-} = require("../middleware/authMiddleware");
-
-const {
-  authorize,
-} = require("../middleware/roleMiddleware");
-
-const {
   createCourse,
   getCourses,
   getPublishedCourses,
@@ -18,47 +10,69 @@ const {
   deleteCourse,
 } = require("../controllers/courseController");
 
-// ==========================================
-// Public Routes
-// ==========================================
+const { protect } = require("../middleware/authMiddleware");
+const { authorize } = require("../middleware/roleMiddleware");
 
-// Students can browse published courses
-router.get("/published", getPublishedCourses);
 
 // ==========================================
-// Admin + Instructor Routes
+// GET ALL COURSES
+// ADMIN + INSTRUCTOR
 // ==========================================
 
-// Get Courses
 router.get(
   "/",
   protect,
-  authorize("Admin", "Instructor"),
+  authorize("admin", "instructor"),
   getCourses
 );
 
-// Create Course
+
+// ==========================================
+// GET PUBLISHED COURSES
+// STUDENTS
+// ==========================================
+
+router.get(
+  "/published",
+  protect,
+  getPublishedCourses
+);
+
+
+// ==========================================
+// CREATE COURSE
+// ==========================================
+
 router.post(
   "/",
   protect,
-  authorize("Admin", "Instructor"),
+  authorize("admin", "instructor"),
   createCourse
 );
 
-// Update Course
+
+// ==========================================
+// UPDATE COURSE
+// ==========================================
+
 router.put(
   "/:id",
   protect,
-  authorize("Admin", "Instructor"),
+  authorize("admin", "instructor"),
   updateCourse
 );
 
-// Delete Course
+
+// ==========================================
+// DELETE COURSE
+// ==========================================
+
 router.delete(
   "/:id",
   protect,
-  authorize("Admin", "Instructor"),
+  authorize("admin", "instructor"),
   deleteCourse
 );
+
 
 module.exports = router;
