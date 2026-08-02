@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-
 // ==========================================
 // VERIFY JWT TOKEN
 // ==========================================
@@ -47,7 +46,8 @@ const protect = async (req, res, next) => {
 // ==========================================
 // ADMIN ONLY
 // ==========================================
-if (req.user && req.user.role === "Admin") {{
+const adminOnly = (req, res, next) => {
+  if (req.user && req.user.role === "admin") {
     return next();
   }
 
