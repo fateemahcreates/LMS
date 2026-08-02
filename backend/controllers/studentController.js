@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 
 const Enrollment = require("../models/Enrollment");
 const Assignment = require("../models/Assignment");
+const Certificate = require("../models/Certificate");
 
 
 // ==========================================
@@ -361,168 +362,127 @@ message:"Server Error",
 
 
 
+
+
 // ==========================================
 // GET STUDENT DASHBOARD STATS
 // ==========================================
 
-const getStudentStats = async(req,res)=>{
+const getStudentStats = async (req, res) => {
+  try {
+    const enrollments = await Enrollment.find({
+      student: req.user._id,
+    }).populate("course");
 
+    const today = new Date();
 
-try{
+    // ==========================
+    // Active Programme
+    // ==========================
 
+    const activeProgramme = enrollments.filter(
+      (item) =>
+        item.status === "Enrolled" ||
+        item.status === "In Progress"
+    ).length;
 
-console.log("==============================");
+    // ==========================
+    // Calculate Progress
+    // ==========================
 
-console.log(
-"Logged User:",
-req.user._id
-);
+    let totalProgress = 0;
 
+    enrollments.forEach((enrollment) => {
+      const startDate = enrollment.startDate
+        ? new Date(enrollment.startDate)
+        : new Date(enrollment.createdAt);
 
+      const endDate = enrollment.endDate
+        ? new Date(enrollment.endDate)
+        : new Date(startDate);
 
-// Get enrolled courses
+      const totalDays = Math.max(
+        1,
+        Math.ceil(
+          (endDate - startDate) /
+            (1000 * 60 * 60 * 24)
+        )
+      );
 
-const enrollments =
-await Enrollment.find({
+      const daysCompleted = Math.min(
+        totalDays,
+        Math.max(
+          0,
+          Math.ceil(
+            (today - startDate) /
+              (1000 * 60 * 60 * 24)
+          )
+        )
+      );
 
-student:req.user._id,
+      const progress = Math.min(
+        100,
+        Math.max(
+          0,
+          Math.round(
+            (daysCompleted / totalDays) * 100
+          )
+        )
+      );
 
-})
-.populate("course");
+      totalProgress += progress;
+    });
 
+    const programmeProgress =
+      enrollments.length > 0
+        ? Math.round(
+            totalProgress / enrollments.length
+          )
+        : 0;
 
+    // ==========================
+    // Pending Assignments
+    // ==========================
 
-console.log(
-"Enrollments:",
-enrollments.length
-);
+    const courseIds = enrollments.map(
+      (item) => item.course._id
+    );
 
+    const pendingAssignments =
+      await Assignment.countDocuments({
+        course: {
+          $in: courseIds,
+        },
+        status: "Active",
+      });
 
+    // ==========================
+    // Certificates
+    // ==========================
 
-// Get course IDs
+    const certificates = enrollments.filter(
+      (item) => item.certificateApproved
+    ).length;
 
-const courseIds =
-enrollments.map(
-(item)=>item.course._id
-);
+    // ==========================
+    // Response
+    // ==========================
 
+    res.json({
+      activeProgramme,
+      pendingAssignments,
+      programmeProgress,
+      certificates,
+    });
 
+  } catch (error) {
+    console.error(error);
 
-// Get assignments
-
-const assignments =
-await Assignment.find({
-
-course:{
-$in:courseIds,
-},
-
-status:"Active",
-
-});
-
-
-
-console.log(
-"Assignments:",
-assignments.length
-);
-
-
-
-
-// Calculate performance
-
-let performance = "0%";
-
-
-if(enrollments.length > 0){
-
-
-const totalProgress =
-enrollments.reduce(
-
-(total,item)=>
-total + item.progress,
-
-0
-
-);
-
-
-
-performance =
-`${Math.round(
-totalProgress /
-enrollments.length
-)}%`;
-
-
-}
-
-
-
-
-const stats = {
-
-
-enrolledCourses:
-enrollments.length,
-
-
-pendingAssignments:
-assignments.length,
-
-
-performance,
-
-
-certificates:
-enrollments.filter(
-(item)=>
-item.certificateApproved
-).length,
-
-
+    res.status(500).json({
+      message: "Server Error",
+    });
+  }
 };
-
-
-
-console.log(
-"Stats:",
-stats
-);
-
-
-console.log("==============================");
-
-
-
-res.status(200).json(stats);
-
-
-
-}catch(error){
-
-
-console.error(error);
-
-
-
-res.status(500).json({
-
-message:"Server Error",
-
-});
-
-
-}
-
-
-};
-
-
-
 
 // ==========================================
 // UPDATE STUDENT (ADMIN)

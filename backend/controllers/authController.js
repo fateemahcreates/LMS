@@ -142,7 +142,28 @@ const loginUser = async (req, res) => {
       message: "Server Error",
     });
   }
+  const { email, password } = req.body;
+
+console.log("Email entered:", email);
+
+const user = await User.findOne({ email });
+
+console.log("User found:", user);
+
+if (!user) {
+  return res.status(400).json({
+    message: "Invalid email or password",
+  });
+}
+
+const isMatch = await bcrypt.compare(
+  password,
+  user.password
+);
+
+console.log("Password match:", isMatch);
 };
+
 
 // ==========================================
 // FORGOT PASSWORD

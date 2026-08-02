@@ -3,10 +3,12 @@ const express = require("express");
 const {
   enrollCourse,
   getMyCourses,
-  continueLearning,
+  updateEnrollmentProgress,
   removeEnrollment,
   getAllEnrollments,
   approveCertificate,
+  getInstructorDashboard,
+  getInstructorCourseStudents,
 } = require("../controllers/enrollmentController");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -27,10 +29,10 @@ router.post(
 );
 
 router.put(
-    "/continue/:id",
-    protect,
-    authorize("student"),
-    continueLearning
+  "/progress/:id",
+  protect,
+  authorize("student"),
+  updateEnrollmentProgress
 );
 
 router.put(
@@ -50,6 +52,20 @@ router.get(
   protect,
   authorize("student"),
   getMyCourses
+);
+
+router.get(
+  "/instructor/dashboard",
+  protect,
+  authorize("Instructor"),
+  getInstructorDashboard
+);
+
+router.get(
+  "/instructor/course/:courseId/students",
+  protect,
+  authorize("Instructor"),
+  getInstructorCourseStudents
 );
 
 router.get(

@@ -5,17 +5,47 @@ const router = express.Router();
 const {
   createAssignment,
   getAssignments,
-  getAssignment,
+  getAssignmentById,
+  getStudentAssignments,
   updateAssignment,
   deleteAssignment,
+  getUpcomingDeadlines,
 } = require("../controllers/assignmentController");
+
 
 const { protect } = require("../middleware/authMiddleware");
 const { authorize } = require("../middleware/roleMiddleware");
 
+
 // ===============================
-// STUDENTS & ADMINS
+// STUDENT ROUTES
 // ===============================
+
+
+// Get student assignments
+// GET /api/assignments/student
+
+router.get(
+  "/student",
+  protect,
+  authorize("student"),
+  getStudentAssignments
+);
+
+
+// Get upcoming deadlines
+// GET /api/assignments/upcoming
+
+router.get(
+  "/upcoming",
+  protect,
+  authorize("student"),
+  getUpcomingDeadlines
+);
+
+
+
+// Get all assignments
 
 router.get(
   "/",
@@ -23,15 +53,25 @@ router.get(
   getAssignments
 );
 
+
+
+// Get single assignment
+
 router.get(
   "/:id",
   protect,
-  getAssignment
+  getAssignmentById
 );
+
+
+
 
 // ===============================
 // ADMIN ONLY
 // ===============================
+
+
+// Create assignment
 
 router.post(
   "/",
@@ -40,6 +80,10 @@ router.post(
   createAssignment
 );
 
+
+
+// Update assignment
+
 router.put(
   "/:id",
   protect,
@@ -47,11 +91,17 @@ router.put(
   updateAssignment
 );
 
+
+
+// Delete assignment
+
 router.delete(
   "/:id",
   protect,
   authorize("admin"),
   deleteAssignment
 );
+
+
 
 module.exports = router;

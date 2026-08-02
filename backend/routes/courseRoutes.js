@@ -1,5 +1,15 @@
 const express = require("express");
 
+const router = express.Router();
+
+const {
+  protect,
+} = require("../middleware/authMiddleware");
+
+const {
+  authorize,
+} = require("../middleware/roleMiddleware");
+
 const {
   createCourse,
   getCourses,
@@ -8,45 +18,47 @@ const {
   deleteCourse,
 } = require("../controllers/courseController");
 
-const { protect } = require("../middleware/authMiddleware");
-const { authorize } = require("../middleware/roleMiddleware");
+// ==========================================
+// Public Routes
+// ==========================================
 
-const router = express.Router();
+// Students can browse published courses
+router.get("/published", getPublishedCourses);
 
-// ==========================
-// CREATE COURSE
-// POST /api/courses
-// Admin Only
-// ==========================
-router.post("/", protect, authorize("admin"), createCourse);
+// ==========================================
+// Admin + Instructor Routes
+// ==========================================
 
-
-// ==========================
-// GET ALL COURSES
-// GET /api/courses
-// Admin & Student
-// ==========================
+// Get Courses
 router.get(
-  "/published",
+  "/",
   protect,
-  authorize("student"),
-  getPublishedCourses
+  authorize("Admin", "Instructor"),
+  getCourses
 );
 
-router.get("/", protect, authorize("admin", "student"), getCourses);
+// Create Course
+router.post(
+  "/",
+  protect,
+  authorize("Admin", "Instructor"),
+  createCourse
+);
 
-// ==========================
-// UPDATE COURSE
-// PUT /api/courses/:id
-// Admin Only
-// ==========================
-router.put("/:id", protect, authorize("admin"), updateCourse);
+// Update Course
+router.put(
+  "/:id",
+  protect,
+  authorize("Admin", "Instructor"),
+  updateCourse
+);
 
-// ==========================
-// DELETE COURSE
-// DELETE /api/courses/:id
-// Admin Only
-// ==========================
-router.delete("/:id", protect, authorize("admin"), deleteCourse);
+// Delete Course
+router.delete(
+  "/:id",
+  protect,
+  authorize("Admin", "Instructor"),
+  deleteCourse
+);
 
 module.exports = router;

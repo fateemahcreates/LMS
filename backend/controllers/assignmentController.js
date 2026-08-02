@@ -1,4 +1,5 @@
 const Assignment = require("../models/Assignment");
+const Enrollment = require("../models/Enrollment");
 
 // =======================================
 // CREATE ASSIGNMENT
@@ -42,7 +43,7 @@ const getAssignments = async (req, res) => {
 // =======================================
 // GET SINGLE ASSIGNMENT
 // =======================================
-const getAssignment = async (req, res) => {
+const getAssignmentById = async (req, res) => {
   try {
     const assignment = await Assignment.findById(req.params.id)
       .populate("course", "title code");
@@ -122,10 +123,153 @@ const deleteAssignment = async (req, res) => {
   }
 };
 
+// ==========================================
+// GET STUDENT ASSIGNMENTS
+// GET /api/assignments/student
+// Student Only
+// ==========================================
+
+const getStudentAssignments = async (req, res) => {
+
+  try {
+
+
+    // Find student's enrolled courses
+
+    const enrollments = await Enrollment.find({
+      student: req.user._id,
+    });
+
+
+    const courseIds = enrollments.map(
+      (item) => item.course
+    );
+
+
+    // Find assignments for those courses
+
+    const assignments =
+      await Assignment.find({
+        course:{
+          $in: courseIds,
+        },
+      })
+      .populate(
+        "course",
+        "title"
+      )
+      .sort({
+        dueDate:1,
+      });
+
+
+
+    res.status(200).json(assignments);
+
+
+
+  } catch(error){
+
+    console.error(
+      "Student Assignment Error:",
+      error
+    );
+
+
+    res.status(500).json({
+      message:error.message,
+    });
+
+  }
+
+};
+// ==========================================
+// GET UPCOMING DEADLINES
+// Student Only
+// ==========================================
+const getUpcomingDeadlines = async (req, res) => {
+  try {
+    const enrollments = await Enrollment.find({
+      student: req.user._id,
+      status: {
+        $in: ["Enrolled", "In Progress"],
+      },
+    });
+
+    const courseIds = enrollments.map(
+      (item) => item.course
+    );
+
+    const assignments = await Assignment.find({
+      course: { $in: courseIds },
+      status: "Active",
+      dueDate: { $gte: new Date() },
+    })
+      .populate("course", "title")
+      .sort({ dueDate: 1 })
+      .limit(5);
+
+    const today = new Date();
+
+    const data = assignments.map((assignment) => {
+      const diff = Math.ceil(
+        (new Date(assignment.dueDate) - today) /
+          (1000 * 60 * 60 * 24)
+      );
+
+      let label = "";
+      let priority = "";
+
+      if (diff <= 0) {
+        label = "Today";
+        priority = "high";
+      } else if (diff === 1) {
+        label = "Tomorrow";
+        priority = "high";
+      } else if (diff <= 3) {
+        label = `${diff} Days`;
+        priority = "medium";
+      } else {
+        label = `${diff} Days`;
+        priority = "low";
+      }
+
+      return {
+        _id: assignment._id,
+        title: assignment.title,
+        course: assignment.course.title,
+        due: new Date(
+          assignment.dueDate
+        ).toLocaleDateString(),
+        label,
+        priority,
+      };
+    });
+
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
+
   createAssignment,
+
   getAssignments,
-  getAssignment,
+
+  getAssignmentById,
+
+  getStudentAssignments,
+
   updateAssignment,
+
   deleteAssignment,
+
+  getUpcomingDeadlines,
+
 };

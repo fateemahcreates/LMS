@@ -4,9 +4,13 @@ const router = express.Router();
 
 const {
   getUsers,
+  getUser,
   createUser,
   updateUser,
   deleteUser,
+  changeUserRole,
+  changeUserStatus,
+  getInstructors,
 } = require("../controllers/userController");
 
 const {
@@ -14,8 +18,9 @@ const {
   adminOnly,
 } = require("../middleware/authMiddleware");
 
-
-// GET USERS
+// ==========================================
+// GET ALL USERS
+// ==========================================
 router.get(
   "/",
   protect,
@@ -23,8 +28,19 @@ router.get(
   getUsers
 );
 
+// ==========================================
+// GET SINGLE USER
+// ==========================================
+router.get(
+  "/:id",
+  protect,
+  adminOnly,
+  getUser
+);
 
+// ==========================================
 // CREATE USER
+// ==========================================
 router.post(
   "/",
   protect,
@@ -32,8 +48,9 @@ router.post(
   createUser
 );
 
-
+// ==========================================
 // UPDATE USER
+// ==========================================
 router.put(
   "/:id",
   protect,
@@ -41,14 +58,44 @@ router.put(
   updateUser
 );
 
+// ==========================================
+// CHANGE USER ROLE
+// ==========================================
+router.patch(
+  "/:id/role",
+  protect,
+  adminOnly,
+  changeUserRole
+);
 
+// ==========================================
+// CHANGE USER STATUS
+// ==========================================
+router.patch(
+  "/:id/status",
+  protect,
+  adminOnly,
+  changeUserStatus
+);
+
+// ==========================================
+// GET ACTIVE INSTRUCTORS
+// ==========================================
+
+router.get(
+  "/instructors",
+  protect,
+  getInstructors
+);
+
+// ==========================================
 // DELETE USER
+// ==========================================
 router.delete(
   "/:id",
   protect,
   adminOnly,
   deleteUser
 );
-
 
 module.exports = router;

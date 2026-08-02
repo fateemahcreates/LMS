@@ -12,7 +12,8 @@ const assignmentRoutes = require("./routes/assignmentRoutes");
 const submissionRoutes = require("./routes/submissionRoutes");
 const announcementRoutes = require("./routes/announcementRoutes");
 const certificateRoutes = require("./routes/certificateRoutes");
-
+const activityRoutes = require("./routes/activityRoutes");
+const instructorRoutes = require("./routes/instructorRoutes");
 
 
 const path = require("path");
@@ -41,6 +42,11 @@ app.use("/api/submissions", submissionRoutes);
 app.use("/api/announcements", announcementRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/certificates", certificateRoutes);
+app.use("/api/activity", activityRoutes);
+app.use(
+ "/api/instructor",
+ instructorRoutes
+);
 
 
 

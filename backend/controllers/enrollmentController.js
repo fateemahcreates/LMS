@@ -2,16 +2,21 @@ const Enrollment = require("../models/Enrollment");
 const Course = require("../models/Course");
 
 // ==========================================
-// ENROLL IN A COURSE
+// ENROLL IN COURSE
 // POST /api/enrollments
-// Student Only
+// Student
 // ==========================================
+
 const enrollCourse = async (req, res) => {
   try {
     const { courseId } = req.body;
 
-    // Check if course exists
-    const course = await Course.findById(courseId);
+    // ======================================
+    // Validate Course
+    // ======================================
+
+    const course = await Course.findById(courseId)
+      .populate("instructor", "name email");
 
     if (!course) {
       return res.status(404).json({
@@ -19,32 +24,32 @@ const enrollCourse = async (req, res) => {
       });
     }
 
-    // Prevent duplicate enrollment
-    const existingEnrollment = await Enrollment.findOne({
-      student: req.user._id,
-      course: courseId,
-    });
+    // ======================================
+    // Prevent Duplicate Enrollment
+    // ======================================
+
+    const existingEnrollment =
+      await Enrollment.findOne({
+        student: req.user._id,
+        course: courseId,
+      });
 
     if (existingEnrollment) {
       return res.status(400).json({
-        message: "You are already enrolled in this course.",
+        message:
+          "You are already enrolled in this course.",
       });
     }
 
-    // ==========================================
-    // Calculate Start & End Dates
-    // ==========================================
+    // ======================================
+    // Calculate End Date
+    // ======================================
 
     const startDate = new Date();
 
-    // Expected format:
-    // "12 Weeks"
-    // "24 Weeks"
-    // "6 Months"
+    const endDate = new Date(startDate);
 
-    let endDate = new Date(startDate);
-
-    const duration = course.duration || "";
+    const duration = course.duration || "12 Weeks";
 
     const value = parseInt(duration);
 
@@ -54,42 +59,73 @@ const enrollCourse = async (req, res) => {
       endDate.setDate(
         endDate.getDate() + value * 7
       );
-
     } else if (
       duration.toLowerCase().includes("month")
     ) {
       endDate.setMonth(
         endDate.getMonth() + value
       );
-
     } else if (
       duration.toLowerCase().includes("day")
     ) {
       endDate.setDate(
         endDate.getDate() + value
       );
-
     } else {
-      // Default to 12 weeks if duration is invalid
       endDate.setDate(
         endDate.getDate() + 84
       );
     }
 
-    // ==========================================
+    // ======================================
     // Create Enrollment
-    // ==========================================
+    // ======================================
 
-    const enrollment = await Enrollment.create({
-      student: req.user._id,
-      course: courseId,
-      startDate,
-      endDate,
-    });
+    const enrollment =
+      await Enrollment.create({
+        student: req.user._id,
+
+        course: course._id,
+
+        instructor: course.instructor._id,
+
+        startDate,
+
+        endDate,
+
+        progress: 0,
+
+        status: "Enrolled",
+
+        currentModule: "Introduction",
+
+        lastActivity: new Date(),
+      });
+
+    // ======================================
+    // Return Enrollment
+    // ======================================
+
+    const populatedEnrollment =
+      await Enrollment.findById(enrollment._id)
+        .populate(
+          "student",
+          "name email"
+        )
+        .populate(
+          "course",
+          "title code category"
+        )
+        .populate(
+          "instructor",
+          "name email"
+        );
 
     res.status(201).json({
-      message: "Course enrolled successfully.",
-      enrollment,
+      message:
+        "Course enrolled successfully.",
+
+      enrollment: populatedEnrollment,
     });
 
   } catch (error) {
@@ -102,7 +138,6 @@ const enrollCourse = async (req, res) => {
 
   }
 };
-
 
 // ==========================================
 // GET MY COURSES
@@ -122,8 +157,13 @@ const getMyCourses = async (req, res) => {
     const today = new Date();
 
     const data = enrollments.map((enrollment) => {
-      const startDate = new Date(enrollment.startDate);
-      const endDate = new Date(enrollment.endDate);
+      const startDate = enrollment.startDate
+  ? new Date(enrollment.startDate)
+  : new Date(enrollment.createdAt);
+
+const endDate = enrollment.endDate
+  ? new Date(enrollment.endDate)
+  : new Date(startDate);
 
       const totalDays = Math.max(
         1,
@@ -186,7 +226,7 @@ const getMyCourses = async (req, res) => {
 // CONTINUE LEARNING
 // ===========================================
 
-const continueLearning = async (req, res) => {
+const updateEnrollmentProgress = async (req, res) => {
   try {
 
     const enrollment =
@@ -226,6 +266,156 @@ const continueLearning = async (req, res) => {
   }
 };
 
+// ==========================================
+// INSTRUCTOR DASHBOARD
+// GET /api/enrollments/instructor/dashboard
+// ==========================================
+
+const getInstructorDashboard = async (req, res) => {
+  try {
+    // ===============================
+    // Courses owned by instructor
+    // ===============================
+
+    const courses = await Course.find({
+      instructor: req.user._id,
+    });
+
+    const courseIds = courses.map(course => course._id);
+
+    // ===============================
+    // Enrollments
+    // ===============================
+
+    const enrollments = await Enrollment.find({
+      course: { $in: courseIds },
+    })
+      .populate("student", "name email")
+      .populate("course", "title code category");
+
+    // ===============================
+    // Statistics
+    // ===============================
+
+    const totalCourses = courses.length;
+
+    const totalStudents = enrollments.length;
+
+    const completedStudents = enrollments.filter(
+      e => e.status === "Completed"
+    ).length;
+
+    const inProgress = enrollments.filter(
+      e =>
+        e.status === "Enrolled" ||
+        e.status === "In Progress"
+    ).length;
+
+    // ===============================
+    // Recent Enrollments
+    // ===============================
+
+    const recentEnrollments = enrollments
+      .sort(
+        (a, b) =>
+          new Date(b.createdAt) -
+          new Date(a.createdAt)
+      )
+      .slice(0, 5);
+
+    res.json({
+      stats: {
+        totalCourses,
+        totalStudents,
+        completedStudents,
+        inProgress,
+      },
+
+      recentEnrollments,
+
+      courses,
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+      message: error.message,
+    });
+
+  }
+};
+
+// ==========================================
+// GET STUDENTS FOR A COURSE
+// GET /api/enrollments/instructor/course/:courseId/students
+// ==========================================
+const getInstructorCourseStudents = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+
+    // ======================================
+    // Verify Course Exists
+    // ======================================
+
+    const course = await Course.findById(courseId);
+
+    if (!course) {
+      return res.status(404).json({
+        message: "Course not found.",
+      });
+    }
+
+    // ======================================
+    // Instructor Ownership Check
+    // ======================================
+
+    if (
+      course.instructor.toString() !== req.user._id.toString()
+    ) {
+      return res.status(403).json({
+        message: "Access denied.",
+      });
+    }
+
+    // ======================================
+    // Get Enrolled Students
+    // ======================================
+
+    const enrollments = await Enrollment.find({
+      course: courseId,
+    })
+      .populate(
+        "student",
+        "name email studentId"
+      )
+      .sort({
+        createdAt: -1,
+      });
+
+    res.json({
+      course: {
+        _id: course._id,
+        title: course.title,
+        code: course.code,
+      },
+
+      totalStudents: enrollments.length,
+
+      students: enrollments,
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+      message: error.message,
+    });
+
+  }
+};
 
 // ==========================================
 // GET ALL ENROLLMENTS
@@ -245,9 +435,20 @@ const getAllEnrollments = async (req, res) => {
 
     const today = new Date();
 
-    const data = enrollments.map((enrollment) => {
-      const startDate = new Date(enrollment.startDate);
-      const endDate = new Date(enrollment.endDate);
+   const data = enrollments
+  .filter(
+    (enrollment) =>
+      enrollment.student &&
+      enrollment.course
+  )
+  .map((enrollment) => {
+      const startDate = enrollment.startDate
+  ? new Date(enrollment.startDate)
+  : new Date(enrollment.createdAt);
+
+const endDate = enrollment.endDate
+  ? new Date(enrollment.endDate)
+  : new Date(startDate);
 
       const totalDays = Math.max(
         1,
@@ -385,8 +586,10 @@ const approveCertificate = async (req, res) => {
 module.exports = {
   enrollCourse,
   getMyCourses,
-  continueLearning,
+  updateEnrollmentProgress,
   removeEnrollment,
   getAllEnrollments,
   approveCertificate,
+  getInstructorDashboard,
+  getInstructorCourseStudents,
 };

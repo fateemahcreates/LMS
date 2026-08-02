@@ -5,6 +5,7 @@ const courseSchema = new mongoose.Schema(
     // ==========================
     // Basic Information
     // ==========================
+
     title: {
       type: String,
       required: true,
@@ -25,9 +26,11 @@ const courseSchema = new mongoose.Schema(
       trim: true,
     },
 
+
     // ==========================
     // Category
     // ==========================
+
     category: {
       type: String,
       enum: [
@@ -46,9 +49,11 @@ const courseSchema = new mongoose.Schema(
       required: true,
     },
 
+
     // ==========================
     // Difficulty
     // ==========================
+
     level: {
       type: String,
       enum: [
@@ -59,40 +64,56 @@ const courseSchema = new mongoose.Schema(
       default: "Beginner",
     },
 
+
     duration: {
       type: String,
       default: "",
     },
 
-    // ==========================
-    // Instructor Name
-    // ==========================
-    instructor: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+
+   // ==========================
+// Instructor
+// ==========================
+
+// Display name
+instructor: {
+  type: String,
+  required: true,
+  trim: true,
+},
+
+// Relationship to User
+instructorUser: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "User",
+  required: true,
+},
 
     // ==========================
     // Thumbnail
     // ==========================
+
     thumbnail: {
       type: String,
       default: "",
     },
 
+
     // ==========================
     // Price
     // ==========================
+
     price: {
       type: Number,
       default: 0,
       min: 0,
     },
 
+
     // ==========================
     // Course Status
     // ==========================
+
     status: {
       type: String,
       enum: [
@@ -103,9 +124,11 @@ const courseSchema = new mongoose.Schema(
       default: "Draft",
     },
 
+
     // ==========================
-    // Students
+    // Enrolled Students
     // ==========================
+
     students: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -113,18 +136,22 @@ const courseSchema = new mongoose.Schema(
       },
     ],
 
+
     // ==========================
     // Statistics
     // ==========================
+
     totalLessons: {
       type: Number,
       default: 0,
     },
 
+
     totalAssignments: {
       type: Number,
       default: 0,
     },
+
 
     completionRate: {
       type: Number,
@@ -132,10 +159,15 @@ const courseSchema = new mongoose.Schema(
       min: 0,
       max: 100,
     },
+
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model("Course", courseSchema);
+
+module.exports = mongoose.model(
+  "Course",
+  courseSchema
+);
