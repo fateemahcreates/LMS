@@ -1,15 +1,11 @@
 import "../styles/StudentForm.css";
-import { notify } from "../utils/notify";
 
 import {
   FaIdCard,
-  FaBuilding,
-  FaUniversity,
-  FaGraduationCap,
+  FaBookOpen,
   FaPhone,
   FaEdit,
 } from "react-icons/fa";
-
 
 function StudentForm({
   formData,
@@ -17,358 +13,90 @@ function StudentForm({
   handleSubmit,
   editingStudent,
 }) {
-
-
   return (
-
     <form
       className="student-form"
       onSubmit={handleSubmit}
     >
-
-
-      {/* Header */}
-
-      <div className="form-header">
-
-        <h2>
-          Update Student Profile
-        </h2>
-
-
-        <p>
-          Manage student's academic information.
-        </p>
-
-      </div>
-
-
-
-
-
-      {/* Student ID */}
-
-      <div className="input-group">
-
-        <label>
+      {/* ==========================
           Student ID
-        </label>
+      ========================== */}
 
+      <div className="input-group">
+        <label>Student ID</label>
 
         <div className="input-wrapper">
-
-          <FaIdCard className="input-icon"/>
-
+          <FaIdCard className="input-icon" />
 
           <input
-
             type="text"
-
             name="studentId"
-
-            placeholder="LMS2026001"
-
             value={formData.studentId}
-
             onChange={handleChange}
-
+            placeholder="GMT2026001"
             required
-
           />
-
-
         </div>
-
-
       </div>
 
-
-
-
-
-
-      {/* Department */}
+      {/* ==========================
+          Program
+      ========================== */}
 
       <div className="input-group">
-
-        <label>
-          Department
-        </label>
-
+        <label>Training Program</label>
 
         <div className="input-wrapper">
-
-          <FaBuilding className="input-icon"/>
-
+          <FaBookOpen className="input-icon" />
 
           <input
-
             type="text"
-
-            name="department"
-
-            placeholder="Computer Science"
-
-            value={formData.department}
-
+            name="program"
+            value={formData.program}
             onChange={handleChange}
-
+            placeholder="Frontend Development"
             required
-
           />
-
-
         </div>
-
-
       </div>
 
-
-
-
-
-
-
-      {/* Faculty */}
+      {/* ==========================
+          Phone
+      ========================== */}
 
       <div className="input-group">
-
-        <label>
-          Faculty
-        </label>
-
+        <label>Phone Number</label>
 
         <div className="input-wrapper">
-
-          <FaUniversity className="input-icon"/>
-
+          <FaPhone className="input-icon" />
 
           <input
-
             type="text"
-
-            name="faculty"
-
-            placeholder="Faculty of Science"
-
-            value={formData.faculty}
-
-            onChange={handleChange}
-
-          />
-
-
-        </div>
-
-
-      </div>
-
-
-
-
-
-
-
-
-      {/* Level */}
-
-      <div className="input-group">
-
-        <label>
-          Level
-        </label>
-
-
-        <div className="input-wrapper">
-
-          <FaGraduationCap className="input-icon"/>
-
-
-          <select
-
-            name="level"
-
-            value={formData.level}
-
-            onChange={handleChange}
-
-            required
-
-          >
-
-            <option value="">
-              Select Level
-            </option>
-
-
-            <option value="100">
-              100 Level
-            </option>
-
-
-            <option value="200">
-              200 Level
-            </option>
-
-
-            <option value="300">
-              300 Level
-            </option>
-
-
-            <option value="400">
-              400 Level
-            </option>
-
-
-            <option value="500">
-              500 Level
-            </option>
-
-
-          </select>
-
-
-        </div>
-
-
-      </div>
-
-
-
-
-
-
-
-
-
-      {/* Semester */}
-
-      <div className="input-group">
-
-        <label>
-          Semester
-        </label>
-
-
-        <div className="input-wrapper">
-
-          <FaGraduationCap className="input-icon"/>
-
-
-          <select
-
-            name="semester"
-
-            value={formData.semester}
-
-            onChange={handleChange}
-
-            required
-
-          >
-
-            <option value="">
-              Select Semester
-            </option>
-
-
-            <option value="First Semester">
-              First Semester
-            </option>
-
-
-            <option value="Second Semester">
-              Second Semester
-            </option>
-
-
-          </select>
-
-
-        </div>
-
-
-      </div>
-
-
-
-
-
-
-
-
-
-      {/* Phone */}
-
-      <div className="input-group">
-
-        <label>
-          Phone Number
-        </label>
-
-
-        <div className="input-wrapper">
-
-          <FaPhone className="input-icon"/>
-
-
-          <input
-
-            type="text"
-
             name="phone"
-
-            placeholder="+234..."
-
             value={formData.phone}
-
             onChange={handleChange}
-
+            placeholder="+234..."
           />
-
-
         </div>
-
-
       </div>
 
-
-
-
-
-
-
-
-      {/* Button */}
+      {/* ==========================
+          Submit
+      ========================== */}
 
       <button
-
         type="submit"
-
         className="submit-btn"
-
         disabled={!editingStudent}
-
       >
-
         <FaEdit />
 
-
         <span>
-          Update Student
+          Save Changes
         </span>
-
-
       </button>
-
-
-
     </form>
-
   );
-
 }
-
 
 export default StudentForm;

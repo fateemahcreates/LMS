@@ -18,8 +18,8 @@ export const getMyCourses = () => {
   return api.get("/enrollments/my");
 };
 
-export const continueLearning = (id) =>
-    api.put(`/enrollments/continue/${id}`);
+export const updateEnrollmentProgress = (id) =>
+  api.put(`/enrollments/progress/${id}`);
 
 // ==========================================
 // REMOVE ENROLLMENT

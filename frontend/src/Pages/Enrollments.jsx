@@ -1,45 +1,49 @@
 import { useEffect, useState } from "react";
-import { getAllEnrollments } from "../services/enrollmentService";
-import {approveCertificate,} from "../services/enrollmentService";
+
 import {
   FaUsers,
   FaBookReader,
   FaCheckCircle,
   FaCertificate,
+  FaSearch,
 } from "react-icons/fa";
+
+import {
+  getAllEnrollments,
+  approveCertificate,
+} from "../services/enrollmentService";
+
+import { notify } from "../utils/notify";
 
 import "../styles/Enrollments.css";
 
+import EnrollmentDetailsDrawer from "../components/EnrollmentDetailsDrawer";
+
 function Enrollments() {
+  const [enrollments, setEnrollments] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState("");
 
-const [statusFilter, setStatusFilter] = useState("All");
-  const [enrollments, setEnrollments] = useState([]);
+  const [statusFilter, setStatusFilter] = useState("All");
 
-  const handleApprove = async (id) => {
-  try {
+  const [selectedEnrollment, setSelectedEnrollment] =
+    useState(null);
 
-    await approveCertificate(id);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-    fetchEnrollments();
-
-  } catch (error) {
-    alert(
-      error.response?.data?.message ||
-      "Unable to approve certificate."
-    );
-  }
-};
+  // ==========================================
+  // FETCH ENROLLMENTS
+  // ==========================================
 
   const fetchEnrollments = async () => {
     try {
       const res = await getAllEnrollments();
 
       setEnrollments(res.data);
-
     } catch (error) {
-      console.log(error);
+      console.error(error);
+
+      notify.apiError(error);
     }
   };
 
@@ -47,231 +51,839 @@ const [statusFilter, setStatusFilter] = useState("All");
     fetchEnrollments();
   }, []);
 
-  const filteredEnrollments =
-  enrollments.filter((enrollment) => {
+  // ==========================================
+  // APPROVE CERTIFICATE
+  // ==========================================
 
-    const matchesSearch =
+  const handleApprove = async (id) => {
+    try {
+      await approveCertificate(id);
 
-      enrollment.student.name
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
+      notify.success(
+        "Certificate approved successfully."
+      );
 
-      enrollment.course.title
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
+      fetchEnrollments();
+    } catch (error) {
+      console.error(error);
 
-    const matchesStatus =
+      notify.apiError(error);
+    }
+  };
 
-      statusFilter === "All"
+  // ==========================================
+  // VIEW ENROLLMENT
+  // ==========================================
 
-        ? true
+  const handleView = (enrollment) => {
+    setSelectedEnrollment(enrollment);
 
-        : enrollment.status === statusFilter;
+    setDrawerOpen(true);
+  };
 
-    return matchesSearch && matchesStatus;
+  // ==========================================
+  // FILTER ENROLLMENTS
+  // ==========================================
 
-  });
+  const filteredEnrollments = enrollments.filter(
+    (item) => {
+      const search = searchTerm.toLowerCase();
+
+      const student =
+        item.student?.name?.toLowerCase() || "";
+
+      const course =
+        item.course?.title?.toLowerCase() || "";
+
+      const matchesSearch =
+        student.includes(search) ||
+        course.includes(search);
+
+      const matchesStatus =
+        statusFilter === "All"
+          ? true
+          : item.status === statusFilter;
+
+      return (
+        matchesSearch &&
+        matchesStatus &&
+        item.student &&
+        item.course
+      );
+    }
+  );
+
+  // ==========================================
+  // DATE FORMAT
+  // ==========================================
+
+  const formatDate = (date) =>
+    new Date(date).toLocaleDateString();
+
+  // ==========================================
+  // RENDER
+  // ==========================================
 
   return (
+    <main className="gmt-enrollment-page">
 
-    <main className="enrollments-page">
+      {/* ======================================
+          PAGE HEADER
+      ====================================== */}
 
-      <div className="page-header">
+      <div className="gmt-enrollment-header">
 
-        <div className="summary-grid">
+        <div className="gmt-enrollment-header-content">
 
-  <div className="summary-card">
+          <span className="gmt-enrollment-header-tag">
+            ENROLLMENT MANAGEMENT
+          </span>
 
-    <div className="summary-icon blue">
-      <FaUsers />
-    </div>
+          <h1>
+            Enrollment Management
+          </h1>
 
-    <div>
+          <p>
+            Monitor student learning,
+            course duration and
+            certificate approvals.
+          </p>
 
-      <h2>{enrollments.length}</h2>
+        </div>
 
-      <p>Total Enrollments</p>
-
-    </div>
-
-  </div>
-
-  <div className="summary-card">
-
-    <div className="summary-icon orange">
-      <FaBookReader />
-    </div>
-
-    <div>
-
-      <h2>
-        {
-          enrollments.filter(
-            e => e.status === "In Progress"
-          ).length
-        }
-      </h2>
-
-      <p>Active Learning</p>
-
-    </div>
-
-  </div>
-
-  <div className="summary-card">
-
-    <div className="summary-icon green">
-      <FaCheckCircle />
-    </div>
-
-    <div>
-
-      <h2>
-        {
-          enrollments.filter(
-            e => e.status === "Completed"
-          ).length
-        }
-      </h2>
-
-      <p>Completed Courses</p>
-
-    </div>
-
-  </div>
-
-  <div className="summary-card">
-
-    <div className="summary-icon purple">
-      <FaCertificate />
-    </div>
-
-    <div>
-
-      <h2>
-        {
-          enrollments.filter(
-            e => e.certificateApproved
-          ).length
-        }
-      </h2>
-
-      <p>Certificates</p>
-
-    </div>
-
-  </div>
-
-</div>
-<div className="table-toolbar">
-
-  <input
-    type="text"
-    placeholder="Search student or course..."
-    value={searchTerm}
-    onChange={(e) =>
-      setSearchTerm(e.target.value)
-    }
-  />
-
-  <select
-    value={statusFilter}
-    onChange={(e) =>
-      setStatusFilter(e.target.value)
-    }
-  >
-    <option>All</option>
-
-    <option>Enrolled</option>
-
-    <option>In Progress</option>
-
-    <option>Completed</option>
-
-  </select>
-
-</div>
-
-        <h1>Enrollments</h1>
-
-        <p>
-          Monitor every student's learning progress.
-        </p>
+        <div className="gmt-enrollment-header-icon">
+          <FaBookReader />
+        </div>
 
       </div>
 
-      <table>
 
-        <thead>
+      {/* ======================================
+          SUMMARY STATS
+      ====================================== */}
 
-          <tr>
+      <div className="gmt-enrollment-stats">
 
-            <th>Student</th>
+        {/* Total */}
 
-            <th>Course</th>
+        <div className="gmt-enrollment-stat-card">
 
-            <th>Progress</th>
+          <div className="gmt-enrollment-stat-icon">
+            <FaUsers />
+          </div>
 
-            <th>Status</th>
+          <div className="gmt-enrollment-stat-content">
 
-            <th>Certificate</th>
+            <h2>
+              {enrollments.length}
+            </h2>
 
-          </tr>
+            <span>
+              Total Enrollments
+            </span>
 
-        </thead>
+          </div>
 
-        <tbody>
+        </div>
 
-          {filteredEnrollments.map((item) => (
 
-            <tr key={item._id}>
+        {/* Active */}
 
-              <td>{item.student.name}</td>
+        <div className="gmt-enrollment-stat-card">
 
-              <td>{item.course.title}</td>
+          <div className="gmt-enrollment-stat-icon">
+            <FaBookReader />
+          </div>
 
-              <td>{item.progress}%</td>
+          <div className="gmt-enrollment-stat-content">
 
-              <td>{item.status}</td>
+            <h2>
+              {
+                enrollments.filter(
+                  (e) =>
+                    e.status ===
+                    "In Progress"
+                ).length
+              }
+            </h2>
 
-              <td>
+            <span>
+              Active Learning
+            </span>
 
-  {item.certificateApproved ? (
+          </div>
 
-    <span className="approved">
-      Approved
-    </span>
+        </div>
 
-  ) : item.progress === 100 ? (
 
-    <button
-      className="approve-btn"
-      onClick={() =>
-        handleApprove(item._id)
-      }
-    >
-      Approve
-    </button>
+        {/* Completed */}
 
-  ) : (
+        <div className="gmt-enrollment-stat-card">
 
-    <span className="pending">
-      Pending
-    </span>
+          <div className="gmt-enrollment-stat-icon">
+            <FaCheckCircle />
+          </div>
 
-  )}
+          <div className="gmt-enrollment-stat-content">
 
-</td>
+            <h2>
+              {
+                enrollments.filter(
+                  (e) =>
+                    e.status ===
+                    "Completed"
+                ).length
+              }
+            </h2>
+
+            <span>
+              Completed
+            </span>
+
+          </div>
+
+        </div>
+
+
+        {/* Certificates */}
+
+        <div className="gmt-enrollment-stat-card">
+
+          <div className="gmt-enrollment-stat-icon">
+            <FaCertificate />
+          </div>
+
+          <div className="gmt-enrollment-stat-content">
+
+            <h2>
+              {
+                enrollments.filter(
+                  (e) =>
+                    e.certificateApproved
+                ).length
+              }
+            </h2>
+
+            <span>
+              Certificates
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      {/* ======================================
+          SEARCH & FILTER
+      ====================================== */}
+
+      <div className="gmt-enrollment-toolbar">
+
+        <div className="gmt-enrollment-search">
+
+          <FaSearch className="gmt-enrollment-search-icon" />
+
+          <input
+            type="text"
+            placeholder="Search student or course..."
+            value={searchTerm}
+            onChange={(e) =>
+              setSearchTerm(e.target.value)
+            }
+          />
+
+        </div>
+
+
+        <div className="gmt-enrollment-filter">
+
+          <select
+            value={statusFilter}
+            onChange={(e) =>
+              setStatusFilter(e.target.value)
+            }
+          >
+
+            <option value="All">
+              All Statuses
+            </option>
+
+            <option value="Enrolled">
+              Enrolled
+            </option>
+
+            <option value="In Progress">
+              In Progress
+            </option>
+
+            <option value="Completed">
+              Completed
+            </option>
+
+            <option value="Withdrawn">
+              Withdrawn
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+
+      {/* ======================================
+          DESKTOP TABLE
+      ====================================== */}
+
+      <div className="gmt-enrollment-table-wrapper">
+
+        <table className="gmt-enrollment-table">
+
+          <thead>
+
+            <tr>
+
+              <th>
+                Student
+              </th>
+
+              <th>
+                Course
+              </th>
+
+              <th>
+                Start
+              </th>
+
+              <th>
+                End
+              </th>
+
+              <th>
+                Duration
+              </th>
+
+              <th>
+                Days Left
+              </th>
+
+              <th>
+                Progress
+              </th>
+
+              <th>
+                Status
+              </th>
+
+              <th>
+                Certificate
+              </th>
+
+              <th>
+                Actions
+              </th>
+
             </tr>
 
-          ))}
+          </thead>
 
-        </tbody>
 
-      </table>
+          <tbody>
+
+            {filteredEnrollments.length === 0 ? (
+
+              <tr>
+
+                <td
+                  colSpan="10"
+                  className="gmt-enrollment-empty-cell"
+                >
+
+                  <div className="gmt-enrollment-empty-state">
+
+                    <FaBookReader className="gmt-enrollment-empty-icon" />
+
+                    <h3>
+                      No Enrollments Found
+                    </h3>
+
+                    <p>
+                      No enrollment records
+                      match your current
+                      search or filter.
+                    </p>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            ) : (
+
+              filteredEnrollments.map(
+                (item) => (
+
+                  <tr key={item._id}>
+
+                    {/* Student */}
+
+                    <td>
+
+                      <div className="gmt-enrollment-student">
+
+                        <div className="gmt-enrollment-student-avatar">
+                          <FaUsers />
+                        </div>
+
+                        <div>
+
+                          <strong>
+                            {item.student?.name}
+                          </strong>
+
+                          <span>
+                            {item.student?.email}
+                          </span>
+
+                        </div>
+
+                      </div>
+
+                    </td>
+
+
+                    {/* Course */}
+
+                    <td>
+
+                      <div className="gmt-enrollment-course">
+
+                        <FaBookReader />
+
+                        <span>
+                          {item.course?.title}
+                        </span>
+
+                      </div>
+
+                    </td>
+
+
+                    {/* Start */}
+
+                    <td>
+                      {formatDate(
+                        item.startDate
+                      )}
+                    </td>
+
+
+                    {/* End */}
+
+                    <td>
+                      {formatDate(
+                        item.endDate
+                      )}
+                    </td>
+
+
+                    {/* Duration */}
+
+                    <td>
+                      {item.course?.duration}
+                    </td>
+
+
+                    {/* Days Left */}
+
+                    <td>
+
+                      <span className="gmt-enrollment-days-left">
+
+                        {item.daysRemaining}
+
+                        {" "}
+
+                        days
+
+                      </span>
+
+                    </td>
+
+
+                    {/* Progress */}
+
+                    <td>
+
+                      <div className="gmt-enrollment-progress-wrapper">
+
+                        <div className="gmt-enrollment-progress-bar">
+
+                          <div
+                            className="gmt-enrollment-progress-fill"
+                            style={{
+                              width: `${item.progress}%`,
+                            }}
+                          />
+
+                        </div>
+
+                        <span>
+                          {item.progress}%
+                        </span>
+
+                      </div>
+
+                    </td>
+
+
+                    {/* Status */}
+
+                    <td>
+
+                      <span
+                        className={`gmt-enrollment-status ${
+                          item.status
+                            ?.toLowerCase()
+                            .replace(/\s+/g, "-")
+                        }`}
+                      >
+
+                        {item.status}
+
+                      </span>
+
+                    </td>
+
+
+                    {/* Certificate */}
+
+                    <td>
+
+                      {item.certificateApproved ? (
+
+                        <span className="gmt-enrollment-approved">
+
+                          <FaCheckCircle />
+
+                          Approved
+
+                        </span>
+
+                      ) : item.progress === 100 ? (
+
+                        <button
+                          className="gmt-enrollment-approve-btn"
+                          onClick={() =>
+                            handleApprove(
+                              item._id
+                            )
+                          }
+                        >
+
+                          <FaCertificate />
+
+                          Approve
+
+                        </button>
+
+                      ) : (
+
+                        <span className="gmt-enrollment-pending">
+
+                          Pending
+
+                        </span>
+
+                      )}
+
+                    </td>
+
+
+                    {/* Actions */}
+
+                    <td>
+
+                      <button
+                        className="gmt-enrollment-view-btn"
+                        onClick={() =>
+                          handleView(item)
+                        }
+                      >
+
+                        View
+
+                      </button>
+
+                    </td>
+
+                  </tr>
+
+                )
+              )
+
+            )}
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      {/* ======================================
+          MOBILE ENROLLMENTS
+      ====================================== */}
+
+      <div className="gmt-mobile-enrollments">
+
+        {filteredEnrollments.length === 0 ? (
+
+          <div className="gmt-enrollment-empty-state">
+
+            <FaBookReader className="gmt-enrollment-empty-icon" />
+
+            <h3>
+              No Enrollments Found
+            </h3>
+
+            <p>
+              No enrollment records match
+              your current search or filter.
+            </p>
+
+          </div>
+
+        ) : (
+
+          filteredEnrollments.map(
+            (item) => (
+
+              <div
+                className="gmt-enrollment-card"
+                key={item._id}
+              >
+
+                {/* Card Header */}
+
+                <div className="gmt-enrollment-card-header">
+
+                  <div className="gmt-enrollment-student-avatar">
+                    <FaUsers />
+                  </div>
+
+                  <div>
+
+                    <h3>
+                      {item.student?.name}
+                    </h3>
+
+                    <span>
+                      {item.student?.email}
+                    </span>
+
+                  </div>
+
+                </div>
+
+
+                {/* Course */}
+
+                <div className="gmt-enrollment-card-course">
+
+                  <FaBookReader />
+
+                  <span>
+                    {item.course?.title}
+                  </span>
+
+                </div>
+
+
+                {/* Details */}
+
+                <div className="gmt-enrollment-card-details">
+
+                  <p>
+                    <strong>
+                      Duration:
+                    </strong>
+
+                    {" "}
+
+                    {item.course?.duration}
+                  </p>
+
+                  <p>
+                    <strong>
+                      Start:
+                    </strong>
+
+                    {" "}
+
+                    {formatDate(
+                      item.startDate
+                    )}
+                  </p>
+
+                  <p>
+                    <strong>
+                      End:
+                    </strong>
+
+                    {" "}
+
+                    {formatDate(
+                      item.endDate
+                    )}
+                  </p>
+
+                  <p>
+                    <strong>
+                      Days Left:
+                    </strong>
+
+                    {" "}
+
+                    {item.daysRemaining}
+                  </p>
+
+                </div>
+
+
+                {/* Status */}
+
+                <div className="gmt-enrollment-card-status">
+
+                  <strong>
+                    Status
+                  </strong>
+
+                  <span
+                    className={`gmt-enrollment-status ${
+                      item.status
+                        ?.toLowerCase()
+                        .replace(/\s+/g, "-")
+                    }`}
+                  >
+                    {item.status}
+                  </span>
+
+                </div>
+
+
+                {/* Progress */}
+
+                <div className="gmt-enrollment-card-progress">
+
+                  <div className="gmt-enrollment-card-progress-header">
+
+                    <strong>
+                      Learning Progress
+                    </strong>
+
+                    <span>
+                      {item.progress}%
+                    </span>
+
+                  </div>
+
+                  <div className="gmt-enrollment-progress-bar">
+
+                    <div
+                      className="gmt-enrollment-progress-fill"
+                      style={{
+                        width: `${item.progress}%`,
+                      }}
+                    />
+
+                  </div>
+
+                </div>
+
+
+                {/* Actions */}
+
+                <div className="gmt-enrollment-card-actions">
+
+                  {item.certificateApproved ? (
+
+                    <span className="gmt-enrollment-approved">
+
+                      <FaCheckCircle />
+
+                      Approved
+
+                    </span>
+
+                  ) : item.progress === 100 ? (
+
+                    <button
+                      className="gmt-enrollment-approve-btn"
+                      onClick={() =>
+                        handleApprove(
+                          item._id
+                        )
+                      }
+                    >
+
+                      <FaCertificate />
+
+                      Approve
+
+                    </button>
+
+                  ) : (
+
+                    <span className="gmt-enrollment-pending">
+
+                      Pending
+
+                    </span>
+
+                  )}
+
+
+                  <button
+                    className="gmt-enrollment-view-btn"
+                    onClick={() =>
+                      handleView(item)
+                    }
+                  >
+
+                    View Details
+
+                  </button>
+
+                </div>
+
+              </div>
+
+            )
+          )
+
+        )}
+
+      </div>
+
+
+      {/* ======================================
+          ENROLLMENT DETAILS DRAWER
+      ====================================== */}
+
+      <EnrollmentDetailsDrawer
+        open={drawerOpen}
+        enrollment={selectedEnrollment}
+        onClose={() =>
+          setDrawerOpen(false)
+        }
+        handleApprove={handleApprove}
+      />
 
     </main>
-
   );
 }
 

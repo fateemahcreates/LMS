@@ -6,12 +6,16 @@ import {
   FaUserGraduate,
   FaEdit,
   FaTrash,
+  FaEnvelope,
+  FaIdCard,
+  FaEye,
 } from "react-icons/fa";
 
 function StudentTable({
-  students,
-  handleDelete,
+  students = [],
+  handleView,
   handleEdit,
+  handleDelete,
 }) {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -31,51 +35,55 @@ function StudentTable({
         ?.toLowerCase()
         .includes(search) ||
 
-      student.department
-        ?.toLowerCase()
-        .includes(search) ||
-
-      student.level
+      student.program
         ?.toLowerCase()
         .includes(search)
     );
   });
 
   return (
-    <div className="student-table">
+    <div className="gmt-student-table">
 
-      {/* Header */}
+      {/* =====================================
+          HEADER
+      ===================================== */}
 
-      <div className="table-header">
+      <div className="gmt-student-table-header">
 
         <div>
+
           <h2>Student Directory</h2>
 
           <p>
-            Manage enrolled students.
+            Manage all enrolled GMT Academy students.
           </p>
+
         </div>
 
-        <div className="student-total">
+        <div className="gmt-student-total">
+
           <FaUserGraduate />
 
           <span>
             {students.length} Student
             {students.length !== 1 && "s"}
           </span>
+
         </div>
 
       </div>
 
-      {/* Search */}
+      {/* =====================================
+          SEARCH
+      ===================================== */}
 
-      <div className="search-box">
+      <div className="gmt-student-search">
 
-        <FaSearch className="search-icon" />
+        <FaSearch className="gmt-student-search-icon" />
 
         <input
           type="text"
-          placeholder="Search students..."
+          placeholder="Search by name, email, ID or programme..."
           value={searchTerm}
           onChange={(e) =>
             setSearchTerm(e.target.value)
@@ -84,21 +92,28 @@ function StudentTable({
 
       </div>
 
-      {/* Desktop */}
+            {/* =====================================
+          DESKTOP TABLE
+      ===================================== */}
 
-      <div className="table-wrapper">
+      <div className="gmt-student-table-wrapper">
 
         <table>
 
           <thead>
 
             <tr>
-              <th>Name</th>
+
+              <th>Student</th>
+
               <th>Email</th>
+
               <th>Student ID</th>
-              <th>Department</th>
-              <th>Level</th>
+
+              <th>Programme</th>
+
               <th>Actions</th>
+
             </tr>
 
           </thead>
@@ -108,19 +123,26 @@ function StudentTable({
             {filteredStudents.length === 0 ? (
 
               <tr>
-                <td colSpan="6">
 
-                  <div className="empty-state">
+                <td colSpan="5">
+
+                  <div className="gmt-student-empty-state">
 
                     <FaUserGraduate
-                      className="empty-icon"
+                      className="gmt-student-empty-icon"
                     />
 
                     <h3>No Students Found</h3>
 
+                    <p>
+                      There are currently no students
+                      matching your search.
+                    </p>
+
                   </div>
 
                 </td>
+
               </tr>
 
             ) : (
@@ -129,47 +151,109 @@ function StudentTable({
 
                 <tr key={student._id}>
 
-                  <td>
-                    {student.user?.name}
-                  </td>
+                  {/* Student */}
 
                   <td>
-                    {student.user?.email}
+
+                    <div className="gmt-student-info">
+
+                      <div className="gmt-student-avatar">
+
+                        <FaUserGraduate />
+
+                      </div>
+
+                      <div>
+
+                        <strong>
+                          {student.user?.name}
+                        </strong>
+
+                      </div>
+
+                    </div>
+
                   </td>
+
+                  {/* Email */}
 
                   <td>
-                    {student.studentId}
+
+                    <div className="gmt-student-email">
+
+                      <FaEnvelope />
+
+                      <span>
+                        {student.user?.email}
+                      </span>
+
+                    </div>
+
                   </td>
+
+                  {/* Student ID */}
 
                   <td>
-                    {student.department}
+
+                    <div className="gmt-student-id">
+
+                      <FaIdCard />
+
+                      <span>
+                        {student.studentId}
+                      </span>
+
+                    </div>
+
                   </td>
+
+                  {/* Programme */}
 
                   <td>
-                    {student.level}
-                  </td>
 
-                  <td className="action-buttons">
+                    <span className="gmt-student-program-badge">
 
-                    <button
-                      className="edit-btn"
-                      onClick={() =>
-                        handleEdit(student)
-                      }
-                    >
-                      <FaEdit />
-                    </button>
+                      {student.program}
 
-                    <button
-                      className="delete-btn"
-                      onClick={() =>
-                        handleDelete(student._id)
-                      }
-                    >
-                      <FaTrash />
-                    </button>
+                    </span>
 
                   </td>
+
+                  {/* Actions */}
+
+                  {/* Actions */}
+
+<td>
+
+  <div className="gmt-student-actions">
+
+    <button
+      className="gmt-student-view-btn"
+      onClick={() => handleView(student)}
+    >
+      <FaEye />
+      View
+    </button>
+
+    <button
+      className="gmt-student-edit-btn"
+      onClick={() => handleEdit(student)}
+    >
+      <FaEdit />
+      Edit
+    </button>
+
+    <button
+      className="gmt-student-delete-btn"
+      onClick={() => handleDelete(student._id)}
+    >
+      <FaTrash />
+      Delete
+    </button>
+
+  </div>
+
+</td>
 
                 </tr>
 
@@ -183,66 +267,117 @@ function StudentTable({
 
       </div>
 
-      {/* Mobile */}
+            {/* =====================================
+          MOBILE CARDS
+      ===================================== */}
 
-      <div className="mobile-students">
+      <div className="gmt-mobile-students">
 
-        {filteredStudents.map((student) => (
+        {filteredStudents.length === 0 ? (
 
-          <div
-            className="student-card"
-            key={student._id}
-          >
+          <div className="gmt-student-empty-state">
 
-            <h3>
-              {student.user?.name}
-            </h3>
+            <FaUserGraduate
+              className="gmt-student-empty-icon"
+            />
 
-            <p>
-              <strong>Email:</strong>{" "}
-              {student.user?.email}
-            </p>
+            <h3>No Students Found</h3>
 
             <p>
-              <strong>Student ID:</strong>{" "}
-              {student.studentId}
+              There are currently no students
+              matching your search.
             </p>
-
-            <p>
-              <strong>Department:</strong>{" "}
-              {student.department}
-            </p>
-
-            <p>
-              <strong>Level:</strong>{" "}
-              {student.level}
-            </p>
-
-            <div className="action-buttons">
-
-              <button
-                className="edit-btn"
-                onClick={() =>
-                  handleEdit(student)
-                }
-              >
-                <FaEdit />
-              </button>
-
-              <button
-                className="delete-btn"
-                onClick={() =>
-                  handleDelete(student._id)
-                }
-              >
-                <FaTrash />
-              </button>
-
-            </div>
 
           </div>
 
-        ))}
+        ) : (
+
+          filteredStudents.map((student) => (
+
+            <div
+              className="gmt-student-card"
+              key={student._id}
+            >
+
+              {/* Card Header */}
+
+              <div className="gmt-student-card-header">
+
+                <div className="gmt-student-avatar">
+
+                  <FaUserGraduate />
+
+                </div>
+
+                <div>
+
+                  <h3>
+                    {student.user?.name}
+                  </h3>
+
+                  <span>
+                    {student.studentId}
+                  </span>
+
+                </div>
+
+              </div>
+
+              {/* Details */}
+
+              <p>
+
+                <strong>Email:</strong>{" "}
+
+                {student.user?.email}
+
+              </p>
+
+              <p>
+
+                <strong>Programme:</strong>{" "}
+
+                {student.program}
+
+              </p>
+
+              {/* Actions */}
+
+             {/* Actions */}
+
+<div className="gmt-student-actions">
+
+  <button
+    className="gmt-student-view-btn"
+    onClick={() => handleView(student)}
+  >
+    <FaEye />
+    View
+  </button>
+
+  <button
+    className="gmt-student-edit-btn"
+    onClick={() => handleEdit(student)}
+  >
+    <FaEdit />
+    Edit
+  </button>
+
+  <button
+    className="gmt-student-delete-btn"
+    onClick={() => handleDelete(student._id)}
+  >
+    <FaTrash />
+    Delete
+  </button>
+
+</div>
+
+</div>
+
+          ))
+
+        )}
 
       </div>
 

@@ -1,0 +1,173 @@
+import {
+  FaLock,
+  FaKey,
+  FaShieldAlt,
+} from "react-icons/fa";
+
+function SecuritySettings() {
+  return (
+    <div className="settings-section">
+
+      <div className="settings-section-header">
+
+        <div>
+
+          <h2>
+            Security
+          </h2>
+
+          <p>
+            Manage your password and account security.
+          </p>
+
+        </div>
+
+        <div className="settings-section-icon">
+          <FaShieldAlt />
+        </div>
+
+      </div>
+
+
+      <div className="settings-security-card">
+
+        <div className="security-card-icon">
+          <FaLock />
+        </div>
+
+        <div>
+
+          <h3>
+            Change Password
+          </h3>
+
+          <p>
+            Keep your account secure by using a strong,
+            unique password.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div className="settings-form">
+
+        <div className="settings-field">
+
+          <label>
+            Current Password
+          </label>
+
+          <div className="settings-input-wrapper">
+
+            <FaLock />
+
+            <input
+              type="password"
+              placeholder="Enter current password"
+            />
+
+          </div>
+
+        </div>
+
+
+        <div className="settings-form-row">
+
+          <div className="settings-field">
+
+            <label>
+              New Password
+            </label>
+
+            <div className="settings-input-wrapper">
+
+              <FaKey />
+
+              <input
+                type="password"
+                placeholder="Enter new password"
+              />
+
+            </div>
+
+          </div>
+
+
+          <div className="settings-field">
+
+            <label>
+              Confirm Password
+            </label>
+
+            <div className="settings-input-wrapper">
+
+              <FaKey />
+
+              <input
+                type="password"
+                placeholder="Confirm new password"
+              />
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div className="password-requirements">
+
+          <h4>
+            Password Requirements
+          </h4>
+
+          <ul>
+
+            <li>
+              At least 8 characters
+            </li>
+
+            <li>
+              At least one uppercase letter
+            </li>
+
+            <li>
+              At least one number
+            </li>
+
+            <li>
+              At least one special character
+            </li>
+
+          </ul>
+
+        </div>
+
+
+        <div className="settings-form-actions">
+
+          <button
+            type="button"
+            className="settings-cancel-btn"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="button"
+            className="settings-save-btn"
+          >
+            Update Password
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+  );
+}
+
+export default SecuritySettings;

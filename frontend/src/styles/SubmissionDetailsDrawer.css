@@ -1,0 +1,619 @@
+/* =========================================================
+   SUBMISSION DETAILS DRAWER
+   GMT LMS
+========================================================= */
+
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.submission-drawer-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  /*
+    IMPORTANT:
+    NO backdrop-filter
+    NO blur
+  */
+
+  background: rgba(15, 23, 42, 0.28);
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+
+  z-index: 9998;
+
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease;
+}
+
+
+/* Overlay visible */
+
+.submission-drawer-overlay.show {
+  opacity: 1;
+
+  visibility: visible;
+
+  pointer-events: auto;
+}
+
+
+/* =========================================================
+   DRAWER
+========================================================= */
+
+.submission-details-drawer {
+  position: fixed;
+
+  top: 0;
+  right: 0;
+
+  width: 520px;
+
+  max-width: 95vw;
+
+  height: 100vh;
+
+  background: #ffffff;
+
+  border-left: 1px solid #e5e7eb;
+
+  box-shadow:
+    -12px 0 40px rgba(15, 23, 42, 0.16);
+
+  z-index: 9999;
+
+  overflow-y: auto;
+
+  transform: translateX(100%);
+
+  transition:
+    transform 0.3s ease;
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+
+/* Drawer open */
+
+.submission-details-drawer.open {
+  transform: translateX(0);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.submission-details-drawer::-webkit-scrollbar {
+  width: 7px;
+}
+
+.submission-details-drawer::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+.submission-details-drawer::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+
+  border-radius: 10px;
+}
+
+.submission-details-drawer::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.submission-drawer-header {
+  position: sticky;
+
+  top: 0;
+
+  z-index: 10;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 25px 28px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+
+/* Header title */
+
+.submission-drawer-header h2 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 22px;
+
+  font-weight: 700;
+
+  line-height: 1.3;
+}
+
+
+/* Header description */
+
+.submission-drawer-header p {
+  margin: 7px 0 0;
+
+  color: #6b7280;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.submission-drawer-close {
+  flex-shrink: 0;
+
+  width: 38px;
+
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #6b7280;
+
+  font-size: 15px;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.submission-drawer-close:hover {
+  background: #fef2f2;
+
+  border-color: #fecaca;
+
+  color: #c91f26;
+
+  transform: rotate(90deg);
+}
+
+.submission-drawer-close:active {
+  transform: rotate(90deg) scale(0.95);
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.submission-drawer-section {
+  padding: 25px 28px;
+
+  border-bottom: 1px solid #f1f5f9;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.submission-drawer-section h3 {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin: 0 0 18px;
+
+  color: #111827;
+
+  font-size: 16px;
+
+  font-weight: 700;
+}
+
+
+/* Section icon */
+
+.submission-drawer-section h3 svg {
+  color: #c91f26;
+
+  font-size: 16px;
+}
+
+
+/* =========================================================
+   INFORMATION GRID
+========================================================= */
+
+.submission-info-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+
+/* =========================================================
+   INFORMATION CARD
+========================================================= */
+
+.submission-info-card {
+  min-width: 0;
+
+  padding: 16px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 12px;
+}
+
+
+/* Label */
+
+.submission-info-card label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.04em;
+}
+
+
+/* Value */
+
+.submission-info-card p {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.submission-status {
+  color: #d97706 !important;
+}
+
+
+/* =========================================================
+   DOWNLOAD BUTTON
+========================================================= */
+
+.submission-download-btn {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  padding: 13px 18px;
+
+  border-radius: 10px;
+
+  background: #c91f26;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+
+  box-shadow:
+    0 5px 15px rgba(201, 31, 38, 0.18);
+}
+
+.submission-download-btn:hover {
+  background: #a5161c;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 20px rgba(201, 31, 38, 0.25);
+}
+
+
+/* =========================================================
+   NO FILE
+========================================================= */
+
+.submission-no-file {
+  padding: 16px;
+
+  border: 1px dashed #cbd5e1;
+
+  border-radius: 10px;
+
+  background: #f8fafc;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   INPUT GROUP
+========================================================= */
+
+.submission-input-group {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+
+/* Label */
+
+.submission-input-group label {
+  color: #374151;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   SCORE INPUT
+========================================================= */
+
+.submission-input-group input {
+  width: 100%;
+
+  height: 48px;
+
+  padding: 0 14px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #111827;
+
+  font-size: 15px;
+
+  outline: none;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.submission-input-group input:focus {
+  border-color: #c91f26;
+
+  box-shadow:
+    0 0 0 3px rgba(201, 31, 38, 0.10);
+}
+
+
+/* =========================================================
+   TEXTAREA
+========================================================= */
+
+.submission-input-group textarea {
+  width: 100%;
+
+  padding: 13px 14px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #111827;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+
+  resize: vertical;
+
+  min-height: 130px;
+
+  box-sizing: border-box;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.submission-input-group textarea:focus {
+  border-color: #c91f26;
+
+  box-shadow:
+    0 0 0 3px rgba(201, 31, 38, 0.10);
+}
+
+
+/* Placeholder */
+
+.submission-input-group input::placeholder,
+.submission-input-group textarea::placeholder {
+  color: #9ca3af;
+}
+
+
+/* =========================================================
+   SAVE BUTTON
+========================================================= */
+
+.submission-save-btn {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  margin-top: 18px;
+
+  padding: 14px 20px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #c91f26;
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+
+  box-shadow:
+    0 6px 18px rgba(201, 31, 38, 0.20);
+}
+
+.submission-save-btn:hover {
+  background: #a5161c;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 9px 22px rgba(201, 31, 38, 0.28);
+}
+
+.submission-save-btn:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .submission-details-drawer {
+    width: 90vw;
+
+    max-width: 90vw;
+  }
+
+  .submission-drawer-header {
+    padding: 22px;
+  }
+
+  .submission-drawer-section {
+    padding: 22px;
+  }
+
+  .submission-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .submission-details-drawer {
+    width: 100vw;
+
+    max-width: 100vw;
+  }
+
+  .submission-drawer-header {
+    padding: 20px;
+  }
+
+  .submission-drawer-header h2 {
+    font-size: 19px;
+  }
+
+  .submission-drawer-section {
+    padding: 20px;
+  }
+
+}

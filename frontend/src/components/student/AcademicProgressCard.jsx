@@ -1,6 +1,6 @@
-import "../../styles/StudentProgressCard.css";
+import "../../styles/AcademicProgressCard.css";
 
-function StudentProgressCard({ enrollment }) {
+function AcademicProgressCard({ enrollment }) {
   if (!enrollment) {
     return (
       <div className="progress-card empty-progress">
@@ -90,4 +90,4 @@ function StudentProgressCard({ enrollment }) {
   );
 }
 
-export default StudentProgressCard;
+export default AcademicProgressCard;

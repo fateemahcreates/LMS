@@ -1,0 +1,1507 @@
+/* =========================================================
+   INSTRUCTOR SUBMISSIONS
+   GMT LMS
+========================================================= */
+
+:root {
+  --submission-primary: #c91f26;
+  --submission-primary-dark: #a5161c;
+  --submission-primary-light: #fcecec;
+
+  --submission-bg: #f8f9fb;
+  --submission-surface: #ffffff;
+
+  --submission-border: #e5e7eb;
+
+  --submission-text: #111827;
+  --submission-text-light: #6b7280;
+  --submission-muted: #9ca3af;
+
+  --submission-success: #16a34a;
+  --submission-success-bg: #ecfdf3;
+
+  --submission-warning: #f59e0b;
+  --submission-warning-bg: #fffbeb;
+
+  --submission-danger: #dc2626;
+  --submission-danger-bg: #fef2f2;
+
+  --submission-shadow:
+    0 8px 30px rgba(17, 24, 39, 0.06);
+
+  --submission-radius: 14px;
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.instructor-submission-page {
+  width: 100%;
+  min-height: 100%;
+  padding: 28px;
+  background: var(--submission-bg);
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.instructor-submission-header {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.instructor-submission-header-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.instructor-submission-heading-icon {
+  width: 54px;
+  height: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: var(--submission-primary-light);
+  color: var(--submission-primary);
+
+  border-radius: 14px;
+
+  font-size: 23px;
+}
+
+.instructor-submission-header h1 {
+  margin: 0 0 5px;
+
+  color: var(--submission-text);
+
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.instructor-submission-header p {
+  margin: 0;
+
+  color: var(--submission-text-light);
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.instructor-submission-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 18px;
+
+  margin-bottom: 28px;
+}
+
+.instructor-submission-stat-card {
+  min-height: 104px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 20px;
+
+  background: var(--submission-surface);
+
+  border: 1px solid var(--submission-border);
+
+  border-radius: var(--submission-radius);
+
+  box-shadow: var(--submission-shadow);
+
+  box-sizing: border-box;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.instructor-submission-stat-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 35px rgba(17, 24, 39, 0.09);
+}
+
+.instructor-submission-stat-icon {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  background: var(--submission-primary-light);
+  color: var(--submission-primary);
+
+  font-size: 19px;
+}
+
+.instructor-submission-stat-card span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--submission-text-light);
+
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.instructor-submission-stat-card strong {
+  display: block;
+
+  color: var(--submission-text);
+
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+
+/* =========================================================
+   MAIN SECTION
+========================================================= */
+
+.instructor-submission-section {
+  width: 100%;
+
+  background: var(--submission-surface);
+
+  border: 1px solid var(--submission-border);
+
+  border-radius: var(--submission-radius);
+
+  box-shadow: var(--submission-shadow);
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.instructor-submission-section-header {
+  min-height: 84px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 20px 24px;
+
+  border-bottom: 1px solid var(--submission-border);
+
+  box-sizing: border-box;
+}
+
+.instructor-submission-section-header h2 {
+  margin: 0 0 5px;
+
+  color: var(--submission-text);
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.instructor-submission-section-header p {
+  margin: 0;
+
+  color: var(--submission-text-light);
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.instructor-submission-count {
+  min-width: 34px;
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 10px;
+
+  border-radius: 10px;
+
+  background: var(--submission-primary-light);
+  color: var(--submission-primary);
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.instructor-submission-loading {
+  min-height: 260px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  padding: 40px;
+
+  color: var(--submission-text-light);
+
+  text-align: center;
+}
+
+.instructor-submission-loading svg {
+  color: var(--submission-primary);
+
+  font-size: 30px;
+
+  animation: instructorSubmissionSpin 1.2s linear infinite;
+}
+
+.instructor-submission-loading p {
+  margin: 0;
+
+  font-size: 14px;
+}
+
+@keyframes instructorSubmissionSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.instructor-submission-empty {
+  min-height: 300px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 45px 25px;
+
+  text-align: center;
+}
+
+.instructor-submission-empty-icon {
+  width: 68px;
+  height: 68px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 18px;
+
+  border-radius: 18px;
+
+  background: var(--submission-primary-light);
+  color: var(--submission-primary);
+
+  font-size: 28px;
+}
+
+.instructor-submission-empty h3 {
+  margin: 0 0 7px;
+
+  color: var(--submission-text);
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.instructor-submission-empty p {
+  max-width: 420px;
+
+  margin: 0;
+
+  color: var(--submission-text-light);
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+========================================================= */
+
+.instructor-submission-table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.instructor-submission-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  min-width: 1000px;
+}
+
+
+/* =========================================================
+   TABLE HEAD
+========================================================= */
+
+.instructor-submission-table thead {
+  background: #f9fafb;
+}
+
+.instructor-submission-table th {
+  padding: 14px 18px;
+
+  color: var(--submission-text-light);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  text-align: left;
+
+  border-bottom: 1px solid var(--submission-border);
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLE BODY
+========================================================= */
+
+.instructor-submission-table td {
+  padding: 16px 18px;
+
+  color: var(--submission-text);
+
+  font-size: 13px;
+
+  border-bottom: 1px solid #f0f1f3;
+
+  vertical-align: middle;
+}
+
+.instructor-submission-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.instructor-submission-table tbody tr:hover {
+  background: #fcfcfd;
+}
+
+.instructor-submission-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   STUDENT
+========================================================= */
+
+.instructor-submission-student {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  min-width: 190px;
+}
+
+.instructor-submission-avatar {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: var(--submission-primary-light);
+  color: var(--submission-primary);
+
+  font-size: 14px;
+}
+
+.instructor-submission-student strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: var(--submission-text);
+
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.instructor-submission-student span {
+  display: block;
+
+  color: var(--submission-text-light);
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   ASSIGNMENT
+========================================================= */
+
+.instructor-submission-assignment {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  min-width: 180px;
+}
+
+.instructor-submission-assignment > svg {
+  flex-shrink: 0;
+
+  color: var(--submission-primary);
+
+  font-size: 15px;
+}
+
+.instructor-submission-assignment strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: var(--submission-text);
+
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.instructor-submission-assignment span {
+  display: block;
+
+  color: var(--submission-text-light);
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   COURSE
+========================================================= */
+
+.instructor-submission-course {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  max-width: 160px;
+}
+
+.instructor-submission-course svg {
+  flex-shrink: 0;
+
+  color: var(--submission-text-light);
+
+  font-size: 13px;
+}
+
+.instructor-submission-course span {
+  overflow: hidden;
+
+  color: var(--submission-text);
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.instructor-submission-date {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: var(--submission-text-light);
+
+  font-size: 12px;
+
+  white-space: nowrap;
+}
+
+.instructor-submission-date svg {
+  color: var(--submission-muted);
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.instructor-submission-status {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 650;
+
+  white-space: nowrap;
+}
+
+.instructor-submission-status.pending {
+  background: var(--submission-warning-bg);
+  color: #b45309;
+}
+
+.instructor-submission-status.graded {
+  background: var(--submission-success-bg);
+  color: var(--submission-success);
+}
+
+
+/* =========================================================
+   SCORE
+========================================================= */
+
+.instructor-submission-score {
+  display: flex;
+  align-items: baseline;
+
+  gap: 3px;
+
+  white-space: nowrap;
+}
+
+.instructor-submission-score strong {
+  color: var(--submission-text);
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.instructor-submission-score span {
+  color: var(--submission-text-light);
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   VIEW / REVIEW BUTTON
+========================================================= */
+
+.instructor-submission-view-btn {
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 0 12px;
+
+  border: 1px solid #f0b8bb;
+
+  border-radius: 8px;
+
+  background: #fff;
+
+  color: var(--submission-primary);
+
+  font-size: 12px;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.instructor-submission-view-btn:hover {
+  background: var(--submission-primary);
+  border-color: var(--submission-primary);
+  color: #fff;
+
+  transform: translateY(-1px);
+}
+
+.instructor-submission-view-btn svg {
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.instructor-submission-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1000;
+
+  background: rgba(17, 24, 39, 0.48);
+
+  backdrop-filter: blur(2px);
+
+  animation: instructorSubmissionFadeIn 0.2s ease;
+}
+
+@keyframes instructorSubmissionFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   DRAWER
+========================================================= */
+
+.instructor-submission-drawer {
+  position: fixed;
+
+  top: 0;
+  right: 0;
+
+  z-index: 1001;
+
+  width: min(520px, 94vw);
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background: var(--submission-surface);
+
+  box-shadow:
+    -15px 0 45px rgba(17, 24, 39, 0.15);
+
+  overflow-y: auto;
+
+  animation: instructorSubmissionDrawerIn 0.25s ease;
+}
+
+@keyframes instructorSubmissionDrawerIn {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+
+/* =========================================================
+   DRAWER HEADER
+========================================================= */
+
+.instructor-submission-drawer-header {
+  position: sticky;
+
+  top: 0;
+
+  z-index: 2;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 22px 24px;
+
+  background: rgba(255, 255, 255, 0.97);
+
+  border-bottom: 1px solid var(--submission-border);
+
+  backdrop-filter: blur(10px);
+}
+
+.instructor-submission-drawer-header h2 {
+  margin: 0 0 5px;
+
+  color: var(--submission-text);
+
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.instructor-submission-drawer-header p {
+  max-width: 340px;
+
+  margin: 0;
+
+  color: var(--submission-text-light);
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.instructor-submission-close-btn {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border: 1px solid var(--submission-border);
+
+  border-radius: 9px;
+
+  background: #fff;
+
+  color: var(--submission-text-light);
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.instructor-submission-close-btn:hover {
+  background: var(--submission-danger-bg);
+  color: var(--submission-danger);
+
+  border-color: #fecaca;
+}
+
+
+/* =========================================================
+   STUDENT PROFILE
+========================================================= */
+
+.instructor-submission-profile {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  margin: 22px 24px 0;
+
+  padding: 16px;
+
+  background: #fafafa;
+
+  border: 1px solid var(--submission-border);
+
+  border-radius: 12px;
+}
+
+.instructor-submission-profile-avatar {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  background: var(--submission-primary-light);
+  color: var(--submission-primary);
+
+  font-size: 19px;
+}
+
+.instructor-submission-profile span {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: var(--submission-text-light);
+
+  font-size: 10px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.instructor-submission-profile strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: var(--submission-text);
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.instructor-submission-profile small {
+  display: block;
+
+  color: var(--submission-text-light);
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   ASSIGNMENT INFO CARD
+========================================================= */
+
+.instructor-submission-info-card {
+  margin: 16px 24px 0;
+
+  padding: 5px 15px;
+
+  background: #fff;
+
+  border: 1px solid var(--submission-border);
+
+  border-radius: 12px;
+}
+
+.instructor-submission-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 12px 0;
+
+  border-bottom: 1px solid #f0f1f3;
+}
+
+.instructor-submission-info-row:last-child {
+  border-bottom: none;
+}
+
+.instructor-submission-info-row span {
+  color: var(--submission-text-light);
+
+  font-size: 11px;
+}
+
+.instructor-submission-info-row strong {
+  max-width: 270px;
+
+  color: var(--submission-text);
+
+  font-size: 12px;
+  font-weight: 650;
+
+  text-align: right;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.instructor-submission-description {
+  margin: 16px 24px 0;
+
+  padding: 16px;
+
+  background: #fafafa;
+
+  border: 1px solid var(--submission-border);
+
+  border-radius: 12px;
+}
+
+.instructor-submission-description h3 {
+  margin: 0 0 8px;
+
+  color: var(--submission-text);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.instructor-submission-description p {
+  margin: 0;
+
+  color: var(--submission-text-light);
+
+  font-size: 12px;
+
+  line-height: 1.7;
+
+  white-space: pre-wrap;
+}
+
+
+/* =========================================================
+   FILE
+========================================================= */
+
+.instructor-submission-file {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin: 16px 24px 0;
+
+  padding: 14px;
+
+  background: var(--submission-primary-light);
+
+  border: 1px solid #f8d1d3;
+
+  border-radius: 12px;
+}
+
+.instructor-submission-file-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  background: #fff;
+
+  color: var(--submission-primary);
+
+  font-size: 17px;
+}
+
+.instructor-submission-file > div:nth-child(2) {
+  min-width: 0;
+
+  flex: 1;
+}
+
+.instructor-submission-file span {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: var(--submission-text-light);
+
+  font-size: 10px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+}
+
+.instructor-submission-file strong {
+  display: block;
+
+  overflow: hidden;
+
+  color: var(--submission-text);
+
+  font-size: 11px;
+  font-weight: 600;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.instructor-submission-file-btn {
+  height: 32px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  flex-shrink: 0;
+
+  padding: 0 10px;
+
+  border-radius: 8px;
+
+  background: var(--submission-primary);
+
+  color: #fff;
+
+  font-size: 11px;
+  font-weight: 650;
+
+  text-decoration: none;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.instructor-submission-file-btn:hover {
+  background: var(--submission-primary-dark);
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   GRADING FORM
+========================================================= */
+
+.instructor-submission-grade-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+
+  margin: 20px 24px 28px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid var(--submission-border);
+}
+
+.instructor-submission-form-group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.instructor-submission-form-group label {
+  color: var(--submission-text);
+
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.instructor-submission-form-group input,
+.instructor-submission-form-group textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  border: 1px solid #d9dde4;
+
+  border-radius: 9px;
+
+  background: #fff;
+
+  color: var(--submission-text);
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.instructor-submission-form-group input {
+  height: 43px;
+
+  padding: 0 12px;
+}
+
+.instructor-submission-form-group textarea {
+  min-height: 120px;
+
+  padding: 11px 12px;
+
+  resize: vertical;
+
+  line-height: 1.6;
+}
+
+.instructor-submission-form-group input::placeholder,
+.instructor-submission-form-group textarea::placeholder {
+  color: #a1a8b3;
+}
+
+.instructor-submission-form-group input:focus,
+.instructor-submission-form-group textarea:focus {
+  border-color: var(--submission-primary);
+
+  box-shadow:
+    0 0 0 3px rgba(201, 31, 38, 0.08);
+}
+
+
+/* =========================================================
+   SCORE INPUT
+========================================================= */
+
+.instructor-submission-score-input {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  height: 43px;
+
+  border: 1px solid #d9dde4;
+
+  border-radius: 9px;
+
+  background: #fff;
+
+  overflow: hidden;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.instructor-submission-score-input:focus-within {
+  border-color: var(--submission-primary);
+
+  box-shadow:
+    0 0 0 3px rgba(201, 31, 38, 0.08);
+}
+
+.instructor-submission-score-input input {
+  flex: 1;
+
+  width: auto;
+  height: 100%;
+
+  border: none;
+
+  border-radius: 0;
+
+  box-shadow: none !important;
+
+  padding: 0 12px;
+}
+
+.instructor-submission-score-input input:focus {
+  border: none;
+  box-shadow: none;
+}
+
+.instructor-submission-score-input span {
+  padding-right: 13px;
+
+  color: var(--submission-text-light);
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   FORM ACTIONS
+========================================================= */
+
+.instructor-submission-form-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  padding-top: 3px;
+}
+
+.instructor-submission-cancel-btn,
+.instructor-submission-save-btn {
+  height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 0 16px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 12px;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.instructor-submission-cancel-btn {
+  border: 1px solid var(--submission-border);
+
+  background: #fff;
+
+  color: var(--submission-text-light);
+}
+
+.instructor-submission-cancel-btn:hover {
+  background: #f9fafb;
+
+  color: var(--submission-text);
+}
+
+.instructor-submission-save-btn {
+  border: 1px solid var(--submission-primary);
+
+  background: var(--submission-primary);
+
+  color: #fff;
+}
+
+.instructor-submission-save-btn:hover {
+  background: var(--submission-primary-dark);
+
+  border-color: var(--submission-primary-dark);
+
+  transform: translateY(-1px);
+}
+
+.instructor-submission-cancel-btn:disabled,
+.instructor-submission-save-btn:disabled,
+.instructor-submission-view-btn:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.instructor-submission-drawer::-webkit-scrollbar,
+.instructor-submission-table-wrapper::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.instructor-submission-drawer::-webkit-scrollbar-track,
+.instructor-submission-table-wrapper::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+.instructor-submission-drawer::-webkit-scrollbar-thumb,
+.instructor-submission-table-wrapper::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+
+  border-radius: 10px;
+}
+
+.instructor-submission-drawer::-webkit-scrollbar-thumb:hover,
+.instructor-submission-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+  .instructor-submission-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+@media (max-width: 900px) {
+  .instructor-submission-page {
+    padding: 22px;
+  }
+
+  .instructor-submission-header h1 {
+    font-size: 24px;
+  }
+}
+
+
+@media (max-width: 650px) {
+  .instructor-submission-page {
+    padding: 16px;
+  }
+
+  .instructor-submission-header-content {
+    align-items: flex-start;
+  }
+
+  .instructor-submission-heading-icon {
+    width: 46px;
+    height: 46px;
+
+    font-size: 19px;
+
+    border-radius: 12px;
+  }
+
+  .instructor-submission-header h1 {
+    font-size: 21px;
+  }
+
+  .instructor-submission-header p {
+    font-size: 12px;
+  }
+
+  .instructor-submission-stats {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .instructor-submission-stat-card {
+    min-height: 88px;
+
+    padding: 16px;
+  }
+
+  .instructor-submission-section-header {
+    align-items: flex-start;
+
+    padding: 18px;
+
+    gap: 12px;
+  }
+
+  .instructor-submission-section-header h2 {
+    font-size: 15px;
+  }
+
+  .instructor-submission-section-header p {
+    font-size: 12px;
+  }
+
+  .instructor-submission-drawer {
+    width: 100%;
+  }
+
+  .instructor-submission-drawer-header {
+    padding: 18px;
+  }
+
+  .instructor-submission-profile,
+  .instructor-submission-info-card,
+  .instructor-submission-description,
+  .instructor-submission-file {
+    margin-left: 18px;
+    margin-right: 18px;
+  }
+
+  .instructor-submission-grade-form {
+    margin-left: 18px;
+    margin-right: 18px;
+  }
+
+  .instructor-submission-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .instructor-submission-cancel-btn,
+  .instructor-submission-save-btn {
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 420px) {
+  .instructor-submission-profile {
+    align-items: flex-start;
+  }
+
+  .instructor-submission-info-row {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 4px;
+  }
+
+  .instructor-submission-info-row strong {
+    max-width: 100%;
+
+    text-align: left;
+  }
+
+  .instructor-submission-file {
+    align-items: flex-start;
+
+    flex-wrap: wrap;
+  }
+
+  .instructor-submission-file > div:nth-child(2) {
+    width: calc(100% - 60px);
+  }
+
+  .instructor-submission-file-btn {
+    width: 100%;
+  }
+}

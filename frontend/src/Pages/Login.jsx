@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import { login } from "../services/authService";
 import { notify } from "../utils/notify";
 
 import "../styles/Login.css";
 
+import logo from "../assets/GMT Software logo.jpeg";
+
 import {
-  FaGraduationCap,
   FaEnvelope,
   FaLock,
   FaEye,
@@ -27,9 +29,10 @@ function Login() {
 
   const [loading, setLoading] = useState(false);
 
-  // ==========================
-  // Handle Input Change
-  // ==========================
+  // ==========================================
+  // HANDLE INPUT CHANGE
+  // ==========================================
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -39,15 +42,17 @@ function Login() {
     });
   };
 
-  // ==========================
-  // Handle Login
-  // ==========================
+  // ==========================================
+  // LOGIN
+  // ==========================================
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Frontend Validation
     if (!formData.email || !formData.password) {
-      notify.warning("Please enter your email and password.");
+      notify.warning(
+        "Please enter your email and password."
+      );
       return;
     }
 
@@ -59,24 +64,37 @@ function Login() {
         password: formData.password,
       });
 
-      // Save JWT Token
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem(
+        "token",
+        res.data.token
+      );
 
-      // Save Logged-in User
       localStorage.setItem(
         "user",
         JSON.stringify(res.data.user)
       );
 
-      // Success Notification
-      notify.success("Login successful. Welcome back!");
+      notify.success(
+        "Login successful. Welcome back!"
+      );
 
-      // Redirect based on role
       setTimeout(() => {
-        if (res.data.user.role === "admin") {
-          navigate("/");
-        } else if (res.data.user.role === "student") {
-          navigate("/student");
+        switch (res.data.user.role.toLowerCase()) {
+          case "admin":
+            navigate("/");
+            break;
+
+          case "instructor":
+            navigate("/instructor");
+            break;
+
+          case "student":
+            navigate("/student");
+            break;
+
+          default:
+            notify.error("Unknown user role.");
+            navigate("/login");
         }
       }, 800);
 
@@ -91,81 +109,139 @@ function Login() {
   };
 
   return (
-    <div className="login-page">
-      <div className="login-container">
+    <div className="gmt-login-page">
 
-        {/* Left Side */}
-        <div className="login-left">
-          <div className="logo-circle">
-            <FaGraduationCap />
+      <div className="gmt-login-container">
+
+        {/* =====================================
+            LEFT BRANDING
+        ===================================== */}
+
+        <div className="gmt-login-left">
+
+          <div className="gmt-login-brand">
+
+            <img
+              src={logo}
+              alt="GMT Software"
+              className="gmt-login-logo"
+            />
+
+            <div className="gmt-login-brand-text">
+
+              <h1>
+                GMT Software Academy
+              </h1>
+
+              <span>
+                Learning Management System
+              </span>
+
+            </div>
+
           </div>
 
-          <h1>Learning Management System</h1>
+          <h2 className="gmt-login-title">
+            Empowering Digital Learning Excellence
+          </h2>
 
-          <p>
-            Manage students, courses, instructors, and academic records
-            from one modern dashboard.
+          <p className="gmt-login-description">
+            A modern Learning Management System
+            designed to connect administrators,
+            instructors and students through one
+            intelligent digital learning platform.
           </p>
 
-          <div className="login-features">
-            <div className="feature">
+          <div className="gmt-login-features">
+
+            <div className="gmt-login-feature">
               ✓ Student Management
             </div>
 
-            <div className="feature">
+            <div className="gmt-login-feature">
               ✓ Course Management
             </div>
 
-            <div className="feature">
-              ✓ Analytics Dashboard
+            <div className="gmt-login-feature">
+              ✓ Instructor Portal
             </div>
 
-            <div className="feature">
+            <div className="gmt-login-feature">
               ✓ Secure Authentication
             </div>
+
           </div>
+
         </div>
 
-        {/* Right Side */}
-        <div className="login-card">
+        {/* =====================================
+            LOGIN CARD
+        ===================================== */}
 
-          <div className="login-header">
-            <h2>Welcome Back</h2>
+        <div className="gmt-login-card">
+
+          <div className="gmt-login-header">
+
+            <h2>
+              Welcome Back
+            </h2>
 
             <p>
               Sign in to continue to your dashboard.
             </p>
+
           </div>
 
-          <form onSubmit={handleSubmit}>
+          <form
+            className="gmt-login-form"
+            onSubmit={handleSubmit}
+          >
 
-            {/* Email */}
-            <div className="input-group">
-              <label>Email Address</label>
+            {/* EMAIL */}
 
-              <div className="input-wrapper">
-                <FaEnvelope className="input-icon" />
+            <div className="gmt-login-group">
+
+              <label className="gmt-login-label">
+                Email Address
+              </label>
+
+              <div className="gmt-login-input-wrapper">
+
+                <FaEnvelope className="gmt-login-input-icon" />
 
                 <input
+                  className="gmt-login-input"
                   type="email"
                   name="email"
-                  placeholder="admin@lms.com"
+                  placeholder="admin@gmtsoftware.com"
                   value={formData.email}
                   onChange={handleChange}
                   required
                 />
+
               </div>
+
             </div>
 
-            {/* Password */}
-            <div className="input-group">
-              <label>Password</label>
+            {/* PASSWORD */}
 
-              <div className="input-wrapper">
-                <FaLock className="input-icon" />
+            <div className="gmt-login-group">
+
+              <label className="gmt-login-label">
+                Password
+              </label>
+
+              <div className="gmt-login-input-wrapper">
+
+                <FaLock className="gmt-login-input-icon" />
 
                 <input
-                  type={showPassword ? "text" : "password"}
+                  className="gmt-login-input"
+                  type={
+                    showPassword
+                      ? "text"
+                      : "password"
+                  }
                   name="password"
                   placeholder="Enter password"
                   value={formData.password}
@@ -175,9 +251,11 @@ function Login() {
 
                 <button
                   type="button"
-                  className="password-toggle"
+                  className="gmt-login-password-toggle"
                   onClick={() =>
-                    setShowPassword(!showPassword)
+                    setShowPassword(
+                      !showPassword
+                    )
                   }
                 >
                   {showPassword ? (
@@ -186,12 +264,17 @@ function Login() {
                     <FaEye />
                   )}
                 </button>
+
               </div>
+
             </div>
 
-            {/* Remember Me */}
-            <div className="login-options">
-              <label className="remember">
+            {/* OPTIONS */}
+
+            <div className="gmt-login-options">
+
+              <label className="gmt-login-remember">
+
                 <input
                   type="checkbox"
                   name="remember"
@@ -199,56 +282,58 @@ function Login() {
                   onChange={handleChange}
                 />
 
-                Remember Me
+                <span>
+                  Remember Me
+                </span>
+
               </label>
 
-              <Link to="/forgot-password">
+              <Link
+                to="/forgot-password"
+                className="gmt-login-forgot"
+              >
                 Forgot Password?
               </Link>
+
             </div>
 
-            {/* Login Button */}
+            {/* BUTTON */}
+
             <button
-              className="login-btn"
               type="submit"
+              className="gmt-login-button"
               disabled={loading}
             >
+
               <FaSignInAlt />
 
               <span>
-                {loading ? "Signing In..." : "Sign In"}
+                {loading
+                  ? "Signing In..."
+                  : "Sign In"}
               </span>
+
             </button>
 
           </form>
 
-          <div className="login-footer">
+          <div className="gmt-login-footer">
 
-            <p>
-              Don't have an account?
-              <Link
-                to="/register"
-                className="register-link"
-              >
-                Create Account
-              </Link>
-            </p>
+  <p className="gmt-login-admin-note">
+    Student accounts are created by the Academy Administration.
+  </p>
 
-            {/*
-            <div className="demo-account">
-              <h4>Demo Account</h4>
+  <p className="gmt-login-contact">
+    If you have not received your login credentials,
+    please contact your administrator.
+  </p>
 
-              <p>Email: admin@lms.com</p>
-
-              <p>Password: Password@123</p>
-            </div>
-            */}
-
-          </div>
+</div>
 
         </div>
 
       </div>
+
     </div>
   );
 }

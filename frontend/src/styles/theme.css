@@ -1,0 +1,38 @@
+:root{
+
+/* ===========================
+   GMT BRAND
+=========================== */
+
+--primary:#C91F26;
+--primary-dark:#A5161C;
+--primary-light:#FCECEC;
+
+--secondary:#111827;
+
+--background:#F8F9FB;
+
+--surface:#FFFFFF;
+
+--border:#E5E7EB;
+
+--text:#111827;
+--text-light:#6B7280;
+
+--success:#16A34A;
+--warning:#F59E0B;
+--danger:#DC2626;
+
+--shadow:
+0 10px 35px rgba(15,23,42,.08);
+
+--shadow-hover:
+0 18px 45px rgba(15,23,42,.12);
+
+--radius-lg:24px;
+--radius-md:16px;
+--radius-sm:12px;
+
+--transition:.3s ease;
+
+}

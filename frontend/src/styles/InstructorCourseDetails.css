@@ -1,0 +1,360 @@
+/* ==========================================================
+   GMT SOFTWARE ACADEMY
+   INSTRUCTOR COURSE DETAILS
+========================================================== */
+
+/* ==============================
+   PAGE
+============================== */
+
+.course-details-page{
+    padding:30px;
+    min-height:calc(100vh - 80px);
+    background:var(--background);
+}
+
+/* ==============================
+   BACK BUTTON
+============================== */
+
+.back-button{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    text-decoration:none;
+    color:var(--primary);
+    font-weight:700;
+    margin-bottom:25px;
+    transition:.3s;
+}
+
+.back-button:hover{
+    transform:translateX(-4px);
+}
+
+/* ==============================
+   BANNER
+============================== */
+
+.course-banner{
+    background:linear-gradient(135deg,var(--primary),#a5161c);
+    color:white;
+    padding:40px;
+    border-radius:22px;
+    margin-bottom:30px;
+    box-shadow:var(--shadow-hover);
+}
+
+.course-banner h1{
+    font-size:2.2rem;
+    margin-bottom:15px;
+    font-weight:800;
+}
+
+.course-banner p{
+    max-width:850px;
+    line-height:1.8;
+    opacity:.95;
+}
+
+/* ==============================
+   TAGS
+============================== */
+
+.course-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:25px;
+}
+
+.course-tags span{
+    background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.2);
+    padding:10px 18px;
+    border-radius:50px;
+    font-size:.85rem;
+    font-weight:600;
+}
+
+/* ==============================
+   OVERVIEW CARDS
+============================== */
+
+.overview-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:22px;
+    margin-bottom:30px;
+}
+
+.overview-card{
+    background:var(--surface);
+    border-radius:20px;
+    padding:28px;
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    transition:.3s;
+    text-align:center;
+}
+
+.overview-card:hover{
+    transform:translateY(-6px);
+    box-shadow:var(--shadow-hover);
+}
+
+.overview-card svg{
+    font-size:2rem;
+    color:var(--primary);
+    margin-bottom:15px;
+}
+
+.overview-card h2{
+    color:var(--secondary);
+    font-size:2rem;
+    margin-bottom:8px;
+}
+
+.overview-card span{
+    color:var(--text-light);
+    font-size:.95rem;
+}
+
+/* ==============================
+   CONTENT LAYOUT
+============================== */
+
+.details-layout{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:25px;
+    align-items:start;
+}
+
+/* ==============================
+   LEFT
+============================== */
+
+.details-main{
+    display:flex;
+    flex-direction:column;
+    gap:25px;
+}
+
+/* ==============================
+   RIGHT
+============================== */
+
+.details-sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:25px;
+}
+
+/* ==============================
+   CARD
+============================== */
+
+.details-card{
+    background:var(--surface);
+    border-radius:20px;
+    padding:25px;
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+}
+
+.details-card h3{
+    margin-bottom:20px;
+    color:var(--secondary);
+    font-size:1.2rem;
+}
+
+/* ==============================
+   QUICK ACTIONS
+============================== */
+
+.quick-actions{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+}
+
+.quick-actions button{
+    height:52px;
+    border:none;
+    border-radius:14px;
+    cursor:pointer;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    background:var(--primary-light);
+    color:var(--primary);
+    font-weight:700;
+    transition:.3s;
+}
+
+.quick-actions button:hover{
+    background:var(--primary);
+    color:white;
+}
+
+/* ==============================
+   ACTIVITY
+============================== */
+
+.activity-item{
+    background:var(--background);
+    border-radius:14px;
+    padding:18px;
+    color:var(--text-light);
+}
+
+/* ==============================
+   INFO ROWS
+============================== */
+
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.info-row:last-child{
+    border-bottom:none;
+}
+
+.info-row span{
+    color:var(--text-light);
+}
+
+.info-row strong{
+    color:var(--secondary);
+}
+
+/* ==============================
+   SUMMARY
+============================== */
+
+.summary-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.summary-item:last-child{
+    border-bottom:none;
+}
+
+.summary-item svg{
+    color:var(--primary);
+    font-size:18px;
+}
+
+.summary-item span{
+    color:var(--secondary);
+    font-weight:600;
+}
+
+/* ==============================
+   LOADING
+============================== */
+
+.loading-state{
+    background:white;
+    padding:80px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:var(--shadow);
+    font-size:1.1rem;
+    color:var(--secondary);
+}
+
+/* ==============================
+   EMPTY
+============================== */
+
+.empty-state{
+    background:white;
+    padding:80px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:var(--shadow);
+    color:var(--danger);
+    font-size:1.1rem;
+    font-weight:700;
+}
+
+/* ==============================
+   RESPONSIVE
+============================== */
+
+@media(max-width:1200px){
+
+    .overview-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .details-layout{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .course-details-page{
+        padding:20px;
+    }
+
+    .course-banner{
+        padding:28px;
+    }
+
+    .course-banner h1{
+        font-size:1.8rem;
+    }
+
+    .quick-actions{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:576px){
+
+    .overview-grid{
+        grid-template-columns:1fr;
+    }
+
+    .course-banner{
+        padding:22px;
+    }
+
+    .course-banner h1{
+        font-size:1.5rem;
+    }
+
+    .course-banner p{
+        font-size:.95rem;
+    }
+
+    .details-card{
+        padding:20px;
+    }
+
+    .info-row{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:5px;
+    }
+
+    .summary-item{
+        gap:10px;
+    }
+
+}

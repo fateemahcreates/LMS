@@ -1,104 +1,270 @@
 /* ==========================================
-   Users Page
+   USERS TOOLBAR
 ========================================== */
 
-.users-page {
-  padding: 30px;
-  min-height: 100vh;
-  background: #f8fafc;
+.users-toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  margin:28px 0;
+  flex-wrap:wrap;
+}
+
+.users-page-header{
+  padding: 20px;
+  margin-top: 20px;
+  
+}
+
+.new-user-btn{
+  padding: 20px;
+  margin-top: 20px;
+  
+
+}
+/* ==========================================
+   GMT USERS TOOLBAR
+========================================== */
+
+.gmt-users-toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    margin:30px 0;
+    flex-wrap:wrap;
 }
 
 /* ==========================================
-   Header
+   SEARCH
 ========================================== */
 
-.users-header {
-  margin-bottom: 30px;
+.gmt-users-search{
+    position:relative;
+    flex:1;
+    min-width:320px;
+    max-width:520px;
 }
 
-.users-header h2 {
-  font-size: 2rem;
-  color: #0f172a;
-  margin-bottom: 8px;
-  font-weight: 700;
+.gmt-users-search-icon{
+    position:absolute;
+    left:18px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--primary);
+    font-size:15px;
 }
 
-.users-header p {
-  color: #64748b;
-  font-size: 1rem;
+.gmt-users-search input{
+    width:100%;
+    height:52px;
+
+    padding:0 18px 0 50px;
+
+    border:1px solid var(--border);
+    border-radius:14px;
+
+    background:#fff;
+
+    color:var(--text);
+
+    font-size:15px;
+
+    transition:.25s;
+}
+
+.gmt-users-search input::placeholder{
+    color:#94a3b8;
+}
+
+.gmt-users-search input:focus{
+    outline:none;
+    border-color:var(--primary);
+
+    box-shadow:
+    0 0 0 4px rgba(35,122,196,.12);
 }
 
 /* ==========================================
-   Sections
+   NEW USER BUTTON
 ========================================== */
 
-.user-form-section,
-.user-table-section {
-  background: #ffffff;
-  border-radius: 18px;
-  padding: 28px;
-  margin-bottom: 30px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+.new-user-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    padding:14px 24px;
+
+    border:none;
+    border-radius:14px;
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        #1d4ed8
+    );
+
+    color:#fff;
+
+    font-size:15px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s ease;
+
+    box-shadow:
+        0 10px 25px rgba(37,99,235,.25);
+}
+
+.new-user-btn svg{
+    font-size:15px;
+}
+
+.new-user-btn:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 16px 35px rgba(37,99,235,.35);
+
+    background:linear-gradient(
+        135deg,
+        #1d4ed8,
+        var(--primary)
+    );
+}
+
+.new-user-btn:active{
+    transform:scale(.98);
+}
+
+.new-user-btn:focus{
+    outline:none;
+
+    box-shadow:
+        0 0 0 4px rgba(37,99,235,.18),
+        0 12px 30px rgba(37,99,235,.30);
 }
 
 /* ==========================================
-   Section Header
+   RESPONSIVE
 ========================================== */
 
-.section-header {
-  margin-bottom: 24px;
+@media (max-width:768px){
+
+.new-user-btn{
+
+    width:100%;
+
+    padding:14px;
+
 }
 
-.section-header h3 {
-  font-size: 1.3rem;
-  color: #0f172a;
-  margin-bottom: 6px;
+}
+/* ==========================================
+   FILTERS
+========================================== */
+
+.gmt-users-filters{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
 }
 
-.section-header p {
-  color: #64748b;
-  font-size: 0.95rem;
+.gmt-users-select{
+    height:52px;
+    min-width:180px;
+
+    padding:0 16px;
+
+    border:1px solid var(--border);
+    border-radius:14px;
+
+    background:#fff;
+
+    color:var(--text);
+
+    font-size:14px;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.gmt-users-select:hover{
+    border-color:var(--primary);
+}
+
+.gmt-users-select:focus{
+    outline:none;
+    border-color:var(--primary);
+
+    box-shadow:
+    0 0 0 4px rgba(35,122,196,.12);
 }
 
 /* ==========================================
-   Responsive
+   RESPONSIVE
 ========================================== */
 
-@media (max-width: 768px) {
-  .users-page {
-    padding: 20px;
-  }
+@media (max-width:992px){
 
-  .user-form-section,
-  .user-table-section {
-    padding: 20px;
-  }
-
-  .users-header h2 {
-    font-size: 1.7rem;
-  }
-
-  .section-header h3 {
-    font-size: 1.15rem;
-  }
+.gmt-users-toolbar{
+    flex-direction:column;
+    align-items:stretch;
 }
 
-@media (max-width: 480px) {
-  .users-page {
-    padding: 15px;
-  }
+.gmt-users-search{
+    max-width:100%;
+}
 
-  .users-header h2 {
-    font-size: 1.5rem;
-  }
+.gmt-users-filters{
+    width:100%;
+}
 
-  .users-header p {
-    font-size: 0.9rem;
-  }
+.gmt-users-select{
+    flex:1;
+    min-width:160px;
+}
 
-  .user-form-section,
-  .user-table-section {
-    padding: 16px;
-  }
+}
+
+@media (max-width:768px){
+
+.gmt-users-search{
+    min-width:100%;
+}
+
+.gmt-users-filters{
+    flex-direction:column;
+}
+
+.gmt-users-select{
+    width:100%;
+}
+
+}
+
+@media (max-width:500px){
+
+.gmt-users-toolbar{
+    margin:20px 0;
+    gap:15px;
+}
+
+.gmt-users-search input{
+    height:48px;
+    font-size:14px;
+}
+
+.gmt-users-select{
+    width:100%;
+    height:48px;
+    font-size:14px;
+}
+
 }

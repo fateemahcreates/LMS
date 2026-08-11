@@ -1,0 +1,297 @@
+/* ==========================================
+   ACADEMIC PROGRESS CARD
+========================================== */
+
+.progress-card {
+  background: #ffffff;
+  border: 1px solid #ececec;
+  border-radius: 24px;
+  padding: 30px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+
+  position: relative;
+  overflow: hidden;
+
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06);
+
+  transition: all .35s ease;
+}
+
+.progress-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+/* GMT Accent */
+
+.progress-card::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 5px;
+  height: 100%;
+
+  background: #c8102e;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.progress-header h2 {
+  font-size: .82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  color: #c8102e;
+
+  margin-bottom: 12px;
+}
+
+.progress-header h3 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #10213a;
+  line-height: 1.4;
+}
+
+.progress-percent {
+  width: 75px;
+  height: 75px;
+
+  border-radius: 50%;
+
+  background: rgba(200,16,46,.08);
+
+  color: #c8102e;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 1.2rem;
+  font-weight: 700;
+
+  flex-shrink: 0;
+}
+
+/* ==========================================
+   PROGRESS BAR
+========================================== */
+
+.progress-bar {
+  width: 100%;
+  height: 12px;
+
+  background: #edf2f7;
+
+  border-radius: 30px;
+
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+
+  border-radius: 30px;
+
+  background: linear-gradient(
+      90deg,
+      #c8102e,
+      #e11d48
+  );
+
+  transition: width .6s ease;
+}
+
+/* ==========================================
+   DETAILS GRID
+========================================== */
+
+.progress-details {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 18px;
+}
+
+.detail {
+  padding: 18px;
+
+  background: #fafafa;
+
+  border: 1px solid #ececec;
+
+  border-radius: 16px;
+
+  transition: .3s;
+}
+
+.detail:hover {
+  background: #fff;
+
+  border-color: rgba(200,16,46,.25);
+
+  transform: translateY(-2px);
+}
+
+.detail span {
+  display: block;
+
+  color: #94a3b8;
+
+  font-size: .72rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+
+  margin-bottom: 8px;
+}
+
+.detail strong {
+  display: block;
+
+  color: #10213a;
+
+  font-size: 1rem;
+
+  font-weight: 700;
+}
+
+/* ==========================================
+   STATUS COLORS
+========================================== */
+
+.status {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 8px 14px;
+
+  border-radius: 30px;
+
+  font-size: .82rem;
+
+  width: fit-content;
+}
+
+.status.active,
+.status.in-progress {
+  background: rgba(16,185,129,.12);
+  color: #059669;
+}
+
+.status.completed {
+  background: rgba(37,99,235,.12);
+  color: #2563eb;
+}
+
+.status.pending {
+  background: rgba(245,158,11,.12);
+  color: #d97706;
+}
+
+.status.suspended {
+  background: rgba(239,68,68,.12);
+  color: #dc2626;
+}
+
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+.empty-progress {
+  min-height: 320px;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+}
+
+.empty-progress h3 {
+  font-size: 1.5rem;
+  color: #10213a;
+
+  margin-bottom: 12px;
+}
+
+.empty-progress p {
+  color: #64748b;
+
+  max-width: 320px;
+
+  line-height: 1.7;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 992px){
+
+  .progress-header{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+}
+
+@media (max-width:768px){
+
+  .progress-card{
+    padding:22px;
+  }
+
+  .progress-details{
+    grid-template-columns:1fr;
+  }
+
+  .progress-percent{
+    width:65px;
+    height:65px;
+    font-size:1rem;
+  }
+
+  .progress-header h3{
+    font-size:1.45rem;
+  }
+
+}
+
+@media (max-width:480px){
+
+  .progress-card{
+    padding:18px;
+  }
+
+  .detail{
+    padding:16px;
+  }
+
+  .progress-header h3{
+    font-size:1.25rem;
+  }
+
+}

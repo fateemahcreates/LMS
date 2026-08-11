@@ -1,258 +1,213 @@
-import "../styles/SideBar.css";
-
 import { NavLink, useNavigate } from "react-router-dom";
-import { notify } from "../utils/notify";
 
 import {
-  FaGraduationCap,
   FaChartPie,
   FaUserGraduate,
   FaBookOpen,
   FaClipboardList,
+  FaClipboardCheck,
+  FaCertificate,
   FaBullhorn,
   FaUsers,
   FaCog,
-  FaTimes,
   FaSignOutAlt,
-  FaClipboardCheck,
-  FaCertificate,
+  FaTimes,
 } from "react-icons/fa";
 
-function SideBar({ sidebarOpen, setSidebarOpen }) {
+import "../styles/AdminSidebar.css";
+
+const menuSections = [
+  {
+    title: "MAIN",
+    items: [
+      {
+        label: "Dashboard",
+        path: "/",
+        icon: FaChartPie,
+      },
+    ],
+  },
+
+  {
+    title: "ACADEMIC",
+    items: [
+      {
+        label: "Students",
+        path: "/students",
+        icon: FaUserGraduate,
+      },
+      {
+        label: "Courses",
+        path: "/courses",
+        icon: FaBookOpen,
+      },
+      {
+        label: "Assignments",
+        path: "/assignments",
+        icon: FaClipboardList,
+      },
+      {
+        label: "Enrollments",
+        path: "/enrollments",
+        icon: FaClipboardCheck,
+      },
+      {
+        label: "Certificates",
+        path: "/admin/certificates",
+        icon: FaCertificate,
+      },
+    ],
+  },
+
+  {
+    title: "COMMUNICATION",
+    items: [
+      {
+        label: "Announcements",
+        path: "/admin/announcements",
+        icon: FaBullhorn,
+      },
+    ],
+  },
+
+  {
+    title: "ADMINISTRATION",
+    items: [
+      {
+        label: "Users",
+        path: "/users",
+        icon: FaUsers,
+      },
+      {
+        label: "Settings",
+        path: "/settings",
+        icon: FaCog,
+      },
+    ],
+  },
+];
+function AdminSidebar({ sidebarOpen, closeSidebar }) {
   const navigate = useNavigate();
 
-  // ==========================
-  // Logout
-  // ==========================
   const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
 
-    notify.confirmLogout(() => {
-
-      // Remove saved login data
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-
-      // Close sidebar
-      setSidebarOpen(false);
-
-      // Notification
-      notify.info("You have been logged out.");
-
-      // Redirect after toast displays
-      setTimeout(() => {
-        navigate("/login");
-      }, 800);
-
-    });
-
+    navigate("/login");
   };
 
+  const handleLinkClick = () => {
+    if (window.innerWidth <= 992) {
+      closeSidebar();
+    }
+  };
 
   return (
-    <>
-      {/* Mobile Overlay */}
-      {sidebarOpen && (
-        <div
-          className="sidebar-overlay"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
+    <aside
+      className={`gmt-admin-sidebar ${
+        sidebarOpen
+          ? "gmt-admin-sidebar-open"
+          : "gmt-admin-sidebar-closed"
+      }`}
+    >
+      {/* ==========================
+          Mobile Close Button
+      ========================== */}
 
-
-      <aside
-        className={`sidebar ${
-          sidebarOpen ? "open" : ""
-        }`}
+      <button
+        className="gmt-admin-sidebar-close"
+        onClick={closeSidebar}
       >
+        <FaTimes />
+      </button>
 
+      {/* ==========================
+          Logo
+      ========================== */}
 
-        {/* ==========================
-            Sidebar Header
-        ========================== */}
+      <div className="gmt-admin-sidebar-brand">
 
-        <div className="sidebar-header">
+        <div className="gmt-admin-sidebar-logo">
+          GMT
+        </div>
 
-          <div className="sidebar-logo">
+        <div>
 
-            <FaGraduationCap className="logo-icon" />
+          <h2>GMT Software</h2>
 
-            <span>
-              LMS Portal
-            </span>
-
-          </div>
-
-
-          <button
-            className="close-btn"
-            onClick={() => setSidebarOpen(false)}
-          >
-            <FaTimes />
-          </button>
+          <p>Learning Management System</p>
 
         </div>
 
+      </div>
 
+      <nav className="gmt-admin-sidebar-menu">
 
-        {/* ==========================
-            Navigation
-        ========================== */}
+  {menuSections.map((section) => (
 
-        <nav className="sidebar-nav">
+    <div
+      key={section.title}
+      className="gmt-admin-sidebar-section"
+    >
 
+      <span className="gmt-admin-sidebar-heading">
+        {section.title}
+      </span>
 
-          <NavLink
-            to="/"
-            end
-            onClick={() => setSidebarOpen(false)}
-          >
-            <FaChartPie />
-            <span>
-              Dashboard
-            </span>
-          </NavLink>
+      {section.items.map((item) => {
 
+        const Icon = item.icon;
 
-
-          <NavLink
-            to="/students"
-            onClick={() => setSidebarOpen(false)}
-          >
-            <FaUserGraduate />
-            <span>
-              Students
-            </span>
-          </NavLink>
-
-
+        return (
 
           <NavLink
-            to="/courses"
-            onClick={() => setSidebarOpen(false)}
+            key={item.path}
+            to={item.path}
+            end={item.path === "/"}
+            onClick={handleLinkClick}
+            className={({ isActive }) =>
+              `gmt-admin-sidebar-link ${
+                isActive
+                  ? "gmt-admin-sidebar-link-active"
+                  : ""
+              }`
+            }
           >
-            <FaBookOpen />
-            <span>
-              Courses
-            </span>
+
+            <Icon />
+
+            <span>{item.label}</span>
+
           </NavLink>
 
+        );
 
+      })}
 
-          <NavLink
-            to="/enrollments"
-            onClick={() => setSidebarOpen(false)}
-          >
-            <FaClipboardCheck />
-            <span>
-              Enrollments
-            </span>
-          </NavLink>
+    </div>
 
+  ))}
 
+</nav>
 
-          <NavLink
-            to="/assignments"
-            onClick={() => setSidebarOpen(false)}
-          >
-            <FaClipboardList />
-            <span>
-              Assignments
-            </span>
-          </NavLink>
+      {/* ==========================
+          Footer
+      ========================== */}
 
+      <div className="gmt-admin-sidebar-footer">
 
+        <button
+          className="gmt-admin-sidebar-logout"
+          onClick={handleLogout}
+        >
+          <FaSignOutAlt />
+          <span>Logout</span>
+        </button>
 
-          <NavLink
-            to="/admin/announcements"
-            onClick={() => setSidebarOpen(false)}
-          >
-            <FaBullhorn />
-            <span>
-              Announcements
-            </span>
-          </NavLink>
+      </div>
 
-
-
-          <NavLink
-            to="/admin/certificates"
-            onClick={() => setSidebarOpen(false)}
-          >
-            <FaCertificate />
-            <span>
-              Certificates
-            </span>
-          </NavLink>
-
-
-
-          <NavLink
-            to="/users"
-            onClick={() => setSidebarOpen(false)}
-          >
-            <FaUsers />
-            <span>
-              Users
-            </span>
-          </NavLink>
-
-
-
-          <NavLink
-            to="/settings"
-            onClick={() => setSidebarOpen(false)}
-          >
-            <FaCog />
-            <span>
-              Settings
-            </span>
-          </NavLink>
-
-
-        </nav>
-
-
-
-
-        {/* ==========================
-            Footer
-        ========================== */}
-
-        <div className="sidebar-footer">
-
-
-          <button
-            className="logout-btn"
-            onClick={handleLogout}
-          >
-
-            <FaSignOutAlt />
-
-            <span>
-              Logout
-            </span>
-
-          </button>
-
-
-
-          <p>
-            LMS Portal
-          </p>
-
-
-          <small>
-            Version 1.0
-          </small>
-
-
-        </div>
-
-
-      </aside>
-    </>
+    </aside>
   );
 }
 
-
-export default SideBar;
+export default AdminSidebar;

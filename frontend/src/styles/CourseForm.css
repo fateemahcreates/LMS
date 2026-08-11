@@ -1,213 +1,226 @@
 /* ==========================================
-   COURSE FORM
+   GMT COURSE FORM
 ========================================== */
 
-.course-form {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  padding: 28px;
-  height: calc(100vh - 90px);
-  overflow-y: auto;
-  background: #fff;
+.gmt-course-form{
+display:flex;
+flex-direction:column;
+gap:32px;
 }
 
-/* ==========================================
-   FORM GRID
-========================================== */
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 22px;
+.gmt-course-section{
+background:#fff;
+border:1px solid #ECEFF3;
+border-radius:20px;
+padding:28px;
+box-shadow:0 8px 30px rgba(15,23,42,.04);
 }
 
-.full-width {
-  grid-column: 1 / -1;
+.gmt-course-section-title{
+font-size:18px;
+font-weight:700;
+color:#111827;
+margin-bottom:24px;
+padding-bottom:12px;
+border-bottom:2px solid #F3F4F6;
 }
 
-/* ==========================================
-   INPUT GROUP
-========================================== */
-
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.gmt-course-grid{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:22px;
 }
 
-.input-group label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #1e293b;
-}
-
-/* ==========================================
-   INPUT WRAPPER
-========================================== */
-
-.input-wrapper{
-    display:flex;
-    align-items:center;
-
-    height:56px;
-
-    background:#fff;
-
-    border:1px solid #dbe4f0;
-    border-radius:12px;
-
-    padding:0 16px;
-
-    overflow:hidden;
-
-    transition:.25s;
-}
-
-.input-wrapper:hover {
-  border-color: #3b82f6;
-}
-
-.input-wrapper:focus-within {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
-}
-
-.input-icon {
-  color: #64748b;
-  font-size: 16px;
-  flex-shrink: 0;
+.full-width{
+grid-column:1/-1;
 }
 
 /* ==========================================
    INPUTS
 ========================================== */
 
-.input-wrapper input,
-.input-wrapper select,
-.input-wrapper textarea {
-  width: 100%;
-  height: 100%;
-  border: 0 !important;
-  outline: 0;
-  background: transparent;
-  box-shadow: none !important;
-  appearance: none;
-  -webkit-appearance: none;
-  font-size: 15px;
-  color: #1e293b;
-  padding: 0 16px;
-  font-family: inherit;
+.gmt-input-group{
+display:flex;
+flex-direction:column;
+gap:10px;
 }
 
-.input-wrapper input::placeholder,
-.input-wrapper textarea::placeholder {
-  color: #94a3b8;
+.gmt-input-group label{
+font-size:14px;
+font-weight:600;
+color:#374151;
 }
 
-.input-wrapper select {
-  cursor: pointer;
+.gmt-input-wrapper{
+position:relative;
+display:flex;
+align-items:center;
 }
 
-/* ==========================================
-   TEXTAREA
-========================================== */
-
-.textarea-wrapper{
-    align-items:flex-start;
-    height:auto;
-    padding:16px;
+.gmt-input-icon{
+position:absolute;
+left:18px;
+font-size:16px;
+color:#9CA3AF;
+transition:.25s;
 }
 
-.textarea-wrapper textarea{
-    min-height:150px;
-    padding:0 0 0 12px;
+.gmt-input-wrapper input,
+.gmt-input-wrapper select,
+.gmt-input-wrapper textarea{
+
+width:100%;
+border:1px solid #E5E7EB;
+border-radius:14px;
+background:#fff;
+padding:15px 18px 15px 52px;
+font-size:15px;
+font-family:inherit;
+color:#111827;
+transition:.25s;
+
 }
 
-textarea {
-  resize: vertical;
-  min-height: 140px;
-  line-height: 1.6;
+.gmt-input-wrapper textarea{
+resize:vertical;
+min-height:140px;
+padding-top:18px;
 }
 
-/* ==========================================
-   SUBMIT BUTTON
-========================================== */
-
-.submit-btn {
-  width: 100%;
-  border: none;
-  border-radius: 12px;
-  background: #2563eb;
-  color: white;
-  padding: 16px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  transition: 0.25s ease;
-  margin-top: 8px;
+.gmt-input-wrapper.textarea{
+align-items:flex-start;
 }
 
-.submit-btn:hover {
-  background: #1d4ed8;
-  transform: translateY(-1px);
+.gmt-input-wrapper.textarea .gmt-input-icon{
+top:18px;
 }
 
-.submit-btn:active {
-  transform: translateY(0);
+.gmt-input-wrapper input:focus,
+.gmt-input-wrapper select:focus,
+.gmt-input-wrapper textarea:focus{
+
+outline:none;
+border-color:#C91F26;
+box-shadow:0 0 0 4px rgba(201,31,38,.12);
+
+}
+
+.gmt-input-wrapper:focus-within .gmt-input-icon{
+color:#C91F26;
 }
 
 /* ==========================================
-   SCROLLBAR
+   SELECT
 ========================================== */
 
-.course-form::-webkit-scrollbar {
-  width: 6px;
+.gmt-input-wrapper select{
+cursor:pointer;
+appearance:none;
 }
 
-.course-form::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 20px;
+/* ==========================================
+   BUTTON
+========================================== */
+
+.gmt-course-submit{
+
+display:flex;
+justify-content:center;
+align-items:center;
+gap:12px;
+
+width:100%;
+
+padding:18px;
+
+border:none;
+
+border-radius:16px;
+
+background:linear-gradient(
+135deg,
+#C91F26,
+#A5161C
+);
+
+color:#fff;
+
+font-size:16px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.3s;
+
+box-shadow:
+0 12px 30px rgba(201,31,38,.28);
+
 }
 
-.course-form::-webkit-scrollbar-track {
-  background: transparent;
+.gmt-course-submit:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+0 16px 35px rgba(201,31,38,.35);
+
+}
+
+.gmt-course-submit:active{
+transform:scale(.98);
+}
+
+/* ==========================================
+   PLACEHOLDER
+========================================== */
+
+::placeholder{
+color:#9CA3AF;
 }
 
 /* ==========================================
    RESPONSIVE
 ========================================== */
 
-@media (max-width: 992px) {
-  .course-form {
-    height: auto;
-    padding: 24px;
-  }
+@media(max-width:900px){
 
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
+.gmt-course-grid{
 
-  .full-width {
-    grid-column: auto;
-  }
+grid-template-columns:1fr;
+
 }
 
-@media (max-width: 576px) {
-  .course-form {
-    padding: 20px;
-  }
+.full-width{
 
-  .input-wrapper {
-    padding: 0 14px;
-  }
+grid-column:auto;
 
-  .submit-btn {
-    padding: 15px;
-    font-size: 14px;
-  }
+}
+
+.gmt-course-section{
+
+padding:22px;
+
+}
+
+}
+
+@media(max-width:600px){
+
+.gmt-course-section{
+
+padding:18px;
+
+border-radius:16px;
+
+}
+
+.gmt-course-submit{
+
+padding:16px;
+
+font-size:15px;
+
+}
+
 }

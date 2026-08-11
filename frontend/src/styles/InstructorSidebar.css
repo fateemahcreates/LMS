@@ -1,0 +1,625 @@
+/* ==========================================================
+   GMT SOFTWARE ACADEMY
+   INSTRUCTOR SIDEBAR
+   PREMIUM RESPONSIVE VERSION
+========================================================== */
+
+/* ==========================================================
+   SIDEBAR CONTAINER
+========================================================== */
+
+.instructor-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 280px;
+    height: 100vh;
+
+    background: var(--surface, #ffffff);
+
+    display: flex;
+    flex-direction: column;
+
+    border-right: 1px solid var(--border, #e5e7eb);
+
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.06);
+
+    z-index: 2000;
+
+    transform: translateX(0);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+    overflow: hidden;
+}
+
+
+/* ==========================================================
+   SIDEBAR OPEN / CLOSED
+========================================================== */
+
+.instructor-sidebar-open {
+    transform: translateX(0);
+}
+
+.instructor-sidebar-closed {
+    transform: translateX(-100%);
+}
+
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.instructor-sidebar-header {
+    height: 85px;
+    min-height: 85px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 18px 18px;
+
+    border-bottom: 1px solid var(--border, #e5e7eb);
+
+    background: var(--surface, #ffffff);
+}
+
+
+/* ==========================================================
+   BRAND
+========================================================== */
+
+.instructor-sidebar-brand {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    min-width: 0;
+}
+
+
+.instructor-sidebar-logo {
+    width: 44px;
+    height: 44px;
+
+    object-fit: contain;
+
+    border-radius: 10px;
+
+    flex-shrink: 0;
+}
+
+
+.instructor-sidebar-brand > div {
+    min-width: 0;
+}
+
+
+.instructor-sidebar-brand h3 {
+    margin: 0;
+
+    font-size: 15px;
+    font-weight: 800;
+
+    color: var(--secondary, #111827);
+
+    white-space: nowrap;
+}
+
+
+.instructor-sidebar-brand span {
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 11px;
+
+    color: var(--text-light, #6b7280);
+
+    white-space: nowrap;
+}
+
+
+/* ==========================================================
+   CLOSE BUTTON
+========================================================== */
+
+.instructor-sidebar-close {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: var(--primary-light, #fcecec);
+
+    color: var(--primary, #c91f26);
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+.instructor-sidebar-close svg {
+    font-size: 14px;
+}
+
+
+.instructor-sidebar-close:hover {
+    background: var(--primary, #c91f26);
+
+    color: #ffffff;
+
+    transform: rotate(90deg);
+}
+
+
+/* ==========================================================
+   PROFILE CARD
+========================================================== */
+
+.instructor-sidebar-profile {
+    margin: 18px;
+
+    padding: 14px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    background: var(--background, #f8f9fb);
+
+    border: 1px solid var(--border, #e5e7eb);
+
+    border-radius: 14px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+}
+
+
+.instructor-sidebar-profile > svg {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    color: var(--primary, #c91f26);
+}
+
+
+.instructor-sidebar-profile > div {
+    min-width: 0;
+}
+
+
+.instructor-sidebar-profile h4 {
+    margin: 0 0 3px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    color: var(--secondary, #111827);
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+.instructor-sidebar-profile span {
+    font-size: 11px;
+
+    color: var(--text-light, #6b7280);
+}
+
+
+/* ==========================================================
+   MENU
+========================================================== */
+
+.instructor-sidebar-menu {
+    flex: 1;
+
+    padding: 0 14px 15px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+/* Scrollbar */
+
+.instructor-sidebar-menu::-webkit-scrollbar {
+    width: 5px;
+}
+
+
+.instructor-sidebar-menu::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.instructor-sidebar-menu::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+
+    border-radius: 20px;
+}
+
+
+/* ==========================================================
+   MENU LINK
+========================================================== */
+
+.instructor-sidebar-link {
+    width: 100%;
+    height: 48px;
+
+    margin-bottom: 7px;
+
+    padding: 0 14px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    color: var(--text-light, #6b7280);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.instructor-sidebar-link:hover {
+    background: var(--primary-light, #fcecec);
+
+    color: var(--primary, #c91f26);
+
+    transform: translateX(2px);
+}
+
+
+/* ==========================================================
+   ICON
+========================================================== */
+
+.instructor-sidebar-icon {
+    width: 22px;
+    min-width: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.instructor-sidebar-icon svg {
+    font-size: 16px;
+}
+
+
+/* ==========================================================
+   ACTIVE LINK
+========================================================== */
+
+.instructor-sidebar-link.active {
+    background: var(--primary, #c91f26);
+
+    color: #ffffff;
+
+    box-shadow:
+        0 7px 18px rgba(201, 31, 38, 0.22);
+}
+
+
+.instructor-sidebar-link.active:hover {
+    background: var(--primary-dark, #a5161c);
+
+    color: #ffffff;
+
+    transform: translateX(0);
+}
+
+
+/* ==========================================================
+   BOTTOM SECTION
+========================================================== */
+
+.instructor-sidebar-bottom {
+    padding: 14px;
+
+    border-top: 1px solid var(--border, #e5e7eb);
+
+    background: var(--surface, #ffffff);
+
+    flex-shrink: 0;
+}
+
+
+.instructor-sidebar-bottom .instructor-sidebar-link {
+    margin-bottom: 6px;
+}
+
+
+/* ==========================================================
+   SETTINGS ICON
+========================================================== */
+
+.instructor-sidebar-bottom .instructor-sidebar-link > svg {
+    width: 22px;
+    min-width: 22px;
+}
+
+
+/* ==========================================================
+   LOGOUT
+========================================================== */
+
+.instructor-sidebar-logout {
+    width: 100%;
+    height: 48px;
+
+    padding: 0 14px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: transparent;
+
+    color: #dc2626;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+.instructor-sidebar-logout svg {
+    width: 22px;
+    min-width: 22px;
+}
+
+
+.instructor-sidebar-logout:hover {
+    background: #fee2e2;
+
+    color: #b91c1c;
+}
+
+
+/* ==========================================================
+   MOBILE OVERLAY
+========================================================== */
+
+.instructor-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(15, 23, 42, 0.48);
+
+    backdrop-filter: blur(2px);
+
+    -webkit-backdrop-filter: blur(2px);
+
+    z-index: 1900;
+}
+
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width: 1100px) {
+
+    .instructor-sidebar {
+        width: 260px;
+    }
+
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 900px) {
+
+    .instructor-sidebar {
+
+        width: 280px;
+
+        max-width: 85vw;
+
+        transform: translateX(-100%);
+
+        box-shadow:
+            10px 0 35px rgba(0, 0, 0, 0.15);
+
+    }
+
+
+    .instructor-sidebar-open {
+        transform: translateX(0);
+    }
+
+
+    .instructor-sidebar-closed {
+        transform: translateX(-100%);
+    }
+
+
+    .instructor-sidebar-header {
+        height: 78px;
+        min-height: 78px;
+
+        padding: 16px;
+    }
+
+
+    .instructor-sidebar-logo {
+        width: 40px;
+        height: 40px;
+    }
+
+
+    .instructor-sidebar-profile {
+        margin: 15px;
+
+        padding: 13px;
+    }
+
+
+    .instructor-sidebar-menu {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+
+    .instructor-sidebar-bottom {
+        padding: 12px;
+    }
+
+}
+
+
+/* ==========================================================
+   SMALL MOBILE
+========================================================== */
+
+@media (max-width: 576px) {
+
+    .instructor-sidebar {
+
+        width: 275px;
+
+        max-width: 88vw;
+
+    }
+
+
+    .instructor-sidebar-header {
+
+        padding: 15px;
+
+    }
+
+
+    .instructor-sidebar-brand h3 {
+
+        font-size: 14px;
+
+    }
+
+
+    .instructor-sidebar-brand span {
+
+        font-size: 10px;
+
+    }
+
+
+    .instructor-sidebar-close {
+
+        width: 32px;
+        height: 32px;
+
+    }
+
+
+    .instructor-sidebar-profile {
+
+        margin: 14px;
+
+    }
+
+
+    .instructor-sidebar-link {
+
+        height: 46px;
+
+        font-size: 13px;
+
+    }
+
+}
+
+
+/* ==========================================================
+   VERY SMALL DEVICES
+========================================================== */
+
+@media (max-width: 380px) {
+
+    .instructor-sidebar {
+
+        width: 260px;
+
+    }
+
+
+    .instructor-sidebar-profile {
+
+        padding: 11px;
+
+    }
+
+
+    .instructor-sidebar-profile > svg {
+
+        width: 38px;
+        height: 38px;
+
+    }
+
+
+    .instructor-sidebar-link {
+
+        height: 44px;
+
+        gap: 12px;
+
+        padding: 0 12px;
+
+    }
+
+}

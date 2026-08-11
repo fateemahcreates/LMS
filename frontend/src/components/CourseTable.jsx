@@ -4,9 +4,11 @@ import "../styles/CourseTable.css";
 import {
   FaSearch,
   FaBookOpen,
+  FaUsers,
+  FaUserTie,
+  FaClock,
   FaEdit,
   FaTrash,
-  FaUsers,
 } from "react-icons/fa";
 
 function CourseTable({
@@ -46,41 +48,61 @@ function CourseTable({
     }
   };
 
+  const getLevelClass = (level) => {
+    switch (level) {
+      case "Beginner":
+        return "beginner";
+
+      case "Intermediate":
+        return "intermediate";
+
+      case "Advanced":
+        return "advanced";
+
+      default:
+        return "";
+    }
+  };
+
   return (
-    <div className="course-table">
+    <div className="gmt-course-table">
 
       {/* Header */}
 
-      <div className="table-header">
+      <div className="gmt-course-table-header">
 
         <div>
+
           <h2>Course Directory</h2>
 
           <p>
-            Manage all academy courses.
+            Manage all GMT Academy programmes.
           </p>
+
         </div>
 
-        <div className="course-total">
+        <div className="gmt-course-total">
+
           <FaBookOpen />
 
           <span>
             {courses.length} Course
             {courses.length !== 1 && "s"}
           </span>
+
         </div>
 
       </div>
 
       {/* Search */}
 
-      <div className="search-box">
+      <div className="gmt-course-search">
 
-        <FaSearch className="search-icon" />
+        <FaSearch className="gmt-course-search-icon" />
 
         <input
           type="text"
-          placeholder="Search courses..."
+          placeholder="Search by title, code, category or instructor..."
           value={searchTerm}
           onChange={(e) =>
             setSearchTerm(e.target.value)
@@ -89,23 +111,32 @@ function CourseTable({
 
       </div>
 
-      {/* Desktop Table */}
+      {/* Desktop */}
 
-      <div className="table-wrapper">
+      <div className="gmt-course-table-wrapper">
 
         <table>
 
           <thead>
 
             <tr>
-              <th>Title</th>
-              <th>Code</th>
+
+              <th>Course</th>
+
               <th>Category</th>
+
+              <th>Instructor</th>
+
               <th>Level</th>
+
               <th>Duration</th>
+
               <th>Students</th>
+
               <th>Status</th>
+
               <th>Actions</th>
+
             </tr>
 
           </thead>
@@ -115,21 +146,24 @@ function CourseTable({
             {filteredCourses.length === 0 ? (
 
               <tr>
+
                 <td colSpan="8">
 
-                  <div className="empty-state">
+                  <div className="gmt-course-empty-state">
 
-                    <FaBookOpen className="empty-icon" />
+                    <FaBookOpen className="gmt-course-empty-icon" />
 
                     <h3>No Courses Found</h3>
 
                     <p>
-                      Create your first course to get started.
+                      Create your first course to
+                      get started.
                     </p>
 
                   </div>
 
                 </td>
+
               </tr>
 
             ) : (
@@ -138,55 +172,166 @@ function CourseTable({
 
                 <tr key={course._id}>
 
-                  <td>{course.title}</td>
-
-                  <td>{course.code}</td>
-
-                  <td>{course.category}</td>
-
-                  <td>{course.level}</td>
-
-                  <td>{course.duration}</td>
+                  {/* Course */}
 
                   <td>
-                    <FaUsers />
 
-                    {" "}
+                    <div className="gmt-course-info">
 
-                    {course.students?.length || 0}
+                      <div className="gmt-course-avatar">
+
+                        <FaBookOpen />
+
+                      </div>
+
+                      <div>
+
+                        <strong>
+                          {course.title}
+                        </strong>
+
+                        <p>
+                          {course.code}
+                        </p>
+
+                      </div>
+
+                    </div>
+
                   </td>
 
+                  {/* Category */}
+
                   <td>
 
-                    <span
-                      className={`status ${getStatusClass(
-                        course.status
-                      )}`}
-                    >
-                      {course.status}
+                    <span className="gmt-course-category-badge">
+
+                      {course.category}
+
                     </span>
 
                   </td>
 
-                  <td className="action-buttons">
+                  {/* Instructor */}
 
-                    <button
-                      className="edit-btn"
-                      onClick={() =>
-                        handleEdit(course)
-                      }
-                    >
-                      <FaEdit />
-                    </button>
+                  <td>
 
-                    <button
-                      className="delete-btn"
-                      onClick={() =>
-                        handleDelete(course._id)
-                      }
+                    <div className="gmt-course-instructor">
+
+                      <FaUserTie />
+
+                      <span>
+
+                        {course.instructor ||
+                          "Not Assigned"}
+
+                      </span>
+
+                    </div>
+
+                  </td>
+
+                  {/* Level */}
+
+                  <td>
+
+                    <span
+                      className={`gmt-course-level-badge ${getLevelClass(
+                        course.level
+                      )}`}
                     >
-                      <FaTrash />
-                    </button>
+
+                      {course.level}
+
+                    </span>
+
+                  </td>
+
+                  {/* Duration */}
+
+                  <td>
+
+                    <div className="gmt-course-duration">
+
+                      <FaClock />
+
+                      <span>
+
+                        {course.duration}
+
+                      </span>
+
+                    </div>
+
+                  </td>
+
+                  {/* Students */}
+
+                  <td>
+
+                    <div className="gmt-course-students">
+
+                      <FaUsers />
+
+                      <span>
+
+                        {course.students?.length || 0}
+
+                      </span>
+
+                    </div>
+
+                  </td>
+
+                  {/* Status */}
+
+                  <td>
+
+                    <span
+                      className={`gmt-course-status ${getStatusClass(
+                        course.status
+                      )}`}
+                    >
+
+                      {course.status}
+
+                    </span>
+
+                  </td>
+
+                  {/* Actions */}
+
+                  <td>
+
+                    <div className="gmt-course-actions">
+
+                      <button
+                        className="gmt-course-edit-btn"
+                        onClick={() =>
+                          handleEdit(course)
+                        }
+                      >
+
+                        <FaEdit />
+
+                        Edit
+
+                      </button>
+
+                      <button
+                        className="gmt-course-delete-btn"
+                        onClick={() =>
+                          handleDelete(course._id)
+                        }
+                      >
+
+                        <FaTrash />
+
+                        Delete
+
+                      </button>
+
+                    </div>
 
                   </td>
 
@@ -202,62 +347,118 @@ function CourseTable({
 
       </div>
 
-      {/* Mobile Cards */}
+      {/* Mobile */}
 
-      <div className="mobile-courses">
+      <div className="gmt-mobile-courses">
 
         {filteredCourses.map((course) => (
 
           <div
-            className="course-card"
+            className="gmt-course-card"
             key={course._id}
           >
 
-            <h3>{course.title}</h3>
+            <div className="gmt-course-card-header">
+
+              <div className="gmt-course-avatar">
+
+                <FaBookOpen />
+
+              </div>
+
+              <div>
+
+                <h3>{course.title}</h3>
+
+                <span>{course.code}</span>
+
+              </div>
+
+            </div>
 
             <p>
-              <strong>Code:</strong> {course.code}
+
+              <strong>Category:</strong>{" "}
+
+              {course.category}
+
             </p>
 
             <p>
-              <strong>Category:</strong> {course.category}
+
+              <strong>Instructor:</strong>{" "}
+
+              {course.instructor ||
+                "Not Assigned"}
+
             </p>
 
             <p>
-              <strong>Level:</strong> {course.level}
+
+              <strong>Level:</strong>{" "}
+
+              {course.level}
+
             </p>
 
             <p>
-              <strong>Duration:</strong> {course.duration}
+
+              <strong>Duration:</strong>{" "}
+
+              {course.duration}
+
             </p>
 
             <p>
-              <strong>Status:</strong> {course.status}
-            </p>
 
-            <p>
               <strong>Students:</strong>{" "}
+
               {course.students?.length || 0}
+
             </p>
 
-            <div className="action-buttons">
+            <p>
+
+              <strong>Status:</strong>{" "}
+
+              <span
+                className={`gmt-course-status ${getStatusClass(
+                  course.status
+                )}`}
+              >
+
+                {course.status}
+
+              </span>
+
+            </p>
+
+            <div className="gmt-course-actions">
 
               <button
-                className="edit-btn"
+                className="gmt-course-edit-btn"
                 onClick={() =>
                   handleEdit(course)
                 }
               >
+
                 <FaEdit />
+
+                Edit
+
               </button>
 
               <button
-                className="delete-btn"
+                className="gmt-course-delete-btn"
                 onClick={() =>
                   handleDelete(course._id)
                 }
               >
+
                 <FaTrash />
+
+                Delete
+
               </button>
 
             </div>

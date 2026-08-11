@@ -1,177 +1,620 @@
-.my-courses{
-    padding:35px;
-    background:#f8fafc;
+/* ==========================================
+   GMT SOFTWARE ACADEMY
+   MY COURSES
+========================================== */
+
+
+.my-courses {
+
     min-height:100vh;
+
+    padding:35px;
+
+    background:var(--background);
+
 }
 
-.page-header{
+
+
+/* ==========================================
+   PAGE HEADER
+========================================== */
+
+
+.my-courses-header {
+
     margin-bottom:35px;
+
 }
 
-.page-header h1{
-    font-size:2rem;
-    color:#0f172a;
-    margin-bottom:8px;
-}
 
-.page-header p{
-    color:#64748b;
-}
 
-.my-course-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(350px,1fr));
-    gap:30px;
-}
+.my-courses-tag {
 
-.my-course-card{
-    background:white;
-    border-radius:18px;
-    overflow:hidden;
-    box-shadow:0 12px 30px rgba(15,23,42,.08);
-    transition:.3s;
-}
+    display:inline-flex;
 
-.my-course-card:hover{
-    transform:translateY(-6px);
-}
+    padding:8px 18px;
 
-.my-course-card img{
-    width:100%;
-    height:220px;
-    object-fit:cover;
-}
-
-.my-course-content{
-    padding:22px;
-}
-
-.category{
-    display:inline-block;
-    background:#dbeafe;
-    color:#2563eb;
-    padding:6px 14px;
-    border-radius:25px;
-    font-size:13px;
-    font-weight:600;
-    margin-bottom:15px;
-}
-
-.my-course-content h2{
-    margin-bottom:20px;
-    color:#0f172a;
-}
-
-.course-meta{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    color:#475569;
-    margin-bottom:22px;
-}
-
-.course-meta span{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.progress-section{
-    margin-bottom:20px;
-}
-
-.progress-header{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:10px;
-    font-weight:600;
-}
-
-.progress-bar{
-    width:100%;
-    height:10px;
-    background:#e2e8f0;
     border-radius:30px;
-    overflow:hidden;
-}
 
-.progress-fill{
-    height:100%;
-    background:#2563eb;
-    border-radius:30px;
-    transition:.4s;
-}
+    background:var(--primary);
 
-.status-row{
-    margin-bottom:20px;
-}
-
-.status{
-    display:inline-block;
-    padding:8px 16px;
-    border-radius:20px;
-    background:#dcfce7;
-    color:#166534;
-    font-size:13px;
-    font-weight:600;
-}
-
-.continue-btn{
-    width:100%;
-    border:none;
-    background:#2563eb;
     color:white;
-    padding:14px;
-    border-radius:12px;
-    cursor:pointer;
-    font-size:15px;
-    font-weight:600;
+
+    font-size:.75rem;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+}
+
+
+
+.my-courses-header h1 {
+
+    margin-top:18px;
+
+    font-size:2.4rem;
+
+    font-weight:800;
+
+    color:var(--secondary);
+
+}
+
+
+
+.my-courses-header p {
+
+    margin-top:12px;
+
+    color:var(--text-light);
+
+    max-width:650px;
+
+    line-height:1.7;
+
+}
+
+
+
+
+
+/* ==========================================
+   COURSE GRID
+========================================== */
+
+
+.my-course-grid {
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(320px,1fr));
+
+    gap:28px;
+
+}
+
+
+
+
+
+/* ==========================================
+   COURSE CARD
+========================================== */
+
+
+.my-course-card {
+
+
+    background:var(--surface);
+
+    border-radius:var(--radius-lg);
+
+    overflow:hidden;
+
+    border:1px solid var(--border);
+
+    box-shadow:var(--shadow);
+
+    transition:var(--transition);
+
+}
+
+
+
+.my-course-card:hover {
+
+
+    transform:translateY(-6px);
+
+    box-shadow:var(--shadow-hover);
+
+
+}
+
+
+
+
+
+.my-course-card img {
+
+
+    width:100%;
+
+    height:210px;
+
+    object-fit:cover;
+
+}
+
+
+
+
+
+/* ==========================================
+   CONTENT
+========================================== */
+
+
+.my-course-content {
+
+    padding:25px;
+
+}
+
+
+
+.my-course-category {
+
+
+    display:inline-block;
+
+
+    padding:6px 14px;
+
+
+    border-radius:30px;
+
+
+    background:var(--primary-light);
+
+
+    color:var(--primary);
+
+
+    font-size:.75rem;
+
+
+    font-weight:700;
+
+
+}
+
+
+
+.my-course-content h2 {
+
+
+    margin:16px 0;
+
+
+    color:var(--text);
+
+
+    font-size:1.25rem;
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   COURSE META
+========================================== */
+
+
+.my-course-meta {
+
 
     display:flex;
-    justify-content:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+
+}
+
+
+
+.my-course-meta span {
+
+
+    display:flex;
+
     align-items:center;
-    gap:10px;
 
-    transition:.3s;
+    gap:8px;
+
+
+    color:var(--text-light);
+
+
+    font-size:.9rem;
+
+
 }
 
-.continue-btn:hover{
-    background:#1d4ed8;
+
+
+.my-course-meta svg {
+
+
+    color:var(--primary);
+
 }
 
-.loading{
-    text-align:center;
-    margin-top:100px;
+
+
+
+
+
+
+
+/* ==========================================
+   PROGRESS
+========================================== */
+
+
+.my-course-progress {
+
+
+    margin-top:25px;
+
+
 }
 
-.empty-state{
-    text-align:center;
-    margin-top:90px;
-}
 
-.empty-icon{
-    font-size:70px;
-    color:#2563eb;
-    margin-bottom:20px;
-}
 
-.empty-state h2{
-    color:#0f172a;
+.my-course-progress-header {
+
+
+    display:flex;
+
+
+    justify-content:space-between;
+
+
     margin-bottom:10px;
+
+
+    color:var(--text-light);
+
+
 }
 
-.empty-state p{
-    color:#64748b;
+
+
+.my-course-progress-header strong {
+
+
+    color:var(--primary);
+
+
 }
+
+
+
+
+
+.my-course-progress-bar {
+
+
+    height:10px;
+
+
+    background:#E5E7EB;
+
+
+    border-radius:20px;
+
+
+    overflow:hidden;
+
+
+}
+
+
+
+.my-course-progress-fill {
+
+
+    height:100%;
+
+
+    background:
+
+    linear-gradient(
+        90deg,
+        var(--primary-dark),
+        var(--primary)
+    );
+
+
+    border-radius:20px;
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   STATUS
+========================================== */
+
+
+.my-course-status {
+
+
+    margin:20px 0;
+
+
+}
+
+
+
+.my-course-status-badge {
+
+
+    display:inline-block;
+
+
+    padding:7px 16px;
+
+
+    border-radius:30px;
+
+
+    font-size:.75rem;
+
+
+    font-weight:700;
+
+
+}
+
+
+
+.my-course-status-badge.enrolled {
+
+
+    background:#DCFCE7;
+
+
+    color:var(--success);
+
+
+}
+
+
+
+.my-course-status-badge.in-progress {
+
+
+    background:var(--primary-light);
+
+
+    color:var(--primary);
+
+
+}
+
+
+
+.my-course-status-badge.completed {
+
+
+    background:#EDE9FE;
+
+
+    color:#7C3AED;
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   GMT ACADEMY MESSAGE
+========================================== */
+
+
+.my-course-action {
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:12px;
+
+
+    padding:15px;
+
+
+    background:var(--primary-light);
+
+
+    border-left:4px solid var(--primary);
+
+
+    border-radius:var(--radius-sm);
+
+
+    color:var(--text-light);
+
+
+}
+
+
+
+.my-course-action svg {
+
+
+    color:var(--primary);
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   CERTIFICATE BUTTON
+========================================== */
+
+
+.my-course-certificate {
+
+
+    width:100%;
+
+
+    margin-top:20px;
+
+
+    padding:14px;
+
+
+    border:none;
+
+
+    border-radius:var(--radius-sm);
+
+
+    background:var(--primary);
+
+
+    color:white;
+
+
+    font-weight:700;
+
+
+    cursor:pointer;
+
+
+    transition:var(--transition);
+
+
+}
+
+
+
+.my-course-certificate:hover {
+
+
+    background:var(--primary-dark);
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+
+.my-courses-empty {
+
+
+    background:var(--surface);
+
+
+    padding:50px;
+
+
+    border-radius:var(--radius-lg);
+
+
+    text-align:center;
+
+
+    box-shadow:var(--shadow);
+
+
+}
+
+
+
+.empty-icon {
+
+
+    font-size:4rem;
+
+
+    color:var(--primary);
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
 
 @media(max-width:768px){
 
-.my-courses{
-    padding:20px;
-}
 
-.my-course-grid{
-    grid-template-columns:1fr;
-}
+    .my-courses {
+
+
+        padding:20px;
+
+    }
+
+
+
+    .my-courses-header h1 {
+
+
+        font-size:2rem;
+
+    }
+
+
 
 }

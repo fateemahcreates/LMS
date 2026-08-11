@@ -1,83 +1,220 @@
-import "../styles/StatsCards.css";
-
-
 import {
   FaUserGraduate,
   FaBookOpen,
-  FaLayerGroup,
-  FaAward,
+  FaChalkboardTeacher,
+  FaClipboardCheck,
+  FaArchive,
 } from "react-icons/fa";
 
-function StatsCards({ students = [], courses = [] }) {
-  const stats = [
-    {
-      title: "Total Students",
-      value: students.length,
-      subtitle: "Enrolled Students",
-      trend: `${students.length}`,
-      icon: <FaUserGraduate />,
-      color: "blue",
-    },
-    {
-      title: "Courses",
-      value: courses.length,
-      subtitle: "Available Courses",
-      trend: `${courses.length}`,
-      icon: <FaBookOpen />,
-      color: "green",
-    },
-    {
-      title: "Active Courses",
-      value: courses.filter(
-        (course) => course.status === "Active"
-      ).length,
-      subtitle: "Currently Running",
-      trend: `${courses.filter(
-        (course) => course.status === "Active"
-      ).length}`,
-      icon: <FaLayerGroup />,
-      color: "orange",
-    },
-    {
-      title: "Draft Courses",
-      value: courses.filter(
-        (course) => course.status === "Draft"
-      ).length,
-      subtitle: "Pending Publication",
-      trend: `${courses.filter(
-        (course) => course.status === "Draft"
-      ).length}`,
-      icon: <FaAward />,
-      color: "purple",
-    },
-  ];
+import "../styles/StatsCards.css";
+
+function StatsCards({
+  students = [],
+  courses = [],
+  role,
+}) {
+  // ============================================================
+  // SAFETY CHECKS
+  // ============================================================
+
+  const safeStudents = Array.isArray(students)
+    ? students
+    : [];
+
+  const safeCourses = Array.isArray(courses)
+    ? courses
+    : [];
+
+  const isAdmin =
+    role?.toLowerCase() === "admin";
+
+  // ============================================================
+  // ADMIN STATS
+  // ============================================================
+
+  const totalStudents =
+    safeStudents.length;
+
+  const totalCourses =
+    safeCourses.length;
+
+  const instructors =
+    safeCourses.filter(
+      (course) => course.instructor
+    ).length;
+
+  const activeCourses =
+    safeCourses.filter(
+      (course) =>
+        course.status === "Published"
+    ).length;
+
+  // ============================================================
+  // INSTRUCTOR STATS
+  // ============================================================
+
+  const publishedCourses =
+    safeCourses.filter(
+      (course) =>
+        course.status === "Published"
+    ).length;
+
+  const draftCourses =
+    safeCourses.filter(
+      (course) =>
+        course.status === "Draft"
+    ).length;
+
+  const archivedCourses =
+    safeCourses.filter(
+      (course) =>
+        course.status === "Archived"
+    ).length;
+
+  // ============================================================
+  // CARD DATA
+  // ============================================================
+
+  const cards = isAdmin
+    ? [
+        {
+          title: "Students",
+          value: totalStudents,
+          icon: <FaUserGraduate />,
+          color: "red",
+          trend: "+12%",
+          trendType: "positive",
+          subtitle: "Registered Students",
+        },
+
+        {
+          title: "Courses",
+          value: totalCourses,
+          icon: <FaBookOpen />,
+          color: "navy",
+          trend: "+5%",
+          trendType: "positive",
+          subtitle: "Total Courses",
+        },
+
+        {
+          title: "Instructors",
+          value: instructors,
+          icon: <FaChalkboardTeacher />,
+          color: "gold",
+          trend: "+2%",
+          trendType: "positive",
+          subtitle: "Active Lecturers",
+        },
+
+        {
+          title: "Published",
+          value: activeCourses,
+          icon: <FaClipboardCheck />,
+          color: "green",
+          trend: "LIVE",
+          trendType: "live",
+          subtitle: "Running Courses",
+        },
+      ]
+    : [
+        {
+          title: "My Courses",
+          value: totalCourses,
+          icon: <FaBookOpen />,
+          color: "navy",
+          trend: "",
+          subtitle: "Courses Assigned",
+        },
+
+        {
+          title: "Published",
+          value: publishedCourses,
+          icon: <FaClipboardCheck />,
+          color: "green",
+          trend: "",
+          subtitle: "Live Courses",
+        },
+
+        {
+          title: "Drafts",
+          value: draftCourses,
+          icon: <FaBookOpen />,
+          color: "gold",
+          trend: "",
+          subtitle: "Pending Publication",
+        },
+
+        {
+          title: "Archived",
+          value: archivedCourses,
+          icon: <FaArchive />,
+          color: "red",
+          trend: "",
+          subtitle: "Archived Courses",
+        },
+      ];
+
+  // ============================================================
+  // RENDER
+  // ============================================================
 
   return (
-    <section className="stats-grid">
-      {stats.map((stat, index) => (
-        <div
-          className={`stat-card ${stat.color}`}
-          key={index}
+    <section className="gmt-stats-grid">
+
+      {cards.map((card) => (
+        <article
+          key={card.title}
+          className={`gmt-stat-card gmt-stat-card-${card.color}`}
         >
-          <div className="card-top">
-            <div className={`stat-icon ${stat.color}`}>
-              {stat.icon}
+
+          {/* ==================================================
+              TOP
+          ================================================== */}
+
+          <div className="gmt-stat-card-top">
+
+            <div className="gmt-stat-icon">
+              {card.icon}
             </div>
 
-            <span className="trend">
-              {stat.trend}
-            </span>
+            {card.trend && (
+              <span
+                className={`gmt-stat-trend ${card.trendType || ""}`}
+              >
+                {card.trend}
+              </span>
+            )}
+
           </div>
 
-          <h2 className="stat-value">{stat.value}</h2>
+          {/* ==================================================
+              VALUE
+          ================================================== */}
 
-          <h4 className="stat-title">{stat.title}</h4>
+          <div className="gmt-stat-value">
+            {card.value}
+          </div>
 
-          <p className="stat-subtitle">
-            {stat.subtitle}
+          {/* ==================================================
+              TITLE
+          ================================================== */}
+
+          <h3 className="gmt-stat-title">
+            {card.title}
+          </h3>
+
+          {/* ==================================================
+              SUBTITLE
+          ================================================== */}
+
+          <p className="gmt-stat-subtitle">
+            {card.subtitle}
           </p>
-        </div>
+
+        </article>
       ))}
+
     </section>
   );
 }

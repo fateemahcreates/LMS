@@ -1,0 +1,226 @@
+/* ==========================================
+   BACKDROP
+========================================== */
+
+.gmt-instructor-student-drawer-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    backdrop-filter:blur(3px);
+    z-index:999;
+}
+
+/* ==========================================
+   DRAWER
+========================================== */
+
+.gmt-instructor-student-drawer{
+    position:fixed;
+    top:0;
+    right:-520px;
+    width:520px;
+    max-width:100%;
+    height:100vh;
+    background:#fff;
+    z-index:1000;
+    transition:.35s ease;
+    overflow-y:auto;
+    box-shadow:-10px 0 40px rgba(0,0,0,.12);
+}
+
+.gmt-instructor-student-drawer.open{
+    right:0;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.gmt-instructor-student-drawer-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:24px 28px;
+    border-bottom:1px solid #ececec;
+}
+
+.gmt-instructor-student-drawer-header h2{
+    margin:0;
+    font-size:24px;
+    font-weight:700;
+    color:#1f2937;
+}
+
+.gmt-instructor-student-drawer-header p{
+    margin-top:6px;
+    color:#6b7280;
+    font-size:14px;
+}
+
+.gmt-instructor-student-drawer-close{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:10px;
+    background:#f4f4f4;
+    cursor:pointer;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    transition:.25s;
+    font-size:18px;
+}
+
+.gmt-instructor-student-drawer-close:hover{
+    background:#C91F26;
+    color:#fff;
+}
+
+/* ==========================================
+   PROFILE
+========================================== */
+
+.gmt-instructor-student-profile-card{
+    padding:35px 25px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    border-bottom:1px solid #efefef;
+}
+
+.gmt-instructor-student-avatar-large{
+    width:95px;
+    height:95px;
+    border-radius:50%;
+    background:#C91F26;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:34px;
+    font-weight:700;
+    margin-bottom:18px;
+}
+
+.gmt-instructor-student-profile-card h3{
+    margin:0;
+    color:#222;
+}
+
+.gmt-instructor-student-profile-card p{
+    margin-top:8px;
+    color:#777;
+}
+
+/* ==========================================
+   INFO GRID
+========================================== */
+
+.gmt-instructor-student-info-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    padding:28px;
+}
+
+.gmt-instructor-student-info-card{
+    background:#fafafa;
+    border:1px solid #ececec;
+    border-radius:14px;
+    padding:18px;
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+    transition:.25s;
+}
+
+.gmt-instructor-student-info-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(0,0,0,.05);
+}
+
+.gmt-instructor-student-info-card svg{
+    color:#C91F26;
+    font-size:20px;
+    margin-top:3px;
+}
+
+.gmt-instructor-student-info-card span{
+    display:block;
+    font-size:13px;
+    color:#888;
+    margin-bottom:6px;
+}
+
+.gmt-instructor-student-info-card strong{
+    color:#1f2937;
+    font-size:15px;
+    word-break:break-word;
+}
+
+/* ==========================================
+   PROGRESS
+========================================== */
+
+.gmt-instructor-student-progress-section{
+    padding:0 28px 35px;
+}
+
+.gmt-instructor-student-progress-header{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:12px;
+    font-weight:600;
+}
+
+.gmt-instructor-student-progress-bar{
+    width:100%;
+    height:12px;
+    background:#e5e7eb;
+    border-radius:30px;
+    overflow:hidden;
+}
+
+.gmt-instructor-student-progress-fill{
+    height:100%;
+    border-radius:30px;
+    background:linear-gradient(90deg,#C91F26,#e84d52);
+    transition:.4s;
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+.gmt-instructor-student-drawer::-webkit-scrollbar{
+    width:8px;
+}
+
+.gmt-instructor-student-drawer::-webkit-scrollbar-thumb{
+    background:#d4d4d4;
+    border-radius:20px;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:768px){
+
+.gmt-instructor-student-drawer{
+    width:100%;
+}
+
+.gmt-instructor-student-info-grid{
+    grid-template-columns:1fr;
+}
+
+.gmt-instructor-student-drawer-header{
+    padding:20px;
+}
+
+.gmt-instructor-student-progress-section{
+    padding:20px;
+}
+
+}

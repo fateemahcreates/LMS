@@ -1,368 +1,382 @@
 /* ==========================================
-   Course Table
+   GMT COURSE TABLE
 ========================================== */
 
-.course-table{
-    width:100%;
-    background:#fff;
-    border-radius:18px;
-    overflow:hidden;
+.gmt-course-table {
+  background: #fff;
+  border-radius: 18px;
+  border: 1px solid #ececec;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
+
 
 /* ==========================================
-   Header
+   HEADER
 ========================================== */
 
-.table-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:24px 28px;
-    border-bottom:1px solid #edf2f7;
+.gmt-course-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 30px;
+  border-bottom: 1px solid #f2f2f2;
 }
 
-.table-header h2{
-    font-size:1.4rem;
-    color:#0f172a;
-    font-weight:700;
+.gmt-course-table-header h2 {
+  font-size: 23px;
+  font-weight: 700;
+  color: #222;
 }
 
-.table-header p{
-    color:#64748b;
-    margin-top:4px;
+.gmt-course-table-header p {
+  margin-top: 6px;
+  color: #777;
+  font-size: 14px;
 }
 
-.course-total{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    background:#eff6ff;
-    color:#2563eb;
-    padding:12px 18px;
-    border-radius:12px;
-    font-weight:600;
+.gmt-course-total {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff3f3;
+  color: #C91F26;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: 600;
 }
 
-.course-total svg{
-    font-size:18px;
-}
 
 /* ==========================================
-   Search
+   SEARCH
 ========================================== */
 
-.search-box{
-    position:relative;
-    padding:22px 28px;
+.gmt-course-search {
+  position: relative;
+  padding: 25px 30px;
 }
 
-.search-box input{
-    width:100%;
-    height:52px;
-
-    padding:0 18px 0 50px;
-
-    border:1px solid #dbe3ee;
-    border-radius:12px;
-
-    outline:none;
-    font-size:15px;
+.gmt-course-search input {
+  width: 100%;
+  height: 54px;
+  padding-left: 52px;
+  padding-right: 20px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  outline: none;
+  transition: .3s;
+  font-size: 15px;
 }
 
-.search-box input:focus{
-    border-color:#2563eb;
-    box-shadow:0 0 0 3px rgba(37,99,235,.12);
+.gmt-course-search input:focus {
+  border-color: #C91F26;
+  box-shadow: 0 0 0 4px rgba(201,31,38,.10);
 }
 
-.search-box .search-icon{
-
-    position:absolute;
-
-    top:48px;
-
-    left:44px;
-
-    transform:translateY(-50%);
-
-    font-size:18px;
-
-    color:#94a3b8;
-
-    pointer-events:none;
-
-    z-index:10;
-}
-/* ==========================================
-   Table
-========================================== */
-
-.table-wrapper{
-    overflow-x:auto;
+.gmt-course-search-icon {
+  position: absolute;
+  left: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
 }
 
-table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:900px;
-}
-
-thead{
-    background:#f8fafc;
-}
-
-th{
-    padding:18px;
-    text-align:left;
-    font-size:14px;
-    color:#475569;
-    font-weight:700;
-    white-space:nowrap;
-}
-
-td{
-    padding:18px;
-    border-top:1px solid #edf2f7;
-    color:#334155;
-    vertical-align:middle;
-}
-
-tbody tr{
-    transition:.25s;
-}
-
-tbody tr:hover{
-    background:#f8fbff;
-}
 
 /* ==========================================
-   Course Info
+   TABLE
 ========================================== */
 
-.course-info{
-    display:flex;
-    align-items:center;
-    gap:14px;
+.gmt-course-table-wrapper {
+  overflow-x: auto;
 }
 
-.course-image{
-    width:60px;
-    height:60px;
-    border-radius:12px;
-    object-fit:cover;
-    background:#e2e8f0;
+.gmt-course-table table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.course-title{
-    font-weight:700;
-    color:#0f172a;
+.gmt-course-table thead {
+  background: #fafafa;
 }
 
-.course-description{
-    font-size:13px;
-    color:#64748b;
-    margin-top:5px;
-    line-height:1.5;
+.gmt-course-table th {
+  padding: 18px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
 }
+
+.gmt-course-table td {
+  padding: 18px;
+  border-top: 1px solid #f3f3f3;
+  vertical-align: middle;
+}
+
+.gmt-course-table tbody tr {
+  transition: .25s;
+}
+
+.gmt-course-table tbody tr:hover {
+  background: #fafafa;
+}
+
 
 /* ==========================================
-   Level Badge
+   COURSE INFO
 ========================================== */
 
-.level-badge{
-    display:inline-block;
-    padding:6px 12px;
-    border-radius:999px;
-    font-size:12px;
-    font-weight:600;
-    background:#eef2ff;
-    color:#4338ca;
+.gmt-course-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
+
+.gmt-course-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #fff2f2;
+  color: #C91F26;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+
+.gmt-course-info strong {
+  display: block;
+  color: #222;
+  font-size: 15px;
+}
+
+.gmt-course-info p {
+  color: #888;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
 
 /* ==========================================
-   Price
+   CATEGORY
 ========================================== */
 
-.price{
-    font-weight:700;
-    color:#16a34a;
+.gmt-course-category-badge {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 30px;
+  background: #eef4ff;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 600;
 }
+
 
 /* ==========================================
-   Students
+   LEVEL
 ========================================== */
 
-.student-count{
-    font-weight:600;
-    color:#2563eb;
+.gmt-course-level-badge {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 600;
 }
+
+.gmt-course-level-badge.beginner {
+  background: #eaf9ef;
+  color: #16a34a;
+}
+
+.gmt-course-level-badge.intermediate {
+  background: #fff8e8;
+  color: #d97706;
+}
+
+.gmt-course-level-badge.advanced {
+  background: #fdecec;
+  color: #C91F26;
+}
+
 
 /* ==========================================
-   Status
+   SMALL INFO
 ========================================== */
 
-.status{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding:7px 14px;
-    border-radius:999px;
-    font-size:13px;
-    font-weight:600;
+.gmt-course-instructor,
+.gmt-course-duration,
+.gmt-course-students {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #555;
 }
 
-.status.active{
-    background:#dcfce7;
-    color:#15803d;
-}
-
-.status.draft{
-    background:#fef3c7;
-    color:#b45309;
-}
-
-.status.archived{
-    background:#fee2e2;
-    color:#b91c1c;
-}
 
 /* ==========================================
-   Buttons
+   STATUS
 ========================================== */
 
-.course-table .action-buttons{
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    gap:10px;
-
+.gmt-course-status {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 600;
 }
 
-.course-table .edit-btn,
-.course-table .delete-btn{
-
-    width:42px !important;
-
-    height:42px !important;
-
-    min-width:42px;
-
-    min-height:42px;
-
-    padding:0;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    border:none;
-
-    border-radius:12px;
-
-    cursor:pointer;
-
-    flex:none;
-
+.gmt-course-status.published {
+  background: #eaf9ef;
+  color: #16a34a;
 }
+
+.gmt-course-status.draft {
+  background: #fff8e8;
+  color: #d97706;
+}
+
+.gmt-course-status.archived {
+  background: #efefef;
+  color: #666;
+}
+
 
 /* ==========================================
-   Responsive
+   ACTIONS
 ========================================== */
 
-/* Desktop */
-
-.table-wrapper{
-    display:block;
+.gmt-course-actions {
+  display: flex;
+  gap: 10px;
 }
 
-.mobile-courses{
-    display:none;
+.gmt-course-edit-btn,
+.gmt-course-delete-btn {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: .25s;
 }
 
-/* Tablet */
-
-@media (max-width:992px){
-
-.table-header{
-    flex-direction:column;
-    align-items:flex-start;
-    gap:18px;
+.gmt-course-edit-btn {
+  background: #fff3f3;
+  color: #C91F26;
 }
 
-.search-box{
-    padding:20px;
+.gmt-course-edit-btn:hover {
+  background: #C91F26;
+  color: white;
 }
 
-.search-icon{
-    left:36px;
+.gmt-course-delete-btn {
+  background: #f4f4f4;
+  color: #444;
 }
 
+.gmt-course-delete-btn:hover {
+  background: #222;
+  color: white;
 }
 
-/* Mobile */
 
-@media (max-width:768px){
+/* ==========================================
+   EMPTY
+========================================== */
 
-.course-table{
-    border-radius:14px;
+.gmt-course-empty-state {
+  padding: 70px 20px;
+  text-align: center;
 }
 
-.table-wrapper{
-    display:none;
+.gmt-course-empty-icon {
+  font-size: 50px;
+  color: #C91F26;
+  margin-bottom: 15px;
 }
 
-.mobile-courses{
-    display:flex;
-    flex-direction:column;
-    gap:18px;
+.gmt-course-empty-state h3 {
+  margin-bottom: 10px;
+  color: #222;
 }
 
-.course-card{
-    background:#fff;
-    border:1px solid #e2e8f0;
-    border-radius:16px;
-    padding:20px;
-    box-shadow:0 6px 18px rgba(15,23,42,.06);
+.gmt-course-empty-state p {
+  color: #777;
 }
 
-.course-card h3{
-    margin-bottom:12px;
-    color:#0f172a;
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+.gmt-mobile-courses {
+  display: none;
+  padding: 20px;
 }
 
-.course-card p{
-    margin:8px 0;
-    color:#475569;
+.gmt-course-card {
+  background: white;
+  border-radius: 18px;
+  border: 1px solid #ececec;
+  padding: 22px;
+  margin-bottom: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.05);
 }
 
-.action-buttons{
-    margin-top:18px;
+.gmt-course-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
 }
 
-.course-table .edit-btn svg,
-.course-table .delete-btn svg{
-
-    display:block !important;
-
-    width:16px !important;
-
-    height:16px !important;
-
-    opacity:1 !important;
-
-    visibility:visible !important;
-
-    color:inherit !important;
-
-    font-size:16px !important;
-
-    flex-shrink:0;
-
+.gmt-course-card-header h3 {
+  color: #222;
 }
+
+.gmt-course-card-header span {
+  color: #888;
+  font-size: 13px;
+}
+
+.gmt-course-card p {
+  margin: 12px 0;
+  color: #555;
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 992px) {
+
+  .gmt-course-table-wrapper {
+    display: none;
+  }
+
+  .gmt-mobile-courses {
+    display: block;
+  }
+
+  .gmt-course-table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .gmt-course-search {
+    padding: 20px;
+  }
+
+  .gmt-course-search-icon {
+    left: 38px;
+  }
 
 }

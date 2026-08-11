@@ -1,179 +1,594 @@
-/* ==========================================
-   Certificate Table
-========================================== */
+/* =========================================================
+   GMT SOFTWARE
+   CERTIFICATE TABLE
+========================================================= */
 
-.certificate-table {
-  margin-top: 35px;
-  background: #fff;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-}
 
-.certificate-table table {
+/* =========================================================
+   TABLE CONTAINER
+========================================================= */
+
+.gmt-certificate-table-container {
   width: 100%;
-  border-collapse: collapse;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
 }
 
-/* ==========================================
-   Header
-========================================== */
 
-.certificate-table thead {
-  background: #2563eb;
+/* =========================================================
+   TABLE SCROLL
+========================================================= */
+
+.gmt-certificate-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
-.certificate-table th {
-  padding: 18px;
-  color: white;
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.gmt-certificate-table {
+  width: 100%;
+  min-width: 1050px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+   IMPORTANT:
+   No blue styling here.
+========================================================= */
+
+.gmt-certificate-table .gmt-certificate-table-head {
+  background: #f8fafc;
+}
+
+.gmt-certificate-table .gmt-certificate-table-head tr {
+  background: #f8fafc;
+}
+
+.gmt-certificate-table .gmt-certificate-table-head th {
+  padding: 17px 20px;
+  background: #f8fafc;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 700;
   text-align: left;
-  font-size: 0.95rem;
+  white-space: nowrap;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+
+/* =========================================================
+   TABLE BODY
+========================================================= */
+
+.gmt-certificate-table .gmt-certificate-table-body {
+  background: #ffffff;
+}
+
+.gmt-certificate-table .gmt-certificate-table-body tr {
+  background: #ffffff;
+}
+
+.gmt-certificate-table .gmt-certificate-table-body td {
+  padding: 18px 20px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 14px;
+  vertical-align: middle;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+
+/* =========================================================
+   ROW HOVER
+========================================================= */
+
+.gmt-certificate-table
+  .gmt-certificate-table-row:hover {
+  background: #fffafa;
+}
+
+.gmt-certificate-table
+  .gmt-certificate-table-row:hover td {
+  background: #fffafa;
+}
+
+
+/* =========================================================
+   LAST ROW
+========================================================= */
+
+.gmt-certificate-table
+  .gmt-certificate-table-body
+  tr:last-child
+  td {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   STUDENT
+========================================================= */
+
+.gmt-certificate-student {
+  display: flex;
+  align-items: center;
+  min-width: 150px;
+}
+
+.gmt-certificate-student strong {
+  color: #111827;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   EMAIL
+========================================================= */
+
+.gmt-certificate-email {
+  color: #6b7280;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   COURSE
+========================================================= */
+
+.gmt-certificate-course {
+  display: block;
+  max-width: 190px;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   CERTIFICATE NUMBER
+========================================================= */
+
+.gmt-certificate-number {
+  display: inline-block;
+  padding: 6px 9px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  color: #374151;
+  font-size: 12px;
   font-weight: 600;
   white-space: nowrap;
 }
 
-/* ==========================================
-   Body
-========================================== */
 
-.certificate-table td {
-  padding: 18px;
-  border-bottom: 1px solid #eef2f7;
-  color: #374151;
-  font-size: 0.94rem;
-  vertical-align: middle;
-}
+/* =========================================================
+   STATUS
+========================================================= */
 
-.certificate-table tbody tr {
-  transition: 0.25s;
-}
-
-.certificate-table tbody tr:hover {
-  background: #f8fbff;
-}
-
-/* ==========================================
-   Status Badge
-========================================== */
-
-.status {
+.gmt-certificate-status {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 7px 16px;
-  border-radius: 30px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  text-transform: capitalize;
+  min-width: 78px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
 }
 
-.status.pending {
+
+/* Pending */
+
+.gmt-certificate-status.pending {
   background: #fff7ed;
-  color: #ea580c;
+  color: #c2410c;
+  border: 1px solid #fed7aa;
 }
 
-.status.approved {
-  background: #ecfdf5;
+
+/* Approved */
+
+.gmt-certificate-status.approved {
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+
+/* Rejected */
+
+.gmt-certificate-status.rejected {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+
+/* =========================================================
+   ISSUE DATE
+========================================================= */
+
+.gmt-certificate-date {
+  color: #6b7280;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.gmt-certificate-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+
+/* =========================================================
+   ACTION BUTTON BASE
+========================================================= */
+
+.gmt-certificate-action {
+  width: 36px;
+  height: 36px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid transparent;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.gmt-certificate-action:hover {
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   VIEW
+========================================================= */
+
+.gmt-certificate-view {
+  background: #f8fafc;
+  border-color: #e5e7eb;
+  color: #4b5563;
+}
+
+.gmt-certificate-view:hover {
+  background: #f1f5f9;
+  border-color: #d1d5db;
+  color: #111827;
+}
+
+
+/* =========================================================
+   APPROVE
+========================================================= */
+
+.gmt-certificate-approve {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
   color: #15803d;
 }
 
-.status.rejected {
+.gmt-certificate-approve:hover {
+  background: #dcfce7;
+  border-color: #86efac;
+}
+
+
+/* =========================================================
+   REJECT
+========================================================= */
+
+.gmt-certificate-reject {
   background: #fef2f2;
+  border-color: #fecaca;
   color: #dc2626;
 }
 
-/* ==========================================
-   Action Buttons
-========================================== */
-
-.certificate-actions {
-  display: flex;
-  gap: 10px;
+.gmt-certificate-reject:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
 }
 
-.certificate-actions button {
-  width: 40px;
-  height: 40px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  color: white;
-  transition: 0.25s;
+
+/* =========================================================
+   DOWNLOAD
+========================================================= */
+
+.gmt-certificate-download {
+  background: #fff5f5;
+  border-color: #fecaca;
+  color: #c91f26;
+}
+
+.gmt-certificate-download:hover {
+  background: #fcecec;
+  border-color: #fca5a5;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.gmt-certificate-empty-row {
+  height: 220px;
+  padding: 0 !important;
+  text-align: center;
+  background: #ffffff !important;
+}
+
+.gmt-certificate-empty-content {
+  min-height: 220px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 35px 20px;
+}
+
+.gmt-certificate-empty-icon {
+  margin-bottom: 14px;
+  color: #d1d5db;
+  font-size: 34px;
+}
+
+.gmt-certificate-empty-content h3 {
+  margin: 0 0 6px;
+  color: #374151;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.gmt-certificate-empty-content p {
+  margin: 0;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.gmt-certificate-table-loading {
+  min-height: 220px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+
+  color: #6b7280;
+  font-size: 14px;
 }
 
-.view-btn {
-  background: #3b82f6;
+
+/* =========================================================
+   MOBILE LIST
+========================================================= */
+
+.gmt-certificate-mobile-list {
+  display: none;
 }
 
-.view-btn:hover {
-  background: #2563eb;
+
+/* =========================================================
+   MOBILE CARD
+========================================================= */
+
+.gmt-certificate-mobile-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 18px;
+
+  box-shadow: 0 5px 18px rgba(15, 23, 42, 0.05);
 }
 
-.approve-btn {
-  background: #16a34a;
+
+/* =========================================================
+   MOBILE HEADER
+========================================================= */
+
+.gmt-certificate-mobile-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f1f5f9;
 }
 
-.approve-btn:hover {
-  background: #15803d;
+.gmt-certificate-mobile-header h3 {
+  margin: 0 0 5px;
+  color: #111827;
+  font-size: 15px;
+  font-weight: 700;
 }
 
-.reject-btn {
-  background: #ef4444;
+.gmt-certificate-mobile-header p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 12px;
 }
 
-.reject-btn:hover {
-  background: #dc2626;
+
+/* =========================================================
+   MOBILE DETAILS
+========================================================= */
+
+.gmt-certificate-mobile-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+
+  padding: 16px 0;
 }
 
-.download-btn {
-  background: #7c3aed;
+.gmt-certificate-mobile-details div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-.download-btn:hover {
-  background: #6d28d9;
-}
-
-/* ==========================================
-   Empty State
-========================================== */
-
-.empty-row {
-  text-align: center;
-  padding: 40px;
+.gmt-certificate-mobile-details span {
   color: #9ca3af;
-  font-style: italic;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
-/* ==========================================
-   Responsive
-========================================== */
+.gmt-certificate-mobile-details strong {
+  color: #374151;
+  font-size: 13px;
+  font-weight: 600;
+}
 
-@media (max-width: 1200px) {
 
-  .certificate-table {
-    overflow-x: auto;
-  }
+/* =========================================================
+   MOBILE ACTIONS
+========================================================= */
 
-  .certificate-table table {
+.gmt-certificate-mobile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  padding-top: 15px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.gmt-certificate-mobile-actions
+  .gmt-certificate-action {
+  width: auto;
+  min-width: 38px;
+  padding: 0 12px;
+  gap: 7px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .gmt-certificate-table {
     min-width: 1000px;
   }
 
+  .gmt-certificate-table
+    .gmt-certificate-table-head
+    th {
+    padding: 15px 16px;
+  }
+
+  .gmt-certificate-table
+    .gmt-certificate-table-body
+    td {
+    padding: 15px 16px;
+  }
+
 }
+
+
+/* =========================================================
+   TABLET / MOBILE
+========================================================= */
 
 @media (max-width: 768px) {
 
-  .certificate-table th,
-  .certificate-table td {
-    padding: 14px;
-    font-size: 0.88rem;
+  .gmt-certificate-table-container {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
   }
 
-  .certificate-actions button {
-    width: 36px;
-    height: 36px;
+  .gmt-certificate-table-scroll {
+    display: none;
+  }
+
+  .gmt-certificate-mobile-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .gmt-certificate-mobile-card {
+    padding: 15px;
+  }
+
+  .gmt-certificate-mobile-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .gmt-certificate-mobile-details {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .gmt-certificate-mobile-actions {
+    flex-direction: column;
+  }
+
+  .gmt-certificate-mobile-actions
+    .gmt-certificate-action {
+    width: 100%;
+    justify-content: center;
   }
 
 }

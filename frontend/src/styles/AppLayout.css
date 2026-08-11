@@ -1,0 +1,108 @@
+/* ==========================================
+   GMT SOFTWARE
+   ADMIN LAYOUT
+========================================== */
+
+:root{
+
+    --gmt-admin-sidebar-width:280px;
+    --gmt-admin-navbar-height:72px;
+
+}
+
+/* ==========================
+   Layout
+========================== */
+
+.gmt-admin-layout{
+    display:flex;
+    min-height:100vh;
+    background:#F8FAFC;
+}
+
+/* ==========================
+   Main Content Area
+========================== */
+
+.gmt-admin-main{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+    margin-left:var(--gmt-admin-sidebar-width);
+    transition:margin-left .3s ease;
+}
+
+/* ==========================
+   Page Content
+========================== */
+
+.gmt-admin-content{
+    flex:1;
+    padding:28px;
+    background:#F8FAFC;
+    overflow-x:hidden;
+}
+
+/* ==========================
+   Overlay
+========================== */
+
+.gmt-admin-overlay{
+    display:none;
+}
+
+/* ==========================================
+   TABLET & MOBILE
+========================================== */
+
+@media (max-width:992px){
+
+    .gmt-admin-main{
+        margin-left:0;
+        width:100%;
+    }
+
+    .gmt-admin-content{
+        padding:20px;
+    }
+
+    .gmt-admin-overlay{
+        display:block;
+        position:fixed;
+        inset:0;
+        background:rgba(17,24,39,.55);
+        backdrop-filter:blur(2px);
+        z-index:999;
+        animation:gmtFade .25s ease;
+    }
+
+}
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width:576px){
+
+    .gmt-admin-content{
+        padding:16px;
+    }
+
+}
+
+/* ==========================================
+   Animation
+========================================== */
+
+@keyframes gmtFade{
+
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
+
+}

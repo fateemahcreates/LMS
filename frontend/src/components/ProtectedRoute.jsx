@@ -1,24 +1,40 @@
 import { Navigate } from "react-router-dom";
 
-function ProtectedRoute({ children, allowedRoles }) {
+function ProtectedRoute({ children, allowedRoles = [] }) {
+  // Get authentication data
   const token = localStorage.getItem("token");
-
-  const user = JSON.parse(
-    localStorage.getItem("user")
-  );
+  const userString = localStorage.getItem("user");
 
   // User is not logged in
-  if (!token) {
+  if (!token || !userString) {
     return <Navigate to="/login" replace />;
   }
 
-  // User information is missing
-  if (!user) {
+  let user;
+
+  try {
+    user = JSON.parse(userString);
+  } catch (error) {
+    console.error("Invalid user data in localStorage:", error);
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     return <Navigate to="/login" replace />;
   }
+
+  // Ensure user has a role
+  if (!user?.role) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // Normalize role comparison (case-insensitive)
+  const userRole = user.role.toLowerCase();
+
+  const normalizedAllowedRoles = allowedRoles.map((role) =>
+    role.toLowerCase()
+  );
 
   // User does not have permission
-  if (!allowedRoles.includes(user.role)) {
+  if (!normalizedAllowedRoles.includes(userRole)) {
     return <Navigate to="/login" replace />;
   }
 

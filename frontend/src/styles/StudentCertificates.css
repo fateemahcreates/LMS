@@ -1,220 +1,367 @@
 /* ==========================================
-   Student Certificates Page
+   GMT STUDENT CERTIFICATES
 ========================================== */
 
-.student-certificates-page {
-  padding: 30px;
-  background: #f8fafc;
-  min-height: 100vh;
+.gmt-certificates-page{
+    min-height:100vh;
+    padding:35px;
+    background:var(--background);
 }
 
 /* ==========================================
-   Header
+   HEADER
 ========================================== */
 
-.student-certificate-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 35px;
+.gmt-certificates-header{
+    margin-bottom:35px;
 }
 
-.student-certificate-header h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #111827;
-  margin-bottom: 8px;
+.gmt-certificates-tag{
+    display:inline-block;
+    background:var(--primary-light);
+    color:var(--primary);
+    padding:8px 18px;
+    border-radius:50px;
+    font-size:.8rem;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    margin-bottom:16px;
 }
 
-.student-certificate-header p {
-  color: #6b7280;
-  font-size: .95rem;
+.gmt-certificates-header h1{
+    font-size:2.3rem;
+    color:var(--secondary);
+    margin-bottom:10px;
+    font-weight:700;
+}
+
+.gmt-certificates-header p{
+    color:var(--text-light);
+    font-size:1rem;
+    line-height:1.8;
+    max-width:700px;
 }
 
 /* ==========================================
-   Summary Cards
+   SUMMARY
 ========================================== */
 
-.certificate-summary {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-bottom: 35px;
+.gmt-certificates-summary{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:24px;
+    margin-bottom:35px;
 }
 
-.summary-card {
-  background: white;
-  border-radius: 18px;
-  padding: 24px;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  box-shadow: 0 12px 28px rgba(0,0,0,.08);
-  transition: .3s;
+.gmt-summary-card{
+    background:var(--surface);
+    border-radius:var(--radius-lg);
+    padding:28px;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    transition:var(--transition);
 }
 
-.summary-card:hover {
-  transform: translateY(-5px);
+.gmt-summary-card:hover{
+    transform:translateY(-6px);
+    box-shadow:var(--shadow-hover);
 }
 
-.summary-card svg {
-  width: 65px;
-  height: 65px;
-  padding: 18px;
-  border-radius: 16px;
-  background: #2563eb;
-  color: white;
-  font-size: 1.6rem;
+.gmt-summary-icon{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--primary-light);
+    color:var(--primary);
+    padding:18px;
+    font-size:1.8rem;
+    flex-shrink:0;
 }
 
-.summary-card.approved svg {
-  background: #10b981;
+.gmt-summary-card h2{
+    font-size:2rem;
+    margin-bottom:5px;
+    color:var(--secondary);
 }
 
-.summary-card.pending svg {
-  background: #f59e0b;
+.gmt-summary-card p{
+    color:var(--text-light);
+    font-size:.95rem;
 }
 
-.summary-card h2 {
-  font-size: 2rem;
-  color: #111827;
-  margin-bottom: 5px;
+.gmt-approved .gmt-summary-icon{
+    background:#DCFCE7;
+    color:var(--success);
 }
 
-.summary-card p {
-  color: #6b7280;
-  font-size: .95rem;
+.gmt-pending .gmt-summary-icon{
+    background:#FEF3C7;
+    color:var(--warning);
 }
 
 /* ==========================================
-   Certificate Grid
+   CERTIFICATE GRID
 ========================================== */
 
-.certificate-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
-  gap: 28px;
+.gmt-certificates-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(370px,1fr));
+    gap:28px;
 }
 
 /* ==========================================
-   Empty State
+   EMPTY STATE
 ========================================== */
 
-.empty-certificates {
-  grid-column: 1/-1;
-  background: white;
-  border-radius: 20px;
-  padding: 70px 30px;
-  text-align: center;
-  box-shadow: 0 12px 30px rgba(0,0,0,.08);
+.gmt-certificates-empty{
+    grid-column:1/-1;
+    background:var(--surface);
+    border-radius:var(--radius-lg);
+    border:2px dashed var(--border);
+    padding:70px 30px;
+    text-align:center;
+    box-shadow:var(--shadow);
 }
 
-.empty-certificates svg {
-  font-size: 4rem;
-  color: #2563eb;
-  margin-bottom: 20px;
+.gmt-empty-icon{
+    font-size:5rem;
+    color:var(--primary);
+    margin-bottom:20px;
 }
 
-.empty-certificates h2 {
-  color: #111827;
-  margin-bottom: 10px;
+.gmt-certificates-empty h2{
+    color:var(--secondary);
+    margin-bottom:12px;
+    font-size:2rem;
 }
 
-.empty-certificates p {
-  color: #6b7280;
-  max-width: 420px;
-  margin: auto;
-  line-height: 1.7;
+.gmt-certificates-empty p{
+    color:var(--text-light);
+    max-width:520px;
+    margin:auto;
+    line-height:1.8;
 }
 
 /* ==========================================
-   Loading
+   LOADING
 ========================================== */
 
-.student-certificates-page h2 {
-  text-align: center;
-  color: #374151;
+.gmt-certificates-loading{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:60vh;
+}
+
+.gmt-certificates-loading h2{
+    color:var(--primary);
+    font-weight:700;
 }
 
 /* ==========================================
-   Responsive
+   CERTIFICATE CARD
 ========================================== */
 
-@media (max-width: 1100px) {
+.gmt-certificate-card{
+    background:var(--surface);
+    border-radius:var(--radius-lg);
+    padding:28px;
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    transition:var(--transition);
+    position:relative;
+    overflow:hidden;
+}
 
-  .certificate-summary {
-    grid-template-columns: repeat(2,1fr);
-  }
+.gmt-certificate-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:5px;
+    background:var(--primary);
+}
+
+.gmt-certificate-card:hover{
+    transform:translateY(-8px);
+    box-shadow:var(--shadow-hover);
+}
+
+.gmt-certificate-title{
+    font-size:1.3rem;
+    color:var(--secondary);
+    font-weight:700;
+    margin-bottom:10px;
+}
+
+.gmt-certificate-course{
+    color:var(--text-light);
+    margin-bottom:18px;
+}
+
+.gmt-certificate-meta{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:25px;
+}
+
+.gmt-certificate-meta span{
+    color:var(--text-light);
+    font-size:.95rem;
+}
+
+.gmt-certificate-actions{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.gmt-download-btn{
+    flex:1;
+    padding:13px;
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    border-radius:var(--radius-sm);
+    cursor:pointer;
+    font-weight:600;
+    transition:var(--transition);
+}
+
+.gmt-download-btn:hover{
+    background:var(--primary-dark);
+}
+
+.gmt-view-btn{
+    flex:1;
+    padding:13px;
+    background:#fff;
+    color:var(--primary);
+    border:2px solid var(--primary);
+    border-radius:var(--radius-sm);
+    cursor:pointer;
+    font-weight:600;
+    transition:var(--transition);
+}
+
+.gmt-view-btn:hover{
+    background:var(--primary);
+    color:#fff;
+}
+
+/* ==========================================
+   STATUS BADGES
+========================================== */
+
+.gmt-certificate-status{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 16px;
+    border-radius:50px;
+    font-size:.85rem;
+    font-weight:600;
+    margin-bottom:18px;
+}
+
+.gmt-certificate-status.approved{
+    background:#DCFCE7;
+    color:var(--success);
+}
+
+.gmt-certificate-status.pending{
+    background:#FEF3C7;
+    color:#92400E;
+}
+
+.gmt-certificate-status.rejected{
+    background:#FEE2E2;
+    color:var(--danger);
+}
+
+/* ==========================================
+   VERIFIED RIBBON
+========================================== */
+
+.gmt-verified-ribbon{
+    position:absolute;
+    top:18px;
+    right:-40px;
+    background:var(--primary);
+    color:#fff;
+    padding:8px 45px;
+    transform:rotate(45deg);
+    font-size:.7rem;
+    font-weight:700;
+    letter-spacing:.08em;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+    .gmt-certificates-page{
+        padding:25px;
+    }
+
+    .gmt-certificates-summary{
+        grid-template-columns:repeat(2,1fr);
+    }
 
 }
 
-@media (max-width: 768px) {
+@media(max-width:768px){
 
-  .student-certificates-page {
-    padding: 20px;
-  }
+    .gmt-certificates-page{
+        padding:20px;
+    }
 
-  .student-certificate-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
+    .gmt-certificates-header h1{
+        font-size:1.9rem;
+    }
 
-  .student-certificate-header h1 {
-    font-size: 1.7rem;
-  }
+    .gmt-certificates-summary{
+        grid-template-columns:1fr;
+    }
 
-  .certificate-summary {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
+    .gmt-certificates-grid{
+        grid-template-columns:1fr;
+    }
 
-  .summary-card {
-    padding: 20px;
-  }
-
-  .summary-card svg {
-    width: 58px;
-    height: 58px;
-    padding: 15px;
-    font-size: 1.3rem;
-  }
-
-  .summary-card h2 {
-    font-size: 1.7rem;
-  }
-
-  .certificate-grid {
-    grid-template-columns: 1fr;
-  }
+    .gmt-summary-card{
+        padding:22px;
+    }
 
 }
 
-@media (max-width: 480px) {
+@media(max-width:480px){
 
-  .student-certificates-page {
-    padding: 15px;
-  }
+    .gmt-certificates-page{
+        padding:15px;
+    }
 
-  .summary-card {
-    flex-direction: column;
-    text-align: center;
-  }
+    .gmt-certificates-header h1{
+        font-size:1.6rem;
+    }
 
-  .summary-card svg {
-    margin-bottom: 10px;
-  }
+    .gmt-summary-card{
+        flex-direction:column;
+        text-align:center;
+    }
 
-  .empty-certificates {
-    padding: 50px 20px;
-  }
-
-  .empty-certificates svg {
-    font-size: 3rem;
-  }
-
-  .student-certificate-header h1 {
-    font-size: 1.5rem;
-  }
+    .gmt-certificate-actions{
+        flex-direction:column;
+    }
 
 }

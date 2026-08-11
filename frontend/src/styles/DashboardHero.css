@@ -1,0 +1,446 @@
+/* =====================================================
+   GMT ADMIN DASHBOARD HERO
+===================================================== */
+
+.dashboard-hero{
+    position: relative;
+    overflow: hidden;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:60px;
+
+    padding:45px;
+
+    border-radius:28px;
+
+    background:linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #fafafa 45%,
+        #fff5f5 100%
+    );
+
+    border:1px solid rgba(201,31,38,.08);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.06);
+
+    margin-bottom:35px;
+}
+
+
+/* subtle background */
+
+.dashboard-hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-150px;
+    right:-150px;
+
+    width:420px;
+    height:420px;
+
+    border-radius:50%;
+
+    background:rgba(201,31,38,.05);
+
+}
+
+.dashboard-hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:-120px;
+    left:-120px;
+
+    width:300px;
+    height:300px;
+
+    border-radius:50%;
+
+    background:rgba(201,31,38,.03);
+
+}
+
+
+
+/* ===========================================
+   LEFT
+=========================================== */
+
+.dashboard-hero-left{
+
+    flex:1;
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+.dashboard-hero-badge{
+
+    display:inline-block;
+
+    padding:8px 18px;
+
+    border-radius:50px;
+
+    background:rgba(201,31,38,.08);
+
+    color:var(--primary);
+
+    font-size:.75rem;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+
+}
+
+.dashboard-greeting{
+
+    margin-top:22px;
+
+    color:#888;
+
+    font-size:.95rem;
+
+}
+
+.dashboard-hero-left h1{
+
+    margin:10px 0 20px;
+
+    font-size:3rem;
+
+    line-height:1.15;
+
+    font-weight:800;
+
+    color:var(--secondary);
+
+}
+
+.dashboard-description{
+
+    max-width:620px;
+
+    color:#666;
+
+    font-size:1rem;
+
+    line-height:1.8;
+
+}
+
+
+
+/* ===========================================
+   BUTTONS
+=========================================== */
+
+.dashboard-actions{
+
+    display:flex;
+
+    gap:16px;
+
+    margin-top:35px;
+
+}
+
+.hero-primary-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:14px 26px;
+
+    background:var(--primary);
+
+    color:#fff;
+
+    border:none;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.hero-primary-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 15px 35px rgba(201,31,38,.28);
+
+}
+
+.hero-secondary-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:14px 26px;
+
+    background:#fff;
+
+    color:var(--secondary);
+
+    border:1px solid #e6e6e6;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.hero-secondary-btn:hover{
+
+    border-color:var(--primary);
+
+    color:var(--primary);
+
+}
+
+
+
+/* ===========================================
+   RIGHT
+=========================================== */
+
+.dashboard-hero-right{
+
+    width:360px;
+
+    position:relative;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+    z-index:2;
+
+}
+
+
+
+/* ===========================================
+   LOGO CARD
+=========================================== */
+
+.dashboard-logo-card{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:30px;
+
+    text-align:center;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+}
+
+.dashboard-logo-card img{
+
+    width:95px;
+
+    height:95px;
+
+    object-fit:contain;
+
+    margin-bottom:18px;
+
+}
+
+.dashboard-logo-card h3{
+
+    color:var(--secondary);
+
+    margin-bottom:8px;
+
+}
+
+.dashboard-logo-card p{
+
+    color:#888;
+
+    font-size:.9rem;
+
+}
+
+
+
+/* ===========================================
+   FLOATING CARDS
+=========================================== */
+
+.floating-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    padding:18px 22px;
+
+    background:#fff;
+
+    border-radius:18px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+
+}
+
+.floating-card svg{
+
+    width:45px;
+    height:45px;
+
+    padding:10px;
+
+    border-radius:12px;
+
+    background:rgba(201,31,38,.08);
+
+    color:var(--primary);
+
+}
+
+.floating-card strong{
+
+    display:block;
+
+    color:var(--secondary);
+
+    margin-bottom:4px;
+
+}
+
+.floating-card small{
+
+    color:#888;
+
+}
+
+
+
+/* ===========================================
+   RESPONSIVE
+=========================================== */
+
+@media(max-width:1200px){
+
+.dashboard-hero{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+}
+
+.dashboard-hero-right{
+
+    width:100%;
+
+}
+
+}
+
+
+
+@media(max-width:768px){
+
+.dashboard-hero{
+
+    padding:30px 24px;
+
+}
+
+.dashboard-hero-left h1{
+
+    font-size:2.1rem;
+
+}
+
+.dashboard-actions{
+
+    flex-direction:column;
+
+}
+
+.hero-primary-btn,
+.hero-secondary-btn{
+
+    width:100%;
+
+    justify-content:center;
+
+}
+
+.dashboard-hero-right{
+
+    width:100%;
+
+}
+
+}
+
+
+
+@media(max-width:500px){
+
+.dashboard-hero{
+
+    padding:22px;
+
+}
+
+.dashboard-hero-left h1{
+
+    font-size:1.7rem;
+
+}
+
+.dashboard-logo-card{
+
+    padding:22px;
+
+}
+
+.floating-card{
+
+    padding:16px;
+
+}
+
+}

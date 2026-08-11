@@ -8,6 +8,13 @@ export const getUsers = () => {
 };
 
 // ==========================================
+// GET SINGLE USER
+// ==========================================
+export const getUser = (id) => {
+  return api.get(`/users/${id}`);
+};
+
+// ==========================================
 // CREATE USER
 // ==========================================
 export const createUser = (data) => {
@@ -19,6 +26,32 @@ export const createUser = (data) => {
 // ==========================================
 export const updateUser = (id, data) => {
   return api.put(`/users/${id}`, data);
+};
+
+// ==========================================
+// CHANGE USER ROLE
+// ==========================================
+export const changeUserRole = (id, role) => {
+  return api.patch(`/users/${id}/role`, {
+    role,
+  });
+};
+
+// ==========================================
+// CHANGE USER STATUS
+// ==========================================
+export const changeUserStatus = (id, status) => {
+  return api.patch(`/users/${id}/status`, {
+    status,
+  });
+};
+
+// ==========================================
+// GET INSTRUCTORS
+// ==========================================
+
+export const getInstructors = () => {
+  return api.get("/users/instructors");
 };
 
 // ==========================================

@@ -12,6 +12,25 @@ import "../../styles/StudentPages.css";
 function Announcements() {
   const [announcements, setAnnouncements] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+
+  // ==========================================
+  // FILTER
+  // ==========================================
+
+  const filteredAnnouncements = announcements.filter(
+    (item) =>
+      item.title
+        .toLowerCase()
+        .includes(search.toLowerCase()) ||
+      item.description
+        .toLowerCase()
+        .includes(search.toLowerCase())
+  );
+
+  // ==========================================
+  // LOAD ANNOUNCEMENTS
+  // ==========================================
 
   const loadAnnouncements = async () => {
     try {
@@ -29,103 +48,192 @@ function Announcements() {
   }, []);
 
   return (
-    <main className="student-page">
+    <main className="gmt-announcement-page">
 
-      <div className="page-header">
+      {/* ==============================
+          HEADER
+      ============================== */}
+
+      <div className="gmt-page-header">
+
         <h1>Announcements</h1>
 
         <p>
-          Stay informed with the latest updates from
-          your academy.
+          Stay informed with the latest
+          updates from GMT Software Academy.
         </p>
+
       </div>
+
+      {/* ==============================
+          STATISTICS
+      ============================== */}
+
+      <div className="gmt-announcement-stats">
+
+  <div className="gmt-stat-card">
+
+    <div className="gmt-stat-content">
+      <h2>{announcements.length}</h2>
+      <p>Total Updates</p>
+    </div>
+
+  </div>
+
+  <div className="gmt-stat-card">
+
+    <div className="gmt-stat-content">
+      <h2>
+        {announcements.filter(item => item.isPinned).length}
+      </h2>
+      <p>Pinned</p>
+    </div>
+
+  </div>
+
+  <div className="gmt-stat-card">
+
+    <div className="gmt-stat-content">
+      <h2>
+        {
+          announcements.filter(
+            item =>
+              Date.now() -
+                new Date(item.createdAt).getTime() <
+              1000 * 60 * 60 * 24
+          ).length
+        }
+      </h2>
+      <p>New Today</p>
+    </div>
+
+  </div>
+
+</div>
+      {/* ==============================
+          SEARCH
+      ============================== */}
+
+      <div className="gmt-search-box">
+
+        <input
+          type="text"
+          placeholder="Search announcements..."
+          value={search}
+          onChange={(e) =>
+            setSearch(e.target.value)
+          }
+        />
+
+      </div>
+
+      {/* ==============================
+          LOADING
+      ============================== */}
 
       {loading ? (
 
-        <p>Loading announcements...</p>
+        <div className="gmt-loading">
 
-      ) : announcements.length === 0 ? (
+          <p>Loading announcements...</p>
 
-        <div className="empty-state">
-          <FaBullhorn className="empty-icon" />
+        </div>
+
+      ) : filteredAnnouncements.length === 0 ? (
+
+        <div className="gmt-empty-state">
+
+          <FaBullhorn className="gmt-empty-icon" />
 
           <h3>No Announcements</h3>
 
           <p>
-            Your instructors haven't posted any
-            announcements yet.
+            Your instructors haven't posted
+            any announcements yet.
           </p>
+
         </div>
 
       ) : (
 
-        <div className="announcement-list">
+        <div className="gmt-announcement-list">
 
-          {announcements.map((announcement) => (
+          {filteredAnnouncements.map(
+            (announcement) => (
 
-            <div
-              key={announcement._id}
-              className={`announcement-card ${
-                announcement.isPinned
-                  ? "pinned"
-                  : ""
-              }`}
-            >
+              <div
+                key={announcement._id}
+                className={`gmt-announcement-card ${
+                  announcement.isPinned
+                    ? "pinned"
+                    : ""
+                }`}
+              >
 
-              <div className="announcement-header">
+                {/* Header */}
 
-                <div>
+                <div className="gmt-card-header">
 
-                  <h2>
+                  <div>
 
-                    {announcement.isPinned && (
-                      <FaThumbtack className="pin-icon" />
-                    )}
+                    <h2>
 
-                    {announcement.title}
+                      {announcement.isPinned && (
 
-                  </h2>
+                        <FaThumbtack className="gmt-pin-icon" />
 
-                  <span
-                    className={`announcement-type ${announcement.type
-                      .toLowerCase()
-                      .replace(/\s/g, "-")}`}
-                  >
-                    {announcement.type}
-                  </span>
+                      )}
+
+                      {announcement.title}
+
+                    </h2>
+
+                    <span
+                      className={`gmt-announcement-type ${announcement.type
+                        .toLowerCase()
+                        .replace(/\s/g, "-")}`}
+                    >
+                      {announcement.type}
+                    </span>
+
+                  </div>
+
+                  <div className="gmt-card-date">
+
+                    {new Date(
+                      announcement.createdAt
+                    ).toLocaleDateString()}
+
+                  </div>
 
                 </div>
 
-                <div className="announcement-date">
+                {/* Description */}
 
-                  <FaCalendarAlt />
+                <p className="gmt-card-description">
 
-                  {new Date(
-                    announcement.createdAt
-                  ).toLocaleDateString()}
+                  {announcement.description}
 
-                </div>
+                </p>
+
+                {/* Course */}
+
+                {announcement.course && (
+
+                  <div className="gmt-course-tag">
+
+                    <strong>Course:</strong>{" "}
+
+                    {announcement.course.title}
+
+                  </div>
+
+                )}
 
               </div>
 
-              <p className="announcement-description">
-                {announcement.description}
-              </p>
-
-              {announcement.course && (
-
-                <div className="announcement-course">
-
-                  <strong>Course:</strong>{" "}
-                  {announcement.course.title}
-
-                </div>
-
-              )}
-
-            </div>
-
-          ))}
+            )
+          )}
 
         </div>
 

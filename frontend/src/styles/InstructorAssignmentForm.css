@@ -1,0 +1,233 @@
+/* =========================================================
+   GMT INSTRUCTOR ASSIGNMENT FORM
+========================================================= */
+
+.instructor-assignment-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+/* =========================================================
+   FORM GROUP
+========================================================= */
+
+.instructor-assignment-form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.instructor-assignment-form-group label {
+  color: #111827;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.instructor-assignment-form-group label span {
+  margin-left: 4px;
+  color: #c91f26;
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.instructor-assignment-form-group input,
+.instructor-assignment-form-group select,
+.instructor-assignment-form-group textarea {
+  width: 100%;
+  border: 1px solid #dfe3e8;
+  border-radius: 11px;
+  background: #ffffff;
+  color: #111827;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+
+/* Inputs */
+
+.instructor-assignment-form-group input,
+.instructor-assignment-form-group select {
+  height: 48px;
+  padding: 0 14px;
+}
+
+
+/* Textarea */
+
+.instructor-assignment-form-group textarea {
+  min-height: 120px;
+  padding: 13px 14px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+========================================================= */
+
+.instructor-assignment-form-group input::placeholder,
+.instructor-assignment-form-group textarea::placeholder {
+  color: #9ca3af;
+}
+
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.instructor-assignment-form-group input:focus,
+.instructor-assignment-form-group select:focus,
+.instructor-assignment-form-group textarea:focus {
+  border-color: #c91f26;
+  box-shadow: 0 0 0 3px rgba(201, 31, 38, 0.09);
+  background: #ffffff;
+}
+
+
+/* =========================================================
+   FORM ROW
+========================================================= */
+
+.instructor-assignment-form-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+
+/* =========================================================
+   SMALL HELP TEXT
+========================================================= */
+
+.instructor-assignment-form-group small {
+  color: #8a929c;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+.instructor-assignment-form-group select {
+  cursor: pointer;
+  appearance: auto;
+}
+
+
+/* =========================================================
+   DATE INPUT
+========================================================= */
+
+.instructor-assignment-form-group input[type="datetime-local"] {
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   FORM ACTIONS
+========================================================= */
+
+.instructor-assignment-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+  padding-top: 22px;
+  border-top: 1px solid #e5e7eb;
+}
+
+
+/* =========================================================
+   CANCEL BUTTON
+========================================================= */
+
+.instructor-assignment-cancel-btn,
+.instructor-assignment-save-btn {
+  min-height: 46px;
+  border: none;
+  border-radius: 10px;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.instructor-assignment-cancel-btn {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.instructor-assignment-cancel-btn:hover {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+
+/* =========================================================
+   SAVE BUTTON
+========================================================= */
+
+.instructor-assignment-save-btn {
+  background: #c91f26;
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(201, 31, 38, 0.18);
+}
+
+.instructor-assignment-save-btn:hover {
+  background: #a5161c;
+  box-shadow: 0 8px 20px rgba(201, 31, 38, 0.24);
+}
+
+.instructor-assignment-save-btn:active,
+.instructor-assignment-cancel-btn:active {
+  transform: scale(0.98);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .instructor-assignment-form-row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .instructor-assignment-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .instructor-assignment-cancel-btn,
+  .instructor-assignment-save-btn {
+    width: 100%;
+  }
+
+}

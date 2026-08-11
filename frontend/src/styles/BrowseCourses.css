@@ -1,391 +1,352 @@
 /* ==========================================
-   Browse Courses
+   GMT BROWSE COURSES PAGE
 ========================================== */
 
-.browse-courses {
-  padding: 35px;
-  background: #f8fafc;
-  min-height: 100vh;
+.gmt-browse-courses{
+    min-height:100vh;
+    padding:32px;
+    background:var(--background);
 }
 
 /* ==========================================
-   Header
+   HEADER
 ========================================== */
 
-.page-header {
-  margin-bottom: 30px;
+.gmt-browse-header{
+    margin-bottom:28px;
 }
 
-.page-header h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 8px;
+.gmt-browse-header .page-tag{
+    display:inline-block;
+    padding:6px 14px;
+    border-radius:30px;
+    background:var(--primary-light);
+    color:var(--primary);
+    font-size:.75rem;
+    font-weight:700;
+    letter-spacing:.08em;
 }
 
-.page-header p {
-  color: #64748b;
-  font-size: 15px;
-  max-width: 700px;
-  line-height: 1.7;
+.gmt-browse-header h1{
+    margin:12px 0 8px;
+    font-size:2.2rem;
+    font-weight:800;
+    color:var(--secondary);
+}
+
+.gmt-browse-header p{
+    max-width:650px;
+    color:var(--text-light);
+    line-height:1.6;
 }
 
 /* ==========================================
-   Search
+   SEARCH
 ========================================== */
 
-.browse-toolbar {
-  margin-bottom: 25px;
+.gmt-browse-toolbar{
+    margin-bottom:22px;
 }
 
-.search-box {
-  position: relative;
-  max-width: 500px;
+.gmt-course-search{
+    position:relative;
+    max-width:480px;
 }
 
-.search-box input {
-  width: 100%;
-  height: 50px;
-  border-radius: 12px;
-  border: 1px solid #dbe3ee;
-  padding: 0 18px 0 48px;
-  font-size: 15px;
-  outline: none;
-  background: white;
-  transition: 0.3s;
+.gmt-course-search input{
+    width:100%;
+    height:52px;
+    padding:0 18px 0 50px;
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:#fff;
+    font-size:.95rem;
+    transition:var(--transition);
 }
 
-.search-box input:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
+.gmt-course-search input:focus{
+    outline:none;
+    border-color:var(--primary);
+    box-shadow:0 0 0 4px rgba(201,31,38,.12);
 }
 
-.search-icon {
-  position: absolute;
-  left: 18px;
-  top: 16px;
-  color: #94a3b8;
+.gmt-search-icon{
+    position:absolute;
+    left:18px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--primary);
 }
 
 /* ==========================================
-   Category Filter
+   CATEGORY FILTER
 ========================================== */
 
-.category-filter {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 35px;
+.gmt-category-filter{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:30px;
 }
 
-.category-filter button {
-  border: none;
-  background: white;
-  color: #475569;
-  padding: 10px 18px;
-  border-radius: 30px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: .3s;
-  box-shadow: 0 5px 15px rgba(15, 23, 42, .05);
+.gmt-category-btn{
+    border:1px solid var(--border);
+    background:#fff;
+    padding:9px 18px;
+    border-radius:30px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.25s;
 }
 
-.category-filter button:hover {
-  background: #2563eb;
-  color: white;
+.gmt-category-btn:hover{
+    border-color:var(--primary);
+    color:var(--primary);
 }
 
-.category-filter button.active {
-  background: #2563eb;
-  color: white;
+.gmt-category-active{
+    background:var(--primary);
+    color:#fff;
+    border-color:var(--primary);
 }
 
 /* ==========================================
-   Grid
+   GRID
 ========================================== */
 
-.course-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 28px;
+.gmt-course-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
+    gap:22px;
 }
 
 /* ==========================================
-   Card
+   CARD
 ========================================== */
 
-.course-card {
-  background: white;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 12px 30px rgba(15, 23, 42, .07);
-  transition: .35s;
-  display: flex;
-  flex-direction: column;
+.gmt-course-card{
+    background:#fff;
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    transition:.3s;
+    display:flex;
+    flex-direction:column;
 }
 
-.course-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(15, 23, 42, .12);
-}
-
-.course-card img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
+.gmt-course-card:hover{
+    transform:translateY(-6px);
+    box-shadow:var(--shadow-hover);
 }
 
 /* ==========================================
-   Content
+   IMAGE
 ========================================== */
 
-.course-content {
-  padding: 22px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+.gmt-course-image{
+    width:100%;
+    height:190px;
+    object-fit:cover;
 }
 
 /* ==========================================
-   Category Badge
+   CONTENT
 ========================================== */
 
-.category {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: fit-content;
-  background: #dbeafe;
-  color: #2563eb;
-  padding: 6px 14px;
-  border-radius: 25px;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 15px;
+.gmt-course-content{
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    flex:1;
+}
+
+.gmt-course-category{
+    display:inline-block;
+    width:fit-content;
+    padding:5px 12px;
+    border-radius:30px;
+    background:var(--primary-light);
+    color:var(--primary);
+    font-size:.72rem;
+    font-weight:700;
+}
+
+.gmt-course-content h2{
+    margin:12px 0 8px;
+    font-size:1.2rem;
+    color:var(--secondary);
+    line-height:1.35;
+}
+
+.gmt-course-content p{
+    margin-bottom:14px;
+    color:var(--text-light);
+    line-height:1.55;
+    font-size:.92rem;
+
+    display:-webkit-box;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
 }
 
 /* ==========================================
-   Title
+   LEVEL
 ========================================== */
 
-.course-content h2 {
-  color: #0f172a;
-  font-size: 22px;
-  margin-bottom: 12px;
-  font-weight: 700;
+.gmt-level-badge{
+    display:inline-block;
+    width:fit-content;
+    padding:5px 12px;
+    border-radius:30px;
+    font-size:.72rem;
+    font-weight:700;
+    margin-bottom:14px;
+}
+
+.gmt-level-badge.beginner{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.gmt-level-badge.intermediate{
+    background:#FEF3C7;
+    color:#92400e;
+}
+
+.gmt-level-badge.advanced{
+    background:#FEE2E2;
+    color:#B91C1C;
 }
 
 /* ==========================================
-   Description
+   META
 ========================================== */
 
-.course-content p {
-  color: #64748b;
-  font-size: 14px;
-  line-height: 1.8;
-  margin-bottom: 20px;
+.gmt-course-meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+    font-size:.88rem;
+    color:#64748b;
+    gap:12px;
+}
+
+.gmt-course-meta span{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.gmt-course-meta svg{
+    color:var(--primary);
 }
 
 /* ==========================================
-   Level Badge
+   FOOTER
 ========================================== */
 
-.level-badge {
-  width: fit-content;
-  padding: 7px 14px;
-  border-radius: 30px;
-  font-size: 12px;
-  font-weight: 700;
-  margin-bottom: 18px;
+.gmt-course-footer{
+    margin-top:auto;
+    padding-top:18px;
+    border-top:1px solid var(--border);
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
 }
 
-.level-badge.beginner {
-  background: #dcfce7;
-  color: #15803d;
-}
-
-.level-badge.intermediate {
-  background: #fef3c7;
-  color: #b45309;
-}
-
-.level-badge.advanced {
-  background: #fee2e2;
-  color: #dc2626;
+.gmt-course-price{
+    font-size:1.25rem;
+    font-weight:800;
+    color:var(--primary);
 }
 
 /* ==========================================
-   Meta
+   BUTTON
 ========================================== */
 
-.course-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 25px;
+.gmt-enroll-btn{
+    border:none;
+    background:var(--primary);
+    color:#fff;
+    padding:11px 20px;
+    border-radius:12px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.25s;
 }
 
-.course-meta span {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #475569;
-  font-size: 14px;
+.gmt-enroll-btn:hover{
+    background:var(--primary-dark);
+    transform:translateY(-2px);
 }
 
-.course-meta svg {
-  color: #2563eb;
+.gmt-enroll-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
 }
 
 /* ==========================================
-   Footer
+   EMPTY / LOADING
 ========================================== */
 
-.course-footer {
-  margin-top: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.gmt-loading,
+.gmt-empty-state{
+    background:#fff;
+    border-radius:18px;
+    padding:60px 30px;
+    text-align:center;
+    box-shadow:var(--shadow);
+}
+
+.gmt-empty-icon{
+    font-size:3rem;
+    color:var(--primary);
+    margin-bottom:15px;
+}
+
+.gmt-empty-state h3{
+    color:var(--secondary);
+    margin-bottom:8px;
+}
+
+.gmt-empty-state p{
+    color:var(--text-light);
 }
 
 /* ==========================================
-   Price
+   RESPONSIVE
 ========================================== */
 
-.price {
-  font-size: 22px;
-  font-weight: 700;
-  color: #16a34a;
-}
+@media(max-width:768px){
 
-/* ==========================================
-   Button
-========================================== */
+    .gmt-browse-courses{
+        padding:20px;
+    }
 
-.register-btn {
-  border: none;
-  cursor: pointer;
-  background: #2563eb;
-  color: white;
-  padding: 12px 22px;
-  border-radius: 10px;
-  font-weight: 600;
-  transition: .3s;
-}
+    .gmt-browse-header h1{
+        font-size:1.8rem;
+    }
 
-.register-btn:hover {
-  background: #1d4ed8;
-}
+    .gmt-course-grid{
+        grid-template-columns:1fr;
+    }
 
-.register-btn:disabled {
-  background: #94a3b8;
-  cursor: not-allowed;
-}
+    .gmt-course-footer{
+        flex-direction:column;
+        align-items:flex-start;
+    }
 
-/* ==========================================
-   Loading
-========================================== */
+    .gmt-enroll-btn{
+        width:100%;
+    }
 
-.loading {
-  text-align: center;
-  padding: 100px 0;
-}
-
-.loading h3 {
-  color: #475569;
-}
-
-/* ==========================================
-   Empty State
-========================================== */
-
-.empty-state {
-  text-align: center;
-  padding: 80px 20px;
-}
-
-.empty-icon {
-  font-size: 70px;
-  color: #2563eb;
-  margin-bottom: 20px;
-}
-
-.empty-state h3 {
-  font-size: 28px;
-  color: #0f172a;
-  margin-bottom: 12px;
-}
-
-.empty-state p {
-  color: #64748b;
-  font-size: 15px;
-}
-
-/* ==========================================
-   Responsive
-========================================== */
-
-@media (max-width: 992px) {
-  .browse-courses {
-    padding: 25px;
-  }
-
-  .course-grid {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  .browse-courses {
-    padding: 20px;
-  }
-
-  .page-header h1 {
-    font-size: 30px;
-  }
-
-  .page-header p {
-    font-size: 14px;
-  }
-
-  .course-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .course-footer {
-    flex-direction: column;
-    gap: 15px;
-    align-items: stretch;
-  }
-
-  .register-btn {
-    width: 100%;
-  }
-
-  .price {
-    text-align: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .category-filter {
-    gap: 8px;
-  }
-
-  .category-filter button {
-    font-size: 13px;
-    padding: 8px 14px;
-  }
-
-  .course-content {
-    padding: 18px;
-  }
-
-  .course-content h2 {
-    font-size: 20px;
-  }
-
-  .course-card img {
-    height: 190px;
-  }
+    .gmt-course-meta{
+        flex-direction:column;
+        align-items:flex-start;
+    }
 }

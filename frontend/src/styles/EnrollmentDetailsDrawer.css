@@ -1,0 +1,552 @@
+/* =========================================================
+   GMT ENROLLMENT DETAILS DRAWER
+========================================================= */
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(15, 23, 42, 0.35);
+
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease;
+
+  z-index: 9998;
+}
+
+.drawer-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* =========================================================
+   DRAWER
+========================================================= */
+
+.enrollment-drawer {
+  position: fixed;
+
+  top: 0;
+  right: 0;
+
+   width: 560px;
+  max-width: 100%;
+
+  height: 100vh;
+
+  background: #ffffff;
+
+  border-left: 1px solid #e5e7eb;
+
+  box-shadow:
+    -12px 0 40px rgba(15, 23, 42, 0.12);
+
+  transform: translateX(100%);
+
+  transition:
+    transform 0.3s ease;
+
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow-y: auto;
+}
+
+.enrollment-drawer.open {
+  transform: translateX(0);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.enrollment-drawer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.enrollment-drawer::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+.enrollment-drawer::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 20px;
+}
+
+.enrollment-drawer::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.drawer-header {
+  position: sticky;
+  top: 0;
+
+  z-index: 5;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 24px 26px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.drawer-header h2 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 21px;
+  font-weight: 700;
+
+  line-height: 1.3;
+}
+
+.drawer-header p {
+  margin: 6px 0 0;
+
+  color: #6b7280;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.drawer-close {
+  flex-shrink: 0;
+
+  width: 38px;
+  height: 38px;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #6b7280;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  font-size: 15px;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.drawer-close:hover {
+  background: #fcebec;
+
+  color: #c91f26;
+
+  border-color: #f3b9bc;
+
+  transform: rotate(3deg);
+}
+
+
+/* =========================================================
+   DRAWER SECTIONS
+========================================================= */
+
+.drawer-section {
+  padding: 22px 26px;
+
+  border-bottom: 1px solid #f0f1f3;
+}
+
+.drawer-section:last-of-type {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 17px;
+
+  color: #111827;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.section-title svg {
+  width: 16px;
+  height: 16px;
+
+  color: #c91f26;
+}
+
+
+/* =========================================================
+   INFORMATION GRID
+========================================================= */
+
+.drawer-info {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 18px 22px;
+}
+
+.drawer-info > div {
+  min-width: 0;
+}
+
+.drawer-info label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #9ca3af;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.05em;
+}
+
+.drawer-info p {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress-wrapper {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  width: 100%;
+}
+
+.progress-bar {
+  flex: 1;
+
+  height: 9px;
+
+  background: #f1f3f5;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+
+  background: #c91f26;
+
+  border-radius: inherit;
+
+  transition: width 0.4s ease;
+}
+
+.progress-wrapper > span {
+  min-width: 42px;
+
+  color: #111827;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  text-align: right;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+  display: inline-flex;
+
+  align-items: center;
+
+  width: fit-content;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  text-transform: capitalize;
+}
+
+
+/* Enrolled */
+
+.status.enrolled {
+  background: #eff6ff;
+
+  color: #2563eb;
+}
+
+
+/* In Progress */
+
+.status.in-progress {
+  background: #fff7ed;
+
+  color: #ea580c;
+}
+
+
+/* Completed */
+
+.status.completed {
+  background: #ecfdf5;
+
+  color: #15803d;
+}
+
+
+/* Withdrawn */
+
+.status.withdrawn {
+  background: #fef2f2;
+
+  color: #dc2626;
+}
+
+
+/* =========================================================
+   CERTIFICATE STATES
+========================================================= */
+
+.approved,
+.pending {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  width: fit-content;
+
+  padding: 7px 11px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+
+/* Approved */
+
+.approved {
+  background: #ecfdf5;
+
+  color: #15803d;
+}
+
+.approved svg {
+  font-size: 12px;
+}
+
+
+/* Pending */
+
+.pending {
+  background: #fff7ed;
+
+  color: #c2410c;
+}
+
+.pending svg {
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.drawer-footer {
+  position: sticky;
+
+  bottom: 0;
+
+  margin-top: auto;
+
+  padding: 18px 26px;
+
+  background: #ffffff;
+
+  border-top: 1px solid #e5e7eb;
+
+  box-shadow:
+    0 -5px 15px rgba(15, 23, 42, 0.04);
+}
+
+
+/* =========================================================
+   APPROVE BUTTON
+========================================================= */
+
+.approve-btn {
+  width: 100%;
+
+  min-height: 46px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #c91f26;
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.approve-btn:hover {
+  background: #a5161c;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 6px 16px rgba(201, 31, 38, 0.2);
+}
+
+.approve-btn:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .enrollment-drawer {
+    width: 100%;
+
+    border-left: none;
+  }
+
+  .drawer-header {
+    padding: 20px;
+  }
+
+  .drawer-section {
+    padding: 20px;
+  }
+
+  .drawer-footer {
+    padding: 16px 20px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .drawer-header h2 {
+    font-size: 19px;
+  }
+
+  .drawer-header p {
+    font-size: 12px;
+  }
+
+  .drawer-info {
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+  }
+
+  .section-title {
+    margin-bottom: 14px;
+  }
+
+  .drawer-info p {
+    font-size: 13px;
+  }
+
+}

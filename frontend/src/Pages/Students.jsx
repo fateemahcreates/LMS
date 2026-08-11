@@ -1,7 +1,18 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import StudentForm from "../components/StudentsForm";
 import StudentTable from "../components/StudentTable";
+
+import AdminStudentDrawer from "../components/AdminStudentDrawer";
+import StudentEditDrawer from "../components/StudentEditDrawer";
+
+import {
+  FaUsers,
+  FaUserGraduate,
+  FaCheckCircle,
+  FaBookOpen,
+  FaChartLine,
+} from "react-icons/fa";
+
 import { notify } from "../utils/notify";
 
 import {
@@ -16,42 +27,69 @@ import "../styles/Students.css";
 function Students() {
 
 
-  const [students, setStudents] = useState([]);
+  // ==========================================
+  // INITIAL FORM STATE
+  // ==========================================
 
-  const [editingStudent, setEditingStudent] =
-    useState(null);
+  const initialState = {
 
+    studentId:"",
+    program:"",
+    faculty:"",
+    semester:"",
+    phone:"",
 
-  const [formData, setFormData] = useState({
-
-    studentId: "",
-    department: "",
-    faculty: "",
-    level: "",
-    semester: "",
-    phone: "",
-
-  });
+  };
 
 
+  const [
+    students,
+    setStudents
+  ] = useState([]);
 
-  // ==========================
-  // Fetch Students
-  // ==========================
 
-  const fetchStudents = async () => {
+  const [
+    editingStudent,
+    setEditingStudent
+  ] = useState(null);
 
-    try {
+
+  const [selectedStudent, setSelectedStudent] = useState(null);
+
+const [viewDrawerOpen, setViewDrawerOpen] =
+  useState(false);
+
+const [editDrawerOpen, setEditDrawerOpen] =
+  useState(false);
+
+  const [
+    formData,
+    setFormData
+  ] = useState(initialState);
+
+
+
+  // ==========================================
+  // FETCH STUDENTS
+  // ==========================================
+
+  const fetchStudents = async()=>{
+
+    try{
 
       const res = await getStudents();
 
       setStudents(res.data);
 
+    }
+    catch(error){
 
-    } catch (error) {
-  console.error(error);
-  notify.apiError(error);
-}
+      console.error(error);
+
+      notify.apiError(error);
+
+    }
+
   };
 
 
@@ -64,10 +102,9 @@ function Students() {
 
 
 
-
-  // ==========================
-  // Handle Change
-  // ==========================
+  // ==========================================
+  // HANDLE CHANGE
+  // ==========================================
 
   const handleChange = (e)=>{
 
@@ -75,8 +112,7 @@ function Students() {
 
       ...formData,
 
-      [e.target.name]:
-        e.target.value,
+      [e.target.name]:e.target.value,
 
     });
 
@@ -84,190 +120,337 @@ function Students() {
 
 
 
+  // ==========================================
+  // EDIT STUDENT
+  // ==========================================
 
-  // ==========================
-  // Update Student
-  // ==========================
+ const handleEdit = (student) => {
 
-  const handleSubmit = async (e) => {
-  e.preventDefault();
+  setEditingStudent(student);
 
-  if (
-    !formData.studentId ||
-    !formData.department ||
-    !formData.level ||
-    !formData.semester
-  ) {
-    notify.warning("Please fill in all required fields.");
-    return;
-  }
+  setFormData({
 
-  try {
-    await updateStudent(
-      editingStudent._id,
-      formData
-    );
+    studentId: student.studentId || "",
 
-    notify.success("Student updated successfully.");
+    program: student.program || "",
 
-    setEditingStudent(null);
+    semester: student.semester || "",
 
-    setFormData({
-      studentId: "",
-      department: "",
-      faculty: "",
-      level: "",
-      semester: "",
-      phone: "",
-    });
+    phone: student.phone || "",
 
-    fetchStudents();
+  });
 
-  } catch (error) {
-    console.error(error);
-    notify.apiError(error);
-  }
-};
+  setEditDrawerOpen(true);
 
-  // ==========================
-  // Delete Student
-  // ==========================
-
-  const handleDelete = async (id) => {
-  const confirmDelete = window.confirm(
-    "Delete this student?"
-  );
-
-  if (!confirmDelete) {
-    notify.info("Deletion cancelled.");
-    return;
-  }
-
-  try {
-    await deleteStudent(id);
-
-    notify.success("Student deleted successfully.");
-
-    fetchStudents();
-
-  } catch (error) {
-    console.error(error);
-    notify.apiError(error);
-  }
 };
 
 
+const handleView = (student) => {
+
+  setSelectedStudent(student);
+
+  setViewDrawerOpen(true);
+
+};
+
+
+  // ==========================================
+  // UPDATE STUDENT
+  // ==========================================
+
+  const handleSubmit = async(e)=>{
+
+    e.preventDefault();
+
+
+    if(
+      !formData.studentId ||
+      !formData.program ||
+      !formData.semester
+    ){
+
+      notify.warning(
+        "Please fill in all required fields."
+      );
+
+      return;
+
+    }
+
+
+    try{
+
+
+      await updateStudent(
+        editingStudent._id,
+        formData
+      );
+
+
+      notify.success(
+        "Student updated successfully."
+      );
+
+
+      await fetchStudents();
+
+
+      setEditDrawerOpen(false);
+
+      setEditingStudent(null);
+
+
+      setFormData(initialState);
+
+
+    }
+    catch(error){
+
+      console.error(error);
+
+      notify.apiError(error);
+
+    }
+
+  };
 
 
 
-  // ==========================
-  // Edit Student
-  // ==========================
+  // ==========================================
+  // DELETE STUDENT
+  // ==========================================
 
-  const handleEdit=(student)=>{
-
-   notify.info("Editing student profile.");
-    setEditingStudent(student);
+  const handleDelete = async(id)=>{
 
 
+    if(
+      !window.confirm(
+        "Delete this student?"
+      )
+    ){
 
-    setFormData({
+      notify.info(
+        "Deletion cancelled."
+      );
 
-      studentId:
-        student.studentId || "",
+      return;
 
-
-      department:
-        student.department || "",
-
-
-      faculty:
-        student.faculty || "",
-
-
-      level:
-        student.level || "",
+    }
 
 
-      semester:
-        student.semester || "",
+
+    try{
 
 
-      phone:
-        student.phone || "",
+      await deleteStudent(id);
 
 
-    });
+      notify.success(
+        "Student deleted successfully."
+      );
+
+
+      fetchStudents();
+
+
+    }
+    catch(error){
+
+      console.error(error);
+
+      notify.apiError(error);
+
+    }
 
 
   };
 
 
+
+  // ==========================================
+  // STATS
+  // ==========================================
+
+  const totalStudents =
+    students.length;
+
+
+  const activeStudents =
+    students.filter(
+      student =>
+      student.isActive !== false
+    ).length;
+
+
+
+  const totalPrograms =
+    [
+      ...new Set(
+        students
+        .map(
+          student=>student.program
+        )
+        .filter(Boolean)
+      )
+    ].length;
+
+
+
+  const averageProgress =
+    students.length > 0
+    ?
+    Math.round(
+      students.reduce(
+        (sum,student)=>
+        sum + (student.progress || 0),
+        0
+      )
+      /
+      students.length
+    )
+    :
+    0;
 
 
 
   return (
 
-    <main className="dashboard">
+
+    <div className="gmt-admin-students-page">
 
 
-      <div className="dashboard-header">
-
-        <h2>
-          Student Management
-        </h2>
+      {/* ======================================
+          HEADER
+      ====================================== */}
 
 
-        <p>
-          Manage enrolled students and update academic records.
-        </p>
+      <div className="gmt-admin-students-header">
+
+
+        <div className="gmt-admin-students-heading">
+
+
+          <span className="gmt-admin-students-tag">
+
+            STUDENT MANAGEMENT
+
+          </span>
+
+
+          <h1>
+
+            Student Management
+
+          </h1>
+
+
+          <p>
+
+            Manage GMT Academy learners,
+            monitor enrolments and update
+            student information.
+
+          </p>
+
+
+        </div>
+
+
+
+        <button
+          className="gmt-admin-student-btn"
+        >
+
+          <FaUsers />
+
+          Students
+
+        </button>
+
+
 
       </div>
 
 
 
 
-      <div className="dashboard-content">
+      {/* ======================================
+          STATS
+      ====================================== */}
 
 
-        <div className="form-section">
+
+      <div className="gmt-admin-student-stats">
 
 
-          {
-            editingStudent ? (
 
-              <StudentForm
-
-                formData={formData}
-
-                handleChange={handleChange}
-
-                handleSubmit={handleSubmit}
-
-                editingStudent={editingStudent}
-
-              />
+        <div className="gmt-admin-student-stat-card">
 
 
-            ) : (
+          
 
-              <div className="student-info-card">
+          <div>
 
-                <h3>
-                  Student Registration
-                </h3>
+            <h2>
+              {totalStudents}
+            </h2>
+
+            <span>
+              Total Students
+            </span>
+
+          </div>
 
 
-                <p>
-                  New students are created from the Users section.
-                </p>
+        </div>
 
 
-              </div>
 
-            )
-          }
 
+        <div className="gmt-admin-student-stat-card">
+
+
+          
+
+          <div>
+
+            <h2>
+              {activeStudents}
+            </h2>
+
+
+            <span>
+              Active Students
+            </span>
+
+
+          </div>
+
+
+        </div>
+
+
+
+
+        <div className="gmt-admin-student-stat-card">
+
+
+          
+
+
+          <div>
+
+            <h2>
+              {totalPrograms}
+            </h2>
+
+
+            <span>
+              Programs
+            </span>
+
+
+          </div>
 
 
         </div>
@@ -276,20 +459,29 @@ function Students() {
 
 
 
-        <div className="table-section">
+        <div className="gmt-admin-student-stat-card">
 
 
-          <StudentTable
-
-            students={students}
-
-            handleDelete={handleDelete}
-
-            handleEdit={handleEdit}
-
+          <FaChartLine
+            className="gmt-admin-student-stat-icon"
           />
 
 
+          <div>
+
+            <h2>
+              {averageProgress}%
+            </h2>
+
+
+            <span>
+              Learning Progress
+            </span>
+
+
+          </div>
+
+
         </div>
 
 
@@ -297,7 +489,85 @@ function Students() {
       </div>
 
 
-    </main>
+
+
+
+      {/* ======================================
+          TABLE
+      ====================================== */}
+
+
+
+      <div className="gmt-admin-student-table-wrapper">
+
+
+        <StudentTable
+  students={students}
+  handleView={handleView}
+  handleEdit={handleEdit}
+  handleDelete={handleDelete}
+/>
+
+      </div>
+
+
+
+
+
+
+      {/* ======================================
+          DRAWER
+      ====================================== */}
+
+
+
+      {(viewDrawerOpen || editDrawerOpen) && (
+
+    <div
+        className="drawer-backdrop"
+        onClick={() => {
+
+            setViewDrawerOpen(false);
+
+            setEditDrawerOpen(false);
+
+        }}
+    />
+
+)}
+
+
+
+
+      <AdminStudentDrawer
+
+    open={viewDrawerOpen}
+
+    onClose={() => setViewDrawerOpen(false)}
+
+    student={selectedStudent}
+
+/>
+
+<StudentEditDrawer
+
+    open={editDrawerOpen}
+
+    onClose={() => setEditDrawerOpen(false)}
+
+    formData={formData}
+
+    handleChange={handleChange}
+
+    handleSubmit={handleSubmit}
+
+    editingStudent={editingStudent}
+
+/>
+
+
+    </div>
+
 
   );
 

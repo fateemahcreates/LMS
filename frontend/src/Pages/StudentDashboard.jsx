@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 
 import StudentHero from "../components/student/StudentHero";
 import StudentStats from "../components/student/StudentStats";
-import StudentProfileCard from "../components/student/StudentProfileCard";
-import StudentProgressCard from "../components/student/StudentProgressCard";
+import EnrollmentOverviewCard from "../components/student/EnrollmentOverviewCard";
+import AcademicProgressCard from "../components/student/AcademicProgressCard";
+
   import StudentAnnouncements from "../components/student/StudentAnnouncements";
   import StudentDeadlines from "../components/student/StudentDeadlines";
 
@@ -81,9 +82,9 @@ function StudentDashboard() {
 
 
       <StudentHero
-        student={student}
-      />
-
+  student={student}
+  enrollment={currentEnrollment}
+/>
 
       <StudentStats
         student={student}
@@ -93,12 +94,11 @@ function StudentDashboard() {
       <div className="student-dashboard-grid">
 
 
-        <StudentProfileCard
-          student={student}
-        />
+        <EnrollmentOverviewCard
+  enrollment={currentEnrollment}
+/>
 
-
-       <StudentProgressCard
+      <AcademicProgressCard
   enrollment={currentEnrollment}
 />
 <StudentAnnouncements />

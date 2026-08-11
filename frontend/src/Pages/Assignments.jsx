@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 
 import AssignmentForm from "../components/AssignmentForm";
 import AssignmentTable from "../components/AssignmentTable";
-import StudentSubmissionTable from "../components/StudentSubmissionTable";
-
+import AssignmentDetailsPanel from "../components/AssignmentDetailsPanel";
+import SubmissionDetailsDrawer from "../components/SubmissionDetailsDrawer";
 
 import {
   getAssignments,
@@ -17,8 +17,25 @@ import "../styles/Assignments.css";
 
 function Assignments() {
   const [assignments, setAssignments] = useState([]);
-  const [editingAssignment, setEditingAssignment] = useState(null);
   const [submissions, setSubmissions] = useState([]);
+
+  const [editingAssignment, setEditingAssignment] =
+    useState(null);
+
+  const [selectedAssignment, setSelectedAssignment] =
+    useState(null);
+
+    const [selectedSubmission, setSelectedSubmission] =
+  useState(null);
+
+const [submissionDrawerOpen, setSubmissionDrawerOpen] =
+  useState(false);
+
+const handleReview = (submission) => {
+  setSelectedSubmission(submission);
+  setSubmissionDrawerOpen(true);
+};
+ 
 
   const [formData, setFormData] = useState({
     title: "",
@@ -31,9 +48,9 @@ function Assignments() {
     status: "Active",
   });
 
-  // ==========================
-  // Load Assignments
-  // ==========================
+  // ==========================================
+  // LOAD DATA
+  // ==========================================
 
   const fetchAssignments = async () => {
     try {
@@ -45,43 +62,35 @@ function Assignments() {
   };
 
   const fetchSubmissions = async () => {
-  try {
-    const res = await getAllSubmissions();
-
-    console.log("Admin Submissions:", res.data);
-
-    setSubmissions(res.data);
-
-  } catch (error) {
-    console.error(error);
-
-    if (error.response) {
-      console.log(error.response.data);
+    try {
+      const res = await getAllSubmissions();
+      setSubmissions(res.data);
+    } catch (error) {
+      console.error(error);
     }
-  }
-};
+  };
 
- useEffect(() => {
-  fetchAssignments();
-  fetchSubmissions();
-}, []);
+  useEffect(() => {
+    fetchAssignments();
+    fetchSubmissions();
+  }, []);
 
-  // ==========================
-  // Handle Input
-  // ==========================
+  // ==========================================
+  // INPUT
+  // ==========================================
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [e.target.name]:
+        e.target.value,
     });
   };
 
-  // ==========================
-  // Submit
-  // ==========================
+  // ==========================================
+  // SAVE
+  // ==========================================
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -117,47 +126,81 @@ function Assignments() {
     }
   };
 
-  // ==========================
-  // Edit
-  // ==========================
+  // ==========================================
+  // EDIT
+  // ==========================================
 
   const handleEdit = (assignment) => {
+
     setEditingAssignment(assignment);
 
     setFormData({
       title: assignment.title,
       description: assignment.description,
       course: assignment.course._id,
-      dueDate: assignment.dueDate?.substring(0, 10),
-      totalMarks: assignment.totalMarks,
-      submissionType: assignment.submissionType,
-      attachment: assignment.attachment,
+      dueDate:
+        assignment.dueDate?.substring(0, 10),
+      totalMarks:
+        assignment.totalMarks,
+      submissionType:
+        assignment.submissionType,
+      attachment:
+        assignment.attachment,
       status: assignment.status,
     });
+
   };
 
-  // ==========================
-  // Delete
-  // ==========================
+  // ==========================================
+  // DELETE
+  // ==========================================
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Delete assignment?")) return;
+
+    if (!window.confirm(
+      "Delete assignment?"
+    ))
+      return;
 
     await deleteAssignment(id);
 
     fetchAssignments();
     fetchSubmissions();
+
   };
 
+  // ==========================================
+  // VIEW
+  // ==========================================
+
+  const handleView = (assignment) => {
+
+  if (
+    selectedAssignment?._id === assignment._id
+  ) {
+
+    setSelectedAssignment(null);
+
+    return;
+
+  }
+
+  setSelectedAssignment(assignment);
+
+};
   return (
+
     <main className="assignments-page">
 
       <div className="page-header">
 
-        <h1>Assignment Management</h1>
+        <h1>
+          Assignment Management
+        </h1>
 
         <p>
-          Create and manage assignments for all academy courses.
+          Create and manage assignments
+          for all academy courses.
         </p>
 
       </div>
@@ -166,20 +209,44 @@ function Assignments() {
         formData={formData}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
-        editingAssignment={editingAssignment}
+        editingAssignment={
+          editingAssignment
+        }
       />
 
       <AssignmentTable
-        assignments={assignments}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
-      />
-
-      <StudentSubmissionTable
-  submissions={submissions}
-  onGrade={() => {}}
+  assignments={assignments}
+  handleEdit={handleEdit}
+  handleDelete={handleDelete}
+  handleView={handleView}
+  selectedAssignment={selectedAssignment}
 />
+
+      {selectedAssignment && (
+
+  <AssignmentDetailsPanel
+    assignment={selectedAssignment}
+    submissions={submissions.filter(
+      (submission) =>
+        submission.assignment?._id ===
+        selectedAssignment._id
+    )}
+    onReview={handleReview}
+  />
+
+)}
+
+<SubmissionDetailsDrawer
+  open={submissionDrawerOpen}
+  onClose={() =>
+    setSubmissionDrawerOpen(false)
+  }
+  submission={selectedSubmission}
+/>
+
+
     </main>
+
   );
 }
 

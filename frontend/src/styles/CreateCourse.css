@@ -1,0 +1,205 @@
+/* =====================================================
+   CREATE COURSE PAGE
+===================================================== */
+
+.create-course-page {
+  padding: 2rem;
+  background: var(--background);
+  min-height: 100vh;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.create-course-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.create-course-header h1 {
+  font-size: 2rem;
+  color: var(--secondary);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.create-course-header p {
+  color: var(--text-light);
+  font-size: 1rem;
+}
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.create-course-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.create-course-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.create-course-card h2 {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: 1.5rem;
+  color: var(--secondary);
+  font-size: 1.2rem;
+}
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.create-course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+/* =====================================================
+   INPUTS
+===================================================== */
+
+.create-course-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-course-input label {
+  margin-bottom: .55rem;
+  font-weight: 600;
+  color: var(--secondary);
+}
+
+.create-course-input input,
+.create-course-input select,
+.create-course-card textarea {
+  width: 100%;
+  padding: .95rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text);
+  font-size: .95rem;
+  transition: var(--transition);
+}
+
+.create-course-card textarea {
+  resize: vertical;
+  min-height: 180px;
+}
+
+.create-course-input input:focus,
+.create-course-input select:focus,
+.create-course-card textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(201,31,38,.12);
+}
+
+/* =====================================================
+   ACTIONS
+===================================================== */
+
+.create-course-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.create-course-actions button {
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .95rem 1.8rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.create-course-cancel {
+  background: #fff;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.create-course-cancel:hover {
+  background: #f5f5f5;
+}
+
+.create-course-submit {
+  background: var(--primary);
+  color: #fff;
+}
+
+.create-course-submit:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.create-course-submit:disabled {
+  opacity: .7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 992px) {
+
+  .create-course-page {
+    padding: 1.5rem;
+  }
+
+  .create-course-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .create-course-page {
+    padding: 1rem;
+  }
+
+  .create-course-card {
+    padding: 1.5rem;
+  }
+
+  .create-course-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .create-course-actions {
+    flex-direction: column;
+  }
+
+  .create-course-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+
+}

@@ -1,229 +1,331 @@
 /* ==========================================
-   Recent Courses Card
+   GMT RECENT COURSES
 ========================================== */
 
-.recent-card {
-  background: #ffffff;
-  border-radius: 18px;
-  padding: 24px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
+.course-recent-card{
+    background:#ffffff;
+    border:1px solid #ECECEC;
+    border-radius:24px;
+    padding:30px;
+    box-shadow:0 12px 35px rgba(16,33,58,.05);
 }
 
 /* ==========================================
-   Header
+   HEADER
 ========================================== */
 
-.recent-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.course-recent-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:30px;
 }
 
-.recent-header h2 {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #0f172a;
+.course-section-tag{
+    display:inline-flex;
+    align-items:center;
+    padding:8px 16px;
+    border-radius:30px;
+    background:#FDECEF;
+    color:#C8102E;
+    font-size:.75rem;
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    margin-bottom:12px;
 }
 
-.recent-header span {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
+.course-recent-header h2{
+    margin:0;
+    font-size:1.65rem;
+    color:#10213A;
+    font-weight:700;
+}
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background: #2563eb;
-  color: #fff;
-
-  font-size: 0.9rem;
-  font-weight: 600;
+.course-recent-total{
+    width:54px;
+    height:54px;
+    border-radius:18px;
+    background:#10213A;
+    color:#ffffff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:1.1rem;
+    font-weight:700;
+    box-shadow:0 12px 25px rgba(16,33,58,.15);
 }
 
 /* ==========================================
-   Course List
+   LIST
 ========================================== */
 
-.recent-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.course-recent-list{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
 }
 
 /* ==========================================
-   Course Item
+   ITEM
 ========================================== */
 
-.recent-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-
-  padding: 16px;
-  border-radius: 14px;
-
-  border: 1px solid transparent;
-
-  transition: 0.3s ease;
+.course-recent-item{
+    display:grid;
+    grid-template-columns:65px 1fr 50px;
+    gap:20px;
+    align-items:center;
+    padding:22px;
+    border:1px solid #ECECEC;
+    border-radius:22px;
+    transition:.35s ease;
 }
 
-.recent-item:hover {
-  background: #f8fafc;
-  border-color: #dbeafe;
-  transform: translateY(-2px);
+.course-recent-item:hover{
+    transform:translateY(-5px);
+    border-color:#C8102E;
+    box-shadow:0 16px 35px rgba(200,16,46,.08);
 }
 
 /* ==========================================
-   Course Icon
+   COURSE ICON
 ========================================== */
 
-.course-avatar {
-  width: 52px;
-  height: 52px;
-
-  border-radius: 50%;
-
-  background: linear-gradient(
-    135deg,
-    #2563eb,
-    #3b82f6
-  );
-
-  color: #fff;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  font-size: 1.2rem;
-
-  flex-shrink: 0;
+.course-avatar{
+    width:60px;
+    height:60px;
+    border-radius:18px;
+    background:linear-gradient(
+        135deg,
+        #C8102E,
+        #8E1025
+    );
+    color:#ffffff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:1.3rem;
+    box-shadow:0 12px 25px rgba(200,16,46,.22);
 }
 
 /* ==========================================
-   Course Information
+   CONTENT
 ========================================== */
 
-.course-info {
-  flex: 1;
+.course-content{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
 }
 
-.course-info h4 {
-  font-size: 1rem;
-  color: #0f172a;
-  margin-bottom: 4px;
+.course-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
 }
 
-.course-info p {
-  color: #64748b;
-  font-size: .9rem;
-  margin-bottom: 4px;
-}
-
-.course-info small {
-  display: inline-block;
-
-  padding: 4px 10px;
-
-  border-radius: 20px;
-
-  background: #eff6ff;
-  color: #2563eb;
-
-  font-size: .75rem;
-  font-weight: 600;
+.course-top h4{
+    margin:0;
+    font-size:1.08rem;
+    color:#10213A;
+    font-weight:700;
 }
 
 /* ==========================================
-   Status Badge
+   STATUS
 ========================================== */
 
-.course-status {
-  padding: 6px 12px;
-  border-radius: 30px;
-
-  font-size: .75rem;
-  font-weight: 600;
-
-  white-space: nowrap;
+.course-status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 15px;
+    border-radius:30px;
+    font-size:.78rem;
+    font-weight:700;
+    text-transform:capitalize;
 }
 
-.course-status.active {
-  background: #dcfce7;
-  color: #15803d;
+.course-status.active{
+    background:#FDECEF;
+    color:#C8102E;
 }
 
-.course-status.draft {
-  background: #fef3c7;
-  color: #b45309;
+.course-status.draft{
+    background:#FFF5D9;
+    color:#D97706;
 }
 
-.course-status.archived {
-  background: #fee2e2;
-  color: #dc2626;
+.course-status.archived{
+    background:#F3F4F6;
+    color:#64748B;
+}
+
+.course-status-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:currentColor;
 }
 
 /* ==========================================
-   Empty State
+   COURSE CODE
 ========================================== */
 
-.empty-recent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  text-align: center;
-
-  padding: 60px 20px;
+.course-code{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
 }
 
-.empty-icon {
-  font-size: 3rem;
-  color: #2563eb;
-  margin-bottom: 18px;
+.course-code small{
+    color:#94A3B8;
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
 }
 
-.empty-recent p {
-  color: #64748b;
+.course-code h5{
+    margin:0;
+    color:#10213A;
+    font-size:.95rem;
+    font-weight:700;
 }
 
 /* ==========================================
-   Responsive
+   META
 ========================================== */
 
-@media (max-width: 768px) {
+.course-meta{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    color:#64748B;
+    font-size:.9rem;
+}
 
-  .recent-card {
-    padding: 18px;
-  }
+.course-meta-divider{
+    color:#C8102E;
+    font-weight:700;
+}
 
-  .recent-item {
-    flex-wrap: wrap;
-  }
+/* ==========================================
+   ACTION BUTTON
+========================================== */
 
-  .course-avatar {
-    width: 46px;
-    height: 46px;
-    font-size: 1rem;
-  }
+.course-action{
+    width:44px;
+    height:44px;
+    border:none;
+    border-radius:14px;
+    background:#F7F8FC;
+    color:#10213A;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer;
+    transition:.3s;
+}
 
-  .course-info h4 {
-    font-size: .95rem;
-  }
+.course-action svg{
+    font-size:1.15rem;
+}
 
-  .course-info p {
-    font-size: .85rem;
-  }
+.course-action:hover{
+    background:#C8102E;
+    color:#ffffff;
+    transform:translateY(-3px);
+}
 
-  .course-status {
-    margin-left: 62px;
-  }
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+.course-empty-recent{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:70px 20px;
+}
+
+.course-empty-icon{
+    font-size:3rem;
+    color:#C8102E;
+    margin-bottom:20px;
+}
+
+.course-empty-recent h3{
+    color:#10213A;
+    margin-bottom:10px;
+}
+
+.course-empty-recent p{
+    color:#64748B;
+    max-width:300px;
+    line-height:1.7;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width:900px){
+
+.course-recent-item{
+    grid-template-columns:1fr;
+    text-align:center;
+}
+
+.course-avatar{
+    margin:auto;
+}
+
+.course-top{
+    flex-direction:column;
+    gap:14px;
+}
+
+.course-meta{
+    justify-content:center;
+}
+
+.course-action{
+    margin:auto;
+}
+
+}
+
+@media (max-width:600px){
+
+.course-recent-card{
+    padding:22px;
+}
+
+.course-recent-header{
+    flex-direction:column;
+    gap:20px;
+}
+
+.course-recent-total{
+    width:46px;
+    height:46px;
+}
+
+.course-recent-header h2{
+    font-size:1.4rem;
+}
+
+.course-top h4{
+    font-size:1rem;
+}
+
+.course-code h5{
+    font-size:.9rem;
+}
 
 }

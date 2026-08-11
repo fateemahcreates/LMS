@@ -1,0 +1,993 @@
+/* ============================================================
+   GMT ADMIN NAVBAR
+============================================================ */
+
+.gmt-admin-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  width: 100%;
+  height: 76px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 28px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  box-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.04);
+
+  box-sizing: border-box;
+}
+
+
+/* ============================================================
+   LEFT SECTION
+============================================================ */
+
+.gmt-admin-navbar-left {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  min-width: 270px;
+
+}
+
+
+/* ============================================================
+   SIDEBAR TOGGLE
+============================================================ */
+
+.gmt-admin-navbar-toggle {
+
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  background: transparent;
+
+  color: #374151;
+
+  font-size: 18px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+
+.gmt-admin-navbar-toggle:hover {
+
+  background: #f3f4f6;
+
+  color: #c91f26;
+
+}
+
+
+/* ============================================================
+   LOGO
+============================================================ */
+
+.gmt-admin-navbar-logo {
+
+  width: 42px;
+  height: 42px;
+
+  object-fit: contain;
+
+  border-radius: 8px;
+
+}
+
+
+/* ============================================================
+   NAVBAR TITLE
+============================================================ */
+
+.gmt-admin-navbar-title {
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  line-height: 1.1;
+
+}
+
+
+.gmt-admin-navbar-title h2 {
+
+  margin: 0;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  color: #111827;
+
+}
+
+
+.gmt-admin-navbar-title span {
+
+  margin-top: 4px;
+
+  font-size: 11px;
+
+  color: #6b7280;
+
+}
+
+
+/* ============================================================
+   SEARCH
+============================================================ */
+
+.gmt-admin-navbar-search {
+
+  flex: 1;
+
+  max-width: 520px;
+
+  height: 42px;
+
+  margin: 0 35px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 0 15px;
+
+  background: #f8f9fb;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 9px;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.gmt-admin-navbar-search svg {
+
+  flex-shrink: 0;
+
+  font-size: 15px;
+
+  color: #9ca3af;
+
+}
+
+
+.gmt-admin-navbar-search input {
+
+  width: 100%;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  color: #111827;
+
+  font-size: 13px;
+
+}
+
+
+.gmt-admin-navbar-search input::placeholder {
+
+  color: #9ca3af;
+
+}
+
+
+.gmt-admin-navbar-search:focus-within {
+
+  background: #ffffff;
+
+  border-color: #c91f26;
+
+  box-shadow:
+    0 0 0 3px rgba(201, 31, 38, 0.08);
+
+}
+
+
+/* ============================================================
+   RIGHT SECTION
+============================================================ */
+
+.gmt-admin-navbar-right {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  min-width: 270px;
+
+}
+
+
+/* ============================================================
+   NAVBAR ICON BUTTON
+============================================================ */
+
+.gmt-admin-navbar-icon {
+
+  position: relative;
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  background: transparent;
+
+  color: #4b5563;
+
+  font-size: 20px;
+
+  border-radius: 9px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.gmt-admin-navbar-icon:hover {
+
+  background: #fcecec;
+
+  color: #c91f26;
+
+}
+
+
+.gmt-admin-navbar-icon:active {
+
+  transform: scale(0.95);
+
+}
+
+
+/* ============================================================
+   NOTIFICATION WRAPPER
+============================================================ */
+
+.gmt-admin-navbar-notification-wrapper {
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+/* ============================================================
+   ACTIVE NOTIFICATION BUTTON
+============================================================ */
+
+.gmt-admin-navbar-icon.active {
+
+  background: #fcecec;
+
+  color: #c91f26;
+
+}
+
+
+/* ============================================================
+   NOTIFICATION BADGE
+============================================================ */
+
+.gmt-admin-navbar-badge {
+
+  position: absolute;
+
+  top: 4px;
+  right: 3px;
+
+  min-width: 17px;
+  height: 17px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 4px;
+
+  background: #c91f26;
+
+  color: #ffffff;
+
+  border: 2px solid #ffffff;
+
+  border-radius: 999px;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  box-sizing: border-box;
+}
+
+
+/* ============================================================
+   PROFILE
+============================================================ */
+
+.gmt-admin-navbar-profile {
+
+  position: relative;
+
+  margin-left: 5px;
+
+}
+
+
+/* ============================================================
+   PROFILE BUTTON
+============================================================ */
+
+.gmt-admin-navbar-profile-btn {
+
+  min-width: 145px;
+
+  height: 48px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 5px 8px;
+
+  border: none;
+
+  background: transparent;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  color: #374151;
+
+  transition:
+    background 0.2s ease;
+}
+
+
+.gmt-admin-navbar-profile-btn:hover {
+
+  background: #f8f9fb;
+
+}
+
+
+/* ============================================================
+   PROFILE AVATAR
+============================================================ */
+
+.gmt-admin-navbar-avatar {
+
+  flex-shrink: 0;
+
+  font-size: 34px;
+
+  color: #c91f26;
+
+}
+
+
+/* ============================================================
+   USER INFORMATION
+============================================================ */
+
+.gmt-admin-navbar-user {
+
+  flex: 1;
+
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+}
+
+
+.gmt-admin-navbar-user small {
+
+  margin: 0 0 2px;
+
+  color: #9ca3af;
+
+  font-size: 10px;
+
+  line-height: 1;
+
+}
+
+
+.gmt-admin-navbar-user h4 {
+
+  max-width: 90px;
+
+  margin: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  color: #111827;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+}
+
+
+.gmt-admin-navbar-profile-btn > svg:last-child {
+
+  flex-shrink: 0;
+
+  font-size: 11px;
+
+  color: #9ca3af;
+
+}
+
+
+/* ============================================================
+   PROFILE DROPDOWN
+============================================================ */
+
+.gmt-admin-navbar-dropdown {
+
+  position: absolute;
+
+  top: calc(100% + 10px);
+
+  right: 0;
+
+  width: 285px;
+
+  padding: 8px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.12);
+
+  animation:
+    gmtAdminDropdownIn 0.18s ease;
+
+  box-sizing: border-box;
+
+}
+
+
+/* ============================================================
+   DROPDOWN ANIMATION
+============================================================ */
+
+@keyframes gmtAdminDropdownIn {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      translateY(-5px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      translateY(0);
+
+  }
+
+}
+
+
+/* ============================================================
+   DROPDOWN HEADER
+============================================================ */
+
+.gmt-admin-navbar-dropdown-header {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 13px 12px;
+
+}
+
+
+.gmt-admin-navbar-dropdown-avatar {
+
+  flex-shrink: 0;
+
+  font-size: 40px;
+
+  color: #c91f26;
+
+}
+
+
+.gmt-admin-navbar-dropdown-header h3 {
+
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+}
+
+
+.gmt-admin-navbar-dropdown-header p {
+
+  margin: 4px 0 0;
+
+  max-width: 180px;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  color: #6b7280;
+
+  font-size: 11px;
+
+}
+
+
+/* ============================================================
+   DIVIDER
+============================================================ */
+
+.gmt-admin-navbar-divider {
+
+  height: 1px;
+
+  margin: 6px 4px;
+
+  background: #e5e7eb;
+
+}
+
+
+/* ============================================================
+   DROPDOWN ITEMS
+============================================================ */
+
+.gmt-admin-navbar-dropdown-item {
+
+  width: 100%;
+
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 0 12px;
+
+  border: none;
+
+  background: transparent;
+
+  border-radius: 8px;
+
+  color: #374151;
+
+  font-size: 13px;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+
+.gmt-admin-navbar-dropdown-item svg {
+
+  width: 17px;
+
+  color: #6b7280;
+
+  font-size: 15px;
+
+}
+
+
+.gmt-admin-navbar-dropdown-item:hover {
+
+  background: #fcecec;
+
+  color: #c91f26;
+
+}
+
+
+.gmt-admin-navbar-dropdown-item:hover svg {
+
+  color: #c91f26;
+
+}
+
+
+/* ============================================================
+   LOGOUT
+============================================================ */
+
+.gmt-admin-navbar-logout {
+
+  width: 100%;
+
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 0 12px;
+
+  border: none;
+
+  background: transparent;
+
+  border-radius: 8px;
+
+  color: #dc2626;
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease;
+}
+
+
+.gmt-admin-navbar-logout svg {
+
+  font-size: 15px;
+
+}
+
+
+.gmt-admin-navbar-logout:hover {
+
+  background: #fef2f2;
+
+}
+
+
+/* ============================================================
+   RESPONSIVE — TABLET
+============================================================ */
+
+@media (max-width: 1100px) {
+
+  .gmt-admin-navbar {
+
+    padding: 0 18px;
+
+  }
+
+
+  .gmt-admin-navbar-left {
+
+    min-width: auto;
+
+  }
+
+
+  .gmt-admin-navbar-right {
+
+    min-width: auto;
+
+  }
+
+
+  .gmt-admin-navbar-search {
+
+    margin: 0 20px;
+
+  }
+
+
+  .gmt-admin-navbar-title span {
+
+    display: none;
+
+  }
+
+}
+
+
+/* ============================================================
+   RESPONSIVE — SMALL TABLET
+============================================================ */
+
+@media (max-width: 850px) {
+
+  .gmt-admin-navbar {
+
+    height: 70px;
+
+  }
+
+
+  .gmt-admin-navbar-logo {
+
+    width: 38px;
+    height: 38px;
+
+  }
+
+
+  .gmt-admin-navbar-title h2 {
+
+    font-size: 16px;
+
+  }
+
+
+  .gmt-admin-navbar-search {
+
+    max-width: 300px;
+
+    margin: 0 12px;
+
+  }
+
+
+  .gmt-admin-navbar-profile-btn {
+
+    min-width: auto;
+
+  }
+
+
+  .gmt-admin-navbar-user {
+
+    display: none;
+
+  }
+
+}
+
+
+/* ============================================================
+   RESPONSIVE — MOBILE
+============================================================ */
+
+@media (max-width: 650px) {
+
+  .gmt-admin-navbar {
+
+    height: 64px;
+
+    padding: 0 12px;
+
+  }
+
+
+  .gmt-admin-navbar-left {
+
+    gap: 8px;
+
+  }
+
+
+  .gmt-admin-navbar-title {
+
+    display: none;
+
+  }
+
+
+  .gmt-admin-navbar-logo {
+
+    width: 36px;
+    height: 36px;
+
+  }
+
+
+  .gmt-admin-navbar-search {
+
+    display: none;
+
+  }
+
+
+  .gmt-admin-navbar-right {
+
+    gap: 2px;
+
+  }
+
+
+  .gmt-admin-navbar-icon {
+
+    width: 38px;
+    height: 38px;
+
+    font-size: 18px;
+
+  }
+
+
+  .gmt-admin-navbar-profile {
+
+    margin-left: 2px;
+
+  }
+
+
+  .gmt-admin-navbar-profile-btn {
+
+    width: 38px;
+    height: 40px;
+
+    padding: 0;
+
+    justify-content: center;
+
+  }
+
+
+  .gmt-admin-navbar-profile-btn > svg:last-child {
+
+    display: none;
+
+  }
+
+
+  .gmt-admin-navbar-avatar {
+
+    font-size: 31px;
+
+  }
+
+
+  .gmt-admin-navbar-dropdown {
+
+    position: fixed;
+
+    top: 70px;
+
+    right: 12px;
+
+    width: calc(100vw - 24px);
+
+    max-width: 320px;
+
+  }
+
+}
+
+
+/* ============================================================
+   VERY SMALL MOBILE
+============================================================ */
+
+@media (max-width: 380px) {
+
+  .gmt-admin-navbar {
+
+    padding: 0 8px;
+
+  }
+
+
+  .gmt-admin-navbar-toggle {
+
+    width: 36px;
+    height: 36px;
+
+  }
+
+
+  .gmt-admin-navbar-logo {
+
+    width: 32px;
+    height: 32px;
+
+  }
+
+
+  .gmt-admin-navbar-icon {
+
+    width: 35px;
+    height: 35px;
+
+  }
+
+}

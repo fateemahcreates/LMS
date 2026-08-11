@@ -1,43 +1,104 @@
 import api from "./api";
 
-// ===========================
+
+// ==========================================
 // GET ALL ASSIGNMENTS
-// ===========================
+// ==========================================
+export const getAssignments = () => {
+  return api.get("/assignments");
+};
 
-export const getAssignments = () =>
-  api.get("/assignments");
 
-// ===========================
-// GET ONE ASSIGNMENT
-// ===========================
+// ==========================================
+// GET SINGLE ASSIGNMENT
+// ==========================================
+export const getAssignmentById = (id) => {
+  return api.get(`/assignments/${id}`);
+};
 
-export const getAssignment = (id) =>
-  api.get(`/assignments/${id}`);
 
-// ===========================
-// CREATE
-// ===========================
+// ==========================================
+// CREATE ASSIGNMENT
+// ==========================================
+export const createAssignment = (data) => {
+  return api.post("/assignments", data);
+};
 
-export const createAssignment = (data) =>
-  api.post("/assignments", data);
 
-// ===========================
-// UPDATE
-// ===========================
+// ==========================================
+// UPDATE ASSIGNMENT
+// ==========================================
+export const updateAssignment = (id, data) => {
+  return api.put(
+    `/assignments/${id}`,
+    data
+  );
+};
 
-export const updateAssignment = (id, data) =>
-  api.put(`/assignments/${id}`, data);
 
-// ===========================
-// DELETE
-// ===========================
+// ==========================================
+// DELETE ASSIGNMENT
+// ==========================================
+export const deleteAssignment = (id) => {
+  return api.delete(
+    `/assignments/${id}`
+  );
+};
 
-export const deleteAssignment = (id) =>
-  api.delete(`/assignments/${id}`);
 
-// ===============================
-// GET ALL STUDENT SUBMISSIONS
-// ===============================
+// ==========================================
+// STUDENT UPCOMING DEADLINES
+// ==========================================
+export const getUpcomingDeadlines = () => {
+  return api.get(
+    "/assignments/upcoming"
+  );
+};
 
-export const getAllSubmissions = () =>
-  api.get("/submissions");
+
+// ==========================================
+// STUDENT ASSIGNMENTS
+// ==========================================
+export const getStudentAssignments = () => {
+  return api.get(
+    "/assignments/student"
+  );
+};
+
+
+// ==========================================
+// GET ALL SUBMISSIONS (ADMIN)
+// ==========================================
+export const getAllSubmissions = () => {
+  return api.get(
+    "/submissions"
+  );
+};
+
+// ==========================================
+// INSTRUCTOR ASSIGNMENTS
+// ==========================================
+
+export const getInstructorAssignments = () => {
+  return api.get("/assignments/instructor");
+};
+
+export const createInstructorAssignment = (data) => {
+  return api.post(
+    "/assignments/instructor",
+    data
+  );
+};
+
+export const updateInstructorAssignment = (id, data) => {
+  return api.put(
+    `/assignments/instructor/${id}`,
+    data
+  );
+};
+
+export const deleteInstructorAssignment = (id) => {
+  return api.delete(
+    `/assignments/instructor/${id}`
+  );
+};

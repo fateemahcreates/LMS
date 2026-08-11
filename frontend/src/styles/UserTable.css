@@ -1,158 +1,396 @@
-/* ==========================================
-   User Table Container
-========================================== */
+/* ===================================================
+   GMT USER TABLE
+=================================================== */
 
-.user-table-container {
-  width: 100%;
-  overflow-x: auto;
-  border-radius: 12px;
+.user-table-wrapper{
+    width:100%;
+    overflow:hidden;
+}
+
+.user-table-container{
+    background:#ffffff;
+    border:1px solid var(--border);
+    border-radius:20px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    box-shadow:0 15px 40px rgba(15,23,42,.06);
+}
+
+/* ===================================================
+   TABLE
+=================================================== */
+
+.user-table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:850px;
+}
+
+/* ===================================================
+   HEADER
+=================================================== */
+
+.user-table thead{
+    background:linear-gradient(
+        90deg,
+        var(--primary),
+        #1d4ed8
+    );
+}
+
+.user-table thead th{
+    padding:18px 22px;
+
+    text-align:left;
+
+    color:#fff;
+
+    font-size:.9rem;
+
+    font-weight:600;
+
+    letter-spacing:.4px;
+
+    white-space:nowrap;
+}
+
+/* ===================================================
+   BODY
+=================================================== */
+
+.user-table tbody tr{
+    transition:.25s;
+    border-bottom:1px solid #eef2f7;
+}
+
+.user-table tbody tr:last-child{
+    border-bottom:none;
+}
+
+.user-table tbody tr:hover{
+    background:#f8fbff;
+}
+
+.user-table td{
+    padding:18px 22px;
+    vertical-align:middle;
+}
+
+/* ===================================================
+   USER CELL
+=================================================== */
+
+.user-cell{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.user-avatar{
+    width:48px;
+    height:48px;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        #4f8ff7
+    );
+
+    color:#fff;
+
+    font-weight:700;
+
+    font-size:18px;
+
+    flex-shrink:0;
+
+    box-shadow:0 8px 18px rgba(37,99,235,.25);
+}
+
+.user-info{
+    display:flex;
+    flex-direction:column;
+}
+
+.user-info h4{
+    margin:0;
+    font-size:15px;
+    color:var(--text);
+    font-weight:600;
+}
+
+.user-info span{
+    margin-top:3px;
+    font-size:13px;
+    color:var(--secondary);
 }
 
 /* ==========================================
-   Table
+   STUDENT ID
 ========================================== */
 
-.user-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #ffffff;
-  min-width: 800px;
-}
+.student-id {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-/* ==========================================
-   Table Head
-========================================== */
+  min-width: 145px;
 
-.user-table thead {
-  background: #f1f5f9;
-}
+  padding: 7px 12px;
 
-.user-table th {
-  padding: 16px;
-  text-align: left;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #334155;
-  border-bottom: 1px solid #e2e8f0;
-}
+  background: #fff5f5;
 
-/* ==========================================
-   Table Body
-========================================== */
+  border: 1px solid #f3c4c7;
 
-.user-table td {
-  padding: 16px;
-  border-bottom: 1px solid #e2e8f0;
-  color: #475569;
-  font-size: 0.95rem;
-}
-
-.user-table tbody tr {
-  transition: background 0.2s ease;
-}
-
-.user-table tbody tr:hover {
-  background: #f8fafc;
-}
-
-/* ==========================================
-   Empty Row
-========================================== */
-
-.empty-row {
-  text-align: center;
-  padding: 30px;
-  color: #94a3b8;
-}
-
-/* ==========================================
-   Role Badges
-========================================== */
-
-.role-badge {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: capitalize;
-}
-
-.role-admin {
-  background: #dbeafe;
-  color: #1d4ed8;
-}
-
-.role-student {
-  background: #dcfce7;
-  color: #15803d;
-}
-
-.role-instructor {
-  background: #fef3c7;
-  color: #b45309;
-}
-
-/* ==========================================
-   Status Badges
-========================================== */
-
-.status-badge {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: capitalize;
-}
-
-.status-active {
-  background: #dcfce7;
-  color: #15803d;
-}
-
-.status-inactive {
-  background: #e2e8f0;
-  color: #475569;
-}
-
-.status-suspended {
-  background: #fee2e2;
-  color: #dc2626;
-}
-
-/* ==========================================
-   Delete Button
-========================================== */
-
-.delete-btn {
-  padding: 8px 14px;
-  border: none;
   border-radius: 8px;
-  background: #ef4444;
-  color: #ffffff;
-  cursor: pointer;
-  font-size: 0.85rem;
-  font-weight: 600;
-  transition: background 0.3s ease;
+
+  color: #c91f26;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 0.4px;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
-.delete-btn:hover {
-  background: #dc2626;
-}
 
 /* ==========================================
-   Responsive
+   HOVER
 ========================================== */
 
-@media (max-width: 768px) {
-  .user-table th,
-  .user-table td {
-    padding: 12px;
-    font-size: 0.85rem;
-  }
+.student-id:hover {
+  background: #fcebec;
+  border-color: #c91f26;
 
-  .delete-btn {
-    width: 100%;
-  }
+  transform: translateY(-1px);
+}
+
+
+/* ==========================================
+   NON-STUDENT
+========================================== */
+
+.not-applicable {
+  color: #9ca3af;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ===================================================
+   ROLE BADGES
+=================================================== */
+
+.role-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:7px 14px;
+
+    border-radius:999px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    text-transform:capitalize;
+}
+
+.role-admin{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.role-instructor{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.role-student{
+    background:#ede9fe;
+    color:#6d28d9;
+}
+
+/* ===================================================
+   STATUS BADGES
+=================================================== */
+
+.status-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:7px 14px;
+
+    border-radius:999px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    text-transform:capitalize;
+}
+
+.status-active{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.status-inactive{
+    background:#fef3c7;
+    color:#b45309;
+}
+
+.status-suspended{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+/* ===================================================
+   ACTION BUTTONS
+=================================================== */
+
+.table-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.edit-btn,
+.delete-btn{
+    width:40px;
+    height:40px;
+
+    border:none;
+    border-radius:12px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.edit-btn{
+    background:#e0f2fe;
+    color:#0284c7;
+}
+
+.edit-btn:hover{
+    background:#0284c7;
+    color:#fff;
+    transform:translateY(-2px);
+}
+
+.delete-btn{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+.delete-btn:hover{
+    background:#dc2626;
+    color:#fff;
+    transform:translateY(-2px);
+}
+
+/* ===================================================
+   EMPTY STATE
+=================================================== */
+
+.empty-row{
+    text-align:center;
+    padding:60px 20px !important;
+
+    color:#94a3b8;
+
+    font-size:15px;
+
+    font-weight:500;
+}
+
+/* ===================================================
+   SCROLLBAR
+=================================================== */
+
+.user-table-container::-webkit-scrollbar{
+    height:8px;
+}
+
+.user-table-container::-webkit-scrollbar-thumb{
+    background:#cbd5e1;
+    border-radius:999px;
+}
+
+.user-table-container::-webkit-scrollbar-track{
+    background:#f8fafc;
+}
+
+/* ===================================================
+   RESPONSIVE
+=================================================== */
+
+@media(max-width:992px){
+
+.user-table{
+    min-width:760px;
+}
+
+}
+
+@media(max-width:768px){
+
+.user-avatar{
+    width:42px;
+    height:42px;
+    font-size:16px;
+}
+
+.user-info h4{
+    font-size:14px;
+}
+
+.user-info span{
+    font-size:12px;
+}
+
+.user-table td,
+.user-table th{
+    padding:16px;
+}
+
+.edit-btn,
+.delete-btn{
+    width:36px;
+    height:36px;
+}
+
+}
+
+@media(max-width:480px){
+
+.user-table{
+    min-width:700px;
+}
+
+.role-badge,
+.status-badge{
+    font-size:11px;
+    padding:6px 10px;
+}
+
 }

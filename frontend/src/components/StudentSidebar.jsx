@@ -1,10 +1,16 @@
-import "../styles/SideBar.css";
+import "../styles/StudentSidebar.css";
+
 import { notify } from "../utils/notify";
 
-import { NavLink, useNavigate } from "react-router-dom";
+import {
+  NavLink,
+  useNavigate
+} from "react-router-dom";
+
+import logo from "../assets/GMT Software logo.jpeg";
+
 
 import {
-  FaGraduationCap,
   FaBookOpen,
   FaClipboardList,
   FaChartLine,
@@ -17,158 +23,469 @@ import {
   FaCompass,
 } from "react-icons/fa";
 
+
+
 function StudentSidebar({
   sidebarOpen,
   setSidebarOpen,
 }) {
+
+
   const navigate = useNavigate();
+
+
 
   const handleLogout = () => {
 
-  notify.confirmLogout(() => {
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    notify.confirmLogout(() => {
 
-    notify.info("You have been logged out.");
 
-    setTimeout(() => {
-      navigate("/login");
-    }, 800);
+      localStorage.removeItem("token");
 
-  });
+      localStorage.removeItem("user");
 
-};
 
-  const closeSidebar = () => {
-    setSidebarOpen(false);
+      notify.info(
+        "You have been logged out."
+      );
+
+
+      setTimeout(() => {
+
+        navigate("/login");
+
+      },800);
+
+
+
+    });
+
+
   };
 
+
+
+
+  const closeSidebar = () => {
+
+    setSidebarOpen(false);
+
+  };
+
+
+
+
+
+
   return (
+
     <>
-      {sidebarOpen && (
-        <div
-          className="sidebar-overlay"
-          onClick={closeSidebar}
-        />
-      )}
+
+
+
+      {
+        sidebarOpen && (
+
+          <div
+
+            className="student-sidebar-overlay"
+
+            onClick={closeSidebar}
+
+          />
+
+        )
+      }
+
+
+
+
+
 
       <aside
-        className={`sidebar ${
-          sidebarOpen ? "open" : ""
-        }`}
-      >
-        {/* ===========================
-            Header
-        =========================== */}
 
-        <div className="sidebar-header">
-          <div className="sidebar-logo">
-            <FaGraduationCap className="logo-icon" />
+className={`student-sidebar ${
+  sidebarOpen
+    ? "student-sidebar-open"
+    : "student-sidebar-closed"
+}`}
 
-            <span>Student Portal</span>
+>
+
+
+
+
+        {/* ==========================
+            HEADER
+        ========================== */}
+
+
+
+        <div className="student-sidebar-header">
+
+
+
+          <div className="student-sidebar-brand">
+
+
+
+            <img
+
+              src={logo}
+
+              alt="GMT Software Academy"
+
+              className="student-sidebar-logo"
+
+            />
+
+
+
+            <div>
+
+
+              <h3>
+                GMT Software
+              </h3>
+
+
+              <span>
+                Student Portal
+              </span>
+
+
+            </div>
+
+
+
           </div>
 
-          <button
-            className="close-btn"
-            onClick={closeSidebar}
-          >
-            <FaTimes />
-          </button>
-        </div>
 
-        {/* ===========================
-            Navigation
-        =========================== */}
 
-      <nav className="sidebar-nav">
 
-  <NavLink
-    to="/student"
-    onClick={closeSidebar}
-  >
-    <FaChartLine />
-    <span>Dashboard</span>
-  </NavLink>
 
-  <NavLink
-    to="/browse-courses"
-    onClick={closeSidebar}
-  >
-    <FaCompass />
-    <span>Browse Courses</span>
-  </NavLink>
+         <button
 
-  <NavLink
-    to="/my-courses"
-    onClick={closeSidebar}
-  >
-    <FaBookOpen />
-    <span>My Courses</span>
-  </NavLink>
+ className="student-sidebar-close"
 
-  <NavLink
-  to="/student/assignments"
-  onClick={closeSidebar}
+ onClick={() => setSidebarOpen(false)}
+
 >
-  <FaClipboardList />
-  <span>Assignments</span>
-</NavLink>
 
-  <NavLink
-    to="/announcements"
-    onClick={closeSidebar}
-  >
-    <FaBullhorn />
-    <span>Announcements</span>
-  </NavLink>
+ <FaTimes />
 
-  <NavLink
-    to="/certification"
-    onClick={closeSidebar}
-  >
-    <FaAward />
-    <span>Certification</span>
-  </NavLink>
+</button>
 
-  <NavLink
-    to="/profile"
-    onClick={closeSidebar}
-  >
-    <FaUser />
-    <span>Profile</span>
-  </NavLink>
 
-  <NavLink
-    to="/student-settings"
-    onClick={closeSidebar}
-  >
-    <FaCog />
-    <span>Settings</span>
-  </NavLink>
+        </div>
 
-</nav>
 
-        {/* ===========================
-            Footer
-        =========================== */}
 
-        <div className="sidebar-footer">
-          <button
-            className="logout-btn"
-            onClick={handleLogout}
+
+
+
+
+        {/* ==========================
+            PROFILE
+        ========================== */}
+
+
+
+        <div className="student-sidebar-profile">
+
+
+          <FaUser />
+
+
+
+          <div>
+
+
+            <h4>
+
+              {
+                JSON.parse(
+                  localStorage.getItem("user")
+                )?.name || "Student"
+              }
+
+            </h4>
+
+
+            <span>
+              Student
+            </span>
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+        {/* ==========================
+            NAVIGATION
+        ========================== */}
+
+
+
+        <nav className="student-sidebar-nav">
+
+
+
+
+
+          <NavLink
+
+            to="/student"
+
+            end
+
+            onClick={closeSidebar}
+
+            className={({isActive}) =>
+
+              isActive
+
+              ?
+
+              "student-sidebar-link active"
+
+              :
+
+              "student-sidebar-link"
+
+            }
+
           >
+
+            <FaChartLine />
+
+            Dashboard
+
+
+          </NavLink>
+
+
+
+
+
+
+
+
+          <NavLink
+
+            to="/browse-courses"
+
+            onClick={closeSidebar}
+
+            className="student-sidebar-link"
+
+          >
+
+            <FaCompass />
+
+            Browse Courses
+
+
+          </NavLink>
+
+
+
+
+
+
+
+
+          <NavLink
+
+            to="/my-courses"
+
+            onClick={closeSidebar}
+
+            className="student-sidebar-link"
+
+          >
+
+            <FaBookOpen />
+
+            My Courses
+
+
+          </NavLink>
+
+
+
+
+
+
+
+          <NavLink
+
+            to="/student/assignments"
+
+            onClick={closeSidebar}
+
+            className="student-sidebar-link"
+
+          >
+
+            <FaClipboardList />
+
+            Assignments
+
+
+          </NavLink>
+
+
+
+
+
+
+
+          <NavLink
+
+            to="/announcements"
+
+            onClick={closeSidebar}
+
+            className="student-sidebar-link"
+
+          >
+
+            <FaBullhorn />
+
+            Announcements
+
+
+          </NavLink>
+
+
+
+
+
+
+
+
+          <NavLink
+
+            to="/certification"
+
+            onClick={closeSidebar}
+
+            className="student-sidebar-link"
+
+          >
+
+            <FaAward />
+
+            Certificates
+
+
+          </NavLink>
+
+
+
+
+
+
+
+          <NavLink
+
+            to="/student-settings"
+
+            onClick={closeSidebar}
+
+            className="student-sidebar-link"
+
+          >
+
+            <FaCog />
+
+            Settings
+
+
+          </NavLink>
+
+
+
+
+
+        </nav>
+
+
+
+
+
+
+
+
+        {/* ==========================
+            FOOTER
+        ========================== */}
+
+
+
+        <div className="student-sidebar-footer">
+
+
+
+          <button
+
+            className="student-sidebar-logout"
+
+            onClick={handleLogout}
+
+          >
+
             <FaSignOutAlt />
-            <span>Logout</span>
+
+            Logout
+
+
           </button>
 
-          <p>Tech Academy LMS</p>
 
-          <small>Version 1.0</small>
+
+
+
+          <p>
+            GMT Software Academy
+          </p>
+
+
+          <small>
+            Student Portal v1.0
+          </small>
+
+
+
+
         </div>
+
+
+
+
+
+
       </aside>
+
+
+
+
     </>
+
   );
+
 }
+
+
 
 export default StudentSidebar;

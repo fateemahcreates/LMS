@@ -1,356 +1,320 @@
-    /* ===========================
-   Login Page
-=========================== */
+/* ===================================================
+   GMT SOFTWARE LMS
+   LOGIN PAGE
+=================================================== */
 
-.login-page{
-    min-height:100vh;
-    background:linear-gradient(135deg,#eff6ff,#f8fafc,#eef2ff);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:40px 20px;
+.gmt-login-page {
+  min-height: 100vh;
+  background: #f5f7fb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
 }
 
-/* ===========================
-   Container
-=========================== */
-
-.login-container{
-    width:100%;
-    max-width:1200px;
-    background:#fff;
-    border-radius:28px;
-    overflow:hidden;
-    display:grid;
-    grid-template-columns:1fr 480px;
-    box-shadow:0 25px 70px rgba(15,23,42,.12);
+.gmt-login-container {
+  width: 100%;
+  max-width: 1180px;
+  background: #ffffff;
+  border-radius: 24px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .08);
 }
 
-/* ===========================
-   Left Side
-=========================== */
+/* =========================================
+   LEFT PANEL
+========================================= */
 
-.login-left{
-    background:linear-gradient(135deg,#2563eb,#1d4ed8);
-    color:#fff;
-    padding:70px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
+.gmt-login-left {
+  background: linear-gradient(
+      135deg,
+      rgba(183,28,28,.96),
+      rgba(139,0,0,.96)
+    ),
+    url("../assets/GMT Software logo.jpeg");
+
+  background-size: cover;
+  background-position: center;
+
+  color: #fff;
+
+  padding: 70px 60px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.logo-circle{
-    width:90px;
-    height:90px;
-    border-radius:50%;
-    background:rgba(255,255,255,.15);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:2.2rem;
-    margin-bottom:35px;
+.gmt-login-brand {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 50px;
 }
 
-.login-left h1{
-    font-size:2.8rem;
-    line-height:1.2;
-    margin-bottom:20px;
+.gmt-login-logo {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  background: white;
+  border-radius: 18px;
+  padding: 10px;
 }
 
-.login-left p{
-    font-size:1rem;
-    line-height:1.8;
-    opacity:.92;
-    max-width:470px;
-    margin-bottom:45px;
+.gmt-login-brand-text h1 {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 5px;
 }
 
-.login-features{
-    display:flex;
-    flex-direction:column;
-    gap:18px;
+.gmt-login-brand-text span {
+  font-size: 15px;
+  opacity: .9;
 }
 
-.feature{
-    background:rgba(255,255,255,.12);
-    border:1px solid rgba(255,255,255,.18);
-    padding:15px 18px;
-    border-radius:14px;
-    font-size:.95rem;
-}
-
-/* ===========================
-   Right Side
-=========================== */
-
-.login-card{
-    padding:60px 45px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-}
-
-.login-header{
-    margin-bottom:35px;
-}
-
-.login-header h2{
-    font-size:2rem;
-    color:#0f172a;
-    margin-bottom:10px;
-}
-
-.login-header p{
-    color:#64748b;
-    line-height:1.6;
-}
-
-/* ===========================
-   Form
-=========================== */
-
-.input-group{
-    margin-bottom:22px;
-}
-
-.input-group label{
-    display:block;
-    margin-bottom:10px;
-    color:#334155;
-    font-weight:600;
-}
-
-.input-wrapper{
-    position:relative;
-}
-
-.input-icon{
-    position:absolute;
-    left:18px;
-    top:50%;
-    transform:translateY(-50%);
-    color:#94a3b8;
-    font-size:18px;
-    width:18px;
-    height:18px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    pointer-events:none;
-    z-index:2;
-}
-
-.input-wrapper input{
-    width:100%;
-    height:56px;
-    border:1px solid #dbe4ee;
-    border-radius:14px;
-    padding-left:50px;
-    padding-right:50px;
-    padding-top:0;
-    padding-bottom:0;
-    font-size:.95rem;
-    background:#fff;
-    transition:.3s;
-}
-
-.input-wrapper input:focus{
-    outline:none;
-    border-color:#2563eb;
-    box-shadow:0 0 0 4px rgba(37,99,235,.12);
-}
-
-/* ===========================
-   Password Toggle
-=========================== */
-
-.password-toggle{
-    position:absolute;
-    right:18px;
-    top:50%;
-    transform:translateY(-50%);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:24px;
-    height:24px;
-    padding:0;
-    margin:0;
-    border:none;
-    background:transparent;
-    color:#64748b;
-    cursor:pointer;
-    z-index:2;
-}
-
-/* ===========================
-   Options
-=========================== */
-
-.login-options{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:30px;
-    font-size:.9rem;
-}
-
-.remember{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    color:#475569;
-    cursor:pointer;
-}
-
-.login-options a{
-    color:#2563eb;
-    text-decoration:none;
-    font-weight:600;
-}
-
-.login-options a:hover{
-    text-decoration:underline;
-}
-
-/* ===========================
-   Button
-=========================== */
-
-.login-btn{
-    width:100%;
-    height:56px;
-    border:none;
-    border-radius:14px;
-    background:#2563eb;
-    color:#fff;
-    font-size:1rem;
-    font-weight:600;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:12px;
-    cursor:pointer;
-    transition:.3s;
-}
-
-.login-btn:hover{
-    background:#1d4ed8;
-    transform:translateY(-2px);
-}
-
-.login-error{
-    background:#fee2e2;
-    color:#dc2626;
-    padding:14px;
-    border-radius:10px;
-    margin-bottom:20px;
-    text-align:center;
-    font-weight:500;
-    border:1px solid #fecaca;
-}
-
-.login-btn:disabled{
-    opacity:.7;
-    cursor:not-allowed;
-}
-
-/* ===========================
-   Demo Account
-=========================== */
-
-.demo-account{
-    margin-top:35px;
-    padding:22px;
-    background:#f8fafc;
-    border:1px solid #e2e8f0;
-    border-radius:16px;
-}
-
-.demo-account h4{
-    color:#0f172a;
-    margin-bottom:12px;
-}
-
-.demo-account p{
-    color:#64748b;
-    margin:6px 0;
-    font-size:.92rem;
-}
-
-
-/* ===========================
-   Login Footer
-=========================== */
-
-.login-footer {
-  margin-top: 30px;
-  text-align: center;
-}
-
-.login-footer p {
-  color: #64748b;
+.gmt-login-title {
+  font-size: 42px;
+  line-height: 1.2;
   margin-bottom: 20px;
-  font-size: 0.95rem;
+  font-weight: 800;
 }
 
-.register-link {
-  margin-left: 8px;
-  color: #2563eb;
+.gmt-login-description {
+  font-size: 17px;
+  line-height: 1.8;
+  opacity: .9;
+  margin-bottom: 40px;
+}
+
+.gmt-login-features {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.gmt-login-feature {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* =========================================
+   RIGHT PANEL
+========================================= */
+
+.gmt-login-card {
+  padding: 70px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.gmt-login-header {
+  margin-bottom: 40px;
+}
+
+.gmt-login-header h2 {
+  font-size: 34px;
+  color: #111827;
+  margin-bottom: 10px;
+}
+
+.gmt-login-header p {
+  color: #6b7280;
+  font-size: 15px;
+}
+
+/* =========================================
+   FORM
+========================================= */
+
+.gmt-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.gmt-login-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gmt-login-label {
+  font-size: 15px;
   font-weight: 600;
-  text-decoration: none;
-  transition: 0.3s;
+  color: #374151;
 }
 
-.register-link:hover {
-  color: #1d4ed8;
+.gmt-login-input-wrapper {
+  position: relative;
+}
+
+.gmt-login-input-icon {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 18px;
+}
+
+.gmt-login-input {
+  width: 100%;
+  height: 58px;
+  border: 1px solid #dbe4f0;
+  border-radius: 14px;
+  padding-left: 55px;
+  padding-right: 55px;
+  font-size: 15px;
+  outline: none;
+  background: #ffffff;
+  transition: .3s;
+}
+
+.gmt-login-input:focus {
+  border-color: #c91f26;
+  box-shadow: 0 0 0 4px rgba(201,31,38,.12);
+}
+
+.gmt-login-password-toggle {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #8b95a7;
+  font-size: 18px;
+}
+
+/* =========================================
+   OPTIONS
+========================================= */
+
+.gmt-login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.gmt-login-remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #4b5563;
+}
+
+.gmt-login-remember input {
+  accent-color: #c91f26;
+}
+
+.gmt-login-forgot {
+  color: #c91f26;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.gmt-login-forgot:hover {
   text-decoration: underline;
 }
 
-/* ===========================
-   Responsive
-=========================== */
+/* =========================================
+   BUTTON
+========================================= */
 
-@media(max-width:992px){
+.gmt-login-button {
+  height: 56px;
+  border: none;
+  border-radius: 14px;
+  background: #c91f26;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
 
-.login-container{
-    grid-template-columns:1fr;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  transition: .3s;
 }
 
-.login-left{
-    display:none;
+.gmt-login-button:hover {
+  background: #a5161c;
 }
 
-.login-card{
-    padding:45px 30px;
+.gmt-login-button:disabled {
+  opacity: .7;
+  cursor: not-allowed;
 }
 
+/* =========================================
+   FOOTER
+========================================= */
+
+.gmt-login-footer {
+  margin-top: 35px;
+  text-align: center;
 }
 
-@media(max-width:576px){
-
-.login-page{
-    padding:20px;
+.gmt-login-footer p {
+  color: #6b7280;
 }
 
-.login-card{
-    padding:35px 20px;
+.gmt-login-register-link {
+  margin-left: 6px;
+  color: #c91f26;
+  font-weight: 700;
+  text-decoration: none;
 }
 
-.login-header h2{
-    font-size:1.7rem;
+.gmt-login-register-link:hover {
+  text-decoration: underline;
 }
 
-.login-options{
-    flex-direction:column;
-    align-items:flex-start;
-    gap:15px;
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 992px) {
+
+  .gmt-login-container {
+    grid-template-columns: 1fr;
+  }
+
+  .gmt-login-left {
+    display: none;
+  }
+
+  .gmt-login-card {
+    padding: 45px 30px;
+  }
+
 }
 
-.login-btn{
-    height:52px;
-}
+@media (max-width: 576px) {
 
+  .gmt-login-page {
+    padding: 15px;
+  }
 
+  .gmt-login-card {
+    padding: 30px 20px;
+  }
+
+  .gmt-login-header h2 {
+    font-size: 28px;
+  }
+
+  .gmt-login-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
 
 }

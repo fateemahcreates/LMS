@@ -1,66 +1,281 @@
-.student-announcements{
-    background:#fff;
-    border-radius:20px;
-    padding:25px;
-    box-shadow:0 12px 30px rgba(0,0,0,.08);
+/* =====================================================
+   GMT DASHBOARD ANNOUNCEMENTS
+===================================================== */
+
+.gmt-dashboard-announcements{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:28px;
+    box-shadow:var(--shadow);
+    transition:var(--transition);
 }
 
-.announcement-header{
+.gmt-dashboard-announcements:hover{
+    box-shadow:var(--shadow-hover);
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.gmt-dashboard-announcements-header{
     display:flex;
     justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
+    align-items:flex-start;
+    margin-bottom:28px;
 }
 
-.announcement-header h2{
+.gmt-dashboard-tag{
+    display:inline-block;
+    padding:6px 14px;
+    border-radius:50px;
+    background:var(--primary-light);
+    color:var(--primary);
+    font-size:.75rem;
+    font-weight:700;
+    letter-spacing:1px;
+    margin-bottom:10px;
+}
+
+.gmt-dashboard-announcements-header h2{
+    color:var(--secondary);
+    font-size:1.8rem;
+    font-weight:700;
+}
+
+.gmt-dashboard-view-all{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:var(--primary);
+    text-decoration:none;
+    font-weight:600;
+    transition:.3s;
+}
+
+.gmt-dashboard-view-all:hover{
+    gap:14px;
+    color:var(--primary-dark);
+}
+
+/* =====================================================
+   LIST
+===================================================== */
+
+.gmt-dashboard-announcement-list{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.gmt-dashboard-announcement-card{
+    display:flex;
+    gap:18px;
+    padding:22px;
+    border:1px solid var(--border);
+    border-left:5px solid var(--primary);
+    border-radius:var(--radius-md);
+    background:#fff;
+    transition:var(--transition);
+}
+
+.gmt-dashboard-announcement-card:hover{
+    transform:translateY(-4px);
+    box-shadow:var(--shadow);
+}
+
+/* =====================================================
+   ICON
+===================================================== */
+
+.gmt-dashboard-announcement-left{
+    flex-shrink:0;
+}
+
+.gmt-dashboard-icon{
+    width:55px;
+    height:55px;
+    border-radius:16px;
+    background:var(--primary-light);
+    color:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
     font-size:1.3rem;
 }
 
-.announcement-header span{
-    color:#64748b;
-    font-size:.9rem;
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.gmt-dashboard-announcement-content{
+    flex:1;
 }
 
-.announcement-item{
+.gmt-dashboard-announcement-top{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:18px 0;
-    border-bottom:1px solid #eee;
+    margin-bottom:10px;
 }
 
-.announcement-item:last-child{
-    border-bottom:none;
+.gmt-dashboard-announcement-top h4{
+    color:var(--secondary);
+    font-size:1.1rem;
+    font-weight:700;
 }
 
-.announcement-left h3{
-    margin-top:8px;
-    font-size:1rem;
-    color:#111827;
+.gmt-dashboard-announcement-content p{
+    color:var(--text-light);
+    line-height:1.7;
+    margin-bottom:16px;
 }
 
-.announcement-type{
-    padding:5px 12px;
+/* =====================================================
+   BADGES
+===================================================== */
+
+.gmt-dashboard-new{
+    background:var(--primary);
+    color:#fff;
+    padding:4px 10px;
     border-radius:20px;
-    font-size:.75rem;
+    font-size:.7rem;
+    font-weight:700;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.gmt-dashboard-announcement-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.gmt-dashboard-announcement-bottom small{
+    color:var(--text-light);
+    font-size:.85rem;
+}
+
+.gmt-dashboard-type{
+    padding:7px 16px;
+    border-radius:30px;
+    font-size:.8rem;
     font-weight:600;
 }
 
-.assignment{
-    background:#dbeafe;
-    color:#2563eb;
+/* =====================================================
+   TYPE COLORS
+===================================================== */
+
+.gmt-dashboard-type.general{
+    background:#EEF2FF;
+    color:#4338CA;
 }
 
-.class{
-    background:#dcfce7;
-    color:#16a34a;
+.gmt-dashboard-type.assignment{
+    background:#FFF7ED;
+    color:#C2410C;
 }
 
-.general{
-    background:#f3f4f6;
-    color:#374151;
+.gmt-dashboard-type.exam{
+    background:#FEF2F2;
+    color:#B91C1C;
 }
 
-.announcement-item small{
-    color:#6b7280;
+.gmt-dashboard-type.event{
+    background:#ECFDF5;
+    color:#047857;
+}
+
+.gmt-dashboard-type.notice{
+    background:#EFF6FF;
+    color:#1D4ED8;
+}
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.gmt-dashboard-empty{
+    text-align:center;
+    padding:50px 20px;
+}
+
+.gmt-dashboard-empty-icon{
+    font-size:3.5rem;
+    color:var(--primary);
+    margin-bottom:20px;
+}
+
+.gmt-dashboard-empty h3{
+    color:var(--secondary);
+    margin-bottom:10px;
+}
+
+.gmt-dashboard-empty p{
+    color:var(--text-light);
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:768px){
+
+.gmt-dashboard-announcements{
+    padding:22px;
+}
+
+.gmt-dashboard-announcements-header{
+    flex-direction:column;
+    gap:16px;
+}
+
+.gmt-dashboard-announcement-card{
+    flex-direction:column;
+}
+
+.gmt-dashboard-announcement-left{
+    display:flex;
+    justify-content:center;
+}
+
+.gmt-dashboard-announcement-top{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+}
+
+.gmt-dashboard-announcement-bottom{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+}
+
+}
+
+@media(max-width:480px){
+
+.gmt-dashboard-announcements{
+    padding:18px;
+}
+
+.gmt-dashboard-announcements-header h2{
+    font-size:1.4rem;
+}
+
+.gmt-dashboard-icon{
+    width:48px;
+    height:48px;
+    font-size:1.1rem;
+}
+
 }

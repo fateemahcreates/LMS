@@ -30,6 +30,10 @@ function AdminCertificates() {
 
   const [refresh, setRefresh] = useState(false);
 
+  // ==========================================
+  // LOAD STATISTICS
+  // ==========================================
+
   useEffect(() => {
     loadStats();
   }, [refresh]);
@@ -39,13 +43,16 @@ function AdminCertificates() {
       const res = await getCertificateStats();
 
       setStats(res.data);
-
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
   };
+
+  // ==========================================
+  // STATISTIC CARDS
+  // ==========================================
 
   const cards = [
     {
@@ -74,20 +81,36 @@ function AdminCertificates() {
     },
   ];
 
+  // ==========================================
+  // REFRESH
+  // ==========================================
+
   const handleRefresh = () => {
     setRefresh((prev) => !prev);
   };
 
-  return (
-    <div className="admin-certificates">
+  // ==========================================
+  // RENDER
+  // ==========================================
 
-      {/* Header */}
+  return (
+    <div className="gmt-admin-certificates-page">
+
+      {/* ======================================
+          HEADER
+      ====================================== */}
 
       <div className="certificate-header">
 
-        <div>
+        <div className="certificate-heading">
 
-          <h1>Certificate Management</h1>
+          <span className="certificate-tag">
+            CERTIFICATE MANAGEMENT
+          </span>
+
+          <h1>
+            Certificate Management
+          </h1>
 
           <p>
             Manage certificate approvals,
@@ -100,16 +123,27 @@ function AdminCertificates() {
           className="generate-btn"
           onClick={() => setShowModal(true)}
         >
-          Generate Certificate
+          <FaCertificate />
+
+          <span>
+            Generate Certificate
+          </span>
         </button>
 
       </div>
 
-      {/* Statistics */}
+
+      {/* ======================================
+          STATISTICS
+      ====================================== */}
 
       {loading ? (
 
-        <p>Loading statistics...</p>
+        <div className="certificate-loading">
+          <p>
+            Loading statistics...
+          </p>
+        </div>
 
       ) : (
 
@@ -126,11 +160,15 @@ function AdminCertificates() {
                 {card.icon}
               </div>
 
-              <div>
+              <div className="certificate-card-content">
 
-                <h2>{card.value}</h2>
+                <h2>
+                  {card.value}
+                </h2>
 
-                <p>{card.title}</p>
+                <p>
+                  {card.title}
+                </p>
 
               </div>
 
@@ -142,11 +180,23 @@ function AdminCertificates() {
 
       )}
 
-      {/* Certificate Table */}
 
-      <CertificateTable refresh={refresh} />
+      {/* ======================================
+          CERTIFICATE TABLE
+      ====================================== */}
 
-      {/* Generate Certificate Modal */}
+      <div className="certificate-table-section">
+
+        <CertificateTable
+          refresh={refresh}
+        />
+
+      </div>
+
+
+      {/* ======================================
+          GENERATE CERTIFICATE MODAL
+      ====================================== */}
 
       <GenerateCertificateModal
         open={showModal}

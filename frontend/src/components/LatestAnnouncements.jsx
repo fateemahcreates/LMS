@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
-import { FaBullhorn } from "react-icons/fa";
+import {
+  FaBullhorn,
+  FaArrowRight,
+  FaThumbtack,
+} from "react-icons/fa";
 
-import { getAnnouncements } from "../services/announcementService";
 import { Link } from "react-router-dom";
+import { getAnnouncements } from "../../services/announcementService";
 
-import "../styles/LatestAnnouncements.css";
+import "../../styles/StudentAnnouncements.css";
 
-function LatestAnnouncements() {
+function StudentAnnouncements() {
   const [announcements, setAnnouncements] = useState([]);
 
   useEffect(() => {
@@ -17,79 +21,135 @@ function LatestAnnouncements() {
     try {
       const res = await getAnnouncements();
 
-      // Show only the latest 3
       setAnnouncements(res.data.slice(0, 3));
-
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <section className="latest-announcements">
+    <section className="gmt-announcements">
 
-      <div className="latest-header">
+      {/* Header */}
 
-  <h2>
-    <FaBullhorn />
-    Latest Announcements
-  </h2>
+      <div className="gmt-announcements-header">
 
-  <Link
-    to="/announcements"
-    className="view-all-btn"
-  >
-    View All
-  </Link>
+        <div>
 
-</div>
+          <span className="gmt-announcements-tag">
+            GMT SOFTWARE ACADEMY
+          </span>
+
+          <h2>Latest Announcements</h2>
+
+        </div>
+
+        <Link
+          to="/student/announcements"
+          className="gmt-announcements-link"
+        >
+          View All
+          <FaArrowRight />
+        </Link>
+
+      </div>
 
       {announcements.length === 0 ? (
-        <p className="empty-announcements">
-          No announcements available.
-        </p>
+
+        <div className="gmt-announcements-empty">
+
+          <FaBullhorn className="gmt-empty-icon" />
+
+          <h3>No Announcements Yet</h3>
+
+          <p>
+            Academy announcements will appear here
+            once they are published.
+          </p>
+
+        </div>
+
       ) : (
-        announcements.map((announcement) => (
-          <div
-            key={announcement._id}
-            className="announcement-card"
-          >
-            <span
-              className={`announcement-badge ${announcement.type
-                .toLowerCase()
-                .replace(/\s/g, "-")}`}
+
+        <div className="gmt-announcements-list">
+
+          {announcements.map((announcement) => (
+
+            <div
+              key={announcement._id}
+              className="gmt-announcement-card"
             >
-              {announcement.type}
-            </span>
 
-            <div className="announcement-title">
+              {/* Icon */}
 
-  <h3>{announcement.title}</h3>
+              <div className="gmt-announcement-icon">
 
-  {Date.now() -
-    new Date(
-      announcement.createdAt
-    ).getTime() <
-    1000 * 60 * 60 * 24 && (
-      <span className="new-badge">
-        NEW
-      </span>
-  )}
+                {announcement.isPinned ? (
+                  <FaThumbtack />
+                ) : (
+                  <FaBullhorn />
+                )}
 
-</div>
-            <p>{announcement.description}</p>
+              </div>
 
-            <small>
-              {new Date(
-                announcement.createdAt
-              ).toLocaleDateString()}
-            </small>
-          </div>
-        ))
+              {/* Body */}
+
+              <div className="gmt-announcement-content">
+
+                <div className="gmt-announcement-top">
+
+                  <h4>
+                    {announcement.title}
+                  </h4>
+
+                  {Date.now() -
+                    new Date(
+                      announcement.createdAt
+                    ).getTime() <
+                    1000 * 60 * 60 * 24 && (
+
+                    <span className="gmt-new-badge">
+                      NEW
+                    </span>
+
+                  )}
+
+                </div>
+
+                <p>
+                  {announcement.description}
+                </p>
+
+                <div className="gmt-announcement-footer">
+
+                  <span
+                    className={`gmt-announcement-type ${announcement.type
+                      .toLowerCase()
+                      .replace(/\s/g, "-")}`}
+                  >
+                    {announcement.type}
+                  </span>
+
+                  <small>
+                    {new Date(
+                      announcement.createdAt
+                    ).toLocaleDateString()}
+                  </small>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          ))}
+
+        </div>
+
       )}
 
     </section>
   );
 }
 
-export default LatestAnnouncements;
+export default StudentAnnouncements;

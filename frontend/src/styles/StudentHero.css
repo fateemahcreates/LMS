@@ -1,158 +1,778 @@
+/* ============================================================
+   GMT STUDENT HERO
+============================================================ */
+
 .student-hero {
-  margin-bottom: 30px;
-}
+  width: 100%;
+  min-height: 340px;
 
-.hero-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 40px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(320px, 0.85fr);
 
-  padding: 40px;
+  position: relative;
+  overflow: hidden;
 
+  padding: 42px;
+
+  background:
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(201, 31, 38, 0.14),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #fafafa 55%,
+      #f7f8fa 100%
+    );
+
+  border: 1px solid #e5e7eb;
   border-radius: 24px;
 
-  background: linear-gradient(
-    135deg,
-    #2563eb,
-    #1d4ed8
-  );
+  box-shadow:
+    0 12px 35px rgba(17, 24, 39, 0.07);
 
-  color: #fff;
-
-  overflow: hidden;
+  box-sizing: border-box;
 }
 
-.hero-left {
-  flex: 1;
-}
 
-.hero-badge {
-  display: inline-block;
+/* ============================================================
+   DECORATIVE BACKGROUND
+============================================================ */
 
-  padding: 8px 16px;
+.student-hero::before {
+  content: "";
 
-  border-radius: 999px;
+  position: absolute;
 
-  background: rgba(255,255,255,.15);
+  width: 300px;
+  height: 300px;
 
-  font-size: .85rem;
-
-  font-weight: 600;
-
-  margin-bottom: 18px;
-}
-
-.hero-left h1 {
-  font-size: 2.3rem;
-
-  margin-bottom: 12px;
-
-  line-height: 1.2;
-}
-
-.hero-left h1 span {
-  color: #fde68a;
-}
-
-.hero-left p {
-  max-width: 600px;
-
-  line-height: 1.8;
-
-  opacity: .95;
-
-  margin-bottom: 25px;
-}
-
-.hero-meta {
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-
-.hero-meta-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  background: rgba(255,255,255,.12);
-
-  padding: 10px 16px;
-
-  border-radius: 12px;
-}
-
-.hero-right {
-  width: 320px;
-}
-
-.hero-card {
-  background: rgba(255,255,255,.12);
-
-  backdrop-filter: blur(14px);
-
-  border: 1px solid rgba(255,255,255,.15);
-
-  border-radius: 20px;
-
-  padding: 28px;
-
-  text-align: center;
-}
-
-.hero-card-icon {
-  width: 70px;
-  height: 70px;
+  right: -130px;
+  top: -150px;
 
   border-radius: 50%;
 
-  margin: auto auto 18px;
+  background: rgba(201, 31, 38, 0.05);
 
-  background: rgba(255,255,255,.2);
+  pointer-events: none;
+}
+
+
+.student-hero::after {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  left: -100px;
+  bottom: -100px;
+
+  border-radius: 50%;
+
+  background: rgba(17, 24, 39, 0.025);
+
+  pointer-events: none;
+}
+
+
+/* ============================================================
+   LEFT SECTION
+============================================================ */
+
+.student-hero-left {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+}
+
+
+/* ============================================================
+   BRAND
+============================================================ */
+
+.student-hero-brand {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 28px;
+}
+
+
+.student-hero-logo-wrapper {
+  width: 46px;
+  height: 46px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-size: 28px;
+  flex-shrink: 0;
+
+  background: #c91f26;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 7px 18px rgba(201, 31, 38, 0.22);
 }
 
-.hero-card h3 {
-  margin-bottom: 12px;
+
+.student-hero-logo-mark {
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
 }
 
-.hero-card p {
-  line-height: 1.7;
-  opacity: .95;
+
+.student-hero-brand-text {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
 }
 
-@media (max-width: 992px) {
 
-  .hero-content {
-    flex-direction: column;
-    text-align: center;
+.student-hero-brand-text span {
+  color: #111827;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 0.8px;
+}
+
+
+.student-hero-brand-text small {
+  color: #6b7280;
+
+  font-size: 11px;
+  font-weight: 500;
+}
+
+
+/* ============================================================
+   HERO CONTENT
+============================================================ */
+
+.student-hero-content {
+  max-width: 720px;
+}
+
+
+.student-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+
+  margin-bottom: 10px;
+
+  color: #c91f26;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+
+.student-hero-eyebrow::before {
+  content: "";
+
+  width: 22px;
+  height: 2px;
+
+  margin-right: 8px;
+
+  background: #c91f26;
+
+  border-radius: 999px;
+}
+
+
+/* ============================================================
+   TITLE
+============================================================ */
+
+.student-hero-content h1 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: clamp(30px, 3vw, 43px);
+  line-height: 1.12;
+
+  font-weight: 800;
+
+  letter-spacing: -1.4px;
+}
+
+
+.student-hero-content h1 span {
+  color: #c91f26;
+}
+
+
+/* ============================================================
+   DESCRIPTION
+============================================================ */
+
+.student-hero-content > p {
+  max-width: 650px;
+
+  margin: 16px 0 25px;
+
+  color: #6b7280;
+
+  font-size: 14px;
+  line-height: 1.75;
+
+  font-weight: 400;
+}
+
+
+/* ============================================================
+   META INFORMATION
+============================================================ */
+
+.student-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 10px;
+}
+
+
+.student-hero-meta-item {
+  min-width: 145px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 10px 13px;
+
+  background: rgba(255, 255, 255, 0.85);
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 11px;
+
+  box-shadow:
+    0 3px 10px rgba(17, 24, 39, 0.03);
+}
+
+
+.student-hero-meta-icon {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  color: #c91f26;
+
+  background: #fcecec;
+
+  border-radius: 8px;
+
+  font-size: 12px;
+}
+
+
+.student-hero-meta-item > div:last-child {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+
+.student-hero-meta-item small {
+  color: #9ca3af;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 0.8px;
+}
+
+
+.student-hero-meta-item span {
+  color: #374151;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* ============================================================
+   RIGHT SECTION
+============================================================ */
+
+.student-hero-right {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  min-width: 0;
+}
+
+
+/* ============================================================
+   COURSE CARD
+============================================================ */
+
+.student-hero-course-card {
+  width: 100%;
+  max-width: 330px;
+
+  padding: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #111827 0%,
+      #172033 100%
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 20px;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 18px 40px rgba(17, 24, 39, 0.20);
+
+  box-sizing: border-box;
+}
+
+
+/* ============================================================
+   COURSE CARD TOP
+============================================================ */
+
+.student-hero-course-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 24px;
+}
+
+
+.student-hero-course-label {
+  color: #9ca3af;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1.2px;
+}
+
+
+.student-hero-course-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: #c91f26;
+
+  color: #ffffff;
+
+  border-radius: 11px;
+
+  box-shadow:
+    0 8px 20px rgba(201, 31, 38, 0.28);
+
+  font-size: 16px;
+}
+
+
+/* ============================================================
+   COURSE CONTENT
+============================================================ */
+
+.student-hero-course-content h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 22px;
+  line-height: 1.25;
+
+  font-weight: 750;
+
+  letter-spacing: -0.5px;
+}
+
+
+.student-hero-course-content p {
+  margin: 7px 0 22px;
+
+  color: #9ca3af;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: 0.8px;
+}
+
+
+/* ============================================================
+   STATUS ROW
+============================================================ */
+
+.student-hero-course-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding-top: 17px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+
+.student-hero-course-status-label {
+  color: #9ca3af;
+
+  font-size: 11px;
+}
+
+
+.student-hero-course-status {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 6px 10px;
+
+  background: rgba(255, 255, 255, 0.07);
+
+  border-radius: 999px;
+
+  color: #d1d5db;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  text-transform: capitalize;
+}
+
+
+.student-hero-status-dot {
+  width: 6px;
+  height: 6px;
+
+  display: inline-block;
+
+  background: #22c55e;
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 0 3px rgba(34, 197, 94, 0.12);
+}
+
+
+/* ============================================================
+   STATUS VARIATIONS
+============================================================ */
+
+.student-hero-course-status.active {
+  color: #86efac;
+}
+
+
+.student-hero-course-status.pending {
+  color: #fcd34d;
+}
+
+
+.student-hero-course-status.completed {
+  color: #93c5fd;
+}
+
+
+.student-hero-course-status.cancelled,
+.student-hero-course-status.rejected {
+  color: #fca5a5;
+}
+
+
+/* ============================================================
+   COURSE FOOTER
+============================================================ */
+
+.student-hero-course-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-top: 22px;
+
+  color: #d1d5db;
+
+  font-size: 10px;
+  font-weight: 500;
+}
+
+
+.student-hero-course-footer svg {
+  color: #c91f26;
+
+  font-size: 12px;
+
+  transition:
+    transform 0.2s ease;
+}
+
+
+.student-hero-course-card:hover
+.student-hero-course-footer svg {
+  transform: translateX(4px);
+}
+
+
+/* ============================================================
+   HOVER EFFECT
+============================================================ */
+
+.student-hero-course-card {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+.student-hero-course-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 22px 45px rgba(17, 24, 39, 0.25);
+}
+
+
+/* ============================================================
+   TABLET
+============================================================ */
+
+@media (max-width: 1100px) {
+
+  .student-hero {
+    grid-template-columns:
+      minmax(0, 1.4fr)
+      minmax(280px, 0.8fr);
+
+    padding: 32px;
   }
 
-  .hero-right {
+
+  .student-hero-content h1 {
+    font-size: 34px;
+  }
+
+
+  .student-hero-course-card {
+    max-width: 300px;
+  }
+
+
+  .student-hero-meta-item {
+    min-width: 125px;
+  }
+
+}
+
+
+/* ============================================================
+   TABLET / SMALL LAPTOP
+============================================================ */
+
+@media (max-width: 900px) {
+
+  .student-hero {
+    grid-template-columns: 1fr;
+
+    gap: 30px;
+
+    padding: 30px;
+  }
+
+
+  .student-hero-right {
+    justify-content: flex-start;
+  }
+
+
+  .student-hero-course-card {
+    max-width: none;
+  }
+
+
+  .student-hero-content {
+    max-width: none;
+  }
+
+}
+
+
+/* ============================================================
+   MOBILE
+============================================================ */
+
+@media (max-width: 600px) {
+
+  .student-hero {
+    min-height: auto;
+
+    padding: 24px 20px;
+
+    border-radius: 18px;
+
+    gap: 26px;
+  }
+
+
+  .student-hero-brand {
+    margin-bottom: 22px;
+  }
+
+
+  .student-hero-logo-wrapper {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 10px;
+  }
+
+
+  .student-hero-brand-text span {
+    font-size: 11px;
+  }
+
+
+  .student-hero-brand-text small {
+    font-size: 9px;
+  }
+
+
+  .student-hero-content h1 {
+    font-size: 29px;
+
+    letter-spacing: -0.9px;
+  }
+
+
+  .student-hero-content > p {
+    margin: 13px 0 20px;
+
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+
+  .student-hero-meta {
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 8px;
+  }
+
+
+  .student-hero-meta-item {
     width: 100%;
-    max-width: 400px;
+
+    box-sizing: border-box;
+
+    min-width: 0;
   }
 
-  .hero-meta {
-    justify-content: center;
+
+  .student-hero-course-card {
+    padding: 20px;
+
+    border-radius: 16px;
+  }
+
+
+  .student-hero-course-content h2 {
+    font-size: 20px;
+  }
+
+
+  .student-hero-course-status-row {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 8px;
   }
 
 }
 
-@media (max-width:768px){
 
-  .hero-content{
-    padding:30px 20px;
+/* ============================================================
+   VERY SMALL MOBILE
+============================================================ */
+
+@media (max-width: 400px) {
+
+  .student-hero {
+    padding: 20px 16px;
   }
 
-  .hero-left h1{
-    font-size:1.8rem;
+
+  .student-hero-content h1 {
+    font-size: 26px;
+  }
+
+
+  .student-hero-course-card {
+    padding: 18px;
+  }
+
+
+  .student-hero-course-content h2 {
+    font-size: 18px;
   }
 
 }

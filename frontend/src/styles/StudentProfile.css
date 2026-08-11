@@ -1,201 +1,334 @@
-/* ==========================================
-   Student Profile Page
-========================================== */
+/* ===================================================
+   GMT STUDENT PROFILE
+=================================================== */
 
-.student-profile-page {
-  padding: 30px;
-  background: #f8fafc;
-  min-height: 100vh;
+.gsp-page{
+    background:var(--background);
+    min-height:100vh;
+    padding:35px;
 }
 
-/* ==========================================
-   Profile Card
-========================================== */
+/* ===================================================
+   HEADER
+=================================================== */
 
-.profile-card {
-  background: #fff;
-  border-radius: 20px;
-  padding: 30px;
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-  margin-bottom: 30px;
+.gsp-header{
+    margin-bottom:35px;
 }
 
-.profile-avatar img {
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 5px solid #2563eb;
+.gsp-tag{
+    display:inline-block;
+    background:var(--primary-light);
+    color:var(--primary);
+    padding:8px 18px;
+    border-radius:50px;
+    font-size:.8rem;
+    font-weight:700;
+    letter-spacing:.08rem;
+    margin-bottom:15px;
 }
 
-.profile-info h1 {
-  font-size: 2rem;
-  color: #111827;
-  margin-bottom: 10px;
+.gsp-header h1{
+    color:var(--secondary);
+    font-size:2.4rem;
+    margin-bottom:10px;
 }
 
-.profile-info p {
-  color: #6b7280;
-  margin-bottom: 15px;
+.gsp-header p{
+    color:var(--text-light);
+    max-width:650px;
+    line-height:1.8;
 }
 
-.student-id {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #2563eb;
-  color: white;
-  padding: 10px 18px;
-  border-radius: 30px;
-  font-weight: 600;
+/* ===================================================
+   LAYOUT
+=================================================== */
+
+.gsp-layout{
+    display:grid;
+    grid-template-columns:320px 1fr;
+    gap:30px;
+    align-items:start;
 }
 
-/* ==========================================
-   Section Card
-========================================== */
+/* ===================================================
+   SIDEBAR
+=================================================== */
 
-.profile-section {
-  background: white;
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+.gsp-sidebar{
+    display:flex;
+    flex-direction:column;
+    gap:25px;
 }
 
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
+.gsp-avatar-card{
+    background:var(--surface);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow);
+    padding:35px 29px;
+    text-align:center;
 }
 
-.section-header h2 {
-  color: #111827;
+.gsp-avatar img{
+    width:150px;
+    height:150px;
+    object-fit:cover;
+    border-radius:50%;
+    border:6px solid var(--primary-light);
+    padding: 10px;
+    margin-left: 60px;
 }
 
-/* ==========================================
-   Edit Button
-========================================== */
-
-.edit-btn {
-  border: none;
-  background: #2563eb;
-  color: white;
-  padding: 12px 22px;
-  border-radius: 10px;
-  cursor: pointer;
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  font-weight: 600;
-  transition: 0.3s;
+.gsp-avatar-card h2{
+    margin-top:20px;
+    color:var(--secondary);
 }
 
-.edit-btn:hover {
-  background: #1d4ed8;
+.gsp-avatar-card p{
+    color:var(--text-light);
+    margin:8px 0 15px;
 }
 
-/* ==========================================
-   Grid
-========================================== */
-
-.profile-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 25px;
+.gsp-id{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:#f5f5f5;
+    padding:10px 18px;
+    border-radius:30px;
+    color:var(--primary);
+    font-weight:600;
+    margin-bottom:25px;
 }
 
-.full-width {
-  grid-column: span 2;
+/* ===================================================
+   BUTTON
+=================================================== */
+
+.gsp-edit-btn{
+    width:100%;
+    border:none;
+    background:var(--primary);
+    color:#fff;
+    padding:14px;
+    border-radius:var(--radius-md);
+    font-size:1rem;
+    font-weight:600;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    cursor:pointer;
+    transition:.3s;
 }
 
-/* ==========================================
-   Inputs
-   (Scoped ONLY to Student Profile)
-========================================== */
-
-.student-profile-page .input-group {
-  display: flex;
-  flex-direction: column;
+.gsp-edit-btn:hover{
+    background:var(--primary-dark);
+    transform:translateY(-2px);
 }
 
-.student-profile-page .input-group label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-  color: #374151;
-  font-weight: 600;
+/* ===================================================
+   STATS
+=================================================== */
+
+.gsp-stats{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
 }
 
-.student-profile-page .input-group input,
-.student-profile-page .input-group textarea {
-  padding: 14px;
-  border-radius: 10px;
-  border: 1px solid #d1d5db;
-  outline: none;
-  transition: 0.3s;
-  font-size: 0.95rem;
+.gsp-stat-card{
+    background:var(--surface);
+    border-radius:var(--radius-md);
+    padding:18px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    box-shadow:var(--shadow);
+    transition:.3s;
 }
 
-.student-profile-page .input-group input:focus,
-.student-profile-page .input-group textarea:focus {
-  border-color: #2563eb;
+.gsp-stat-card:hover{
+    transform:translateY(-4px);
 }
 
-.student-profile-page .input-group input:disabled,
-.student-profile-page .input-group textarea:disabled {
-  background: #f9fafb;
-  cursor: not-allowed;
+.gsp-stat-card svg{
+    width:55px;
+    height:55px;
+    padding:15px;
+    border-radius:50%;
+    background:var(--primary-light);
+    color:var(--primary);
 }
 
-/* ==========================================
-   Mobile
-========================================== */
-
-@media (max-width: 900px) {
-  .profile-card {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .profile-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .full-width {
-    grid-column: span 1;
-  }
-
-  .section-header {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .edit-btn {
-    width: 100%;
-    justify-content: center;
-  }
+.gsp-stat-card h3{
+    font-size:.9rem;
+    color:var(--text-light);
+    margin-bottom:4px;
 }
 
-@media (max-width: 600px) {
-  .student-profile-page {
-    padding: 20px;
-  }
+.gsp-stat-card strong{
+    font-size:1.3rem;
+    color:var(--secondary);
+}
 
-  .profile-card,
-  .profile-section {
-    padding: 20px;
-  }
+/* ===================================================
+   CONTENT
+=================================================== */
 
-  .profile-avatar img {
-    width: 100px;
-    height: 100px;
-  }
+.gsp-content{
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+}
 
-  .profile-info h1 {
-    font-size: 1.6rem;
-  }
+.gsp-card{
+    background:var(--surface);
+    border-radius:var(--radius-lg);
+    padding:35px;
+    box-shadow:var(--shadow);
+}
+
+.gsp-card-header{
+    margin-bottom:30px;
+    padding-bottom:18px;
+    border-bottom:1px solid var(--border);
+}
+
+.gsp-card-header h2{
+    color:var(--secondary);
+}
+
+/* ===================================================
+   GRID
+=================================================== */
+
+.gsp-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:25px;
+}
+
+.gsp-full{
+    grid-column:1/-1;
+}
+
+/* ===================================================
+   INPUTS
+=================================================== */
+
+.gsp-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.gsp-group label{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+    color:var(--secondary);
+    font-weight:600;
+}
+
+.gsp-group label svg{
+    color:var(--primary);
+}
+
+.gsp-input,
+.gsp-textarea{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:var(--radius-md);
+    padding:15px 18px;
+    font-size:.95rem;
+    background:#fff;
+    transition:.3s;
+}
+
+.gsp-input:focus,
+.gsp-textarea:focus{
+    outline:none;
+    border-color:var(--primary);
+    box-shadow:0 0 0 4px rgba(201,31,38,.12);
+}
+
+.gsp-input:disabled,
+.gsp-textarea:disabled{
+    background:#f8f9fb;
+    color:#555;
+    cursor:not-allowed;
+}
+
+.gsp-textarea{
+    resize:vertical;
+    min-height:130px;
+}
+
+/* ===================================================
+   RESPONSIVE
+=================================================== */
+
+@media(max-width:992px){
+
+.gsp-layout{
+    grid-template-columns:1fr;
+}
+
+.gsp-sidebar{
+    order:1;
+}
+
+.gsp-content{
+    order:2;
+}
+
+}
+
+@media(max-width:768px){
+
+.gsp-page{
+    padding:20px;
+}
+
+.gsp-grid{
+    grid-template-columns:1fr;
+}
+
+.gsp-header h1{
+    font-size:2rem;
+}
+
+.gsp-card{
+    padding:25px;
+}
+
+.gsp-avatar img{
+    width:120px;
+    height:120px;
+     margin-left: 245px;
+}
+
+}
+
+@media(max-width:480px){
+
+.gsp-page{
+    padding:15px;
+}
+
+.gsp-avatar img{
+    width:120px;
+    height:120px;
+     margin-left: 225px;
+}
+
+.gsp-header h1{
+    font-size:1.7rem;
+}
+
+.gsp-edit-btn{
+    font-size:.9rem;
+}
+
 }

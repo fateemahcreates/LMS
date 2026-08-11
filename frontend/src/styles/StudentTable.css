@@ -1,263 +1,522 @@
-.student-table {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
+/* ==========================================
+   GMT STUDENT TABLE
+========================================== */
+
+.gmt-student-table{
+    background:#fff;
+    border-radius:18px;
+    border:1px solid #ececec;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.05);
 }
 
-/* ======================
-   Header
-====================== */
+/* ==========================================
+   HEADER
+========================================== */
 
-.table-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
+.gmt-student-table-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:28px 30px;
+    border-bottom:1px solid #f2f2f2;
 }
 
-.table-header h2 {
-  font-size: 1.5rem;
-  color: #0f172a;
-  margin-bottom: 6px;
+.gmt-student-table-header h2{
+    font-size:23px;
+    font-weight:700;
+    color:#222;
+    margin:0;
 }
 
-.table-header p {
-  color: #64748b;
+.gmt-student-table-header p{
+    margin-top:6px;
+    color:#777;
+    font-size:14px;
 }
 
-.student-total {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: #dbeafe;
-  color: #2563eb;
-  padding: 12px 18px;
-  border-radius: 40px;
-  font-weight: 600;
+/* ==========================================
+   TOTAL STUDENTS
+========================================== */
+
+.gmt-student-total{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:#fff3f3;
+    color:#C91F26;
+    padding:12px 18px;
+    border-radius:12px;
+    font-weight:600;
 }
 
-/* ======================
-   Search
-====================== */
-
-.search-box {
-  position: relative;
+.gmt-student-total svg{
+    font-size:18px;
 }
 
-.search-icon {
-  position: absolute;
-  left: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #94a3b8;
+/* ==========================================
+   SEARCH
+========================================== */
+
+.gmt-student-search{
+    position:relative;
+    padding:25px 30px;
 }
 
-.search-box input {
-  width: 100%;
-  height: 52px;
-  border: 1px solid #dbe4ee;
-  border-radius: 14px;
-  padding: 0 20px 0 50px;
-  font-size: 0.95rem;
-  transition: 0.3s;
+.gmt-student-search input{
+    width:100%;
+    height:54px;
+    padding-left:52px;
+    padding-right:20px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    outline:none;
+    transition:.3s;
+    font-size:15px;
 }
 
-.search-box input:focus {
-  outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+.gmt-student-search input:focus{
+    border-color:#C91F26;
+    box-shadow:0 0 0 4px rgba(201,31,38,.10);
 }
 
-/* ======================
-   Desktop Table
-====================== */
-
-.table-wrapper {
-  width: 100%;
+.gmt-student-search-icon{
+    position:absolute;
+    left:48px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#999;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
+/* ==========================================
+   TABLE
+========================================== */
+
+.gmt-student-table-wrapper{
+    overflow-x:auto;
 }
 
-thead {
-  background: #f8fafc;
+.gmt-student-table table{
+    width:100%;
+    border-collapse:collapse;
 }
 
-th {
-  text-align: left;
-  padding: 18px;
-  color: #475569;
-  font-size: 0.9rem;
-  border-bottom: 1px solid #e2e8f0;
+.gmt-student-table thead{
+    background:#fafafa;
 }
 
-td {
-  padding: 22px 18px;
-  border-bottom: 1px solid #eef2f7;
+.gmt-student-table th{
+    padding:18px;
+    text-align:left;
+    font-size:14px;
+    font-weight:600;
+    color:#555;
 }
 
-tbody tr {
-  transition: 0.25s;
+.gmt-student-table td{
+    padding:18px;
+    border-top:1px solid #f3f3f3;
+    vertical-align:middle;
 }
 
-tbody tr:hover {
-  background: #f8fafc;
+.gmt-student-table tbody tr{
+    transition:.25s;
 }
 
-/* ======================
-   Action Buttons
-====================== */
-
-.action-buttons {
-  display: flex;
-  gap: 10px;
-  align-items: center;
+.gmt-student-table tbody tr:hover{
+    background:#fafafa;
 }
 
-.edit-btn,
-.delete-btn {
-  width: 38px;
-  height: 38px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: 0.3s;
+/* ==========================================
+   STUDENT INFO
+========================================== */
+
+.gmt-student-info{
+    display:flex;
+    align-items:center;
+    gap:14px;
 }
 
-.edit-btn {
-  background: #dbeafe;
-  color: #2563eb;
+.gmt-student-avatar{
+    width:52px;
+    height:52px;
+    border-radius:14px;
+    background:#fff2f2;
+    color:#C91F26;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:20px;
+    flex-shrink:0;
 }
 
-.edit-btn:hover {
-  background: #2563eb;
-  color: white;
+.gmt-student-info strong{
+    display:block;
+    color:#222;
+    font-size:15px;
+    font-weight:600;
 }
 
-.delete-btn {
-  background: #fee2e2;
-  color: #dc2626;
+
+/* ==========================================
+   EMAIL
+========================================== */
+
+.gmt-student-email{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#555;
+    font-size:14px;
 }
 
-.delete-btn:hover {
-  background: #dc2626;
-  color: white;
+.gmt-student-email svg{
+    color:#C91F26;
+    font-size:14px;
 }
 
-/* ======================
-   Empty State
-====================== */
 
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  padding: 70px 20px;
-  text-align: center;
+/* ==========================================
+   STUDENT ID
+========================================== */
+
+.gmt-student-id{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#555;
+    font-size:14px;
 }
 
-.empty-icon {
-  font-size: 4rem;
-  color: #2563eb;
+.gmt-student-id svg{
+    color:#C91F26;
+    font-size:14px;
 }
 
-.empty-state h3 {
-  color: #0f172a;
+
+/* ==========================================
+   PROGRAMME BADGE
+========================================== */
+
+.gmt-student-program-badge{
+    display:inline-block;
+    padding:8px 14px;
+    border-radius:30px;
+    background:#EEF4FF;
+    color:#2563EB;
+    font-size:13px;
+    font-weight:600;
 }
 
-.empty-state p {
-  color: #64748b;
+
+/* ==========================================
+   ACTIONS
+========================================== */
+
+.gmt-student-actions{
+    display:flex;
+    gap:10px;
 }
 
-/* ======================
-   Mobile Cards
-====================== */
-
-.mobile-students {
-  display: none;
+.gmt-student-edit-btn,
+.gmt-student-delete-btn{
+    border:none;
+    border-radius:10px;
+    padding:10px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:600;
+    transition:.25s;
 }
 
-.student-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+/* ==========================================
+   VIEW BUTTON
+========================================== */
+
+.gmt-student-view-btn{
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:10px 16px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    transition:.25s ease;
+
+    background:#C91F26;
+
+    color:#FFFFFF;
+
 }
 
-.student-card h3 {
-  font-size: 1.15rem;
-  margin-bottom: 15px;
-  color: #0f172a;
+.gmt-student-view-btn:hover{
+
+    background:#C91F26;
+
+    color:#FFFFFF;
+
 }
 
-.student-card p {
-  margin-bottom: 10px;
-  color: #475569;
-  line-height: 1.5;
+.gmt-student-edit-btn{
+    background:#ebe6e6;
+    color:#C91F26;
 }
 
-.student-card strong {
-  color: #0f172a;
+.gmt-student-edit-btn:hover{
+    background:#C91F26;
+    color:#fff;
 }
 
-.student-card .action-buttons {
-  margin-top: 18px;
+.gmt-student-delete-btn{
+    background:#f2ebeb;
+    color:#C91F26;
 }
 
-/* ======================
-   Responsive
-====================== */
+.gmt-student-delete-btn:hover{
+    background:#222;
+    color:#fff;
+}
 
-@media (max-width: 768px) {
+.drawer-backdrop{
 
-  .table-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+    position:fixed;
 
-  .student-total {
-    width: 100%;
-    justify-content: center;
-  }
+    inset:0;
 
-  .search-box input {
-    font-size: 14px;
-  }
+    background:rgba(17,24,39,.45);
 
-  /* Hide desktop table */
+    backdrop-filter:blur(6px);
 
-  .table-wrapper {
-    display: none;
-  }
+    -webkit-backdrop-filter:blur(6px);
 
-  /* Show mobile cards */
+    z-index:1099;
 
-  .mobile-students {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
+    animation:fadeIn .25s ease;
 
-  .student-card {
-    width: 100%;
-  }
+}
 
-  .student-card .action-buttons {
-    justify-content: space-between;
-  }
+@keyframes fadeIn{
 
-  .edit-btn,
-  .delete-btn {
-    flex: 1;
-    height: 44px;
-  }
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
+
+}
+
+
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+.gmt-student-empty-state{
+    padding:70px 20px;
+    text-align:center;
+}
+
+.gmt-student-empty-icon{
+    font-size:50px;
+    color:#C91F26;
+    margin-bottom:15px;
+}
+
+.gmt-student-empty-state h3{
+    margin-bottom:10px;
+    color:#222;
+    font-size:22px;
+}
+
+.gmt-student-empty-state p{
+    color:#777;
+    font-size:15px;
+}
+
+/* ==========================================
+   MOBILE CARDS
+========================================== */
+
+.gmt-mobile-students{
+    display:none;
+    padding:20px;
+}
+
+.gmt-student-card{
+    background:#fff;
+    border-radius:18px;
+    border:1px solid #ececec;
+    padding:22px;
+    margin-bottom:18px;
+    box-shadow:0 6px 18px rgba(0,0,0,.05);
+    transition:.25s;
+}
+
+.gmt-student-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 24px rgba(0,0,0,.08);
+}
+
+/* ==========================================
+   CARD HEADER
+========================================== */
+
+.gmt-student-card-header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:20px;
+}
+
+.gmt-student-card-header h3{
+    margin:0;
+    color:#222;
+    font-size:18px;
+    font-weight:700;
+}
+
+.gmt-student-card-header span{
+    display:block;
+    margin-top:4px;
+    color:#888;
+    font-size:13px;
+}
+
+/* ==========================================
+   CARD DETAILS
+========================================== */
+
+.gmt-student-card p{
+    margin:12px 0;
+    color:#555;
+    font-size:14px;
+    line-height:1.6;
+}
+
+.gmt-student-card strong{
+    color:#222;
+}
+
+/* ==========================================
+   MOBILE ACTIONS
+========================================== */
+
+.gmt-student-card .gmt-student-actions{
+    margin-top:22px;
+    display:flex;
+    gap:10px;
+}
+
+.gmt-student-card .gmt-student-edit-btn,
+.gmt-student-card .gmt-student-delete-btn{
+    flex:1;
+    justify-content:center;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width:992px){
+
+    /* Hide desktop table */
+
+    .gmt-student-table-wrapper{
+        display:none;
+    }
+
+    /* Show cards */
+
+    .gmt-mobile-students{
+        display:block;
+    }
+
+    /* Header */
+
+    .gmt-student-table-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:20px;
+    }
+
+    .gmt-student-search{
+        padding:20px;
+    }
+
+    .gmt-student-search-icon{
+        left:38px;
+    }
+
+}
+
+@media (max-width:768px){
+
+    .gmt-student-table-header{
+        padding:20px;
+    }
+
+    .gmt-student-search{
+        padding:18px;
+    }
+
+    .gmt-student-total{
+        width:100%;
+        justify-content:center;
+    }
+
+}
+
+@media (max-width:576px){
+
+    .gmt-student-card{
+        padding:18px;
+    }
+
+    .gmt-student-card-header{
+        gap:12px;
+    }
+
+    .gmt-student-avatar{
+        width:44px;
+        height:44px;
+        border-radius:12px;
+        font-size:16px;
+    }
+
+    .gmt-student-card-header h3{
+        font-size:16px;
+    }
+
+    .gmt-student-card p{
+        font-size:13px;
+    }
+
+    .gmt-student-card .gmt-student-actions{
+        flex-direction:column;
+    }
+
+    .gmt-student-card .gmt-student-edit-btn,
+    .gmt-student-card .gmt-student-delete-btn{
+        width:100%;
+    }
+
 }

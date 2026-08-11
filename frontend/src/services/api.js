@@ -1,17 +1,22 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://lms-backend-g9mp.onrender.com/api",
+  baseURL: "http://localhost:5000/api",
 });
 
-// Attach JWT token to every request
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
 
+    console.log("========== AXIOS REQUEST ==========");
+    console.log("TOKEN:", token);
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    console.log("HEADERS:", config.headers);
+    console.log("URL:", config.url);
 
     return config;
   },

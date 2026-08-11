@@ -1,67 +1,75 @@
 import { useState } from "react";
-import { createUser } from "../services/userService";
+
+import {
+  createUser,
+  updateUser,
+} from "../services/userService";
+
+import { notify } from "../utils/notify";
 
 import "../styles/UserForm.css";
 
-function UserForm({ refreshUsers }) {
+function UserForm({
+  formData,
+  setFormData,
+  editingUser,
+  refreshUsers,
+  closeDrawer,
+}) {
+  // =====================================
+  // INITIAL STATE
+  // =====================================
+
   const initialState = {
     name: "",
     email: "",
     password: "",
     role: "student",
 
-    // Student Fields
-    studentId: "",
-    department: "",
-    faculty: "",
-    level: "",
-    semester: "First Semester",
+    // General user information
+    gender: "",
+    dateOfBirth: "",
     phone: "",
+    nationality: "",
+    address: "",
+    bio: "",
+    avatar: "",
+
+    // Student information
+    program: "",
+    cohort: "",
+
+    // Account status
+    status: "active",
   };
 
-  const [formData,setFormData] = useState({
-
- name:"",
- email:"",
- password:"",
- role:"student",
-
- studentId:"",
- department:"",
- faculty:"",
- level:"",
- semester:"First Semester",
- phone:""
-
-});
   const [loading, setLoading] = useState(false);
 
+  // =====================================
+  // HANDLE CHANGE
+  // =====================================
+
   const handleChange = (e) => {
+    const { name, value } = e.target;
 
-  const {name,value}=e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
 
+      // Clear student-only fields
+      // when changing to another role
+      ...(name === "role" && value !== "student"
+        ? {
+            program: "",
+            cohort: "",
+          }
+        : {}),
+    }));
+  };
 
-  setFormData((prev)=>({
-
-    ...prev,
-
-    [name]:value,
-
-
-    ...(name === "role" && value !== "student"
-      ? {
-          studentId:"",
-          department:"",
-          faculty:"",
-          level:"",
-          semester:"First Semester",
-          phone:""
-        }
-      : {})
-
-  }));
-
-};
+  // =====================================
+  // SUBMIT
+  // =====================================
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,138 +77,333 @@ function UserForm({ refreshUsers }) {
     setLoading(true);
 
     try {
-      await createUser(formData);
+      if (editingUser) {
+        await updateUser(
+          editingUser._id,
+          formData
+        );
 
-      alert("User created successfully.");
+        notify.success(
+          "User updated successfully."
+        );
+      } else {
+        await createUser(formData);
 
-      setFormData(initialState);
+        notify.success(
+          "User created successfully."
+        );
+      }
 
-      refreshUsers();
+      await refreshUsers();
+
+      setFormData({
+        ...initialState,
+      });
+
+      closeDrawer();
 
     } catch (error) {
-      alert(
-        error.response?.data?.message ||
-          "Unable to create user."
+      console.error(
+        "User form submission error:",
+        error
       );
+
+      notify.apiError(error);
+
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <form className="user-form" onSubmit={handleSubmit}>
+    <form
+      className="user-form"
+      onSubmit={handleSubmit}
+    >
+
+      {/* =====================================
+          ACCOUNT INFORMATION
+      ===================================== */}
 
       <h2>Account Information</h2>
+
+      {/* FULL NAME */}
 
       <input
         type="text"
         name="name"
         placeholder="Full Name"
-        value={formData.name}
+        value={formData.name || ""}
         onChange={handleChange}
         required
       />
+
+
+      {/* EMAIL */}
 
       <input
         type="email"
         name="email"
         placeholder="Email Address"
-        value={formData.email}
+        value={formData.email || ""}
         onChange={handleChange}
         required
       />
+
+
+      {/* PASSWORD */}
 
       <input
         type="password"
         name="password"
-        placeholder="Password"
-        value={formData.password}
+        placeholder={
+          editingUser
+            ? "Leave blank to keep current password"
+            : "Password"
+        }
+        value={formData.password || ""}
         onChange={handleChange}
-        required
+        required={!editingUser}
       />
+
+
+      {/* ROLE */}
 
       <select
         name="role"
-        value={formData.role}
+        value={formData.role || "student"}
         onChange={handleChange}
+        required
       >
-        <option value="student">Student</option>
-        <option value="instructor">Instructor</option>
-        <option value="admin">Admin</option>
+        <option value="student">
+          Student
+        </option>
+
+        <option value="instructor">
+          Instructor
+        </option>
+
+        <option value="admin">
+          Administrator
+        </option>
       </select>
 
-      {/* Student Information */}
+
+      {/* =====================================
+          PERSONAL INFORMATION
+      ===================================== */}
+
+      <hr />
+
+      <h2>Personal Information</h2>
+
+
+      {/* GENDER */}
+
+      <select
+        name="gender"
+        value={formData.gender || ""}
+        onChange={handleChange}
+      >
+        <option value="">
+          Select Gender
+        </option>
+
+        <option value="Male">
+          Male
+        </option>
+
+        <option value="Female">
+          Female
+        </option>
+
+        <option value="Other">
+          Other
+        </option>
+      </select>
+
+
+      {/* DATE OF BIRTH */}
+
+      <input
+        type="date"
+        name="dateOfBirth"
+        value={
+          formData.dateOfBirth || ""
+        }
+        onChange={handleChange}
+      />
+
+
+      {/* PHONE */}
+
+      <input
+        type="text"
+        name="phone"
+        placeholder="Phone Number"
+        value={formData.phone || ""}
+        onChange={handleChange}
+      />
+
+
+      {/* NATIONALITY */}
+
+      <input
+        type="text"
+        name="nationality"
+        placeholder="Nationality"
+        value={
+          formData.nationality || ""
+        }
+        onChange={handleChange}
+      />
+
+
+      {/* ADDRESS */}
+
+      <textarea
+        name="address"
+        placeholder="Address"
+        value={formData.address || ""}
+        onChange={handleChange}
+        rows="3"
+      />
+
+
+      {/* =====================================
+          STUDENT INFORMATION
+      ===================================== */}
 
       {formData.role === "student" && (
         <>
           <hr />
 
-          <h2>Academic Information</h2>
+          <h2>
+            Student Information
+          </h2>
 
-          <input
-            type="text"
-            name="studentId"
-            placeholder="Student ID"
-            value={formData.studentId}
-            onChange={handleChange}
-            required
-          />
 
-          <input
-            type="text"
-            name="department"
-            placeholder="Department"
-            value={formData.department}
-            onChange={handleChange}
-            required
-          />
-
-          <input
-            type="text"
-            name="faculty"
-            placeholder="Faculty"
-            value={formData.faculty}
-            onChange={handleChange}
-          />
+          {/* =================================
+              PROGRAM
+          ================================= */}
 
           <select
-            name="level"
-            value={formData.level}
+            name="program"
+            value={
+              formData.program || ""
+            }
             onChange={handleChange}
             required
           >
-            <option value="">Select Level</option>
-            <option value="100">100 Level</option>
-            <option value="200">200 Level</option>
-            <option value="300">300 Level</option>
-            <option value="400">400 Level</option>
-            <option value="500">500 Level</option>
+            <option value="">
+              Select Program
+            </option>
+
+            <option value="Software Engineering">
+              Software Engineering
+            </option>
+
+            <option value="Cybersecurity">
+              Cybersecurity
+            </option>
+
+            <option value="Data Science">
+              Data Science
+            </option>
+
+            <option value="Digital Marketing">
+              Digital Marketing
+            </option>
+
+            <option value="Graphic Design">
+              Graphic Design
+            </option>
           </select>
+
+
+          {/* =================================
+              COHORT
+          ================================= */}
 
           <select
-            name="semester"
-            value={formData.semester}
+            name="cohort"
+            value={
+              formData.cohort || ""
+            }
             onChange={handleChange}
+            required
           >
-            <option>First Semester</option>
-            <option>Second Semester</option>
-          </select>
+            <option value="">
+              Select Cohort
+            </option>
 
-          <input
-            type="text"
-            name="phone"
-            placeholder="Phone Number"
-            value={formData.phone}
-            onChange={handleChange}
-          />
+            <option value="July 2026">
+              July 2026
+            </option>
+
+            <option value="August 2026">
+              August 2026
+            </option>
+
+            <option value="September 2026">
+              September 2026
+            </option>
+
+            <option value="October 2026">
+              October 2026
+            </option>
+          </select>
         </>
       )}
+
+
+      {/* =====================================
+          ACCOUNT STATUS
+      ===================================== */}
+
+      <hr />
+
+      <h2>
+        Account Status
+      </h2>
+
+      <select
+        name="status"
+        value={
+          formData.status || "active"
+        }
+        onChange={handleChange}
+        required
+      >
+        <option value="active">
+          Active
+        </option>
+
+        <option value="inactive">
+          Inactive
+        </option>
+
+        <option value="suspended">
+          Suspended
+        </option>
+      </select>
+
+
+      {/* =====================================
+          SUBMIT BUTTON
+      ===================================== */}
 
       <button
         type="submit"
         disabled={loading}
       >
-        {loading ? "Creating..." : "Create User"}
+        {loading
+          ? editingUser
+            ? "Updating..."
+            : "Creating..."
+          : editingUser
+          ? "Update User"
+          : "Create User"}
       </button>
 
     </form>

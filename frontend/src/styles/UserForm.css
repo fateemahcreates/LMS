@@ -1,87 +1,261 @@
-/* ==========================================
-   User Form
-========================================== */
+/* ===================================================
+   GMT USER FORM
+=================================================== */
 
-.user-form {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+.user-form{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+
+    padding:28px;
 }
 
-/* ==========================================
-   Inputs & Select
-========================================== */
+/* ===================================================
+   SECTION TITLES
+=================================================== */
+
+.user-form h2{
+    margin:0;
+
+    font-size:18px;
+    font-weight:700;
+
+    color:var(--text);
+
+    padding-bottom:10px;
+
+    border-bottom:1px solid var(--border);
+}
+
+.user-form hr{
+    border:none;
+    border-top:1px solid var(--border);
+    margin:10px 0;
+}
+
+/* ===================================================
+   INPUTS
+=================================================== */
 
 .user-form input,
-.user-form select {
-  width: 100%;
-  padding: 14px 16px;
-  border: 1px solid #dbe3ec;
-  border-radius: 10px;
-  font-size: 0.95rem;
-  background: #ffffff;
-  color: #1e293b;
-  outline: none;
-  transition: all 0.3s ease;
-  box-sizing: border-box;
+.user-form select,
+.user-form textarea{
+
+    width:100%;
+
+    height:52px;
+
+    padding:0 16px;
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    background:#fff;
+
+    font-size:.95rem;
+
+    color:var(--text);
+
+    transition:.3s;
+
+    outline:none;
+
+}
+
+.user-form textarea{
+
+    min-height:120px;
+
+    padding:14px 16px;
+
+    resize:vertical;
+
+}
+
+.user-form input::placeholder,
+.user-form textarea::placeholder{
+
+    color:#94a3b8;
+
 }
 
 .user-form input:focus,
-.user-form select:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+.user-form select:focus,
+.user-form textarea:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:
+    0 0 0 4px rgba(37,99,235,.12);
+
 }
 
-/* ==========================================
-   Button
-========================================== */
+/* ===================================================
+   SELECT
+=================================================== */
 
-.user-form button {
-  grid-column: span 2;
+.user-form select{
 
-  padding: 14px;
+    cursor:pointer;
 
-  border: none;
-  border-radius: 10px;
-
-  background: #2563eb;
-  color: #ffffff;
-
-  font-size: 1rem;
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition: all 0.3s ease;
 }
 
-.user-form button:hover:not(:disabled) {
-  background: #1d4ed8;
+/* ===================================================
+   BUTTON
+=================================================== */
+
+.user-form button{
+
+    height:54px;
+
+    margin-top:10px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        #1d4ed8
+    );
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:
+    0 10px 25px rgba(37,99,235,.25);
+
 }
 
-.user-form button:disabled {
-  background: #94a3b8;
-  cursor: not-allowed;
+.user-form button:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 14px 30px rgba(37,99,235,.35);
+
 }
 
-/* ==========================================
-   Placeholder
-========================================== */
+.user-form button:disabled{
 
-.user-form input::placeholder {
-  color: #94a3b8;
+    opacity:.7;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+    box-shadow:none;
+
 }
 
-/* ==========================================
-   Responsive
-========================================== */
+/* ===================================================
+   GRID (OPTIONAL)
+=================================================== */
 
-@media (max-width: 768px) {
-  .user-form {
-    grid-template-columns: 1fr;
-  }
+.user-form-grid{
 
-  .user-form button {
-    grid-column: span 1;
-  }
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:18px;
+
+}
+
+/* ===================================================
+   SMALL LABELS
+=================================================== */
+
+.user-form label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    color:var(--secondary);
+
+}
+
+/* ===================================================
+   RESPONSIVE
+=================================================== */
+
+@media(max-width:768px){
+
+.user-form{
+
+    padding:22px;
+
+}
+
+.user-form-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+.user-form input,
+.user-form select,
+.user-form textarea{
+
+    height:50px;
+
+    font-size:14px;
+
+}
+
+.user-form button{
+
+    height:50px;
+
+}
+
+}
+
+@media(max-width:480px){
+
+.user-form{
+
+    padding:18px;
+
+    gap:15px;
+
+}
+
+.user-form h2{
+
+    font-size:16px;
+
+}
+
+.user-form input,
+.user-form select{
+
+    height:48px;
+
+    font-size:14px;
+
+}
+
+.user-form button{
+
+    height:48px;
+
+    font-size:14px;
+
+}
+
 }

@@ -1,0 +1,717 @@
+/* ==========================================
+   GMT SOFTWARE
+   ASSIGNMENT DETAILS PANEL
+   PART 1
+========================================== */
+
+.assignment-details-panel{
+
+    background:#FFFFFF;
+
+    border:1px solid #E5E7EB;
+
+    border-radius:20px;
+
+    margin-top:28px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 10px 30px rgba(15,23,42,.08);
+
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.details-header{
+
+    padding:30px;
+
+    border-bottom:1px solid #EEF2F7;
+
+    background:linear-gradient(
+        135deg,
+        #FFFFFF,
+        #FCFCFD
+    );
+
+}
+
+
+.details-header h2{
+
+    margin:0;
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+
+.details-header p{
+
+    margin-top:10px;
+
+    color:#6B7280;
+
+    line-height:1.7;
+
+    font-size:15px;
+
+}
+
+
+/* ==========================================
+   INFO GRID
+========================================== */
+
+.assignment-info-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+    gap:20px;
+
+    padding:28px;
+
+}
+
+
+/* ==========================================
+   INFO CARD
+========================================== */
+
+.info-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    padding:22px;
+
+    border:1px solid #E5E7EB;
+
+    border-radius:18px;
+
+    background:#FFFFFF;
+
+    transition:.3s ease;
+
+}
+
+
+.info-card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:#F5D4D6;
+
+    box-shadow:
+    0 12px 28px rgba(15,23,42,.08);
+
+}
+
+
+.info-card svg{
+
+    width:54px;
+
+    height:54px;
+
+    padding:16px;
+
+    border-radius:16px;
+
+    background:#FCECEC;
+
+    color:#C91F26;
+
+    flex-shrink:0;
+
+    font-size:22px;
+
+}
+
+
+.info-card span{
+
+    display:block;
+
+    margin-bottom:6px;
+
+    color:#6B7280;
+
+    font-size:13px;
+
+}
+
+
+.info-card strong{
+
+    color:#111827;
+
+    font-size:16px;
+
+    font-weight:700;
+
+}
+
+/* ==========================================
+   GMT SOFTWARE
+   ASSIGNMENT DETAILS PANEL
+   PART 2
+========================================== */
+
+
+/* ==========================================
+   STATISTICS
+========================================== */
+
+.assignment-stats{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(200px,1fr));
+
+    gap:20px;
+
+    padding:0 28px 28px;
+
+}
+
+
+/* ==========================================
+   STAT CARD
+========================================== */
+
+.stat-box{
+
+    position:relative;
+
+    background:#FFFFFF;
+
+    border:1px solid #E5E7EB;
+
+    border-radius:18px;
+
+    padding:24px;
+
+    overflow:hidden;
+
+    transition:.3s ease;
+
+    box-shadow:
+    0 8px 24px rgba(15,23,42,.05);
+
+}
+
+
+.stat-box::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    width:5px;
+
+    height:100%;
+
+    background:#C91F26;
+
+}
+
+
+.stat-box:hover{
+
+    transform:translateY(-5px);
+
+    border-color:#F5D4D6;
+
+    box-shadow:
+    0 18px 36px rgba(15,23,42,.10);
+
+}
+
+
+.stat-box svg{
+
+    width:58px;
+
+    height:58px;
+
+    padding:16px;
+
+    border-radius:16px;
+
+    background:#FCECEC;
+
+    color:#C91F26;
+
+    margin-bottom:18px;
+
+    font-size:22px;
+
+}
+
+
+.stat-box h3{
+
+    margin:0;
+
+    font-size:34px;
+
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+
+.stat-box span{
+
+    display:block;
+
+    margin-top:8px;
+
+    color:#6B7280;
+
+    font-size:14px;
+
+}
+
+
+/* ==========================================
+   SUBMISSIONS SECTION
+========================================== */
+
+.submissions-section{
+
+    padding:30px;
+
+    border-top:1px solid #EEF2F7;
+
+}
+
+
+.submissions-section h3{
+
+    margin:0 0 24px;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+/* ==========================================
+   GMT SOFTWARE
+   ASSIGNMENT DETAILS PANEL
+   PART 3
+========================================== */
+
+
+/* ==========================================
+   DESKTOP TABLE
+========================================== */
+
+.submissions-table{
+
+    width:100%;
+
+    overflow-x:auto;
+
+}
+
+
+.submissions-table table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:850px;
+
+}
+
+
+.submissions-table thead{
+
+    background:#FAFAFA;
+
+}
+
+
+.submissions-table th{
+
+    padding:18px;
+
+    text-align:left;
+
+    color:#555;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    white-space:nowrap;
+
+}
+
+
+.submissions-table td{
+
+    padding:18px;
+
+    border-top:1px solid #F3F4F6;
+
+    vertical-align:middle;
+
+}
+
+
+.submissions-table tbody tr{
+
+    transition:.25s ease;
+
+}
+
+
+.submissions-table tbody tr:hover{
+
+    background:#FAFAFA;
+
+}
+
+
+/* ==========================================
+   STATUS BADGES
+========================================== */
+
+.submission-status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:8px 16px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+
+.submission-status.graded{
+
+    background:#ECFDF3;
+
+    color:#16A34A;
+
+}
+
+
+.submission-status.pending{
+
+    background:#FFF7E6;
+
+    color:#D97706;
+
+}
+
+
+.submission-status.submitted{
+
+    background:#EEF4FF;
+
+    color:#2563EB;
+
+}
+
+
+.submission-status.late{
+
+    background:#FCECEC;
+
+    color:#C91F26;
+
+}
+
+
+/* ==========================================
+   REVIEW BUTTON
+========================================== */
+
+.review-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#FFF3F3;
+
+    color:#C91F26;
+
+    padding:10px 18px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s ease;
+
+}
+
+
+.review-btn:hover{
+
+    background:#C91F26;
+
+    color:#FFFFFF;
+
+    transform:translateY(-2px);
+
+}
+
+
+.review-btn svg{
+
+    font-size:14px;
+
+}
+
+
+/* ==========================================
+   MOBILE CARDS
+========================================== */
+
+.mobile-submissions{
+
+    display:none;
+
+}
+
+
+.submission-card{
+
+    background:#FFFFFF;
+
+    border:1px solid #E5E7EB;
+
+    border-radius:18px;
+
+    padding:22px;
+
+    margin-bottom:18px;
+
+    box-shadow:
+
+    0 6px 18px rgba(15,23,42,.05);
+
+    transition:.3s ease;
+
+}
+
+
+.submission-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+
+    0 16px 34px rgba(15,23,42,.08);
+
+}
+
+
+.submission-card h4{
+
+    margin:0 0 16px;
+
+    font-size:18px;
+
+    color:#111827;
+
+}
+
+
+.submission-card p{
+
+    margin:10px 0;
+
+    color:#4B5563;
+
+    line-height:1.6;
+
+}
+
+
+.submission-card strong{
+
+    color:#111827;
+
+}
+
+
+.submission-card .review-btn{
+
+    width:100%;
+
+    margin-top:20px;
+
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+    .submissions-table{
+
+        display:none;
+
+    }
+
+    .mobile-submissions{
+
+        display:block;
+
+    }
+
+}
+
+
+@media(max-width:768px){
+
+    .details-header{
+
+        padding:22px;
+
+    }
+
+    .details-header h2{
+
+        font-size:24px;
+
+    }
+
+    .assignment-info-grid{
+
+        grid-template-columns:1fr;
+
+        padding:22px;
+
+    }
+
+    .assignment-stats{
+
+        grid-template-columns:1fr;
+
+        padding:0 22px 22px;
+
+    }
+
+    .submissions-section{
+
+        padding:22px;
+
+    }
+
+}
+
+
+@media(max-width:480px){
+
+    .details-header{
+
+        padding:18px;
+
+    }
+
+    .details-header h2{
+
+        font-size:21px;
+
+    }
+
+    .details-header p{
+
+        font-size:14px;
+
+    }
+
+    .info-card{
+
+        padding:18px;
+
+    }
+
+    .info-card svg{
+
+        width:48px;
+
+        height:48px;
+
+        padding:14px;
+
+    }
+
+    .stat-box{
+
+        padding:20px;
+
+    }
+
+    .stat-box h3{
+
+        font-size:28px;
+
+    }
+
+    .submission-card{
+
+        padding:18px;
+
+    }
+
+    .review-btn{
+
+        width:100%;
+
+    }
+
+}
+

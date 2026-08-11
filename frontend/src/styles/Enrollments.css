@@ -1,403 +1,832 @@
-/* ==========================================
-   PAGE
-========================================== */
+/* =========================================================
+   GMT ENROLLMENT MANAGEMENT
+   ========================================================= */
 
-.enrollments-page {
-  padding: 35px;
-  background: #f8fafc;
-  min-height: 100vh;
+.gmt-enrollment-page {
+  width: 100%;
+  min-height: 100%;
+  padding: 28px;
+  background: #f8f9fb;
+  color: #111827;
+  box-sizing: border-box;
 }
 
-/* ==========================================
-   HEADER
-========================================== */
 
-.page-header {
-  margin-bottom: 30px;
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.gmt-enrollment-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 26px;
+  padding: 28px 30px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px rgba(17, 24, 39, 0.05);
 }
 
-.page-header h1 {
-  font-size: 2rem;
-  color: #0f172a;
+.gmt-enrollment-header-content {
+  min-width: 0;
+}
+
+.gmt-enrollment-header-tag {
+  display: inline-flex;
+  align-items: center;
   margin-bottom: 8px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: #fcecec;
+  color: #c91f26;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
 }
 
-.page-header p {
-  color: #64748b;
-  font-size: 15px;
+.gmt-enrollment-header h1 {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 800;
+  color: #111827;
 }
 
-/* ==========================================
-   TABLE CARD
-========================================== */
-
-.enrollment-table {
-  background: #fff;
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+.gmt-enrollment-header p {
+  margin: 8px 0 0;
+  max-width: 650px;
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
-/* ==========================================
-   TABLE TOOLBAR
-========================================== */
-
-.table-toolbar{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-margin-bottom:25px;
-
-gap:20px;
-
-flex-wrap:wrap;
-
+.gmt-enrollment-header-icon {
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: #fcecec;
+  color: #c91f26;
+  font-size: 24px;
 }
 
-.table-toolbar input{
 
-flex:1;
+/* =========================================================
+   SUMMARY STATS
+   ========================================================= */
 
-min-width:280px;
-
-padding:14px 18px;
-
-border:1px solid #dbe4ee;
-
-border-radius:12px;
-
-font-size:15px;
-
-outline:none;
-
-transition:.3s;
-
+.gmt-enrollment-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
 }
 
-.table-toolbar input:focus{
-
-border-color:#2563eb;
-
-box-shadow:0 0 0 3px rgba(37,99,235,.15);
-
+.gmt-enrollment-stat-card {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 21px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 3px 14px rgba(17, 24, 39, 0.04);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.table-toolbar select{
-
-padding:14px;
-
-border-radius:12px;
-
-border:1px solid #dbe4ee;
-
-background:white;
-
-font-size:15px;
-
-cursor:pointer;
-
+.gmt-enrollment-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 22px rgba(17, 24, 39, 0.08);
 }
 
-/* ==========================================
-   SUMMARY CARDS
-========================================== */
-
-.summary-grid{
-
-display:grid;
-
-grid-template-columns:repeat(4,1fr);
-
-gap:25px;
-
-margin-bottom:35px;
-
+.gmt-enrollment-stat-icon {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #fcecec;
+  color: #c91f26;
+  font-size: 18px;
 }
 
-.summary-card{
-
-background:#fff;
-
-padding:25px;
-
-border-radius:18px;
-
-display:flex;
-
-align-items:center;
-
-gap:18px;
-
-box-shadow:0 10px 30px rgba(0,0,0,.08);
-
-transition:.3s;
-
+.gmt-enrollment-stat-content {
+  min-width: 0;
 }
 
-.summary-card:hover{
-
-transform:translateY(-6px);
-
+.gmt-enrollment-stat-content h2 {
+  margin: 0 0 3px;
+  color: #111827;
+  font-size: 25px;
+  line-height: 1;
+  font-weight: 800;
 }
 
-.summary-icon{
-
-width:65px;
-
-height:65px;
-
-border-radius:18px;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-font-size:26px;
-
-color:white;
-
-}
-
-.summary-icon.blue{
-
-background:#2563eb;
-
-}
-
-.summary-icon.orange{
-
-background:#f59e0b;
-
-}
-
-.summary-icon.green{
-
-background:#16a34a;
-
-}
-
-.summary-icon.purple{
-
-background:#7c3aed;
-
-}
-
-.summary-card h2{
-
-font-size:30px;
-
-margin-bottom:6px;
-
-color:#0f172a;
-
-}
-
-.summary-card p{
-
-font-size:14px;
-
-color:#64748b;
-
-font-weight:500;
-
-}
-
-/* ==========================================
-   TABLE
-========================================== */
-
-.enrollment-table table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.enrollment-table thead {
-  background: #2563eb;
-}
-
-.enrollment-table thead th {
-  color: white;
-  padding: 18px;
-  text-align: left;
-  font-size: 15px;
+.gmt-enrollment-stat-content span {
+  display: block;
+  color: #6b7280;
+  font-size: 12px;
   font-weight: 600;
 }
 
-.enrollment-table tbody tr {
-  transition: .25s;
-  border-bottom: 1px solid #e2e8f0;
+
+/* =========================================================
+   SEARCH + FILTER TOOLBAR
+   ========================================================= */
+
+.gmt-enrollment-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 3px 14px rgba(17, 24, 39, 0.04);
 }
 
-.enrollment-table tbody tr:hover {
+.gmt-enrollment-search {
+  position: relative;
+  flex: 1;
+  min-width: 240px;
+}
+
+.gmt-enrollment-search input {
+  width: 100%;
+  height: 44px;
+  padding: 0 16px 0 43px;
+  box-sizing: border-box;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  outline: none;
+  background: #ffffff;
+  color: #111827;
+  font-family: inherit;
+  font-size: 13px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.gmt-enrollment-search input::placeholder {
+  color: #9ca3af;
+}
+
+.gmt-enrollment-search input:focus {
+  border-color: #c91f26;
+  box-shadow: 0 0 0 3px rgba(201, 31, 38, 0.09);
+}
+
+.gmt-enrollment-search-icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  z-index: 1;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.gmt-enrollment-filter {
+  flex-shrink: 0;
+}
+
+.gmt-enrollment-filter select {
+  height: 44px;
+  min-width: 175px;
+  padding: 0 36px 0 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  outline: none;
+  background: #ffffff;
+  color: #374151;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.gmt-enrollment-filter select:focus {
+  border-color: #c91f26;
+  box-shadow: 0 0 0 3px rgba(201, 31, 38, 0.09);
+}
+
+
+/* =========================================================
+   DESKTOP TABLE
+   ========================================================= */
+
+.gmt-enrollment-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 3px 16px rgba(17, 24, 39, 0.05);
+}
+
+.gmt-enrollment-table {
+  width: 100%;
+  min-width: 1050px;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.gmt-enrollment-table thead {
   background: #f8fafc;
 }
 
-.enrollment-table td {
-  padding: 18px;
-  color: #334155;
-  font-size: 15px;
+.gmt-enrollment-table th {
+  padding: 15px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #6b7280;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
-/* ==========================================
-   STATUS BADGES
-========================================== */
-
-.status {
-  padding: 8px 14px;
-  border-radius: 20px;
+.gmt-enrollment-table td {
+  padding: 16px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #374151;
   font-size: 13px;
-  font-weight: 600;
+  vertical-align: middle;
+  white-space: nowrap;
 }
 
-.status.enrolled {
-  background: #dbeafe;
-  color: #2563eb;
+.gmt-enrollment-table tbody tr {
+  transition: background 0.18s ease;
 }
 
-.status.progress {
-  background: #fef3c7;
-  color: #ca8a04;
+.gmt-enrollment-table tbody tr:hover {
+  background: #fffafa;
 }
 
-.status.completed {
-  background: #dcfce7;
-  color: #16a34a;
+.gmt-enrollment-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
-/* ==========================================
-   PROGRESS
-========================================== */
 
-.progress-wrapper {
-  width: 150px;
+/* =========================================================
+   STUDENT
+   ========================================================= */
+
+.gmt-enrollment-student {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 180px;
 }
 
-.progress-bar {
-  width: 100%;
-  height: 10px;
-  background: #e2e8f0;
-  border-radius: 20px;
-  overflow: hidden;
-  margin-top: 6px;
+.gmt-enrollment-student-avatar {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #fcecec;
+  color: #c91f26;
+  font-size: 14px;
 }
 
-.progress-fill {
-  height: 100%;
-  background: #2563eb;
-  border-radius: 20px;
-  transition: .35s;
-}
-
-.progress-text {
+.gmt-enrollment-student strong {
+  display: block;
+  margin-bottom: 3px;
+  color: #111827;
   font-size: 13px;
-  font-weight: 600;
-  color: #64748b;
-}
-
-/* ==========================================
-   APPROVE BUTTON
-========================================== */
-
-.approve-btn {
-  border: none;
-  background: #16a34a;
-  color: white;
-  padding: 10px 18px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: .25s;
-}
-
-.approve-btn:hover {
-  background: #15803d;
-}
-
-/* ==========================================
-   CERTIFICATE
-========================================== */
-
-.pending {
-  color: #f59e0b;
-  font-weight: 600;
-}
-
-.approved {
-  color: #16a34a;
   font-weight: 700;
 }
 
-/* ==========================================
+.gmt-enrollment-student span {
+  display: block;
+  max-width: 180px;
+  overflow: hidden;
+  color: #9ca3af;
+  font-size: 11px;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   COURSE
+   ========================================================= */
+
+.gmt-enrollment-course {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 190px;
+  color: #374151;
+  font-weight: 600;
+}
+
+.gmt-enrollment-course svg {
+  flex-shrink: 0;
+  color: #c91f26;
+  font-size: 13px;
+}
+
+.gmt-enrollment-course span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   DAYS LEFT
+   ========================================================= */
+
+.gmt-enrollment-days-left {
+  color: #374151;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+.gmt-enrollment-progress-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 120px;
+}
+
+.gmt-enrollment-progress-bar {
+  width: 75px;
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e5e7eb;
+}
+
+.gmt-enrollment-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: #c91f26;
+  transition: width 0.35s ease;
+}
+
+.gmt-enrollment-progress-wrapper > span {
+  min-width: 32px;
+  color: #374151;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.gmt-enrollment-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 82px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.gmt-enrollment-status.enrolled {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.gmt-enrollment-status.in-progress {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.gmt-enrollment-status.completed {
+  background: #ecfdf5;
+  color: #15803d;
+}
+
+.gmt-enrollment-status.withdrawn {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+
+/* =========================================================
+   CERTIFICATE
+   ========================================================= */
+
+.gmt-enrollment-approved {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #15803d;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.gmt-enrollment-approved svg {
+  font-size: 12px;
+}
+
+.gmt-enrollment-pending {
+  color: #9ca3af;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.gmt-enrollment-approve-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 7px 12px;
+  border: none;
+  border-radius: 7px;
+  background: #c91f26;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.gmt-enrollment-approve-btn:hover {
+  background: #a5161c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(201, 31, 38, 0.2);
+}
+
+
+/* =========================================================
+   VIEW BUTTON
+   ========================================================= */
+
+.gmt-enrollment-view-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 7px 14px;
+  border: 1px solid #c91f26;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #c91f26;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.gmt-enrollment-view-btn:hover {
+  background: #c91f26;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
    EMPTY STATE
-========================================== */
+   ========================================================= */
 
-.empty-state {
-  background: white;
-  padding: 70px;
-  border-radius: 18px;
+.gmt-enrollment-empty-cell {
+  padding: 0 !important;
+}
+
+.gmt-enrollment-empty-state {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 35px 20px;
   text-align: center;
-  box-shadow: 0 12px 30px rgba(15, 23, 42, .08);
 }
 
-.empty-state h2 {
-  color: #0f172a;
-  margin-bottom: 10px;
+.gmt-enrollment-empty-icon {
+  margin-bottom: 14px;
+  color: #d1d5db;
+  font-size: 42px;
 }
 
-.empty-state p {
-  color: #64748b;
+.gmt-enrollment-empty-state h3 {
+  margin: 0 0 6px;
+  color: #374151;
+  font-size: 16px;
+  font-weight: 700;
 }
 
-/* ==========================================
-   RESPONSIVE
-========================================== */
-
-@media(max-width:1100px){
-
-.summary-grid{
-
-grid-template-columns:repeat(2,1fr);
-
+.gmt-enrollment-empty-state p {
+  max-width: 360px;
+  margin: 0;
+  color: #9ca3af;
+  font-size: 12px;
+  line-height: 1.6;
 }
 
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+.gmt-mobile-enrollments {
+  display: none;
 }
 
-@media(max-width:650px){
 
-.summary-grid{
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
 
-grid-template-columns:1fr;
+@media (max-width: 1100px) {
 
-}
+  .gmt-enrollment-page {
+    padding: 22px;
+  }
 
-}
+  .gmt-enrollment-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 
-@media (max-width: 992px) {
-
-  .enrollment-table {
+  .gmt-enrollment-table-wrapper {
     overflow-x: auto;
   }
 
-  .enrollment-table table {
-    min-width: 900px;
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .gmt-enrollment-page {
+    padding: 16px;
+  }
+
+  .gmt-enrollment-header {
+    padding: 22px;
+  }
+
+  .gmt-enrollment-header h1 {
+    font-size: 23px;
+  }
+
+  .gmt-enrollment-header p {
+    font-size: 13px;
+  }
+
+  .gmt-enrollment-header-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .gmt-enrollment-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .gmt-enrollment-search {
+    min-width: 0;
+  }
+
+  .gmt-enrollment-filter select {
+    width: 100%;
+  }
+
+  /* Hide desktop table */
+  .gmt-enrollment-table-wrapper {
+    display: none;
+  }
+
+  /* Show mobile cards */
+  .gmt-mobile-enrollments {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .gmt-enrollment-card {
+    padding: 18px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    box-shadow: 0 3px 14px rgba(17, 24, 39, 0.05);
+  }
+
+  .gmt-enrollment-card-header {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .gmt-enrollment-card-header h3 {
+    margin: 0 0 3px;
+    color: #111827;
+    font-size: 15px;
+    font-weight: 800;
+  }
+
+  .gmt-enrollment-card-header span {
+    color: #9ca3af;
+    font-size: 11px;
+  }
+
+  .gmt-enrollment-card-course {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px;
+    padding: 11px 12px;
+    border-radius: 8px;
+    background: #f8fafc;
+    color: #374151;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .gmt-enrollment-card-course svg {
+    color: #c91f26;
+  }
+
+  .gmt-enrollment-card-details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .gmt-enrollment-card-details p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .gmt-enrollment-card-details strong {
+    color: #374151;
+  }
+
+  .gmt-enrollment-card-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 14px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .gmt-enrollment-card-status > strong {
+    color: #374151;
+    font-size: 12px;
+  }
+
+  .gmt-enrollment-card-progress {
+    margin-top: 16px;
+  }
+
+  .gmt-enrollment-card-progress-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .gmt-enrollment-card-progress-header strong {
+    color: #374151;
+    font-size: 12px;
+  }
+
+  .gmt-enrollment-card-progress-header span {
+    color: #c91f26;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .gmt-enrollment-card-progress .gmt-enrollment-progress-bar {
+    width: 100%;
+    height: 8px;
+  }
+
+  .gmt-enrollment-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 18px;
+    padding-top: 15px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .gmt-enrollment-card-actions .gmt-enrollment-view-btn {
+    margin-left: auto;
   }
 
 }
 
-@media (max-width: 768px) {
 
-  .enrollments-page {
-    padding: 20px;
+/* =========================================================
+   RESPONSIVE — SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .gmt-enrollment-page {
+    padding: 12px;
   }
 
-  .page-header h1 {
-    font-size: 1.7rem;
+  .gmt-enrollment-header {
+    align-items: flex-start;
+    padding: 18px;
+  }
+
+  .gmt-enrollment-header-icon {
+    display: none;
+  }
+
+  .gmt-enrollment-header-tag {
+    font-size: 9px;
+  }
+
+  .gmt-enrollment-header h1 {
+    font-size: 20px;
+  }
+
+  .gmt-enrollment-header p {
+    font-size: 12px;
+  }
+
+  .gmt-enrollment-stats {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .gmt-enrollment-stat-card {
+    padding: 16px;
+  }
+
+  .gmt-enrollment-stat-content h2 {
+    font-size: 22px;
+  }
+
+  .gmt-enrollment-card {
+    padding: 15px;
+  }
+
+  .gmt-enrollment-card-details {
+    grid-template-columns: 1fr;
+  }
+
+  .gmt-enrollment-card-actions {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .gmt-enrollment-card-actions .gmt-enrollment-view-btn {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .gmt-enrollment-card-actions .gmt-enrollment-approve-btn {
+    flex: 1;
+  }
+
+  .gmt-enrollment-card-actions .gmt-enrollment-approved,
+  .gmt-enrollment-card-actions .gmt-enrollment-pending {
+    flex: 1;
   }
 
 }

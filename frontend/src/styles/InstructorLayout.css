@@ -1,0 +1,71 @@
+/* ===========================
+   APP
+=========================== */
+
+.instructor-app{
+    display:flex;
+    min-height:100vh;
+    background:#f8fafc;
+}
+
+/* ===========================
+   MAIN
+=========================== */
+
+.instructor-main{
+    flex:1;
+    min-height:100vh;
+    transition:margin-left .35s ease;
+}
+
+.instructor-main.sidebar-open{
+    margin-left:280px;
+}
+
+.instructor-main.sidebar-closed{
+    margin-left:0;
+}
+
+.instructor-content{
+    padding:30px;
+}
+
+/* ===========================
+   OVERLAY
+=========================== */
+
+.instructor-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    z-index:1500;
+}
+
+/* ===========================
+   TABLET
+=========================== */
+
+@media(max-width:992px){
+
+.instructor-main.sidebar-open{
+    margin-left:240px;
+}
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+.instructor-main.sidebar-open,
+.instructor-main.sidebar-closed{
+    margin-left:0;
+}
+
+.instructor-content{
+    padding:20px;
+}
+
+}

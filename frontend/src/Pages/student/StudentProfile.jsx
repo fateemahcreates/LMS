@@ -9,8 +9,12 @@ import {
   FaIdCard,
   FaEdit,
   FaSave,
+  FaGraduationCap,
+  FaCertificate,
+  FaChartLine,
+  FaClipboardCheck,
+  FaClock,
 } from "react-icons/fa";
-
 import {
   getStudentProfile,
   updateStudentProfile,
@@ -21,6 +25,7 @@ import { toast } from "react-toastify";
 import "../../styles/StudentProfile.css";
 
 function StudentProfile() {
+
   const [student, setStudent] = useState({});
   const [editing, setEditing] = useState(false);
 
@@ -30,6 +35,7 @@ function StudentProfile() {
 
   const loadProfile = async () => {
     try {
+
       const res = await getStudentProfile();
 
       setStudent(res.data.student || res.data);
@@ -39,232 +45,410 @@ function StudentProfile() {
     }
   };
 
- const handleChange = (e) => {
-  setStudent({
-    ...student,
-    [e.target.name]: e.target.value,
-  });
-};
+  const handleChange = (e) => {
 
-const handleSave = async () => {
-  try {
-    await updateStudentProfile(student);
+    setStudent({
+      ...student,
+      [e.target.name]: e.target.value,
+    });
 
-    toast.success("Profile updated successfully.");
+  };
 
-    setEditing(false);
+  const handleSave = async () => {
 
-    loadProfile();
+    try {
 
-  } catch (error) {
-  console.error(error);
+      await updateStudentProfile(student);
 
-  console.log("Status:", error.response?.status);
-  console.log("Response:", error.response?.data);
+      toast.success("Profile updated successfully.");
 
-  toast.error("Unable to update profile.");
-}
-};
+      setEditing(false);
+
+      loadProfile();
+
+    } catch (error) {
+
+      console.error(error);
+
+      toast.error("Unable to update profile.");
+
+    }
+
+  };
 
   return (
-    <main className="student-profile-page">
 
-      {/* ================= Header ================= */}
+    <main className="gsp-page">
 
-      <div className="profile-card">
+      {/* ======================================
+          PAGE HEADER
+      ====================================== */}
 
-        <div className="profile-avatar">
+      <div className="gsp-header">
 
-          <img
-            src={
-              student.avatar ||
-              "https://ui-avatars.com/api/?name=Student&background=2563eb&color=fff"
-            }
-            alt="Profile"
-          />
+        <span className="gsp-tag">
+          GMT SOFTWARE ACADEMY
+        </span>
 
-        </div>
+        <h1>Student Profile</h1>
 
-        <div className="profile-info">
-
-          <h1>{student.name}</h1>
-
-          <p>{student.email}</p>
-
-          <span className="student-id">
-            <FaIdCard />
-            {student.studentId || "Not Assigned"}
-          </span>
-
-        </div>
+        <p>
+          Manage your personal information,
+          learning profile and account settings.
+        </p>
 
       </div>
 
-      {/* ================= Personal Information ================= */}
+      {/* ======================================
+          PROFILE LAYOUT
+      ====================================== */}
 
-      <div className="profile-section">
+      <div className="gsp-layout">
 
-        <div className="section-header">
+        {/* ======================================
+            LEFT SIDEBAR
+        ====================================== */}
 
-          <h2>Personal Information</h2>
+        <div className="gsp-sidebar">
 
-          <button
-  className="edit-btn"
-  onClick={() => {
-    if (editing) {
-      handleSave();
-    } else {
-      setEditing(true);
-    }
-  }}
->
-            {editing ? (
-              <>
-                <FaSave /> Save
-              </>
-            ) : (
-              <>
-                <FaEdit /> Edit
-              </>
-            )}
-          </button>
+          <div className="gsp-avatar-card">
 
-        </div>
+            <div className="gsp-avatar">
 
-        <div className="profile-grid">
+              <img
+                src={
+                  student.avatar ||
+                  "https://ui-avatars.com/api/?name=Student&background=C91F26&color=fff"
+                }
+                alt="Profile"
+              />
 
-          <div className="input-group">
+            </div>
 
-            <label>
-              <FaUser />
-              Full Name
-            </label>
+            <h2>
+              {student.name || "Student"}
+            </h2>
 
-            <input
-              name="name"
-              value={student.name || ""}
-              disabled={!editing}
-              onChange={handleChange}
-            />
+            <p>
+              GMT Software Academy
+            </p>
+
+            <span className="gsp-id">
+
+              <FaIdCard />
+
+              {student.studentId || "Not Assigned"}
+
+            </span>
+
+            <button
+              className="gsp-edit-btn"
+              onClick={() => {
+
+                if (editing) {
+
+                  handleSave();
+
+                } else {
+
+                  setEditing(true);
+
+                }
+
+              }}
+            >
+
+              {editing ? (
+                <>
+                  <FaSave />
+                  Save Changes
+                </>
+              ) : (
+                <>
+                  <FaEdit />
+                  Edit Profile
+                </>
+              )}
+
+            </button>
 
           </div>
 
-          <div className="input-group">
+          {/* ======================================
+              QUICK STATS
+          ====================================== */}
 
-            <label>
-              <FaEnvelope />
-              Email
-            </label>
+          <div className="gsp-stats">
 
-            <input
-              value={student.email || ""}
-              disabled
-            />
+  <div className="gsp-stat-card">
 
-          </div>
+    <FaCertificate />
 
-          <div className="input-group">
+    <div>
 
-  <label>
-    <FaPhone />
-    Phone Number
-  </label>
+      <h3>Certificates</h3>
 
-  <input
-    name="phone"
-    value={student.phone || ""}
-    disabled={!editing}
-    onChange={handleChange}
-  />
+      <strong>
+        {student.totalCertificates ?? 0}
+      </strong>
+
+    </div>
+
+  </div>
 
 </div>
-
-<div className="input-group">
-
-  <label>
-    <FaIdCard />
-    Learning Track
-  </label>
-
-  <input
-    name="learningTrack"
-    value={student.learningTrack || ""}
-    disabled={!editing}
-    onChange={handleChange}
-  />
-
-
-          </div>
-
-          <div className="input-group">
-
-            <label>
-              <FaGlobe />
-              Nationality
-            </label>
-
-            <input
-              name="nationality"
-              value={student.nationality || ""}
-              disabled={!editing}
-              onChange={handleChange}
-            />
-
-          </div>
-
-          <div className="input-group full-width">
-
-  <label>
-    <FaMapMarkerAlt />
-    Address
-  </label>
-
-  <textarea
-    rows="3"
-    name="address"
-    value={student.address || ""}
-    disabled={!editing}
-    onChange={handleChange}
-  />
-
 </div>
 
-<div className="input-group">
 
-  <label>
-    <FaIdCard />
-    Course Duration
-  </label>
+        {/* ======================================
+            RIGHT CONTENT
+        ====================================== */}
 
-  <input
-    name="courseDuration"
-    value={student.courseDuration || ""}
-    disabled={!editing}
-    onChange={handleChange}
-  />
+        <section className="gsp-content">
 
-</div>
+          <div className="gsp-card">
 
-          <div className="input-group full-width">
+            <div className="gsp-card-header">
 
-            <label>Bio</label>
+              <h2>
+                Personal Information
+              </h2>
 
-            <textarea
-              rows="4"
-              name="bio"
-              value={student.bio || ""}
-              disabled={!editing}
-              onChange={handleChange}
-            />
+            </div>
+
+            <div className="gsp-grid">
+                            {/* ===========================
+                  FULL NAME
+              =========================== */}
+
+              <div className="gsp-group">
+
+                <label>
+
+                  <FaUser />
+
+                  Full Name
+
+                </label>
+
+                <input
+                  className="gsp-input"
+                  type="text"
+                  name="name"
+                  value={student.name || ""}
+                  disabled={!editing}
+                  onChange={handleChange}
+                />
+
+              </div>
+
+              {/* ===========================
+                  EMAIL
+              =========================== */}
+
+              <div className="gsp-group">
+
+                <label>
+
+                  <FaEnvelope />
+
+                  Email Address
+
+                </label>
+
+                <input
+                  className="gsp-input"
+                  type="email"
+                  value={student.email || ""}
+                  disabled
+                />
+
+              </div>
+
+              {/* ===========================
+                  PHONE
+              =========================== */}
+
+              <div className="gsp-group">
+
+                <label>
+
+                  <FaPhone />
+
+                  Phone Number
+
+                </label>
+
+                <input
+                  className="gsp-input"
+                  type="text"
+                  name="phone"
+                  value={student.phone || ""}
+                  disabled={!editing}
+                  onChange={handleChange}
+                />
+
+              </div>
+
+              {/* ===========================
+                  STUDENT ID
+              =========================== */}
+
+              <div className="gsp-group">
+
+                <label>
+
+                  <FaIdCard />
+
+                  Student ID
+
+                </label>
+
+                <input
+                  className="gsp-input"
+                  type="text"
+                  value={student.studentId || ""}
+                  disabled
+                />
+
+              </div>
+
+              {/* ===========================
+                  LEARNING TRACK
+              =========================== */}
+
+              <div className="gsp-group">
+
+                <label>
+
+                  <FaGraduationCap />
+
+                  Learning Track
+
+                </label>
+
+                <input
+                  className="gsp-input"
+                  type="text"
+                  name="learningTrack"
+                  value={student.learningTrack || ""}
+                  disabled={!editing}
+                  onChange={handleChange}
+                />
+
+              </div>
+
+              {/* ===========================
+                  NATIONALITY
+              =========================== */}
+
+              <div className="gsp-group">
+
+                <label>
+
+                  <FaGlobe />
+
+                  Nationality
+
+                </label>
+
+                <input
+                  className="gsp-input"
+                  type="text"
+                  name="nationality"
+                  value={student.nationality || ""}
+                  disabled={!editing}
+                  onChange={handleChange}
+                />
+
+              </div>
+
+              {/* ===========================
+                  COURSE DURATION
+              =========================== */}
+
+              <div className="gsp-group">
+
+                <label>
+
+                  <FaClock />
+
+                  Course Duration
+
+                </label>
+
+                <input
+                  className="gsp-input"
+                  type="text"
+                  name="courseDuration"
+                  value={student.courseDuration || ""}
+                  disabled={!editing}
+                  onChange={handleChange}
+                />
+
+              </div>
+
+                            {/* ===========================
+                  ADDRESS
+              =========================== */}
+
+              <div className="gsp-group gsp-full">
+
+                <label>
+
+                  <FaMapMarkerAlt />
+
+                  Address
+
+                </label>
+
+                <textarea
+                  className="gsp-textarea"
+                  rows="4"
+                  name="address"
+                  value={student.address || ""}
+                  disabled={!editing}
+                  onChange={handleChange}
+                />
+
+              </div>
+
+              {/* ===========================
+                  BIO
+              =========================== */}
+
+              <div className="gsp-group gsp-full">
+
+                <label>
+
+                  About Me
+
+                </label>
+
+                <textarea
+                  className="gsp-textarea"
+                  rows="6"
+                  name="bio"
+                  value={student.bio || ""}
+                  disabled={!editing}
+                  onChange={handleChange}
+                  placeholder="Tell us about yourself..."
+                />
+
+              </div>
+
+            </div>
 
           </div>
 
-        </div>
+        </section>
 
       </div>
 
     </main>
+
   );
+
 }
 
 export default StudentProfile;

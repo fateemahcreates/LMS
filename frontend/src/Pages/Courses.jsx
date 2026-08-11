@@ -1,9 +1,20 @@
 import { useState, useEffect } from "react";
-import { FaPlus, FaTimes } from "react-icons/fa";
+import {
+  FaPlus,
+  FaTimes,
+  FaSearch,
+  FaBookOpen,
+  FaCheckCircle,
+  FaEdit,
+  FaArchive,
+} from "react-icons/fa";
 
 import CourseForm from "../components/CourseForm";
 import CourseTable from "../components/CourseTable";
+
 import { notify } from "../utils/notify";
+
+import { getInstructors } from "../services/userService";
 
 import {
   getCourses,
@@ -12,18 +23,20 @@ import {
   deleteCourse,
 } from "../services/courseService";
 
+import "../styles/Drawer.css";
 import "../styles/Courses.css";
 
 function Courses() {
-  // ==========================================
-  // INITIAL FORM STATE
-  // ==========================================
+  /* ==========================================
+      INITIAL FORM STATE
+  ========================================== */
+
   const initialState = {
     title: "",
     code: "",
     description: "",
     category: "Frontend",
-    instructor: "",
+    instructorUser: "",
     duration: "",
     level: "Beginner",
     thumbnail: "",
@@ -32,36 +45,61 @@ function Courses() {
     topics: [],
   };
 
-  const [formData, setFormData] = useState(initialState);
+  /* ==========================================
+      STATES
+  ========================================== */
 
   const [courses, setCourses] = useState([]);
+  const [instructors, setInstructors] = useState([]);
+
+  const [formData, setFormData] = useState(initialState);
 
   const [editingCourse, setEditingCourse] = useState(null);
 
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // ==========================================
-  // FETCH COURSES
-  // ==========================================
+  const [searchTerm, setSearchTerm] = useState("");
+
+  /* ==========================================
+      FETCH COURSES
+  ========================================== */
 
   const fetchCourses = async () => {
     try {
       const res = await getCourses();
 
-      setCourses(res.data);
-
+      if (Array.isArray(res.data)) {
+        setCourses(res.data);
+      } else {
+        setCourses([]);
+      }
     } catch (error) {
-      console.error(error);
+      console.log(error);
+      setCourses([]);
+    }
+  };
+
+  /* ==========================================
+      FETCH INSTRUCTORS
+  ========================================== */
+
+  const fetchInstructors = async () => {
+    try {
+      const res = await getInstructors();
+      setInstructors(res.data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
   useEffect(() => {
     fetchCourses();
+    fetchInstructors();
   }, []);
 
-  // ==========================================
-  // HANDLE CHANGE
-  // ==========================================
+  /* ==========================================
+      HANDLE CHANGE
+  ========================================== */
 
   const handleChange = (e) => {
     setFormData({
@@ -73,21 +111,19 @@ function Courses() {
     });
   };
 
-  // ==========================================
-  // OPEN DRAWER
-  // ==========================================
+  /* ==========================================
+      NEW COURSE
+  ========================================== */
 
   const handleNewCourse = () => {
     setEditingCourse(null);
-
     setFormData(initialState);
-
     setDrawerOpen(true);
   };
 
-  // ==========================================
-  // EDIT COURSE
-  // ==========================================
+  /* ==========================================
+      EDIT COURSE
+  ========================================== */
 
   const handleEdit = (course) => {
     setEditingCourse(course);
@@ -96,7 +132,10 @@ function Courses() {
       title: course.title || "",
       code: course.code || "",
       description: course.description || "",
-      instructor: course.instructor || "",
+      instructorUser:
+        course.instructorUser?._id ||
+        course.instructorUser ||
+        "",
       duration: course.duration || "",
       category: course.category || "Frontend",
       level: course.level || "Beginner",
@@ -109,171 +148,303 @@ function Courses() {
     setDrawerOpen(true);
   };
 
-  // ==========================================
-  // DELETE COURSE
-  // ==========================================
+  /* ==========================================
+      DELETE
+  ========================================== */
 
   const handleDelete = async (id) => {
-  if (!window.confirm("Delete this course?")) return;
+    if (!window.confirm("Delete this course?")) return;
 
-  try {
-    await deleteCourse(id);
+    try {
+      await deleteCourse(id);
 
-    notify.success("Course deleted successfully.");
+      notify.success("Course deleted successfully.");
 
-    await fetchCourses();
+      fetchCourses();
+    } catch (error) {
+      notify.error(
+        error.response?.data?.message ||
+          "Unable to delete course."
+      );
+    }
+  };
 
-  } catch (error) {
-    console.error(error);
-
-    notify.error(
-      error.response?.data?.message ||
-      "Unable to delete course."
-    );
-  }
-};
-
-  // ==========================================
-  // SAVE COURSE
-  // ==========================================
+  /* ==========================================
+      SAVE
+  ========================================== */
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!formData.title || !formData.code) {
-    notify.warning(
-      "Course title and course code are required."
-    );
-    return;
-  }
-
-  try {
-    if (editingCourse) {
-      await updateCourse(
-        editingCourse._id,
-        formData
+    if (!formData.title || !formData.code) {
+      notify.warning(
+        "Course title and course code are required."
       );
-
-      notify.success("Course updated successfully.");
-
-    } else {
-      await createCourse(formData);
-
-      notify.success("Course created successfully.");
+      return;
     }
 
-    await fetchCourses();
+    try {
+      if (editingCourse) {
+        await updateCourse(
+          editingCourse._id,
+          formData
+        );
 
-    setDrawerOpen(false);
+        notify.success(
+          "Course updated successfully."
+        );
+      } else {
+        await createCourse(formData);
 
-    setEditingCourse(null);
+        notify.success(
+          "Course created successfully."
+        );
+      }
 
-    setFormData(initialState);
+      fetchCourses();
 
-  } catch (error) {
-    console.error(error);
+      setDrawerOpen(false);
 
-    notify.error(
-      error.response?.data?.message ||
-      "Unable to save course."
-    );
-  }
-};
+      setEditingCourse(null);
 
-  // ==========================================
-  // STATS
-  // ==========================================
+      setFormData(initialState);
+    } catch (error) {
+      notify.error(
+        error.response?.data?.message ||
+          "Unable to save course."
+      );
+    }
+  };
+
+  /* ==========================================
+      STATISTICS
+  ========================================== */
 
   const published = courses.filter(
-    (c) => c.status === "Published"
+    (course) => course.status === "Published"
   ).length;
 
   const draft = courses.filter(
-    (c) => c.status === "Draft"
+    (course) => course.status === "Draft"
   ).length;
 
   const archived = courses.filter(
-    (c) => c.status === "Archived"
+    (course) => course.status === "Archived"
   ).length;
 
+  /* ==========================================
+      SEARCH
+  ========================================== */
+
+  const filteredCourses = courses.filter((course) =>
+    course.title
+      ?.toLowerCase()
+      .includes(searchTerm.toLowerCase())
+  );
+
+  /* ==========================================
+      UI
+  ========================================== */
+
   return (
-    <main className="courses-page">
+    <div className="gmt-admin-courses-page">
 
-      {/* HEADER */}
+      {/* =======================================
+          PAGE HEADER
+      ======================================= */}
 
-      <div className="page-header">
+      <div className="gmt-admin-courses-header">
 
-        <div>
+        <div className="gmt-admin-courses-heading">
+
+          <span className="gmt-admin-page-tag">
+            GMT SOFTWARE
+          </span>
 
           <h1>Course Management</h1>
 
           <p>
-            Manage GMT Academy programmes,
-            instructors and course information.
+            Create, organize and manage GMT
+            Software learning programmes,
+            instructors and course catalogue.
           </p>
 
         </div>
 
         <button
-          className="new-course-btn"
+          className="gmt-admin-course-btn"
           onClick={handleNewCourse}
         >
           <FaPlus />
-
-          New Course
+          Create Course
         </button>
 
       </div>
 
-      {/* STATS */}
+      {/* =======================================
+          SEARCH BAR
+      ======================================= */}
 
-      <div className="course-stats">
+      <div className="gmt-admin-course-toolbar">
 
-        <div className="stat-card">
-          <h2>{courses.length}</h2>
-          <span>Total Courses</span>
-        </div>
+        <div className="gmt-admin-course-search">
 
-        <div className="stat-card">
-          <h2>{published}</h2>
-          <span>Published</span>
-        </div>
+          <FaSearch />
 
-        <div className="stat-card">
-          <h2>{draft}</h2>
-          <span>Draft</span>
-        </div>
+          <input
+            type="text"
+            placeholder="Search courses..."
+            value={searchTerm}
+            onChange={(e) =>
+              setSearchTerm(e.target.value)
+            }
+          />
 
-        <div className="stat-card">
-          <h2>{archived}</h2>
-          <span>Archived</span>
         </div>
 
       </div>
 
-      {/* TABLE */}
+      {/* =======================================
+          STATISTICS
+      ======================================= */}
 
-      <CourseTable
-        courses={courses}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
-      />
+      <div className="gmt-admin-course-stats">
 
-      {/* BACKDROP */}
+        <div className="gmt-admin-course-stat-card">
+
+          <div className="gmt-admin-course-stat-icon">
+            <FaBookOpen />
+          </div>
+
+          <div>
+
+            <h2>{courses.length}</h2>
+
+            <p>Total Courses</p>
+
+          </div>
+
+        </div>
+
+        <div className="gmt-admin-course-stat-card">
+
+          <div className="gmt-admin-course-stat-icon success">
+            <FaCheckCircle />
+          </div>
+
+          <div>
+
+            <h2>{published}</h2>
+
+            <p>Published</p>
+
+          </div>
+
+        </div>
+
+        <div className="gmt-admin-course-stat-card">
+
+          <div className="gmt-admin-course-stat-icon warning">
+            <FaEdit />
+          </div>
+
+          <div>
+
+            <h2>{draft}</h2>
+
+            <p>Draft</p>
+
+          </div>
+
+        </div>
+
+        <div className="gmt-admin-course-stat-card">
+
+          <div className="gmt-admin-course-stat-icon danger">
+            <FaArchive />
+          </div>
+
+          <div>
+
+            <h2>{archived}</h2>
+
+            <p>Archived</p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+            {/* =======================================
+          COURSE TABLE
+      ======================================= */}
+
+      <div className="gmt-admin-course-table-wrapper">
+
+        {filteredCourses.length > 0 ? (
+
+          <CourseTable
+            courses={filteredCourses}
+            handleEdit={handleEdit}
+            handleDelete={handleDelete}
+          />
+
+        ) : (
+
+          <div className="gmt-admin-course-empty-state">
+
+            <div className="gmt-admin-course-empty-icon">
+              <FaBookOpen />
+            </div>
+
+            <h2>No Courses Found</h2>
+
+            <p>
+              {searchTerm
+                ? "No courses match your search."
+                : "You haven't created any courses yet."}
+            </p>
+
+            {!searchTerm && (
+
+              <button
+                className="gmt-admin-course-btn"
+                onClick={handleNewCourse}
+              >
+                <FaPlus />
+
+                Create Your First Course
+
+              </button>
+
+            )}
+
+          </div>
+
+        )}
+
+      </div>
+
+      {/* =======================================
+          DRAWER BACKDROP
+      ======================================= */}
 
       {drawerOpen && (
+
         <div
           className="drawer-backdrop"
-          onClick={() =>
-            setDrawerOpen(false)
-          }
+          onClick={() => setDrawerOpen(false)}
         />
+
       )}
 
-      {/* DRAWER */}
+      {/* =======================================
+          COURSE DRAWER
+      ======================================= */}
 
       <div
-        className={`course-drawer ${
+        className={`side-drawer ${
           drawerOpen ? "open" : ""
         }`}
       >
@@ -283,24 +454,30 @@ function Courses() {
           <div>
 
             <h2>
+
               {editingCourse
                 ? "Edit Course"
                 : "Create Course"}
+
             </h2>
 
             <p>
-              Configure course information.
+
+              {editingCourse
+                ? "Update course information and publish changes."
+                : "Configure a new course for the GMT Learning Management System."}
+
             </p>
 
           </div>
 
           <button
             className="close-btn"
-            onClick={() =>
-              setDrawerOpen(false)
-            }
+            onClick={() => setDrawerOpen(false)}
           >
+
             <FaTimes />
+
           </button>
 
         </div>
@@ -310,11 +487,12 @@ function Courses() {
           handleChange={handleChange}
           handleSubmit={handleSubmit}
           editingCourse={editingCourse}
+          instructors={instructors}
         />
 
       </div>
 
-    </main>
+    </div>
   );
 }
 

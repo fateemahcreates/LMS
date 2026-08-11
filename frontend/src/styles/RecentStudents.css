@@ -1,200 +1,859 @@
-/* ==========================================
-   Recent Students Card
-========================================== */
+/* ============================================================
+   GMT LMS — RECENT STUDENTS
+   Premium Admin Dashboard Component
+============================================================ */
 
-.recent-card {
+
+/* ============================================================
+   ROOT
+============================================================ */
+
+.gmt-recent-students {
+
+  width: 100%;
+
   background: #ffffff;
+
+  border: 1px solid #e8eaee;
+
   border-radius: 18px;
+
   padding: 24px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
+  box-sizing: border-box;
+
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.04),
+    0 1px 3px rgba(15, 23, 42, 0.03);
+
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+
 }
 
-/* ==========================================
-   Header
-========================================== */
 
-.recent-header {
+/* ============================================================
+   HEADER
+============================================================ */
+
+.gmt-recent-students-header {
+
   display: flex;
+
+  align-items: flex-start;
+
   justify-content: space-between;
+
+  gap: 20px;
+
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid #eef0f3;
+
+}
+
+
+/* ============================================================
+   SECTION TAG
+============================================================ */
+
+.gmt-recent-students-tag {
+
+  display: inline-flex;
+
   align-items: center;
+
+  gap: 7px;
+
+  margin-bottom: 7px;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.4px;
+
+  color: #c91f26;
+
 }
 
-.recent-header h2 {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #0f172a;
-}
 
-.recent-header span {
-  width: 38px;
-  height: 38px;
+/* Small red indicator */
+
+.gmt-recent-students-tag::before {
+
+  content: "";
+
+  width: 6px;
+
+  height: 6px;
+
   border-radius: 50%;
 
+  background: #c91f26;
+
+  box-shadow:
+    0 0 0 4px #fcecec;
+
+}
+
+
+/* ============================================================
+   HEADER TITLE
+============================================================ */
+
+.gmt-recent-students-header h2 {
+
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 20px;
+
+  line-height: 1.25;
+
+  font-weight: 750;
+
+  letter-spacing: -0.4px;
+
+}
+
+
+/* ============================================================
+   HEADER DESCRIPTION
+============================================================ */
+
+.gmt-recent-students-header p {
+
+  margin: 7px 0 0;
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+
+}
+
+
+/* ============================================================
+   TOTAL COUNT
+============================================================ */
+
+.gmt-recent-students-total {
+
+  min-width: 48px;
+
+  height: 48px;
+
   display: flex;
+
+  align-items: center;
+
   justify-content: center;
-  align-items: center;
 
-  background: #2563eb;
-  color: #ffffff;
+  flex-shrink: 0;
 
-  font-size: 0.9rem;
-  font-weight: 600;
+  border-radius: 12px;
+
+  background: #fcecec;
+
+  color: #c91f26;
+
+  font-size: 16px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.5px;
+
+  border: 1px solid #f7d7d9;
+
 }
 
-/* ==========================================
-   Student List
-========================================== */
 
-.recent-list {
+/* ============================================================
+   STUDENT LIST
+============================================================ */
+
+.gmt-recent-students-list {
+
   display: flex;
+
   flex-direction: column;
-  gap: 16px;
+
+  gap: 4px;
+
+  margin-top: 12px;
+
 }
 
-/* ==========================================
-   Student Item
-========================================== */
 
-.recent-item {
+/* ============================================================
+   STUDENT ITEM
+============================================================ */
+
+.gmt-recent-student-item {
+
+  position: relative;
+
   display: flex;
-  align-items: center;
-  gap: 16px;
 
-  padding: 16px;
-  border-radius: 14px;
+  align-items: center;
+
+  gap: 14px;
+
+  min-width: 0;
+
+  padding: 14px 10px;
+
+  border-radius: 13px;
 
   border: 1px solid transparent;
 
-  transition: 0.3s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
 }
 
-.recent-item:hover {
-  background: #f8fafc;
-  border-color: #dbeafe;
-  transform: translateY(-2px);
+
+/* ============================================================
+   ITEM HOVER
+============================================================ */
+
+.gmt-recent-student-item:hover {
+
+  background: #fafafa;
+
+  border-color: #eeeeee;
+
+  transform: translateX(2px);
+
+  box-shadow:
+    0 5px 14px rgba(15, 23, 42, 0.04);
+
 }
 
-/* ==========================================
-   Avatar
-========================================== */
 
-.student-avatar {
-  width: 52px;
-  height: 52px;
+/* ============================================================
+   AVATAR
+============================================================ */
 
-  border-radius: 50%;
+.gmt-recent-student-avatar {
 
-  background: linear-gradient(
-    135deg,
-    #2563eb,
-    #3b82f6
-  );
+  width: 46px;
+
+  height: 46px;
+
+  min-width: 46px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #c91f26,
+      #a5161c
+    );
 
   color: #ffffff;
 
+  font-size: 16px;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  box-shadow:
+    0 5px 12px rgba(201, 31, 38, 0.18);
+
+}
+
+
+/* ============================================================
+   CONTENT
+============================================================ */
+
+.gmt-recent-student-content {
+
+  flex: 1;
+
+  min-width: 0;
+
+}
+
+
+/* ============================================================
+   TOP ROW
+============================================================ */
+
+.gmt-recent-student-top {
+
   display: flex;
-  justify-content: center;
+
   align-items: center;
 
-  font-size: 1.1rem;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  min-width: 0;
+
+}
+
+
+/* ============================================================
+   STUDENT NAME
+============================================================ */
+
+.gmt-recent-student-top h4 {
+
+  margin: 0;
+
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  color: #111827;
+
+  font-size: 14px;
+
   font-weight: 700;
 
-  flex-shrink: 0;
+  line-height: 1.4;
+
 }
 
-/* ==========================================
-   Student Details
-========================================== */
 
-.student-info {
-  flex: 1;
-}
+/* ============================================================
+   STATUS
+============================================================ */
 
-.student-info h4 {
-  font-size: 1rem;
-  color: #0f172a;
-  margin-bottom: 4px;
-}
+.gmt-recent-student-status {
 
-.student-info p {
-  font-size: 0.9rem;
-  color: #475569;
-  margin-bottom: 4px;
-}
+  display: inline-flex;
 
-.student-info small {
-  display: inline-block;
-
-  padding: 4px 10px;
-
-  border-radius: 20px;
-
-  background: #eff6ff;
-  color: #2563eb;
-
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-/* ==========================================
-   Empty State
-========================================== */
-
-.empty-recent {
-  display: flex;
-  flex-direction: column;
   align-items: center;
+
+  gap: 6px;
+
+  flex-shrink: 0;
+
+  padding: 4px 8px;
+
+  border-radius: 999px;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  text-transform: capitalize;
+
+}
+
+
+/* ============================================================
+   STATUS DOT
+============================================================ */
+
+.gmt-recent-student-status-dot {
+
+  width: 6px;
+
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: currentColor;
+
+}
+
+
+/* ============================================================
+   ACTIVE
+============================================================ */
+
+.gmt-recent-student-status.active {
+
+  color: #15803d;
+
+  background: #f0fdf4;
+
+}
+
+
+/* ============================================================
+   INACTIVE
+============================================================ */
+
+.gmt-recent-student-status.inactive {
+
+  color: #b91c1c;
+
+  background: #fef2f2;
+
+}
+
+
+/* ============================================================
+   PENDING
+============================================================ */
+
+.gmt-recent-student-status.pending {
+
+  color: #b45309;
+
+  background: #fffbeb;
+
+}
+
+
+/* ============================================================
+   SUSPENDED
+============================================================ */
+
+.gmt-recent-student-status.suspended {
+
+  color: #7c3aed;
+
+  background: #f5f3ff;
+
+}
+
+
+/* ============================================================
+   STUDENT ID
+============================================================ */
+
+.gmt-recent-student-id {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  margin-top: 3px;
+
+}
+
+
+/* ============================================================
+   ID LABEL
+============================================================ */
+
+.gmt-recent-student-id small {
+
+  color: #9ca3af;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+
+  text-transform: uppercase;
+
+}
+
+
+/* ============================================================
+   ID VALUE
+============================================================ */
+
+.gmt-recent-student-id h5 {
+
+  margin: 0;
+
+  color: #4b5563;
+
+  font-size: 10px;
+
+  font-weight: 650;
+
+}
+
+
+/* ============================================================
+   META
+============================================================ */
+
+.gmt-recent-student-meta {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  margin-top: 5px;
+
+  min-width: 0;
+
+  color: #8b929d;
+
+  font-size: 10px;
+
+  font-weight: 500;
+
+}
+
+
+/* ============================================================
+   META TEXT
+============================================================ */
+
+.gmt-recent-student-meta span {
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+}
+
+
+/* ============================================================
+   META DIVIDER
+============================================================ */
+
+.gmt-recent-student-divider {
+
+  color: #c9cdd3;
+
+  flex-shrink: 0;
+
+}
+
+
+/* ============================================================
+   ACTION BUTTON
+============================================================ */
+
+.gmt-recent-student-action {
+
+  width: 34px;
+
+  height: 34px;
+
+  min-width: 34px;
+
+  display: flex;
+
+  align-items: center;
+
   justify-content: center;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #6b7280;
+
+  cursor: pointer;
+
+  font-size: 16px;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+
+}
+
+
+/* ============================================================
+   ACTION HOVER
+============================================================ */
+
+.gmt-recent-student-action:hover {
+
+  background: #c91f26;
+
+  border-color: #c91f26;
+
+  color: #ffffff;
+
+  transform: translate(2px, -2px);
+
+}
+
+
+/* ============================================================
+   EMPTY STATE
+============================================================ */
+
+.gmt-recent-students-empty {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-direction: column;
+
+  min-height: 245px;
+
+  padding: 30px 20px;
 
   text-align: center;
 
-  padding: 60px 20px;
 }
 
-.empty-icon {
-  font-size: 3rem;
-  color: #2563eb;
-  margin-bottom: 18px;
+
+/* ============================================================
+   EMPTY ICON
+============================================================ */
+
+.gmt-recent-students-empty-icon {
+
+  width: 58px;
+
+  height: 58px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  margin-bottom: 15px;
+
+  border-radius: 16px;
+
+  background: #fcecec;
+
+  color: #c91f26;
+
+  font-size: 23px;
+
 }
 
-.empty-recent p {
-  color: #64748b;
-  font-size: 0.95rem;
+
+/* ============================================================
+   EMPTY TITLE
+============================================================ */
+
+.gmt-recent-students-empty h3 {
+
+  margin: 0;
+
+  color: #1f2937;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
 }
 
-/* ==========================================
-   Responsive
-========================================== */
 
-@media (max-width: 768px) {
-  .recent-card {
+/* ============================================================
+   EMPTY DESCRIPTION
+============================================================ */
+
+.gmt-recent-students-empty p {
+
+  max-width: 250px;
+
+  margin: 7px 0 0;
+
+  color: #9ca3af;
+
+  font-size: 12px;
+
+  line-height: 1.6;
+
+}
+
+
+/* ============================================================
+   TABLET
+============================================================ */
+
+@media (max-width: 900px) {
+
+  .gmt-recent-students {
+
+    padding: 20px;
+
+  }
+
+
+  .gmt-recent-student-item {
+
+    padding: 12px 6px;
+
+  }
+
+}
+
+
+/* ============================================================
+   MOBILE
+============================================================ */
+
+@media (max-width: 600px) {
+
+  .gmt-recent-students {
+
     padding: 18px;
+
+    border-radius: 15px;
+
   }
 
-  .recent-header h2 {
-    font-size: 1.15rem;
+
+  .gmt-recent-students-header h2 {
+
+    font-size: 18px;
+
   }
 
-  .student-avatar {
-    width: 46px;
-    height: 46px;
-    font-size: 1rem;
+
+  .gmt-recent-students-header p {
+
+    font-size: 12px;
+
   }
 
-  .student-info h4 {
-    font-size: 0.95rem;
+
+  .gmt-recent-students-total {
+
+    width: 42px;
+
+    min-width: 42px;
+
+    height: 42px;
+
+    font-size: 14px;
+
   }
 
-  .student-info p {
-    font-size: 0.85rem;
+
+  .gmt-recent-student-item {
+
+    gap: 10px;
+
+    padding: 12px 4px;
+
   }
 
-  .student-info small {
-    font-size: 0.72rem;
+
+  .gmt-recent-student-avatar {
+
+    width: 40px;
+
+    height: 40px;
+
+    min-width: 40px;
+
+    border-radius: 11px;
+
+    font-size: 14px;
+
   }
+
+
+  .gmt-recent-student-top {
+
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+  }
+
+
+  .gmt-recent-student-status {
+
+    font-size: 9px;
+
+    padding: 3px 7px;
+
+  }
+
+
+  .gmt-recent-student-meta {
+
+    max-width: 100%;
+
+    font-size: 9px;
+
+  }
+
+
+  .gmt-recent-student-action {
+
+    width: 30px;
+
+    height: 30px;
+
+    min-width: 30px;
+
+    font-size: 14px;
+
+  }
+
+}
+
+
+/* ============================================================
+   VERY SMALL SCREENS
+============================================================ */
+
+@media (max-width: 400px) {
+
+  .gmt-recent-students {
+
+    padding: 15px;
+
+  }
+
+
+  .gmt-recent-students-header {
+
+    gap: 10px;
+
+  }
+
+
+  .gmt-recent-students-header h2 {
+
+    font-size: 16px;
+
+  }
+
+
+  .gmt-recent-student-id {
+
+    display: none;
+
+  }
+
+
+  .gmt-recent-student-meta {
+
+    margin-top: 4px;
+
+  }
+
 }

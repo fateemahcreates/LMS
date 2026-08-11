@@ -1,3 +1,5 @@
+import "../styles/AnnouncementTable.css";
+
 import {
   FaEdit,
   FaTrash,

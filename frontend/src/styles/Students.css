@@ -1,163 +1,1003 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ==========================================
+   GMT SOFTWARE
+   ADMIN STUDENTS PAGE
+   PART 1
+========================================== */
+
+
+:root{
+
+    --gmt-primary:#C91F26;
+    --gmt-primary-dark:#A5161C;
+
+    --gmt-secondary:#111827;
+
+    --gmt-background:#F8FAFC;
+    --gmt-surface:#FFFFFF;
+
+    --gmt-border:#E5E7EB;
+
+    --gmt-text:#111827;
+    --gmt-text-light:#6B7280;
+
+    --gmt-success:#16A34A;
+    --gmt-warning:#F59E0B;
+    --gmt-danger:#DC2626;
+
+
+    --gmt-shadow:
+    0 10px 30px rgba(15,23,42,.08);
+
+
+    --gmt-transition:.3s ease;
+
 }
 
-body {
-  background: #f1f5f9;
-  font-family: Inter, Arial, sans-serif;
-  color: #0f172a;
+
+
+/* ==========================================
+   PAGE CONTAINER
+========================================== */
+
+
+.gmt-admin-students-page{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:28px;
+
+    padding:28px;
+
+    min-height:100%;
+
+    background:var(--gmt-background);
+
 }
 
-/* App wrapper */
-.App {
-  max-width: 1200px;
-  margin: auto;
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+
+.gmt-admin-students-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:24px;
+
+    padding:30px;
+
+
+    background:#ffffff;
+
+    border-radius:20px;
+
+    border:1px solid var(--gmt-border);
+
+
+    box-shadow:var(--gmt-shadow);
+
+
 }
 
-/* NAV */
-nav {
-  background: #697fb1;
-  color: white;
-  padding: 1rem 2rem;
-  border-bottom: 1px solid #1e293b;
+
+
+
+/* ==========================================
+   TITLE AREA
+========================================== */
+
+
+.gmt-admin-students-heading{
+
+    display:flex;
+
+    flex-direction:column;
+
 }
 
-/* DASHBOARD WRAPPER */
-.dashboard {
-  padding: 30px;
-  width: 100%;
-  min-height: 100vh;
-  background: #f8fafc;
+
+
+.gmt-admin-students-tag{
+
+    width:max-content;
+
+    padding:6px 14px;
+
+
+    margin-bottom:14px;
+
+
+    background:#FCECEC;
+
+
+    color:var(--gmt-primary);
+
+
+    border-radius:999px;
+
+
+    font-size:12px;
+
+
+    font-weight:700;
+
+
+    letter-spacing:1px;
+
+
+    text-transform:uppercase;
+
+
 }
 
-/* HEADER */
-.dashboard-header {
-  margin-bottom: 2rem;
+
+
+.gmt-admin-students-heading h1{
+
+    margin:0;
+
+
+    color:var(--gmt-secondary);
+
+
+    font-size:34px;
+
+
+    font-weight:700;
+
+
 }
 
-.dashboard-header h2 {
-  font-size: 2rem;
-  font-weight: 700;
+
+
+.gmt-admin-students-heading p{
+
+
+    margin-top:10px;
+
+
+    max-width:650px;
+
+
+    color:var(--gmt-text-light);
+
+
+    line-height:1.7;
+
+
+    font-size:15px;
+
+
 }
 
-.dashboard-header p {
-  color: #64748b;
-  margin-top: 8px;
+
+
+
+/* ==========================================
+   ADD STUDENT BUTTON
+========================================== */
+
+
+.gmt-admin-student-btn{
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    justify-content:center;
+
+
+    gap:10px;
+
+
+    padding:14px 24px;
+
+
+    border:none;
+
+
+    border-radius:14px;
+
+
+    background:var(--gmt-primary);
+
+
+    color:#ffffff;
+
+
+    font-size:15px;
+
+
+    font-weight:600;
+
+
+    cursor:pointer;
+
+
+    transition:var(--gmt-transition);
+
+
+
+    box-shadow:
+
+    0 10px 25px rgba(201,31,38,.25);
+
+
+
 }
 
-/* STATS GRID */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 24px;
-  margin-bottom: 2rem;
+
+
+
+.gmt-admin-student-btn:hover{
+
+
+    background:var(--gmt-primary-dark);
+
+
+    transform:translateY(-2px);
+
+
+    box-shadow:
+
+    0 16px 35px rgba(201,31,38,.30);
+
+
+
 }
 
-.stat-card {
-  background: white;
-  padding: 24px;
-  border-radius: 18px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 10px 15px rgba(15, 23, 42, 0.05),
-              0 4px 6px rgba(15, 23, 42, 0.05);
-  transition: transform 0.25s ease;
+
+
+
+.gmt-admin-student-btn:active{
+
+
+    transform:scale(.98);
+
+
 }
 
-.stat-card:hover {
-  transform: translateY(-4px);
+
+
+
+.gmt-admin-student-btn svg{
+
+
+    font-size:16px;
+
+
 }
 
-/* MAIN LAYOUT */
-.dashboard-content {
-  display: grid;
-  grid-template-columns: 340px 1fr;
-  gap: 30px;
-  align-items: start;
+
+
+
+
+/* ==========================================
+   STATISTICS GRID
+========================================== */
+
+
+.gmt-admin-student-stats{
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+
+    repeat(auto-fit,minmax(240px,1fr));
+
+
+    gap:24px;
+
+
+
 }
 
-/* SECTIONS */
-.form-section,
-.table-section {
-  background: #fff;
-  border-radius: 20px;
-  padding: 30px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-  min-width: 0;
+
+
+
+
+/* ==========================================
+   STAT CARD
+========================================== */
+
+
+.gmt-admin-student-stat-card{
+
+
+    position:relative;
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:18px;
+
+
+    padding:24px;
+
+
+    background:#ffffff;
+
+
+    border:1px solid var(--gmt-border);
+
+
+    border-radius:18px;
+
+
+    box-shadow:var(--gmt-shadow);
+
+
+    overflow:hidden;
+
+
+    transition:var(--gmt-transition);
+
+
+
 }
 
-/* EMPTY STATE */
-.empty-state {
-  margin-top: 40px;
-  padding: 50px;
-  text-align: center;
-  border: 2px dashed #cbd5e1;
-  border-radius: 12px;
-  color: #64748b;
+
+
+
+
+.gmt-admin-student-stat-card::before{
+
+
+    content:"";
+
+
+    position:absolute;
+
+
+    left:0;
+
+
+    top:0;
+
+
+    width:5px;
+
+
+    height:100%;
+
+
+    background:var(--gmt-primary);
+
+
+
 }
 
-/* =========================
-   RESPONSIVE BREAKPOINTS
-   ========================= */
 
-/* Tablet */
-@media (max-width: 1100px) {
-  .dashboard-content {
-    grid-template-columns: 1fr;
-  }
 
-  .form-section {
-    order: 1;
-  }
 
-  .table-section {
-    order: 2;
-  }
+
+.gmt-admin-student-stat-card:hover{
+
+
+    transform:translateY(-6px);
+
+
+    border-color:
+
+    rgba(201,31,38,.25);
+
+
+
+    box-shadow:
+
+    0 20px 40px rgba(15,23,42,.10);
+
+
+
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  .dashboard {
-    padding: 16px;
-  }
 
-  .dashboard-header h2 {
-    font-size: 1.5rem;
-  }
 
-  .dashboard-header p {
-    font-size: 0.95rem;
-  }
-  table {
-  width: max-content;
-  min-width: 750px;
-  border-collapse: collapse;
+
+
+/* ==========================================
+   STAT ICON
+========================================== */
+
+
+.gmt-admin-student-stat-icon{
+
+
+    width:64px;
+
+
+    height:64px;
+
+
+    border-radius:18px;
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    justify-content:center;
+
+
+
+    padding:18px;
+
+
+
+    background:#FCECEC;
+
+
+    color:var(--gmt-primary);
+
+
+
+    font-size:24px;
+
+
+    flex-shrink:0;
+
+
+
 }
-  .form-section {
-    padding: 16px;
-    border-radius: 14px;
-  }
 
-  .table-section {
-  min-width: 0;
-  overflow: hidden;
+
+
+
+
+.gmt-admin-student-stat-icon.success{
+
+
+    background:#ECFDF3;
+
+
+    color:var(--gmt-success);
+
+
+
 }
-  .stats-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
+
+
+
+
+
+.gmt-admin-student-stat-icon.warning{
+
+
+    background:#FFF8E6;
+
+
+    color:var(--gmt-warning);
+
+
+
 }
 
-/* Small mobile */
-@media (max-width: 480px) {
-  .dashboard-header h2 {
-    font-size: 1.3rem;
-  }
 
-  .form-section,
-  .table-section {
-    padding: 12px;
-  }
+
+
+
+/* ==========================================
+   STAT TEXT
+========================================== */
+
+
+.gmt-admin-student-stat-card h2{
+
+
+    margin:0;
+
+
+    font-size:34px;
+
+
+    font-weight:700;
+
+
+    color:var(--gmt-secondary);
+
+
+
+}
+
+
+
+
+
+.gmt-admin-student-stat-card span{
+
+
+    display:block;
+
+
+    margin-top:6px;
+
+
+    color:var(--gmt-text-light);
+
+
+    font-size:15px;
+
+
+
+}
+
+/* ==========================================
+   GMT SOFTWARE
+   ADMIN STUDENTS PAGE
+   RESPONSIVE SYSTEM
+========================================== */
+
+
+/* ==========================================
+   LAPTOP SCREENS
+========================================== */
+
+@media(max-width:1200px){
+
+
+    .gmt-admin-students-page{
+
+        padding:24px;
+
+    }
+
+
+
+    .gmt-admin-students-header{
+
+        padding:24px;
+
+    }
+
+
+
+    .gmt-admin-students-heading h1{
+
+        font-size:30px;
+
+    }
+
+
+
+}
+
+
+
+
+
+/* ==========================================
+   TABLET SCREENS
+========================================== */
+
+
+@media(max-width:992px){
+
+
+
+    .gmt-admin-students-page{
+
+
+        padding:20px;
+
+
+        gap:22px;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-students-header{
+
+
+        flex-direction:column;
+
+
+        align-items:flex-start;
+
+
+        padding:24px;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-student-btn{
+
+
+        width:100%;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-student-stats{
+
+
+        grid-template-columns:
+
+
+        repeat(2,1fr);
+
+
+        gap:18px;
+
+
+    }
+
+
+
+
+    .gmt-admin-student-stat-card{
+
+
+        padding:20px;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-student-stat-card h2{
+
+
+        font-size:28px;
+
+
+    }
+
+
+}
+
+
+
+
+
+/* ==========================================
+   MOBILE SCREENS
+========================================== */
+
+
+@media(max-width:768px){
+
+
+
+    .gmt-admin-students-page{
+
+
+        padding:16px;
+
+
+        gap:18px;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-students-header{
+
+
+        padding:20px;
+
+
+        border-radius:16px;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-students-tag{
+
+
+        font-size:11px;
+
+
+        padding:5px 12px;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-students-heading h1{
+
+
+        font-size:24px;
+
+
+        line-height:1.3;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-students-heading p{
+
+
+        font-size:14px;
+
+
+        line-height:1.5;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-student-btn{
+
+
+        padding:12px 18px;
+
+
+        font-size:14px;
+
+
+        border-radius:12px;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-student-stats{
+
+
+        grid-template-columns:1fr;
+
+
+        gap:16px;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-student-stat-card{
+
+
+        padding:20px;
+
+
+        border-radius:16px;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-student-stat-icon{
+
+
+        width:54px;
+
+
+        height:54px;
+
+
+        padding:14px;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-student-stat-card h2{
+
+
+        font-size:26px;
+
+
+    }
+
+
+
+
+    .gmt-admin-student-stat-card span{
+
+
+        font-size:14px;
+
+
+    }
+
+
+}
+
+
+
+
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+
+@media(max-width:480px){
+
+
+
+    .gmt-admin-students-page{
+
+
+        padding:12px;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-students-header{
+
+
+        padding:18px;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-students-heading h1{
+
+
+        font-size:21px;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-students-heading p{
+
+
+        font-size:13px;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-student-stat-card{
+
+
+        flex-direction:column;
+
+
+        align-items:flex-start;
+
+
+        gap:14px;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-student-stat-icon{
+
+
+        width:50px;
+
+
+        height:50px;
+
+
+    }
+
+
+
+}
+
+
+
+
+
+/* ==========================================
+   VERY SMALL DEVICES
+========================================== */
+
+
+@media(max-width:360px){
+
+
+
+    .gmt-admin-students-page{
+
+
+        padding:10px;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-students-heading h1{
+
+
+        font-size:19px;
+
+
+    }
+
+
+
+
+
+    .gmt-admin-student-btn{
+
+
+        width:100%;
+
+
+        font-size:13px;
+
+
+    }
+
+
+
 }

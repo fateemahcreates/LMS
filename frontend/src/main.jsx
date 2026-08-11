@@ -4,6 +4,8 @@ import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import "./App.css";
+import "./styles/theme.css";
+import "./styles/global.css";
 
 import "@fontsource/inter";
 import "react-toastify/dist/ReactToastify.css";

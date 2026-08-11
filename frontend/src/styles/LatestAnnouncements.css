@@ -1,145 +1,218 @@
 /* ==========================================
-   Latest Announcements
+   Student Announcements
 ========================================== */
 
-.latest-announcements {
-  background: #fff;
-  border-radius: 18px;
-  padding: 25px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
-  margin-top: 25px;
+.student-announcements {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px;
+  border: 1px solid #ececec;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
-.latest-header {
+/* ==========================================
+   Header
+========================================== */
+
+.announcement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.announcement-tag {
+  display: inline-block;
+  background: rgba(200, 16, 46, 0.08);
+  color: #c8102e;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 6px 12px;
+  border-radius: 30px;
+  margin-bottom: 10px;
+}
+
+.announcement-header h2 {
+  font-size: 1.35rem;
+  color: #1f2937;
+  font-weight: 700;
+}
+
+.announcement-view-all {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #c8102e;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.announcement-view-all:hover {
+  gap: 12px;
+}
+
+/* ==========================================
+   Announcement Item
+========================================== */
+
+.announcement-item {
+  display: flex;
+  gap: 18px;
+  padding: 18px 0;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.announcement-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.announcement-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(200, 16, 46, 0.08);
+  color: #c8102e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.announcement-body {
+  flex: 1;
+}
+
+.announcement-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 }
 
-.latest-header h2 {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #1f2937;
-  font-size: 1.2rem;
-}
-
-.empty-announcements {
-  text-align: center;
-  color: #9ca3af;
-  padding: 30px 0;
-}
-
-.announcement-card {
-  padding: 18px;
-  border: 1px solid #f1f5f9;
-  border-radius: 14px;
-  margin-bottom: 18px;
-  transition: 0.3s ease;
-}
-
-.announcement-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 18px rgba(0,0,0,.08);
-}
-
-.announcement-card:last-child {
-  margin-bottom: 0;
-}
-
-.announcement-card h3 {
-  margin: 10px 0;
-  color: #111827;
+.announcement-top h4 {
   font-size: 1rem;
+  color: #1f2937;
+  font-weight: 700;
 }
 
-.announcement-card p {
+.announcement-body p {
   color: #6b7280;
   line-height: 1.6;
-  margin-bottom: 12px;
-}
-
-.announcement-card small {
-  color: #9ca3af;
+  font-size: 0.94rem;
+  margin-bottom: 14px;
 }
 
 /* ==========================================
-   Badges
+   Footer
 ========================================== */
 
-.announcement-badge {
-  display: inline-block;
-  padding: 5px 12px;
-  border-radius: 50px;
-  font-size: .75rem;
-  font-weight: 600;
+.announcement-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.general {
-  background: #dbeafe;
+.announcement-footer small {
+  color: #9ca3af;
+  font-size: 0.82rem;
+}
+
+/* ==========================================
+   Type Badges
+========================================== */
+
+.type {
+  padding: 5px 12px;
+  border-radius: 30px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.type.general {
+  background: #eef4ff;
   color: #2563eb;
 }
 
-.assignment {
-  background: #dcfce7;
-  color: #15803d;
+.type.assignment {
+  background: #ecfdf3;
+  color: #16a34a;
 }
 
-.exam {
-  background: #fee2e2;
+.type.exam {
+  background: #fef2f2;
   color: #dc2626;
 }
 
-.holiday {
-  background: #ede9fe;
-  color: #7c3aed;
+.type.holiday {
+  background: #f3e8ff;
+  color: #9333ea;
 }
 
-.course-update {
-  background: #fef3c7;
-  color: #b45309;
-}
-
-.view-all-btn{
-    text-decoration:none;
-    color:#2563eb;
-    font-weight:600;
-    transition:.3s;
-}
-
-.view-all-btn:hover{
-    color:#1d4ed8;
-}
-
-.announcement-title{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin:10px 0;
-}
-
-.new-badge{
-    background:#ef4444;
-    color:white;
-    padding:4px 10px;
-    border-radius:20px;
-    font-size:.7rem;
-    font-weight:700;
+.type.course-update {
+  background: #fff7ed;
+  color: #ea580c;
 }
 
 /* ==========================================
-   Mobile
+   NEW Badge
 ========================================== */
 
-@media (max-width:768px) {
+.new-badge {
+  background: #c8102e;
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
 
-  .latest-announcements {
+/* ==========================================
+   Empty State
+========================================== */
+
+.announcement-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #9ca3af;
+}
+
+.announcement-empty svg {
+  font-size: 2rem;
+  color: #c8102e;
+  margin-bottom: 12px;
+}
+
+/* ==========================================
+   Responsive
+========================================== */
+
+@media (max-width: 768px) {
+  .student-announcements {
     padding: 20px;
   }
 
-  .latest-header h2 {
-    font-size: 1rem;
+  .announcement-header {
+    flex-direction: column;
+    gap: 16px;
   }
 
+  .announcement-item {
+    gap: 14px;
+  }
+
+  .announcement-icon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .announcement-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
 }

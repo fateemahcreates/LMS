@@ -1,0 +1,671 @@
+/* =========================================================
+   GMT LMS — ADMIN ANNOUNCEMENT TABLE
+========================================================= */
+
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 20px;
+}
+
+
+.table-header h2 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 22px;
+  font-weight: 700;
+
+  letter-spacing: -0.3px;
+}
+
+
+.table-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 12px;
+
+  border-radius: 20px;
+
+  background: #fcecec;
+
+  color: #a5161c;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLE RESPONSIVE WRAPPER
+========================================================= */
+
+.table-responsive {
+  width: 100%;
+
+  overflow-x: auto;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 3px 12px rgba(17, 24, 39, 0.05);
+
+  scrollbar-width: thin;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.announcement-table {
+  width: 100%;
+
+  min-width: 1050px;
+
+  border-collapse: collapse;
+
+  background: #ffffff;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.announcement-table thead {
+  background: #f9fafb;
+}
+
+
+.announcement-table th {
+  padding: 15px 17px;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  color: #6b7280;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-align: left;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.55px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLE BODY
+========================================================= */
+
+.announcement-table tbody tr {
+  transition:
+    background 0.2s ease;
+}
+
+
+.announcement-table tbody tr:hover {
+  background: #fffafa;
+}
+
+
+.announcement-table td {
+  padding: 17px;
+
+  border-bottom: 1px solid #f0f1f3;
+
+  color: #4b5563;
+
+  font-size: 13px;
+
+  vertical-align: middle;
+}
+
+
+.announcement-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   TITLE COLUMN
+========================================================= */
+
+.announcement-table td:first-child {
+  min-width: 260px;
+}
+
+
+.announcement-table td:first-child strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #111827;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  line-height: 1.4;
+}
+
+
+.announcement-table td:first-child small {
+  display: block;
+
+  max-width: 300px;
+
+  color: #9ca3af;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   TYPE BADGES
+========================================================= */
+
+.type-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* General */
+
+.type-badge.general {
+  background: #f3f4f6;
+
+  color: #4b5563;
+}
+
+
+/* Assignment */
+
+.type-badge.assignment {
+  background: #eff6ff;
+
+  color: #2563eb;
+}
+
+
+/* Exam */
+
+.type-badge.exam {
+  background: #fef2f2;
+
+  color: #dc2626;
+}
+
+
+/* Holiday */
+
+.type-badge.holiday {
+  background: #ecfdf5;
+
+  color: #059669;
+}
+
+
+/* Course Update */
+
+.type-badge.course-update {
+  background: #f5f3ff;
+
+  color: #7c3aed;
+}
+
+
+/* =========================================================
+   AUDIENCE
+========================================================= */
+
+.announcement-table td:nth-child(3) {
+  font-weight: 600;
+}
+
+
+.announcement-table td:nth-child(3)::before {
+  content: "";
+
+  display: inline-block;
+
+  width: 7px;
+  height: 7px;
+
+  margin-right: 7px;
+
+  border-radius: 50%;
+
+  background: #c91f26;
+
+  vertical-align: middle;
+}
+
+
+/* =========================================================
+   COURSE
+========================================================= */
+
+.announcement-table td:nth-child(4) {
+  color: #374151;
+
+  font-weight: 600;
+
+  max-width: 190px;
+}
+
+
+.announcement-table td:nth-child(4) {
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 11px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* Active */
+
+.status-badge.active {
+  background: #ecfdf5;
+
+  color: #15803d;
+}
+
+
+/* Archived */
+
+.status-badge.archived {
+  background: #f3f4f6;
+
+  color: #6b7280;
+}
+
+
+/* =========================================================
+   PINNED
+========================================================= */
+
+.pinned {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  background: #fff7ed;
+
+  color: #c2410c;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   CREATED DATE
+========================================================= */
+
+.announcement-table td:nth-child(7) {
+  color: #6b7280;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+}
+
+
+.action-buttons button {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  font-size: 12px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+/* =========================================================
+   PIN BUTTON
+========================================================= */
+
+.pin-btn {
+  border: 1px solid #fed7aa;
+
+  background: #fff7ed;
+
+  color: #ea580c;
+}
+
+
+.pin-btn:hover {
+  border-color: #fdba74;
+
+  background: #ffedd5;
+
+  color: #c2410c;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   EDIT BUTTON
+========================================================= */
+
+.edit-btn {
+  border: 1px solid #fde68a;
+
+  background: #fffbeb;
+
+  color: #d97706;
+}
+
+
+.edit-btn:hover {
+  border-color: #fcd34d;
+
+  background: #fef3c7;
+
+  color: #b45309;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   DELETE BUTTON
+========================================================= */
+
+.delete-btn {
+  border: 1px solid #fecaca;
+
+  background: #fef2f2;
+
+  color: #dc2626;
+}
+
+
+.delete-btn:hover {
+  border-color: #fca5a5;
+
+  background: #fee2e2;
+
+  color: #b91c1c;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-state {
+  min-height: 340px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  padding: 50px 25px;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  text-align: center;
+
+  box-shadow:
+    0 3px 12px rgba(17, 24, 39, 0.04);
+}
+
+
+.empty-state::before {
+  content: "📢";
+
+  width: 70px;
+  height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 18px;
+
+  border-radius: 50%;
+
+  background: #fcecec;
+
+  font-size: 28px;
+}
+
+
+.empty-state h3 {
+  margin: 0 0 8px;
+
+  color: #111827;
+
+  font-size: 19px;
+  font-weight: 700;
+}
+
+
+.empty-state p {
+  max-width: 420px;
+
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .announcement-table {
+    min-width: 950px;
+  }
+
+
+  .announcement-table th,
+  .announcement-table td {
+    padding: 14px;
+  }
+
+
+  .announcement-table td:first-child {
+    min-width: 220px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .table-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    margin-bottom: 16px;
+  }
+
+
+  .table-header h2 {
+    font-size: 20px;
+  }
+
+
+  .table-responsive {
+    border-radius: 12px;
+  }
+
+
+  /*
+     Keep the table scrollable instead of
+     breaking the admin page.
+  */
+
+  .announcement-table {
+    min-width: 900px;
+  }
+
+
+  .announcement-table th,
+  .announcement-table td {
+    padding: 13px 12px;
+  }
+
+
+  .empty-state {
+    min-height: 280px;
+
+    padding: 40px 20px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .table-header h2 {
+    font-size: 18px;
+  }
+
+
+  .table-count {
+    font-size: 11px;
+
+    padding: 5px 10px;
+  }
+
+
+  .action-buttons {
+    gap: 5px;
+  }
+
+
+  .action-buttons button {
+    width: 32px;
+    height: 32px;
+
+    font-size: 11px;
+  }
+
+
+  .empty-state h3 {
+    font-size: 17px;
+  }
+
+
+  .empty-state p {
+    font-size: 12px;
+  }
+
+}
