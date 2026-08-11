@@ -5,7 +5,9 @@ const router = express.Router();
 const {
   createCourse,
   getCourses,
+  getInstructorCourses,
   getPublishedCourses,
+  getCourseById,
   updateCourse,
   deleteCourse,
 } = require("../controllers/courseController");
@@ -38,6 +40,22 @@ router.get(
   getPublishedCourses
 );
 
+router.get(
+  "/my-courses",
+  protect,
+ authorize("instructor"),
+  getInstructorCourses
+);
+
+// ==========================================
+// GET SINGLE COURSE
+// ==========================================
+router.get(
+  "/:id",
+  protect,
+  authorize("admin", "instructor"),
+  getCourseById
+);
 
 // ==========================================
 // CREATE COURSE

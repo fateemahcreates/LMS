@@ -3,27 +3,42 @@ const express = require("express");
 const router = express.Router();
 
 const {
+  // ==========================================
+  // ADMIN
+  // ==========================================
   createAssignment,
   getAssignments,
   getAssignmentById,
-  getStudentAssignments,
   updateAssignment,
   deleteAssignment,
+
+  // ==========================================
+  // INSTRUCTOR
+  // ==========================================
+  createInstructorAssignment,
+  getInstructorAssignments,
+  updateInstructorAssignment,
+  deleteInstructorAssignment,
+
+  // ==========================================
+  // STUDENT
+  // ==========================================
+  getStudentAssignments,
   getUpcomingDeadlines,
 } = require("../controllers/assignmentController");
-
 
 const { protect } = require("../middleware/authMiddleware");
 const { authorize } = require("../middleware/roleMiddleware");
 
 
-// ===============================
+// ======================================================
 // STUDENT ROUTES
-// ===============================
+// ======================================================
 
-
-// Get student assignments
+// ------------------------------------------
+// GET STUDENT ASSIGNMENTS
 // GET /api/assignments/student
+// ------------------------------------------
 
 router.get(
   "/student",
@@ -33,8 +48,10 @@ router.get(
 );
 
 
-// Get upcoming deadlines
+// ------------------------------------------
+// GET UPCOMING DEADLINES
 // GET /api/assignments/upcoming
+// ------------------------------------------
 
 router.get(
   "/upcoming",
@@ -44,34 +61,96 @@ router.get(
 );
 
 
+// ======================================================
+// INSTRUCTOR ROUTES
+// ======================================================
 
-// Get all assignments
+// ------------------------------------------
+// GET INSTRUCTOR ASSIGNMENTS
+// GET /api/assignments/instructor
+// ------------------------------------------
+
+router.get(
+  "/instructor",
+  protect,
+  authorize("instructor"),
+  getInstructorAssignments
+);
+
+
+// ------------------------------------------
+// CREATE INSTRUCTOR ASSIGNMENT
+// POST /api/assignments/instructor
+// ------------------------------------------
+
+router.post(
+  "/instructor",
+  protect,
+  authorize("instructor"),
+  createInstructorAssignment
+);
+
+
+// ------------------------------------------
+// UPDATE INSTRUCTOR ASSIGNMENT
+// PUT /api/assignments/instructor/:id
+// ------------------------------------------
+
+router.put(
+  "/instructor/:id",
+  protect,
+  authorize("instructor"),
+  updateInstructorAssignment
+);
+
+
+// ------------------------------------------
+// DELETE INSTRUCTOR ASSIGNMENT
+// DELETE /api/assignments/instructor/:id
+// ------------------------------------------
+
+router.delete(
+  "/instructor/:id",
+  protect,
+  authorize("instructor"),
+  deleteInstructorAssignment
+);
+
+
+// ======================================================
+// ADMIN ROUTES
+// ======================================================
+
+// ------------------------------------------
+// GET ALL ASSIGNMENTS
+// GET /api/assignments
+// ------------------------------------------
 
 router.get(
   "/",
   protect,
+  authorize("admin"),
   getAssignments
 );
 
 
-
-// Get single assignment
+// ------------------------------------------
+// GET SINGLE ASSIGNMENT
+// GET /api/assignments/:id
+// ------------------------------------------
 
 router.get(
   "/:id",
   protect,
+  authorize("admin"),
   getAssignmentById
 );
 
 
-
-
-// ===============================
-// ADMIN ONLY
-// ===============================
-
-
-// Create assignment
+// ------------------------------------------
+// CREATE ASSIGNMENT
+// POST /api/assignments
+// ------------------------------------------
 
 router.post(
   "/",
@@ -81,8 +160,10 @@ router.post(
 );
 
 
-
-// Update assignment
+// ------------------------------------------
+// UPDATE ASSIGNMENT
+// PUT /api/assignments/:id
+// ------------------------------------------
 
 router.put(
   "/:id",
@@ -92,8 +173,10 @@ router.put(
 );
 
 
-
-// Delete assignment
+// ------------------------------------------
+// DELETE ASSIGNMENT
+// DELETE /api/assignments/:id
+// ------------------------------------------
 
 router.delete(
   "/:id",
@@ -101,7 +184,6 @@ router.delete(
   authorize("admin"),
   deleteAssignment
 );
-
 
 
 module.exports = router;

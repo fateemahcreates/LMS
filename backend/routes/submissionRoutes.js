@@ -9,7 +9,10 @@ const {
   gradeSubmission,
   deleteSubmission,
   getAcademyAssignments,
-} = require("../controllers/submissionController");
+
+  getInstructorSubmissions,
+  gradeInstructorSubmission,
+} = require("../controllers/submissionController");  
 
 const { protect } = require("../middleware/authMiddleware");
 const { authorize } = require("../middleware/roleMiddleware");
@@ -73,6 +76,24 @@ router.delete(
   protect,
   authorize("admin"),
   deleteSubmission
+);
+
+// =======================================
+// INSTRUCTOR ROUTES
+// =======================================
+
+router.get(
+  "/instructor",
+  protect,
+  authorize("instructor"),
+  getInstructorSubmissions
+);
+
+router.put(
+  "/instructor/:id",
+  protect,
+  authorize("instructor"),
+  gradeInstructorSubmission
 );
 
 module.exports = router;

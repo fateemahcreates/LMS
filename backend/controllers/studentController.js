@@ -7,362 +7,191 @@ const Enrollment = require("../models/Enrollment");
 const Assignment = require("../models/Assignment");
 const Certificate = require("../models/Certificate");
 
-
 // ==========================================
 // CREATE STUDENT
 // ==========================================
 
 const createStudent = async (req, res) => {
-
   try {
-
     const {
       name,
       email,
       password,
       studentId,
-      department,
-      faculty,
-      level,
-      semester,
+      program,
       phone,
     } = req.body;
-
 
     if (
       !name ||
       !email ||
       !password ||
       !studentId ||
-      !department ||
-      !level
+      !program
     ) {
-
       return res.status(400).json({
-        message:"Please fill all required fields.",
+        message: "Please fill all required fields.",
       });
-
     }
 
+    const existingUser = await User.findOne({ email });
 
-
-    const existingUser =
-      await User.findOne({ email });
-
-
-    if(existingUser){
-
+    if (existingUser) {
       return res.status(400).json({
-        message:"Email already exists.",
+        message: "Email already exists.",
       });
-
     }
 
+    const existingStudent = await Student.findOne({
+      studentId,
+    });
 
-
-    const existingStudent =
-      await Student.findOne({
-        studentId,
-      });
-
-
-
-    if(existingStudent){
-
+    if (existingStudent) {
       return res.status(400).json({
-        message:"Student ID already exists.",
+        message: "Student ID already exists.",
       });
-
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
 
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      role: "student",
+      status: "active",
+    });
 
-    const hashedPassword =
-      await bcrypt.hash(password,10);
+    const student = await Student.create({
+      user: user._id,
+      studentId,
+      program,
+      phone,
+    });
 
-
-
-    const user =
-      await User.create({
-
-        name,
-
-        email,
-
-        password:hashedPassword,
-
-        role:"student",
-
-        status:"active",
-
-      });
-
-
-
-    const student =
-      await Student.create({
-
-        user:user._id,
-
-        studentId,
-
-        department,
-
-        faculty,
-
-        level,
-
-        semester,
-
-        phone,
-
-      });
-
-
-
-    const populatedStudent =
-      await Student.findById(student._id)
-      .populate(
-        "user",
-        "name email role"
-      );
-
-
+    const populatedStudent = await Student.findById(student._id)
+      .populate("user", "name email role");
 
     res.status(201).json({
-
-      message:"Student created successfully.",
-
-      student:populatedStudent,
-
+      message: "Student created successfully.",
+      student: populatedStudent,
     });
 
-
-
-  } catch(error){
-
+  } catch (error) {
     console.error(error);
 
-
     res.status(500).json({
-      message:"Server Error",
+      message: "Server Error",
     });
-
   }
-
 };
-
-
-
 
 // ==========================================
 // GET ALL STUDENTS
 // ==========================================
 
-const getStudents = async(req,res)=>{
-
-  try{
-
-    const students =
-      await Student.find()
-      .populate(
-        "user",
-        "name email role"
-      )
+const getStudents = async (req, res) => {
+  try {
+    const students = await Student.find()
+      .populate("user", "name email role")
       .sort({
-        createdAt:-1,
+        createdAt: -1,
       });
-
-
 
     res.status(200).json(students);
 
-
-
-  }catch(error){
-
+  } catch (error) {
     console.error(error);
 
-
     res.status(500).json({
-      message:"Server Error",
+      message: "Server Error",
     });
-
   }
-
 };
-
-
-
 
 // ==========================================
 // GET LOGGED-IN STUDENT PROFILE
 // ==========================================
 
-const getStudentProfile = async(req,res)=>{
+const getStudentProfile = async (req, res) => {
+  try {
+    const student = await Student.findOne({
+      user: req.user._id,
+    }).populate(
+      "user",
+      "name email role"
+    );
 
-
-  try{
-
-
-    const student =
-      await Student.findOne({
-
-        user:req.user._id,
-
-      })
-      .populate(
-        "user",
-        "name email role"
-      );
-
-
-
-    if(!student){
-
+    if (!student) {
       return res.status(404).json({
-
-        message:"Student profile not found.",
-
+        message: "Student profile not found.",
       });
-
     }
-
-
 
     res.status(200).json(student);
 
-
-
-  }catch(error){
-
-
+  } catch (error) {
     console.error(error);
 
-
     res.status(500).json({
-
-      message:"Server Error",
-
+      message: "Server Error",
     });
-
-
   }
-
 };
-
-
-
 
 // ==========================================
 // UPDATE STUDENT PROFILE
 // ==========================================
 
-const updateStudentProfile = async(req,res)=>{
+const updateStudentProfile = async (req, res) => {
+  try {
+    const {
+      name,
+      phone,
+      program,
+    } = req.body;
 
+    const student = await Student.findOne({
+      user: req.user._id,
+    });
 
-try{
+    if (!student) {
+      return res.status(404).json({
+        message: "Student profile not found.",
+      });
+    }
 
+    await User.findByIdAndUpdate(
+      student.user,
+      {
+        name,
+      }
+    );
 
-const {
-name,
-phone,
-department,
-faculty,
-level,
-semester,
-}=req.body;
+    student.phone = phone;
+    student.program = program;
 
+    await student.save();
 
+    const updatedStudent = await Student.findById(student._id)
+      .populate(
+        "user",
+        "name email role"
+      );
 
-const student =
-await Student.findOne({
+    res.status(200).json({
+      message: "Profile updated successfully.",
+      student: updatedStudent,
+    });
 
-user:req.user._id,
+  } catch (error) {
+    console.error(error);
 
-});
-
-
-
-if(!student){
-
-return res.status(404).json({
-
-message:"Student profile not found.",
-
-});
-
-}
-
-
-
-
-await User.findByIdAndUpdate(
-student.user,
-{
-name,
-}
-);
-
-
-
-
-student.phone = phone;
-
-student.department = department;
-
-student.faculty = faculty;
-
-student.level = level;
-
-student.semester = semester;
-
-
-
-await student.save();
-
-
-
-const updatedStudent =
-await Student.findById(student._id)
-.populate(
-"user",
-"name email role"
-);
-
-
-
-res.status(200).json({
-
-message:"Profile updated successfully.",
-
-student:updatedStudent,
-
-});
-
-
-
-}catch(error){
-
-console.error(error);
-
-
-res.status(500).json({
-
-message:"Server Error",
-
-});
-
-
-}
-
-
+    res.status(500).json({
+      message: "Server Error",
+    });
+  }
 };
-
-
-
-
-
 
 // ==========================================
 // GET STUDENT DASHBOARD STATS
@@ -376,19 +205,11 @@ const getStudentStats = async (req, res) => {
 
     const today = new Date();
 
-    // ==========================
-    // Active Programme
-    // ==========================
-
     const activeProgramme = enrollments.filter(
       (item) =>
         item.status === "Enrolled" ||
         item.status === "In Progress"
     ).length;
-
-    // ==========================
-    // Calculate Progress
-    // ==========================
 
     let totalProgress = 0;
 
@@ -440,10 +261,6 @@ const getStudentStats = async (req, res) => {
           )
         : 0;
 
-    // ==========================
-    // Pending Assignments
-    // ==========================
-
     const courseIds = enrollments.map(
       (item) => item.course._id
     );
@@ -456,17 +273,9 @@ const getStudentStats = async (req, res) => {
         status: "Active",
       });
 
-    // ==========================
-    // Certificates
-    // ==========================
-
     const certificates = enrollments.filter(
       (item) => item.certificateApproved
     ).length;
-
-    // ==========================
-    // Response
-    // ==========================
 
     res.json({
       activeProgramme,
@@ -488,211 +297,98 @@ const getStudentStats = async (req, res) => {
 // UPDATE STUDENT (ADMIN)
 // ==========================================
 
-const updateStudent = async(req,res)=>{
-
-
-try{
-
-
-const {id}=req.params;
-
-
-const {
-
-name,
-
-email,
-
-studentId,
-
-department,
-
-faculty,
-
-level,
-
-semester,
-
-phone,
-
-}=req.body;
-
-
-
-const student =
-await Student.findById(id);
-
-
-
-if(!student){
-
-return res.status(404).json({
-
-message:"Student not found.",
-
-});
-
-}
-
-
-
-await User.findByIdAndUpdate(
-
-student.user,
-
-{
-name,
-email,
-}
-
-);
-
-
-
-student.studentId = studentId;
-
-student.department = department;
-
-student.faculty = faculty;
-
-student.level = level;
-
-student.semester = semester;
-
-student.phone = phone;
-
-
-
-await student.save();
-
-
-
-const updatedStudent =
-await Student.findById(student._id)
-.populate(
-"user",
-"name email role"
-);
-
-
-
-res.status(200).json({
-
-message:"Student updated successfully.",
-
-student:updatedStudent,
-
-});
-
-
-
-}catch(error){
-
-
-console.error(error);
-
-
-res.status(500).json({
-
-message:"Server Error",
-
-});
-
-
-}
-
-
+const updateStudent = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const {
+      name,
+      email,
+      studentId,
+      program,
+      phone,
+    } = req.body;
+
+    const student = await Student.findById(id);
+
+    if (!student) {
+      return res.status(404).json({
+        message: "Student not found.",
+      });
+    }
+
+    await User.findByIdAndUpdate(
+      student.user,
+      {
+        name,
+        email,
+      }
+    );
+
+    student.studentId = studentId;
+    student.program = program;
+    student.phone = phone;
+
+    await student.save();
+
+    const updatedStudent = await Student.findById(student._id)
+      .populate(
+        "user",
+        "name email role"
+      );
+
+    res.status(200).json({
+      message: "Student updated successfully.",
+      student: updatedStudent,
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Server Error",
+    });
+  }
 };
-
-
-
 
 // ==========================================
 // DELETE STUDENT
 // ==========================================
 
-const deleteStudent = async(req,res)=>{
+const deleteStudent = async (req, res) => {
+  try {
+    const { id } = req.params;
 
+    const student = await Student.findById(id);
 
-try{
+    if (!student) {
+      return res.status(404).json({
+        message: "Student not found.",
+      });
+    }
 
+    await User.findByIdAndDelete(student.user);
+    await Student.findByIdAndDelete(id);
 
-const {id}=req.params;
+    res.status(200).json({
+      message: "Student deleted successfully.",
+    });
 
+  } catch (error) {
+    console.error(error);
 
-
-const student =
-await Student.findById(id);
-
-
-
-if(!student){
-
-return res.status(404).json({
-
-message:"Student not found.",
-
-});
-
-}
-
-
-
-
-await User.findByIdAndDelete(
-student.user
-);
-
-
-
-await Student.findByIdAndDelete(id);
-
-
-
-res.status(200).json({
-
-message:"Student deleted successfully.",
-
-});
-
-
-
-}catch(error){
-
-
-console.error(error);
-
-
-res.status(500).json({
-
-message:"Server Error",
-
-});
-
-
-}
-
-
+    res.status(500).json({
+      message: "Server Error",
+    });
+  }
 };
 
-
-
-
-
 module.exports = {
-
-createStudent,
-
-getStudents,
-
-updateStudent,
-
-deleteStudent,
-
-getStudentProfile,
-
-updateStudentProfile,
-
-getStudentStats,
-
+  createStudent,
+  getStudents,
+  updateStudent,
+  deleteStudent,
+  getStudentProfile,
+  updateStudentProfile,
+  getStudentStats,
 };

@@ -93,6 +93,28 @@ avatar: {
   type: String,
   default: "",
 },
+
+notificationPreferences: {
+  emailNotifications: {
+    type: Boolean,
+    default: true,
+  },
+
+  assignmentNotifications: {
+    type: Boolean,
+    default: true,
+  },
+
+  announcementNotifications: {
+    type: Boolean,
+    default: true,
+  },
+
+  systemNotifications: {
+    type: Boolean,
+    default: true,
+  },
+},
   },
   {
     timestamps: true,

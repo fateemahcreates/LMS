@@ -3,7 +3,6 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  registerUser,
   loginUser,
   forgotPassword,
   resetPassword,
@@ -13,14 +12,11 @@ const {
 // AUTH ROUTES
 // ==========================================
 
-// Register
-router.post("/register", registerUser);
-
 // Login
 router.post("/login", loginUser);
 
 // ==========================================
-// FORGOT PASSWORD
+// PASSWORD RESET
 // ==========================================
 
 // Send password reset email

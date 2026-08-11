@@ -2,6 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
+
 const {
   getUsers,
   getUser,
@@ -13,14 +14,17 @@ const {
   getInstructors,
 } = require("../controllers/userController");
 
+
 const {
   protect,
   adminOnly,
 } = require("../middleware/authMiddleware");
 
+
 // ==========================================
 // GET ALL USERS
 // ==========================================
+
 router.get(
   "/",
   protect,
@@ -28,9 +32,25 @@ router.get(
   getUsers
 );
 
+
+
+// ==========================================
+// GET ALL INSTRUCTORS
+// ==========================================
+
+router.get(
+  "/instructors",
+  protect,
+  adminOnly,
+  getInstructors
+);
+
+
+
 // ==========================================
 // GET SINGLE USER
 // ==========================================
+
 router.get(
   "/:id",
   protect,
@@ -38,9 +58,12 @@ router.get(
   getUser
 );
 
+
+
 // ==========================================
 // CREATE USER
 // ==========================================
+
 router.post(
   "/",
   protect,
@@ -48,9 +71,12 @@ router.post(
   createUser
 );
 
+
+
 // ==========================================
 // UPDATE USER
 // ==========================================
+
 router.put(
   "/:id",
   protect,
@@ -58,9 +84,12 @@ router.put(
   updateUser
 );
 
+
+
 // ==========================================
 // CHANGE USER ROLE
 // ==========================================
+
 router.patch(
   "/:id/role",
   protect,
@@ -68,9 +97,12 @@ router.patch(
   changeUserRole
 );
 
+
+
 // ==========================================
 // CHANGE USER STATUS
 // ==========================================
+
 router.patch(
   "/:id/status",
   protect,
@@ -78,24 +110,19 @@ router.patch(
   changeUserStatus
 );
 
-// ==========================================
-// GET ACTIVE INSTRUCTORS
-// ==========================================
 
-router.get(
-  "/instructors",
-  protect,
-  getInstructors
-);
 
 // ==========================================
 // DELETE USER
 // ==========================================
+
 router.delete(
   "/:id",
   protect,
   adminOnly,
   deleteUser
 );
+
+
 
 module.exports = router;

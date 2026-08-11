@@ -1,10 +1,18 @@
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
+const dotenv = require("dotenv");
+const path = require("path");
+
+dotenv.config();
+
+const connectDB = require("./config/db");
+
+// ============================================================
+// ROUTES
+// ============================================================
 
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
-const connectDB = require("./config/db");
 const studentRoutes = require("./routes/studentRoutes");
 const courseRoutes = require("./routes/courseRoutes");
 const enrollmentRoutes = require("./routes/enrollmentRoutes");
@@ -14,49 +22,165 @@ const announcementRoutes = require("./routes/announcementRoutes");
 const certificateRoutes = require("./routes/certificateRoutes");
 const activityRoutes = require("./routes/activityRoutes");
 const instructorRoutes = require("./routes/instructorRoutes");
+const settingsRoutes = require("./routes/settingsRoutes");
+const dashboardRoutes = require("./routes/dashboardRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
 
 
-const path = require("path");
-
+// ============================================================
+// APP
+// ============================================================
 
 const app = express();
 
-connectDB();
 
-app.use(cors());
-app.use(express.json());
+// ============================================================
+// MIDDLEWARE
+// ============================================================
+
+app.use(
+  cors()
+);
+
+app.use(
+  express.json()
+);
+
+
+// ============================================================
+// UPLOADS
+// ============================================================
 
 app.use(
   "/uploads",
-  express.static(path.join(__dirname, "uploads"))
+  express.static(
+    path.join(__dirname, "uploads")
+  )
 );
 
-const dashboardRoutes = require("./routes/dashboardRoutes");
-app.use("/api/auth", authRoutes);
-app.use("/api/students", studentRoutes);
-app.use("/api/courses", courseRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/enrollments", enrollmentRoutes);
-app.use("/api/assignments", assignmentRoutes);
-app.use("/api/submissions", submissionRoutes);
-app.use("/api/announcements", announcementRoutes);
-app.use("/api/dashboard", dashboardRoutes);
-app.use("/api/certificates", certificateRoutes);
-app.use("/api/activity", activityRoutes);
+
+// ============================================================
+// API ROUTES
+// ============================================================
+
 app.use(
- "/api/instructor",
- instructorRoutes
+  "/api/auth",
+  authRoutes
+);
+
+app.use(
+  "/api/students",
+  studentRoutes
+);
+
+app.use(
+  "/api/courses",
+  courseRoutes
+);
+
+app.use(
+  "/api/users",
+  userRoutes
+);
+
+app.use(
+  "/api/enrollments",
+  enrollmentRoutes
+);
+
+app.use(
+  "/api/assignments",
+  assignmentRoutes
+);
+
+app.use(
+  "/api/submissions",
+  submissionRoutes
+);
+
+app.use(
+  "/api/announcements",
+  announcementRoutes
+);
+
+app.use(
+  "/api/dashboard",
+  dashboardRoutes
+);
+
+app.use(
+  "/api/certificates",
+  certificateRoutes
+);
+
+app.use(
+  "/api/activity",
+  activityRoutes
+);
+
+app.use(
+  "/api/instructor",
+  instructorRoutes
+);
+
+app.use(
+  "/api/settings",
+  settingsRoutes
+);
+
+app.use(
+  "/api/notifications",
+  notificationRoutes
 );
 
 
-
+// ============================================================
+// ROOT ROUTE
+// ============================================================
 
 app.get("/", (req, res) => {
-  res.send("LMS API Running...");
+  res.status(200).send(
+    "LMS API Running..."
+  );
 });
 
-const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// ============================================================
+// START SERVER
+// ============================================================
+
+const PORT =
+  process.env.PORT || 5000;
+
+
+// ============================================================
+// CONNECT DATABASE THEN START SERVER
+// ============================================================
+
+const startServer = async () => {
+  try {
+
+    await connectDB();
+
+    app.listen(
+      PORT,
+      () => {
+        console.log(
+          `Server running on port ${PORT}`
+        );
+      }
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Failed to start server:",
+      error.message
+    );
+
+    process.exit(1);
+  }
+};
+
+
+startServer();

@@ -12,6 +12,7 @@ const {
 
 const {
   getInstructorDashboard,
+  getInstructorStudents,
 } = require("../controllers/instructorController");
 
 // ======================================
@@ -23,6 +24,13 @@ router.get(
   protect,
   authorize("instructor"),
   getInstructorDashboard
+);
+
+router.get(
+  "/students",
+  protect,
+  authorize("Instructor"),
+  getInstructorStudents
 );
 
 module.exports = router;

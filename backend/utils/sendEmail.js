@@ -1,13 +1,17 @@
 const axios = require("axios");
 
-const sendEmail = async ({ to, subject, html }) => {
+const sendEmail = async ({
+  to,
+  subject,
+  html,
+}) => {
   try {
     await axios.post(
       "https://api.brevo.com/v3/smtp/email",
       {
         sender: {
           name: "GMT LMS",
-          email: "fateemahcreates@gmail.com", // Your verified sender email
+          email: "contact@gmtsoftware.tech",
         },
 
         to: [
@@ -30,15 +34,23 @@ const sendEmail = async ({ to, subject, html }) => {
 
     console.log("✅ Email sent successfully.");
   } catch (error) {
-    console.error("========== BREVO ERROR ==========");
+    console.error(
+      "========== BREVO ERROR =========="
+    );
 
     if (error.response) {
-      console.error(error.response.data);
+      console.error(
+        error.response.data
+      );
     } else {
-      console.error(error.message);
+      console.error(
+        error.message
+      );
     }
 
-    console.error("================================");
+    console.error(
+      "================================"
+    );
 
     throw error;
   }

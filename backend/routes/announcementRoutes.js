@@ -14,8 +14,9 @@ const {
 const { protect } = require("../middleware/authMiddleware");
 const { authorize } = require("../middleware/roleMiddleware");
 
+
 // ==========================================
-// STUDENTS & ADMINS
+// AUTHENTICATED USERS
 // ==========================================
 
 // Get all active announcements
@@ -25,6 +26,7 @@ router.get(
   getAnnouncements
 );
 
+
 // Get single announcement
 router.get(
   "/:id",
@@ -32,33 +34,41 @@ router.get(
   getAnnouncement
 );
 
+
 // ==========================================
-// ADMIN ONLY
+// ADMIN + INSTRUCTOR
 // ==========================================
 
 // Create announcement
 router.post(
   "/",
   protect,
-  authorize("admin"),
+  authorize("admin", "instructor"),
   createAnnouncement
 );
+
 
 // Update announcement
 router.put(
   "/:id",
   protect,
-  authorize("admin"),
+  authorize("admin", "instructor"),
   updateAnnouncement
 );
+
 
 // Delete announcement
 router.delete(
   "/:id",
   protect,
-  authorize("admin"),
+  authorize("admin", "instructor"),
   deleteAnnouncement
 );
+
+
+// ==========================================
+// ADMIN ONLY
+// ==========================================
 
 // Pin / Unpin announcement
 router.patch(
@@ -67,5 +77,6 @@ router.patch(
   authorize("admin"),
   togglePinAnnouncement
 );
+
 
 module.exports = router;

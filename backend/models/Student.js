@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 
 const studentSchema = new mongoose.Schema(
   {
-    // Link to authenticated user
+    // ==========================================
+    // LINK TO AUTHENTICATED USER
+    // ==========================================
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -10,47 +12,62 @@ const studentSchema = new mongoose.Schema(
       unique: true,
     },
 
+    // ==========================================
+    // AUTOMATICALLY GENERATED STUDENT ID
+    // ==========================================
     studentId: {
       type: String,
       required: true,
       unique: true,
     },
 
-    department: {
-      type: String,
-      required: true,
-    },
-
-    faculty: {
+    // ==========================================
+    // PROGRAM
+    // ==========================================
+    program: {
       type: String,
       default: "",
+      trim: true,
     },
 
-    level: {
+    // ==========================================
+    // COHORT
+    // ==========================================
+    cohort: {
       type: String,
-      required: true,
+      default: "",
+      trim: true,
     },
 
-    semester: {
-      type: String,
-      default: "First Semester",
-    },
-
+    // ==========================================
+    // PHONE
+    // ==========================================
     phone: {
       type: String,
       default: "",
+      trim: true,
     },
 
+    // ==========================================
+    // ADDRESS
+    // ==========================================
     address: {
       type: String,
       default: "",
+      trim: true,
     },
 
+    // ==========================================
+    // AVATAR
+    // ==========================================
     avatar: {
       type: String,
       default: "",
     },
 
+    // ==========================================
+    // STUDENT STATUS
+    // ==========================================
     status: {
       type: String,
       enum: ["active", "inactive"],
@@ -62,4 +79,7 @@ const studentSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Student", studentSchema);
+module.exports = mongoose.model(
+  "Student",
+  studentSchema
+);
