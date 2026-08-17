@@ -1,0 +1,912 @@
+/* =========================================================
+   STUDENT ATTENDANCE PAGE
+   ========================================================= */
+
+.student-attendance-page {
+  min-height: calc(100vh - 80px);
+  padding: 32px;
+  background: #f5f7fa;
+  color: #172033;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.student-attendance-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+.attendance-eyebrow {
+  display: inline-block;
+  margin-bottom: 8px;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+
+  color: #d71920;
+}
+
+.student-attendance-header h1 {
+  margin: 0;
+
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 800;
+
+  color: #172033;
+}
+
+.student-attendance-header p {
+  margin: 9px 0 0;
+
+  font-size: 15px;
+  line-height: 1.6;
+
+  color: #7a8496;
+}
+
+
+/* =========================================================
+   REFRESH BUTTON
+   ========================================================= */
+
+.attendance-refresh-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  min-height: 42px;
+  padding: 0 18px;
+
+  border: 1px solid #e0e4ea;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #394355;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.attendance-refresh-btn svg {
+  font-size: 13px;
+}
+
+.attendance-refresh-btn:hover {
+  background: #d71920;
+  border-color: #d71920;
+  color: #ffffff;
+
+  box-shadow: 0 7px 18px rgba(215, 25, 32, 0.16);
+
+  transform: translateY(-1px);
+}
+
+.attendance-refresh-btn:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   SUMMARY GRID
+   ========================================================= */
+
+.attendance-summary-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
+
+  gap: 18px;
+
+  margin-bottom: 28px;
+}
+
+
+/* =========================================================
+   SUMMARY CARD
+   ========================================================= */
+
+.attendance-summary-card {
+  display: flex;
+  align-items: center;
+
+  min-height: 105px;
+  padding: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #e7eaf0;
+  border-radius: 14px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 4px 16px rgba(20, 31, 51, 0.04);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.attendance-summary-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 25px rgba(20, 31, 51, 0.07);
+}
+
+
+/* =========================================================
+   SUMMARY ICON
+   ========================================================= */
+
+.attendance-summary-icon {
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-right: 14px;
+
+  border-radius: 12px;
+
+  font-size: 18px;
+}
+
+
+/* Total */
+
+.attendance-summary-icon.total {
+  background: #eef2f7;
+  color: #536174;
+}
+
+
+/* Present */
+
+.attendance-summary-icon.present {
+  background: #e9f8ef;
+  color: #1c9b57;
+}
+
+
+/* Late */
+
+.attendance-summary-icon.late {
+  background: #fff5dc;
+  color: #d58b00;
+}
+
+
+/* Absent */
+
+.attendance-summary-icon.absent {
+  background: #fdebed;
+  color: #d71920;
+}
+
+
+/* =========================================================
+   SUMMARY TEXT
+   ========================================================= */
+
+.attendance-summary-card span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #7d8798;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.attendance-summary-card > div:last-child > strong {
+  display: block;
+
+  color: #172033;
+
+  font-size: 24px;
+  line-height: 1;
+
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   PERCENTAGE CARD
+   ========================================================= */
+
+.attendance-summary-card.percentage {
+  gap: 14px;
+}
+
+
+/* =========================================================
+   PERCENTAGE CIRCLE
+   ========================================================= */
+
+.attendance-percentage-circle {
+  width: 52px;
+  height: 52px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #d71920,
+      #b81219
+    );
+
+  box-shadow:
+    0 5px 15px rgba(215, 25, 32, 0.18);
+}
+
+.attendance-percentage-circle strong {
+  color: #ffffff !important;
+
+  font-size: 13px !important;
+
+  margin: 0 !important;
+}
+
+
+/* =========================================================
+   MAIN ATTENDANCE CARD
+   ========================================================= */
+
+.student-attendance-card {
+  width: 100%;
+
+  background: #ffffff;
+
+  border: 1px solid #e7eaf0;
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 4px 18px rgba(20, 31, 51, 0.04);
+}
+
+
+/* =========================================================
+   CARD HEADER
+   ========================================================= */
+
+.student-attendance-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 22px 24px;
+
+  border-bottom: 1px solid #edf0f4;
+}
+
+.student-attendance-card-header h2 {
+  margin: 0;
+
+  color: #172033;
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.student-attendance-card-header p {
+  margin: 6px 0 0;
+
+  color: #8992a2;
+
+  font-size: 13px;
+}
+
+.student-attendance-card-header > svg {
+  width: 38px;
+  height: 38px;
+
+  padding: 10px;
+
+  box-sizing: border-box;
+
+  border-radius: 10px;
+
+  background: #fff0f1;
+
+  color: #d71920;
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+   ========================================================= */
+
+.attendance-table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.student-attendance-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  min-width: 760px;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+   ========================================================= */
+
+.student-attendance-table thead {
+  background: #fafbfc;
+}
+
+.student-attendance-table th {
+  padding: 14px 24px;
+
+  text-align: left;
+
+  border-bottom: 1px solid #edf0f4;
+
+  color: #788294;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLE BODY
+   ========================================================= */
+
+.student-attendance-table td {
+  padding: 17px 24px;
+
+  border-bottom: 1px solid #f0f2f5;
+
+  color: #4c5668;
+
+  font-size: 13px;
+
+  vertical-align: middle;
+}
+
+.student-attendance-table tbody tr {
+  transition:
+    background 0.2s ease;
+}
+
+.student-attendance-table tbody tr:hover {
+  background: #fffafb;
+}
+
+.student-attendance-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   COURSE
+   ========================================================= */
+
+.attendance-course {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+
+  min-width: 180px;
+}
+
+.attendance-course strong {
+  color: #252e3d;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.attendance-course span {
+  color: #8b94a4;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   DATE
+   ========================================================= */
+
+.attendance-date {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  white-space: nowrap;
+}
+
+.attendance-date svg {
+  color: #d71920;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.attendance-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  min-width: 85px;
+
+  padding: 7px 10px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+
+/* Present */
+
+.attendance-status.present {
+  background: #eaf8ef;
+  color: #16884b;
+}
+
+
+/* Absent */
+
+.attendance-status.absent {
+  background: #fdebed;
+  color: #d71920;
+}
+
+
+/* Late */
+
+.attendance-status.late {
+  background: #fff4dc;
+  color: #c47c00;
+}
+
+
+/* Excused */
+
+.attendance-status.excused {
+  background: #eeeaff;
+  color: #6655c8;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.attendance-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 300px;
+
+  padding: 40px;
+
+  text-align: center;
+}
+
+.attendance-empty > svg {
+  width: 48px;
+  height: 48px;
+
+  padding: 14px;
+
+  box-sizing: border-box;
+
+  border-radius: 50%;
+
+  background: #fff0f1;
+
+  color: #d71920;
+
+  margin-bottom: 15px;
+}
+
+.attendance-empty h3 {
+  margin: 0 0 7px;
+
+  color: #273143;
+
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.attendance-empty p {
+  max-width: 430px;
+
+  margin: 0;
+
+  color: #8a93a3;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.student-attendance-loading {
+  min-height: 60vh;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #7d8797;
+}
+
+.student-attendance-loading p {
+  margin-top: 14px;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   LOADING SPINNER
+   ========================================================= */
+
+.attendance-spinner {
+  width: 38px;
+  height: 38px;
+
+  border: 3px solid #e7eaee;
+  border-top-color: #d71920;
+
+  border-radius: 50%;
+
+  animation:
+    attendance-spin 0.8s linear infinite;
+}
+
+@keyframes attendance-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   ERROR STATE
+   ========================================================= */
+
+.student-attendance-error {
+  min-height: 60vh;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  text-align: center;
+}
+
+.attendance-error-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 16px;
+
+  border-radius: 50%;
+
+  background: #fdebed;
+
+  color: #d71920;
+
+  font-size: 23px;
+}
+
+.student-attendance-error h2 {
+  margin: 0 0 8px;
+
+  color: #202a3a;
+
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.student-attendance-error p {
+  max-width: 450px;
+
+  margin: 0 0 18px;
+
+  color: #8992a2;
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   RETRY BUTTON
+   ========================================================= */
+
+.attendance-retry-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  min-height: 40px;
+
+  padding: 0 18px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #d71920;
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.attendance-retry-btn:hover {
+  background: #b81219;
+
+  box-shadow:
+    0 7px 18px rgba(215, 25, 32, 0.18);
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+  .attendance-summary-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+  .attendance-summary-card.percentage {
+    grid-column: span 1;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .student-attendance-page {
+    padding: 26px 20px;
+  }
+
+  .student-attendance-header {
+    align-items: flex-start;
+  }
+
+  .student-attendance-header h1 {
+    font-size: 27px;
+  }
+
+  .attendance-summary-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .student-attendance-page {
+    padding: 20px 14px;
+  }
+
+
+  /* Header */
+
+  .student-attendance-header {
+    flex-direction: column;
+
+    gap: 17px;
+
+    margin-bottom: 22px;
+  }
+
+  .student-attendance-header h1 {
+    font-size: 24px;
+  }
+
+  .student-attendance-header p {
+    font-size: 13px;
+  }
+
+  .attendance-refresh-btn {
+    width: 100%;
+  }
+
+
+  /* Summary */
+
+  .attendance-summary-grid {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+  }
+
+  .attendance-summary-card {
+    min-height: 88px;
+
+    padding: 17px;
+  }
+
+  .attendance-summary-card.percentage {
+    grid-column: auto;
+  }
+
+
+  /* Main card */
+
+  .student-attendance-card {
+    border-radius: 12px;
+  }
+
+  .student-attendance-card-header {
+    padding: 18px;
+  }
+
+  .student-attendance-card-header h2 {
+    font-size: 16px;
+  }
+
+  .student-attendance-card-header p {
+    font-size: 12px;
+  }
+
+
+  /* Table */
+
+  .student-attendance-table {
+    min-width: 700px;
+  }
+
+  .student-attendance-table th {
+    padding: 12px 16px;
+  }
+
+  .student-attendance-table td {
+    padding: 15px 16px;
+  }
+
+
+  /* Empty state */
+
+  .attendance-empty {
+    min-height: 260px;
+
+    padding: 30px 20px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+  .student-attendance-page {
+    padding: 17px 10px;
+  }
+
+  .student-attendance-header h1 {
+    font-size: 22px;
+  }
+
+  .attendance-summary-card {
+    padding: 15px;
+  }
+
+  .attendance-summary-icon {
+    width: 42px;
+    height: 42px;
+
+    margin-right: 12px;
+  }
+
+  .attendance-summary-card > div:last-child > strong {
+    font-size: 21px;
+  }
+
+}

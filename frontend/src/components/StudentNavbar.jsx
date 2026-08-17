@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import "../styles/StudentNavbar.css";
 
 import logo from "../assets/GMT Software logo.jpeg";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { notify } from "../utils/notify";
 
 import {
   FaBars,
@@ -18,17 +19,28 @@ import {
 
 import NotificationDropdown from "./NotificationDropdown";
 
+import api from "../services/api";
+
+
 function StudentNavbar({
   setSidebarOpen,
 }) {
 
   const navigate = useNavigate();
 
+
+  // ============================================================
+  // STATE
+  // ============================================================
+
   const [profileOpen, setProfileOpen] =
     useState(false);
 
   const [notificationOpen, setNotificationOpen] =
     useState(false);
+
+  const [unreadCount, setUnreadCount] =
+    useState(0);
 
 
   // ============================================================
@@ -62,16 +74,87 @@ function StudentNavbar({
 
 
   // ============================================================
+  // FETCH UNREAD NOTIFICATION COUNT
+  // ============================================================
+
+  const fetchUnreadCount = async () => {
+
+    try {
+
+      const response =
+        await api.get(
+          "/notifications/unread-count"
+        );
+
+      const count =
+        Number(
+          response.data?.count || 0
+        );
+
+      setUnreadCount(
+        count
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Failed to load unread notification count:",
+        error
+      );
+
+    }
+
+  };
+
+
+  // ============================================================
+  // LOAD NOTIFICATION COUNT
+  // ============================================================
+
+  useEffect(() => {
+
+    fetchUnreadCount();
+
+
+    // ==========================================
+    // CHECK FOR NEW NOTIFICATIONS
+    // EVERY 30 SECONDS
+    // ==========================================
+
+    const notificationInterval =
+      setInterval(() => {
+
+        fetchUnreadCount();
+
+      }, 30000);
+
+
+    return () => {
+
+      clearInterval(
+        notificationInterval
+      );
+
+    };
+
+  }, []);
+
+
+  // ============================================================
   // LOGOUT
   // ============================================================
 
   const handleLogout = () => {
 
-    localStorage.removeItem("token");
+    notify.confirmLogout(() => {
 
-    localStorage.removeItem("user");
+      localStorage.removeItem("token");
 
-    navigate("/login");
+      localStorage.removeItem("user");
+
+      navigate("/login");
+
+    });
 
   };
 
@@ -123,6 +206,21 @@ function StudentNavbar({
   };
 
 
+  // ============================================================
+  // CLOSE NOTIFICATIONS
+  // ============================================================
+
+  const handleNotificationClose = () => {
+
+    setNotificationOpen(false);
+
+  };
+
+
+  // ============================================================
+  // RENDER
+  // ============================================================
+
   return (
 
     <header className="student-navbar">
@@ -134,6 +232,8 @@ function StudentNavbar({
 
       <div className="student-navbar-left">
 
+
+        {/* SIDEBAR MENU */}
 
         <button
           type="button"
@@ -148,6 +248,8 @@ function StudentNavbar({
 
         </button>
 
+
+        {/* BRAND */}
 
         <div className="student-navbar-brand">
 
@@ -230,6 +332,7 @@ function StudentNavbar({
 
         <div className="student-navbar-notification-wrapper">
 
+
           <button
             type="button"
             className={
@@ -238,21 +341,58 @@ function StudentNavbar({
                 : "student-navbar-notification"
             }
             onClick={toggleNotifications}
-            aria-label="Notifications"
-            title="Notifications"
+            aria-label={
+              unreadCount > 0
+                ? `${unreadCount} unread notifications`
+                : "Notifications"
+            }
+            title={
+              unreadCount > 0
+                ? `${unreadCount} unread notifications`
+                : "Notifications"
+            }
           >
 
             <FaBell />
 
+
+            {/* ==============================================
+                UNREAD NOTIFICATION COUNT
+            ============================================== */}
+
+            {unreadCount > 0 && (
+
+              <span
+                className="student-navbar-notification-badge"
+              >
+
+                {unreadCount > 99
+                  ? "99+"
+                  : unreadCount}
+
+              </span>
+
+            )}
+
           </button>
 
+
+          {/* ==============================================
+              NOTIFICATION DROPDOWN
+          ============================================== */}
 
           {notificationOpen && (
 
             <NotificationDropdown
-              onClose={() =>
-                setNotificationOpen(false)
+
+              onClose={
+                handleNotificationClose
               }
+
+              onUnreadCountChange={
+                setUnreadCount
+              }
+
             />
 
           )}
@@ -275,6 +415,8 @@ function StudentNavbar({
           >
 
 
+            {/* AVATAR */}
+
             <div className="student-navbar-avatar">
 
               {
@@ -287,6 +429,8 @@ function StudentNavbar({
 
             </div>
 
+
+            {/* USER INFO */}
 
             <div className="student-navbar-user">
 
@@ -437,5 +581,6 @@ function StudentNavbar({
   );
 
 }
+
 
 export default StudentNavbar;

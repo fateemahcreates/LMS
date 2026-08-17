@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { notify } from "../utils/notify";
 
 import {
   FaBars,
@@ -147,21 +148,22 @@ function AdminNavbar({
 
 
   // ============================================================
-  // HANDLE LOGOUT
-  // ============================================================
+// HANDLE LOGOUT
+// ============================================================
 
-  const handleLogout = () => {
+const handleLogout = () => {
+
+  notify.confirmLogout(() => {
 
     localStorage.removeItem("token");
 
     localStorage.removeItem("user");
 
+    window.location.href = "/login";
 
-    window.location.href =
-      "/login";
+  });
 
-  };
-
+};
 
   // ============================================================
   // HANDLE PROFILE

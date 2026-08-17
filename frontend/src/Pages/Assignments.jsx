@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { notify } from "../utils/notify";
 
 import AssignmentForm from "../components/AssignmentForm";
 import AssignmentTable from "../components/AssignmentTable";
@@ -88,43 +89,110 @@ const handleReview = (submission) => {
   };
 
   // ==========================================
-  // SAVE
-  // ==========================================
+// SAVE
+// ==========================================
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      if (editingAssignment) {
-        await updateAssignment(
-          editingAssignment._id,
-          formData
+  const isEditing = Boolean(editingAssignment);
+
+  notify.confirmAction({
+
+    title: isEditing
+      ? "Update Assignment"
+      : "Publish Assignment",
+
+    message: isEditing
+      ? "Are you sure you want to update this assignment?"
+      : "Are you sure you want to publish this assignment?",
+
+    confirmText: isEditing
+      ? "Update"
+      : "Publish",
+
+    cancelText: "Cancel",
+
+    type: isEditing
+      ? "info"
+      : "success",
+
+    onConfirm: async () => {
+
+      try {
+
+        // ========================================
+        // UPDATE ASSIGNMENT
+        // ========================================
+
+        if (editingAssignment) {
+
+          await updateAssignment(
+            editingAssignment._id,
+            formData
+          );
+
+          notify.success(
+            "Assignment updated successfully."
+          );
+
+        }
+
+        // ========================================
+        // CREATE / PUBLISH ASSIGNMENT
+        // ========================================
+
+        else {
+
+          await createAssignment(
+            formData
+          );
+
+          notify.success(
+            "Assignment published successfully."
+          );
+
+        }
+
+        // ========================================
+        // RESET FORM
+        // ========================================
+
+        setFormData({
+          title: "",
+          description: "",
+          course: "",
+          dueDate: "",
+          totalMarks: 100,
+          submissionType: "Online",
+          attachment: "",
+          status: "Active",
+        });
+
+        setEditingAssignment(null);
+
+        // ========================================
+        // REFRESH DATA
+        // ========================================
+
+        fetchAssignments();
+        fetchSubmissions();
+
+      } catch (error) {
+
+        console.error(
+          "Assignment save error:",
+          error
         );
-      } else {
-        await createAssignment(formData);
+
+        notify.apiError(error);
+
       }
 
-      setFormData({
-        title: "",
-        description: "",
-        course: "",
-        dueDate: "",
-        totalMarks: 100,
-        submissionType: "Online",
-        attachment: "",
-        status: "Active",
-      });
+    },
 
-      setEditingAssignment(null);
-
-      fetchAssignments();
-      fetchSubmissions();
-
-    } catch (error) {
-      console.error(error);
-      alert("Unable to save assignment.");
-    }
-  };
+  });
+};
 
   // ==========================================
   // EDIT
@@ -152,22 +220,42 @@ const handleReview = (submission) => {
   };
 
   // ==========================================
-  // DELETE
-  // ==========================================
+// DELETE
+// ==========================================
 
-  const handleDelete = async (id) => {
+const handleDelete = (id) => {
 
-    if (!window.confirm(
-      "Delete assignment?"
-    ))
-      return;
+  notify.confirmDelete(async () => {
 
-    await deleteAssignment(id);
+    try {
 
-    fetchAssignments();
-    fetchSubmissions();
+      await deleteAssignment(id);
 
-  };
+      notify.success(
+        "Assignment deleted successfully."
+      );
+
+      // ========================================
+      // REFRESH DATA
+      // ========================================
+
+      fetchAssignments();
+      fetchSubmissions();
+
+    } catch (error) {
+
+      console.error(
+        "Delete assignment error:",
+        error
+      );
+
+      notify.apiError(error);
+
+    }
+
+  });
+
+};
 
   // ==========================================
   // VIEW

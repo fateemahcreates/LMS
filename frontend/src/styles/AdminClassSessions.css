@@ -1,0 +1,755 @@
+/* =========================================================
+   ADMIN CLASS SESSIONS
+   ========================================================= */
+
+.admin-class-sessions-page {
+  width: 100%;
+  min-height: 100%;
+  padding: 28px;
+  background: #f7f8fa;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.admin-class-sessions-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 26px;
+}
+
+.admin-class-sessions-header h1 {
+  margin: 0;
+  color: #17191c;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.4px;
+}
+
+.admin-class-sessions-header p {
+  margin: 7px 0 0;
+  color: #737981;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.admin-class-sessions-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.admin-class-session-btn {
+  min-height: 42px;
+  padding: 0 17px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.admin-class-session-btn svg {
+  font-size: 13px;
+}
+
+.admin-class-session-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin-class-session-btn-primary {
+  background: #b91c1c;
+  border-color: #b91c1c;
+  color: #ffffff;
+}
+
+.admin-class-session-btn-primary:hover:not(:disabled) {
+  background: #991b1b;
+  border-color: #991b1b;
+  box-shadow: 0 4px 12px rgba(185, 28, 28, 0.18);
+  transform: translateY(-1px);
+}
+
+.admin-class-session-btn-secondary {
+  background: #ffffff;
+  border-color: #dfe3e8;
+  color: #4b5158;
+}
+
+.admin-class-session-btn-secondary:hover:not(:disabled) {
+  background: #f9fafb;
+  border-color: #cdd2d8;
+  color: #25282c;
+}
+
+
+/* =========================================================
+   ALERTS
+   ========================================================= */
+
+.admin-class-sessions-alert {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 13px 16px;
+
+  border: 1px solid;
+  border-radius: 9px;
+
+  box-sizing: border-box;
+
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.admin-class-sessions-alert.error {
+  background: #fff5f5;
+  border-color: #fecaca;
+  color: #b91c1c;
+}
+
+.admin-class-sessions-alert.success {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #047857;
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.admin-class-sessions-card {
+  width: 100%;
+  margin-bottom: 22px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 13px;
+
+  box-shadow:
+    0 2px 7px rgba(15, 23, 42, 0.03);
+
+  overflow: hidden;
+}
+
+.admin-class-sessions-card-header {
+  min-height: 76px;
+  padding: 20px 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+
+  border-bottom: 1px solid #edf0f2;
+  box-sizing: border-box;
+}
+
+.admin-class-sessions-card-header h2 {
+  margin: 0;
+
+  color: #202327;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.admin-class-sessions-card-header p {
+  margin: 5px 0 0;
+
+  color: #7a8087;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   COURSE SELECT
+   ========================================================= */
+
+.admin-class-sessions-select {
+  width: calc(100% - 44px);
+  height: 46px;
+
+  margin: 20px 22px;
+
+  padding: 0 14px;
+
+  background: #ffffff;
+  border: 1px solid #d9dde2;
+  border-radius: 8px;
+
+  color: #24272b;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+
+  outline: none;
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.admin-class-sessions-select:hover {
+  border-color: #c3c8ce;
+}
+
+.admin-class-sessions-select:focus {
+  border-color: #b91c1c;
+  box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.08);
+}
+
+.admin-class-sessions-select:disabled {
+  background: #f6f7f8;
+  color: #969ba1;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   CLOSE FORM BUTTON
+   ========================================================= */
+
+.admin-class-session-close {
+  width: 34px;
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f7f8f9;
+  border: 1px solid #e2e5e8;
+  border-radius: 8px;
+
+  color: #6c7279;
+  font-size: 14px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.admin-class-session-close:hover {
+  background: #fff1f2;
+  border-color: #fecdd3;
+  color: #b91c1c;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.admin-class-session-form {
+  padding: 22px;
+}
+
+.admin-class-session-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.admin-class-session-field {
+  width: 100%;
+}
+
+.admin-class-session-field label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #34383d;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.admin-class-session-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.admin-class-session-input-wrapper svg {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #8a9097;
+  font-size: 14px;
+
+  pointer-events: none;
+}
+
+.admin-class-session-input-wrapper input {
+  width: 100%;
+  height: 45px;
+
+  padding: 0 13px 0 38px;
+
+  background: #ffffff;
+  border: 1px solid #d9dde2;
+  border-radius: 8px;
+
+  color: #25282c;
+  font-family: inherit;
+  font-size: 14px;
+
+  outline: none;
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.admin-class-session-input-wrapper input:hover {
+  border-color: #c4c9cf;
+}
+
+.admin-class-session-input-wrapper input:focus {
+  border-color: #b91c1c;
+  box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.08);
+}
+
+
+/* =========================================================
+   NOTES TEXTAREA
+   ========================================================= */
+
+.admin-class-session-field textarea {
+  width: 100%;
+
+  padding: 12px 13px;
+
+  background: #ffffff;
+  border: 1px solid #d9dde2;
+  border-radius: 8px;
+
+  color: #25282c;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.admin-class-session-field textarea::placeholder {
+  color: #a0a5ab;
+}
+
+.admin-class-session-field textarea:hover {
+  border-color: #c4c9cf;
+}
+
+.admin-class-session-field textarea:focus {
+  border-color: #b91c1c;
+  box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.08);
+}
+
+
+/* =========================================================
+   FORM ACTIONS
+   ========================================================= */
+
+.admin-class-session-form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+
+  margin-top: 20px;
+  padding-top: 18px;
+
+  border-top: 1px solid #edf0f2;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.admin-class-sessions-loading {
+  min-height: 180px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+
+  color: #777e86;
+  font-size: 14px;
+}
+
+.admin-class-sessions-spinner {
+  width: 18px;
+  height: 18px;
+
+  border: 2px solid #e5e7eb;
+  border-top-color: #b91c1c;
+  border-radius: 50%;
+
+  animation: adminClassSessionsSpin 0.8s linear infinite;
+}
+
+@keyframes adminClassSessionsSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.admin-class-sessions-empty {
+  min-height: 230px;
+
+  padding: 35px 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.admin-class-sessions-empty > svg {
+  margin-bottom: 14px;
+
+  color: #b8bec5;
+  font-size: 34px;
+}
+
+.admin-class-sessions-empty h3 {
+  margin: 0 0 6px;
+
+  color: #363a3f;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.admin-class-sessions-empty p {
+  max-width: 420px;
+  margin: 0;
+
+  color: #858b92;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+   ========================================================= */
+
+.admin-class-sessions-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.admin-class-sessions-table {
+  width: 100%;
+  min-width: 720px;
+
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.admin-class-sessions-table thead {
+  background: #fafbfc;
+}
+
+.admin-class-sessions-table th {
+  padding: 13px 18px;
+
+  border-bottom: 1px solid #e8ebee;
+
+  color: #737980;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.45px;
+  white-space: nowrap;
+}
+
+.admin-class-sessions-table td {
+  padding: 16px 18px;
+
+  border-bottom: 1px solid #eef0f2;
+
+  color: #41464c;
+  font-size: 13px;
+  line-height: 1.5;
+
+  vertical-align: middle;
+}
+
+.admin-class-sessions-table tbody tr {
+  transition: background 0.18s ease;
+}
+
+.admin-class-sessions-table tbody tr:hover {
+  background: #fcfcfd;
+}
+
+.admin-class-sessions-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   TIME
+   ========================================================= */
+
+.admin-class-session-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #4d535a;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.admin-class-session-time svg {
+  color: #8a9097;
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.admin-class-session-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 82px;
+
+  padding: 5px 10px;
+
+  border: 1px solid;
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+
+  white-space: nowrap;
+}
+
+.admin-class-session-status-scheduled {
+  background: #f8fafc;
+  border-color: #d9dee5;
+  color: #59616b;
+}
+
+.admin-class-session-status-open {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #047857;
+}
+
+.admin-class-session-status-finalized {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+}
+
+.admin-class-session-status-cancelled {
+  background: #fff1f2;
+  border-color: #fecdd3;
+  color: #be123c;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .admin-class-sessions-page {
+    padding: 22px;
+  }
+
+  .admin-class-sessions-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-class-sessions-header-actions {
+    width: 100%;
+  }
+
+  .admin-class-sessions-header-actions
+  .admin-class-session-btn {
+    flex: 1;
+  }
+
+  .admin-class-session-form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 640px) {
+
+  .admin-class-sessions-page {
+    padding: 16px;
+  }
+
+  .admin-class-sessions-header {
+    margin-bottom: 20px;
+  }
+
+  .admin-class-sessions-header h1 {
+    font-size: 24px;
+  }
+
+  .admin-class-sessions-header p {
+    font-size: 13px;
+  }
+
+  .admin-class-sessions-header-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-class-sessions-header-actions
+  .admin-class-session-btn {
+    width: 100%;
+    flex: none;
+  }
+
+  .admin-class-sessions-card {
+    margin-bottom: 16px;
+    border-radius: 11px;
+  }
+
+  .admin-class-sessions-card-header {
+    padding: 17px;
+  }
+
+  .admin-class-sessions-card-header h2 {
+    font-size: 16px;
+  }
+
+  .admin-class-sessions-select {
+    width: calc(100% - 34px);
+    margin: 17px;
+  }
+
+  .admin-class-session-form {
+    padding: 17px;
+  }
+
+  .admin-class-session-form-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .admin-class-session-form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .admin-class-session-form-actions
+  .admin-class-session-btn {
+    width: 100%;
+  }
+
+  .admin-class-sessions-table th,
+  .admin-class-sessions-table td {
+    padding: 13px 14px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+  .admin-class-sessions-page {
+    padding: 12px;
+  }
+
+  .admin-class-sessions-header h1 {
+    font-size: 22px;
+  }
+
+  .admin-class-sessions-card-header {
+    padding: 15px;
+  }
+
+  .admin-class-sessions-select {
+    width: calc(100% - 30px);
+    margin: 15px;
+  }
+
+  .admin-class-session-form {
+    padding: 15px;
+  }
+
+}

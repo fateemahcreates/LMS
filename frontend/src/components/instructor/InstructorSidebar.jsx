@@ -9,118 +9,173 @@ import {
   FaUsers,
   FaClipboardList,
   FaBullhorn,
-  FaChartLine,
   FaUserCircle,
   FaCog,
   FaSignOutAlt,
+  FaCalendarCheck,
+  FaCalendarPlus,
 } from "react-icons/fa";
-
 
 import logo from "../../assets/GMT Software logo.jpeg";
 
+import { notify } from "../../utils/notify";
 
 
 function InstructorSidebar({
   sidebarOpen,
-  setSidebarOpen
+  setSidebarOpen,
 }) {
-
 
   const navigate = useNavigate();
 
 
+  // ============================================================
+  // CURRENT USER
+  // ============================================================
 
   const user =
-    JSON.parse(localStorage.getItem("user")) || {};
+    JSON.parse(
+      localStorage.getItem("user")
+    ) || {};
 
 
-
+  // ============================================================
+  // LOGOUT
+  // ============================================================
 
   const handleLogout = () => {
 
+    notify.confirmLogout(() => {
 
-    localStorage.removeItem("token");
+      localStorage.removeItem("token");
 
-    localStorage.removeItem("user");
+      localStorage.removeItem("user");
 
+      setSidebarOpen(false);
 
-    navigate("/login");
+      navigate("/login");
 
+    });
 
   };
 
 
+  // ============================================================
+  // CLOSE SIDEBAR ON MOBILE
+  // ============================================================
 
+  const handleNavigation = () => {
+
+    if (window.innerWidth <= 768) {
+      setSidebarOpen(false);
+    }
+
+  };
+
+
+  // ============================================================
+  // MENU ITEMS
+  // ============================================================
 
   const menuItems = [
 
+    // ----------------------------------------------------------
+    // DASHBOARD
+    // ----------------------------------------------------------
 
     {
-      name:"Dashboard",
-      path:"/instructor",
-      icon:<FaChartPie />
+      name: "Dashboard",
+      path: "/instructor",
+      icon: <FaChartPie />,
     },
 
 
+    // ----------------------------------------------------------
+    // MY COURSES
+    // ----------------------------------------------------------
+
     {
-      name:"My Courses",
-      path:"/instructor/courses",
-      icon:<FaBookOpen />
+      name: "My Courses",
+      path: "/instructor/courses",
+      icon: <FaBookOpen />,
     },
 
 
+    // ----------------------------------------------------------
+    // ATTENDANCE
+    // ----------------------------------------------------------
+
     {
-      name:"Students",
-      path:"/instructor/students",
-      icon:<FaUsers />
+      name: "Attendance",
+      path: "/instructor/attendance",
+      icon: <FaCalendarCheck />,
     },
 
 
+    // ----------------------------------------------------------
+    // CLASS SESSIONS
+    // ----------------------------------------------------------
+
     {
-      name:"Assignments",
-      path:"/instructor/assignments",
-      icon:<FaClipboardList />
+      name: "Class Sessions",
+      path: "/instructor/class-sessions",
+      icon: <FaCalendarPlus />,
     },
 
 
+    // ----------------------------------------------------------
+    // STUDENTS
+    // ----------------------------------------------------------
+
     {
-      name:"Announcements",
-      path:"/instructor/announcements",
-      icon:<FaBullhorn />
+      name: "Students",
+      path: "/instructor/students",
+      icon: <FaUsers />,
     },
 
 
-   
+    // ----------------------------------------------------------
+    // ASSIGNMENTS
+    // ----------------------------------------------------------
 
+    {
+      name: "Assignments",
+      path: "/instructor/assignments",
+      icon: <FaClipboardList />,
+    },
+
+
+    // ----------------------------------------------------------
+    // ANNOUNCEMENTS
+    // ----------------------------------------------------------
+
+    {
+      name: "Announcements",
+      path: "/instructor/announcements",
+      icon: <FaBullhorn />,
+    },
 
   ];
 
 
-
-
-
+  // ============================================================
+  // RENDER
+  // ============================================================
 
   return (
 
-
     <aside
-
-className={`instructor-sidebar ${
-  sidebarOpen
-    ? "instructor-sidebar-open"
-    : "instructor-sidebar-closed"
-}`}
-
->
+      className={`instructor-sidebar ${
+        sidebarOpen
+          ? "instructor-sidebar-open"
+          : "instructor-sidebar-closed"
+      }`}
+    >
 
 
-
-
-
-      {/* ==========================
+      {/* ======================================================
           HEADER
-      ========================== */}
-
+      ====================================================== */}
 
       <div className="instructor-sidebar-header">
 
@@ -129,64 +184,50 @@ className={`instructor-sidebar ${
 
 
           <img
-
             src={logo}
-
             alt="GMT Software Academy"
-
             className="instructor-sidebar-logo"
-
           />
 
 
-
           <div>
-
 
             <h3>
               GMT Software
             </h3>
 
-
             <span>
               Instructor Portal
             </span>
 
-
           </div>
-
 
 
         </div>
 
 
+        {/* CLOSE SIDEBAR */}
 
-<button
+        <button
+          type="button"
+          className="instructor-sidebar-close"
+          onClick={() =>
+            setSidebarOpen(false)
+          }
+          aria-label="Close sidebar"
+        >
 
-className="instructor-sidebar-close"
-
-onClick={() => setSidebarOpen(false)}
-
->
           <FaTimes />
 
         </button>
 
 
-
       </div>
 
 
-
-
-
-
-
-      {/* ==========================
+      {/* ======================================================
           PROFILE CARD
-      ========================== */}
-
-
+      ====================================================== */}
 
       <div className="instructor-sidebar-profile">
 
@@ -194,21 +235,15 @@ onClick={() => setSidebarOpen(false)}
         <FaUserCircle />
 
 
-
         <div>
-
 
           <h4>
             {user.name || "Instructor"}
           </h4>
 
-
-
           <span>
             Instructor
           </span>
-
-
 
         </div>
 
@@ -216,155 +251,110 @@ onClick={() => setSidebarOpen(false)}
       </div>
 
 
-
-
-
-
-
-
-
-      {/* ==========================
-          MENU
-      ========================== */}
-
-
+      {/* ======================================================
+          MAIN MENU
+      ====================================================== */}
 
       <nav className="instructor-sidebar-menu">
 
 
+        {menuItems.map((item) => (
 
-        {
-          menuItems.map((item)=>(
-
-
-            <NavLink
-
-              key={item.name}
-
-              to={item.path}
-
-              end={
-                item.path === "/instructor"
-              }
-
-              className={({isActive})=>
-
-                isActive
-
+          <NavLink
+            key={item.name}
+            to={item.path}
+            end={
+              item.path === "/instructor"
+            }
+            className={({ isActive }) =>
+              isActive
                 ? "instructor-sidebar-link active"
-
                 : "instructor-sidebar-link"
+            }
+            onClick={handleNavigation}
+          >
 
-              }
+            <span className="instructor-sidebar-icon">
 
+              {item.icon}
 
-              onClick={() =>
-                window.innerWidth <= 768 &&
-                setSidebarOpen(false)
-              }
-
-            >
-
-
-              <span className="instructor-sidebar-icon">
-
-                {item.icon}
-
-              </span>
+            </span>
 
 
-              <span>
-
-                {item.name}
-
-              </span>
+            <span>
+              {item.name}
+            </span>
 
 
+          </NavLink>
 
-            </NavLink>
-
-
-
-          ))
-        }
-
-
-
+        ))}
 
 
       </nav>
 
 
-
-
-
-
-
-      {/* ==========================
+      {/* ======================================================
           BOTTOM MENU
-      ========================== */}
-
-
+      ====================================================== */}
 
       <div className="instructor-sidebar-bottom">
 
 
-
-
-
-
-
-
+        {/* SETTINGS */}
 
         <NavLink
-
           to="/instructor/settings"
-
-          className="instructor-sidebar-link"
-
+          className={({ isActive }) =>
+            isActive
+              ? "instructor-sidebar-link active"
+              : "instructor-sidebar-link"
+          }
+          onClick={handleNavigation}
         >
 
-          <FaCog />
+          <span className="instructor-sidebar-icon">
 
-          Settings
+            <FaCog />
+
+          </span>
+
+          <span>
+            Settings
+          </span>
 
         </NavLink>
 
 
-
-
+        {/* LOGOUT */}
 
         <button
-
+          type="button"
           className="instructor-sidebar-logout"
-
           onClick={handleLogout}
-
         >
 
-          <FaSignOutAlt />
+          <span className="instructor-sidebar-icon">
 
-          Logout
+            <FaSignOutAlt />
 
+          </span>
+
+          <span>
+            Logout
+          </span>
 
         </button>
-
-
 
 
       </div>
 
 
-
-
-
     </aside>
-
 
   );
 
 }
-
 
 
 export default InstructorSidebar;

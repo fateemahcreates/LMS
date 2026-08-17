@@ -21,6 +21,7 @@ import {
   FaSignOutAlt,
   FaAward,
   FaCompass,
+  FaCalendarCheck,
 } from "react-icons/fa";
 
 
@@ -320,6 +321,20 @@ className={`student-sidebar ${
 
 
           </NavLink>
+
+          <NavLink
+  to="/student/attendance"
+  onClick={closeSidebar}
+  className={({ isActive }) =>
+    isActive
+      ? "student-sidebar-link active"
+      : "student-sidebar-link"
+  }
+>
+  <FaCalendarCheck />
+
+  Attendance
+</NavLink>
 
 
 

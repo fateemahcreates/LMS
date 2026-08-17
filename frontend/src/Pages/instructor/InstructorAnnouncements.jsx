@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { notify } from "../../utils/notify";
+
 import {
   FaBullhorn,
   FaPlus,
@@ -98,12 +100,16 @@ function InstructorAnnouncements() {
 
 
       setAnnouncements(
-        announcementsResponse.data || []
+        Array.isArray(announcementsResponse.data)
+          ? announcementsResponse.data
+          : []
       );
 
 
       setCourses(
-        coursesResponse.data || []
+        Array.isArray(coursesResponse.data)
+          ? coursesResponse.data
+          : []
       );
 
     } catch (err) {
@@ -139,9 +145,10 @@ function InstructorAnnouncements() {
       description: "",
       type: "General",
       audience: "Course",
-      course: courses.length > 0
-        ? courses[0]._id
-        : "",
+      course:
+        courses.length > 0
+          ? courses[0]._id
+          : "",
       status: "Active",
     });
 
@@ -162,7 +169,8 @@ function InstructorAnnouncements() {
     );
 
     setFormData({
-      title: announcement.title || "",
+      title:
+        announcement.title || "",
 
       description:
         announcement.description || "",
@@ -233,9 +241,13 @@ function InstructorAnnouncements() {
     setError("");
 
 
+    // ========================================
+    // VALIDATION
+    // ========================================
+
     if (!formData.title.trim()) {
 
-      setError(
+      notify.warning(
         "Please enter an announcement title."
       );
 
@@ -245,7 +257,7 @@ function InstructorAnnouncements() {
 
     if (!formData.description.trim()) {
 
-      setError(
+      notify.warning(
         "Please enter announcement details."
       );
 
@@ -255,7 +267,7 @@ function InstructorAnnouncements() {
 
     if (!formData.course) {
 
-      setError(
+      notify.warning(
         "Please select a course."
       );
 
@@ -268,7 +280,12 @@ function InstructorAnnouncements() {
       setSubmitting(true);
 
 
+      // ========================================
+      // PAYLOAD
+      // ========================================
+
       const payload = {
+
         title:
           formData.title.trim(),
 
@@ -289,6 +306,10 @@ function InstructorAnnouncements() {
       };
 
 
+      // ========================================
+      // UPDATE
+      // ========================================
+
       if (editingAnnouncement) {
 
         const response =
@@ -298,16 +319,32 @@ function InstructorAnnouncements() {
           );
 
 
+        const updatedAnnouncement =
+          response.data?.announcement ||
+          response.data;
+
+
         setAnnouncements((prev) =>
           prev.map((item) =>
             item._id ===
             editingAnnouncement._id
-              ? response.data.announcement
+              ? updatedAnnouncement
               : item
           )
         );
 
-      } else {
+
+        notify.success(
+          "Announcement updated successfully."
+        );
+
+      }
+
+      // ========================================
+      // CREATE
+      // ========================================
+
+      else {
 
         const response =
           await createInstructorAnnouncement(
@@ -315,14 +352,41 @@ function InstructorAnnouncements() {
           );
 
 
+        const newAnnouncement =
+          response.data?.announcement ||
+          response.data;
+
+
         setAnnouncements((prev) => [
-          response.data.announcement,
+          newAnnouncement,
           ...prev,
         ]);
+
+
+        notify.success(
+          "Announcement published successfully."
+        );
       }
 
 
-      closeModal();
+      // ========================================
+      // CLOSE MODAL
+      // ========================================
+
+      setShowModal(false);
+
+      setEditingAnnouncement(null);
+
+      setFormData({
+        title: "",
+        description: "",
+        type: "General",
+        audience: "Course",
+        course: "",
+        status: "Active",
+      });
+
+      setError("");
 
     } catch (err) {
 
@@ -331,10 +395,7 @@ function InstructorAnnouncements() {
         err
       );
 
-      setError(
-        err.response?.data?.message ||
-        "Failed to save announcement."
-      );
+      notify.apiError(err);
 
     } finally {
 
@@ -348,39 +409,42 @@ function InstructorAnnouncements() {
   // DELETE
   // ==========================================
 
-  const handleDelete = async (id) => {
+  const handleDelete = (id) => {
 
-    const confirmed =
-      window.confirm(
-        "Are you sure you want to delete this announcement?"
-      );
+    notify.confirmDelete(
+      async () => {
+
+        try {
+
+          await deleteInstructorAnnouncement(id);
 
 
-    if (!confirmed) return;
+          setAnnouncements((prev) =>
+            prev.filter(
+              (item) =>
+                item._id !== id
+            )
+          );
 
 
-    try {
+          notify.success(
+            "Announcement deleted successfully."
+          );
 
-      await deleteInstructorAnnouncement(id);
+        } catch (err) {
 
-      setAnnouncements((prev) =>
-        prev.filter(
-          (item) => item._id !== id
-        )
-      );
+          console.error(
+            "Delete announcement error:",
+            err
+          );
 
-    } catch (err) {
+          notify.apiError(err);
 
-      console.error(
-        "Delete announcement error:",
-        err
-      );
+        }
 
-      alert(
-        err.response?.data?.message ||
-        "Failed to delete announcement."
-      );
-    }
+      }
+    );
+
   };
 
 
@@ -389,25 +453,34 @@ function InstructorAnnouncements() {
   // ==========================================
 
   const filteredAnnouncements =
-    announcements.filter((announcement) => {
+    announcements.filter(
+      (announcement) => {
 
-      const search =
-        searchTerm.toLowerCase();
+        const search =
+          searchTerm.toLowerCase();
 
-      return (
-        announcement.title
-          ?.toLowerCase()
-          .includes(search) ||
+        return (
 
-        announcement.description
-          ?.toLowerCase()
-          .includes(search) ||
+          announcement.title
+            ?.toLowerCase()
+            .includes(search)
 
-        announcement.course?.title
-          ?.toLowerCase()
-          .includes(search)
-      );
-    });
+          ||
+
+          announcement.description
+            ?.toLowerCase()
+            .includes(search)
+
+          ||
+
+          announcement.course?.title
+            ?.toLowerCase()
+            .includes(search)
+
+        );
+
+      }
+    );
 
 
   // ==========================================
@@ -416,7 +489,9 @@ function InstructorAnnouncements() {
 
   const formatDate = (date) => {
 
-    if (!date) return "No date";
+    if (!date) {
+      return "No date";
+    }
 
     return new Date(date).toLocaleDateString(
       "en-US",
@@ -436,6 +511,7 @@ function InstructorAnnouncements() {
   if (loading) {
 
     return (
+
       <div className="instructor-announcements-page">
 
         <div className="instructor-announcements-loading">
@@ -447,13 +523,16 @@ function InstructorAnnouncements() {
           </h2>
 
           <p>
-            Please wait while we load your announcements.
+            Please wait while we load
+            your announcements.
           </p>
 
         </div>
 
       </div>
+
     );
+
   }
 
 
@@ -549,7 +628,9 @@ function InstructorAnnouncements() {
             placeholder="Search announcements..."
             value={searchTerm}
             onChange={(e) =>
-              setSearchTerm(e.target.value)
+              setSearchTerm(
+                e.target.value
+              )
             }
           />
 
@@ -563,10 +644,12 @@ function InstructorAnnouncements() {
           </strong>
 
           <span>
+
             Announcement
             {filteredAnnouncements.length !== 1
               ? "s"
               : ""}
+
           </span>
 
         </div>
@@ -622,6 +705,10 @@ function InstructorAnnouncements() {
                 className="instructor-announcement-card"
               >
 
+                {/* ==================================
+                    CARD TOP
+                ================================== */}
+
                 <div className="instructor-announcement-card-top">
 
                   <div className="instructor-announcement-type">
@@ -632,7 +719,10 @@ function InstructorAnnouncements() {
 
                   </div>
 
+
                   <div className="instructor-announcement-actions">
+
+                    {/* EDIT */}
 
                     <button
                       type="button"
@@ -647,6 +737,9 @@ function InstructorAnnouncements() {
                       <FaEdit />
 
                     </button>
+
+
+                    {/* DELETE */}
 
                     <button
                       type="button"
@@ -667,10 +760,18 @@ function InstructorAnnouncements() {
                 </div>
 
 
+                {/* ==================================
+                    TITLE
+                ================================== */}
+
                 <h2>
                   {announcement.title}
                 </h2>
 
+
+                {/* ==================================
+                    DESCRIPTION
+                ================================== */}
 
                 <p className="instructor-announcement-description">
 
@@ -678,6 +779,10 @@ function InstructorAnnouncements() {
 
                 </p>
 
+
+                {/* ==================================
+                    META
+                ================================== */}
 
                 <div className="instructor-announcement-meta">
 
@@ -739,6 +844,10 @@ function InstructorAnnouncements() {
             }
           >
 
+            {/* ==================================
+                MODAL HEADER
+            ================================== */}
+
             <div className="instructor-announcement-modal-header">
 
               <div>
@@ -775,6 +884,10 @@ function InstructorAnnouncements() {
             </div>
 
 
+            {/* ==================================
+                MODAL ERROR
+            ================================== */}
+
             {error && (
 
               <div className="instructor-announcement-modal-error">
@@ -790,12 +903,18 @@ function InstructorAnnouncements() {
             )}
 
 
+            {/* ==================================
+                FORM
+            ================================== */}
+
             <form
               className="instructor-announcement-form"
               onSubmit={handleSubmit}
             >
 
-              {/* TITLE */}
+              {/* ==================================
+                  TITLE
+              ================================== */}
 
               <div className="instructor-form-group">
 
@@ -806,8 +925,12 @@ function InstructorAnnouncements() {
                 <input
                   type="text"
                   name="title"
-                  value={formData.title}
-                  onChange={handleChange}
+                  value={
+                    formData.title
+                  }
+                  onChange={
+                    handleChange
+                  }
                   placeholder="Enter announcement title"
                   disabled={submitting}
                 />
@@ -815,7 +938,9 @@ function InstructorAnnouncements() {
               </div>
 
 
-              {/* COURSE */}
+              {/* ==================================
+                  COURSE
+              ================================== */}
 
               <div className="instructor-form-group">
 
@@ -825,8 +950,12 @@ function InstructorAnnouncements() {
 
                 <select
                   name="course"
-                  value={formData.course}
-                  onChange={handleChange}
+                  value={
+                    formData.course
+                  }
+                  onChange={
+                    handleChange
+                  }
                   disabled={submitting}
                 >
 
@@ -834,25 +963,36 @@ function InstructorAnnouncements() {
                     Select a course
                   </option>
 
-                  {courses.map((course) => (
 
-                    <option
-                      key={course._id}
-                      value={course._id}
-                    >
+                  {courses.map(
+                    (course) => (
 
-                      {course.title}
+                      <option
+                        key={
+                          course._id
+                        }
+                        value={
+                          course._id
+                        }
+                      >
 
-                    </option>
+                        {
+                          course.title
+                        }
 
-                  ))}
+                      </option>
+
+                    )
+                  )}
 
                 </select>
 
               </div>
 
 
-              {/* TYPE */}
+              {/* ==================================
+                  TYPE
+              ================================== */}
 
               <div className="instructor-form-group">
 
@@ -862,8 +1002,12 @@ function InstructorAnnouncements() {
 
                 <select
                   name="type"
-                  value={formData.type}
-                  onChange={handleChange}
+                  value={
+                    formData.type
+                  }
+                  onChange={
+                    handleChange
+                  }
                   disabled={submitting}
                 >
 
@@ -892,7 +1036,9 @@ function InstructorAnnouncements() {
               </div>
 
 
-              {/* DESCRIPTION */}
+              {/* ==================================
+                  DESCRIPTION
+              ================================== */}
 
               <div className="instructor-form-group">
 
@@ -902,8 +1048,12 @@ function InstructorAnnouncements() {
 
                 <textarea
                   name="description"
-                  value={formData.description}
-                  onChange={handleChange}
+                  value={
+                    formData.description
+                  }
+                  onChange={
+                    handleChange
+                  }
                   placeholder="Write your announcement..."
                   rows="6"
                   disabled={submitting}
@@ -912,7 +1062,9 @@ function InstructorAnnouncements() {
               </div>
 
 
-              {/* ACTIONS */}
+              {/* ==================================
+                  FORM ACTIONS
+              ================================== */}
 
               <div className="instructor-announcement-form-actions">
 
@@ -953,7 +1105,9 @@ function InstructorAnnouncements() {
       )}
 
     </div>
+
   );
+
 }
 
 

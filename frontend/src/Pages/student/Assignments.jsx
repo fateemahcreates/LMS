@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { notify } from "../../utils/notify";
 
 import {
   FaUpload,
@@ -290,93 +291,149 @@ function StudentAssignments() {
       fileInput.value = "";
     }
   };
+// ==========================================
+// SUBMIT ASSIGNMENT
+// ==========================================
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
   // ==========================================
-  // SUBMIT ASSIGNMENT
+  // VALIDATE REQUIRED FIELDS
   // ==========================================
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  if (
+    !formData.course ||
+    !formData.title.trim() ||
+    !formData.file
+  ) {
+    notify.warning(
+      "Please complete all required fields."
+    );
 
-    if (
-      !formData.course ||
-      !formData.title.trim() ||
-      !formData.file
-    ) {
-      alert(
-        "Please complete all required fields."
-      );
+    return;
+  }
 
-      return;
-    }
+  // ==========================================
+  // CONFIRM SUBMISSION
+  // ==========================================
 
-    try {
-      setSubmitting(true);
+  notify.confirmAction({
 
-      const data = new FormData();
+    title: "Submit Assignment",
 
-      data.append(
-        "course",
-        formData.course
-      );
+    message:
+      "Are you sure you want to submit this assignment? Please make sure you have uploaded the correct file before continuing.",
 
-      if (selectedAssignment) {
+    confirmText: "Submit",
+
+    cancelText: "Cancel",
+
+    type: "success",
+
+    onConfirm: async () => {
+
+      try {
+
+        setSubmitting(true);
+
+        // ========================================
+        // CREATE FORM DATA
+        // ========================================
+
+        const data = new FormData();
+
         data.append(
-          "assignment",
-          selectedAssignment._id
+          "course",
+          formData.course
         );
+
+        if (selectedAssignment) {
+
+          data.append(
+            "assignment",
+            selectedAssignment._id
+          );
+
+        }
+
+        data.append(
+          "title",
+          formData.title
+        );
+
+        data.append(
+          "description",
+          formData.description
+        );
+
+        data.append(
+          "file",
+          formData.file
+        );
+
+        // ========================================
+        // DEBUG
+        // ========================================
+
+        console.log(
+          "========== SUBMITTING ASSIGNMENT =========="
+        );
+
+        console.log({
+          course: formData.course,
+          assignment:
+            selectedAssignment?._id,
+          title: formData.title,
+          file: formData.file?.name,
+        });
+
+        // ========================================
+        // SUBMIT
+        // ========================================
+
+        await submitAssignment(data);
+
+        // ========================================
+        // SUCCESS
+        // ========================================
+
+        notify.success(
+          "Assignment submitted successfully!"
+        );
+
+        // ========================================
+        // CLOSE FORM
+        // ========================================
+
+        handleCloseForm();
+
+        // ========================================
+        // REFRESH SUBMISSIONS
+        // ========================================
+
+        await loadSubmissions();
+
+      } catch (error) {
+
+        console.error(
+          "ASSIGNMENT SUBMISSION ERROR:",
+          error
+        );
+
+        notify.apiError(error);
+
+      } finally {
+
+        setSubmitting(false);
+
       }
 
-      data.append(
-        "title",
-        formData.title
-      );
+    },
 
-      data.append(
-        "description",
-        formData.description
-      );
+  });
 
-      data.append(
-        "file",
-        formData.file
-      );
-
-      console.log(
-        "========== SUBMITTING ASSIGNMENT =========="
-      );
-
-      console.log({
-        course: formData.course,
-        assignment:
-          selectedAssignment?._id,
-        title: formData.title,
-        file: formData.file?.name,
-      });
-
-      await submitAssignment(data);
-
-      alert(
-        "Assignment submitted successfully!"
-      );
-
-      handleCloseForm();
-
-      await loadSubmissions();
-    } catch (error) {
-      console.error(
-        "ASSIGNMENT SUBMISSION ERROR:",
-        error
-      );
-
-      alert(
-        error.response?.data?.message ||
-          "Unable to submit assignment."
-      );
-    } finally {
-      setSubmitting(false);
-    }
-  };
+};
 
   // ==========================================
   // STATISTICS

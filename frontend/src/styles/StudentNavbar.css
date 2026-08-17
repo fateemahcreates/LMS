@@ -616,6 +616,124 @@ transform:translateY(0);
 
 }
 
+}
+
+/* ============================================================
+   NOTIFICATION WRAPPER
+============================================================ */
+
+.student-navbar-notification-wrapper {
+  position: relative;
+}
+
+
+/* ============================================================
+   NOTIFICATION BUTTON
+============================================================ */
+
+.student-navbar-notification {
+  position: relative;
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background: transparent;
+
+  color: #4b5563;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.student-navbar-notification:hover {
+  background: #f3f4f6;
+
+  color: #c91f26;
+}
+
+
+.student-navbar-notification.active {
+  background: #fcecec;
+
+  color: #c91f26;
+}
+
+
+/* ============================================================
+   RED NOTIFICATION BADGE
+============================================================ */
+
+.student-navbar-notification-badge {
+  position: absolute;
+
+  top: -2px;
+  right: -2px;
+
+  min-width: 18px;
+  height: 18px;
+
+  padding: 0 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #dc2626;
+
+  color: #ffffff;
+
+  border: 2px solid #ffffff;
+
+  border-radius: 999px;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  box-shadow:
+    0 2px 6px rgba(220, 38, 38, 0.35);
+
+  animation:
+    notificationPulse 2s infinite;
+}
+
+
+/* ============================================================
+   NOTIFICATION PULSE
+============================================================ */
+
+@keyframes notificationPulse {
+
+  0% {
+    box-shadow:
+      0 0 0 0
+      rgba(220, 38, 38, 0.45);
+  }
+
+  70% {
+    box-shadow:
+      0 0 0 6px
+      rgba(220, 38, 38, 0);
+  }
+
+  100% {
+    box-shadow:
+      0 0 0 0
+      rgba(220, 38, 38, 0);
+  }
 
 }
 

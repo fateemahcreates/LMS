@@ -1,9 +1,17 @@
 import {
   FaTrash,
   FaEdit,
+  FaPhone,
+  FaBookOpen,
+  FaBan,
+  FaCheckCircle,
 } from "react-icons/fa";
 
-import { deleteUser } from "../services/userService";
+import {
+  deleteUser,
+  changeUserStatus,
+} from "../services/userService";
+
 import { notify } from "../utils/notify";
 
 import "../styles/UserTable.css";
@@ -13,6 +21,7 @@ function UserTable({
   refreshUsers,
   handleEdit,
 }) {
+
   // ==========================================
   // DELETE USER
   // ==========================================
@@ -29,10 +38,92 @@ function UserTable({
         await refreshUsers();
 
       } catch (error) {
+        console.error(
+          "Delete user error:",
+          error
+        );
+
         notify.apiError(error);
       }
     });
   };
+
+
+  // ==========================================
+  // SUSPEND / UNSUSPEND USER
+  // ==========================================
+
+  const handleStatusChange = (user) => {
+
+    const isSuspended =
+      user.status === "suspended";
+
+    const newStatus =
+      isSuspended
+        ? "active"
+        : "suspended";
+
+
+    // ========================================
+    // CONFIRM ACTION
+    // ========================================
+
+    const actionText =
+      isSuspended
+        ? "reactivate"
+        : "suspend";
+
+
+    const confirmed = window.confirm(
+      isSuspended
+        ? `Are you sure you want to reactivate ${user.name}?`
+        : `Are you sure you want to suspend ${user.name}?`
+    );
+
+
+    if (!confirmed) {
+      return;
+    }
+
+
+    // ========================================
+    // UPDATE STATUS
+    // ========================================
+
+    const updateStatus = async () => {
+
+      try {
+
+        await changeUserStatus(
+          user._id,
+          newStatus
+        );
+
+
+        notify.success(
+          isSuspended
+            ? "User reactivated successfully."
+            : "User suspended successfully."
+        );
+
+
+        await refreshUsers();
+
+      } catch (error) {
+
+        console.error(
+          `Failed to ${actionText} user:`,
+          error
+        );
+
+        notify.apiError(error);
+      }
+    };
+
+
+    updateStatus();
+  };
+
 
   return (
     <div className="user-table-wrapper">
@@ -49,6 +140,10 @@ function UserTable({
 
               <th>Student ID</th>
 
+              <th>Contact</th>
+
+              <th>Course / Program</th>
+
               <th>Role</th>
 
               <th>Status</th>
@@ -59,6 +154,7 @@ function UserTable({
 
           </thead>
 
+
           <tbody>
 
             {users.length === 0 ? (
@@ -66,7 +162,7 @@ function UserTable({
               <tr>
 
                 <td
-                  colSpan="5"
+                  colSpan="7"
                   className="empty-row"
                 >
                   No users found.
@@ -79,6 +175,7 @@ function UserTable({
               users.map((user) => (
 
                 <tr key={user._id}>
+
 
                   {/* =================================
                       USER
@@ -97,6 +194,7 @@ function UserTable({
                           : "U"}
 
                       </div>
+
 
                       <div className="user-info">
 
@@ -124,9 +222,108 @@ function UserTable({
                     {user.role === "student" ? (
 
                       <span className="student-id">
+
                         {user.studentId ||
                           "Not assigned"}
+
                       </span>
+
+                    ) : (
+
+                      <span className="not-applicable">
+                        —
+                      </span>
+
+                    )}
+
+                  </td>
+
+
+                  {/* =================================
+                      CONTACT
+                  ================================= */}
+
+                  <td>
+
+                    <div className="user-contact">
+
+                      <div className="contact-item">
+
+                        <FaPhone />
+
+                        <span>
+                          {user.phone ||
+                            "No phone"}
+                        </span>
+
+                      </div>
+
+
+                      {user.role === "student" &&
+                        user.parentPhone && (
+
+                          <div className="contact-secondary">
+
+                            Parent:{" "}
+                            {user.parentPhone}
+
+                          </div>
+
+                        )}
+
+
+                      {user.role === "student" &&
+                        user.guardianPhone && (
+
+                          <div className="contact-secondary">
+
+                            Guardian:{" "}
+                            {user.guardianPhone}
+
+                          </div>
+
+                        )}
+
+                    </div>
+
+                  </td>
+
+
+                  {/* =================================
+                      COURSE / PROGRAM
+                  ================================= */}
+
+                  <td>
+
+                    {user.role === "student" ? (
+
+                      <div className="course-info">
+
+                        <div className="course-name">
+
+                          <FaBookOpen />
+
+                          <span>
+
+                            {user.program ||
+                              "No program"}
+
+                          </span>
+
+                        </div>
+
+
+                        {user.cohort && (
+
+                          <span className="cohort-text">
+
+                            {user.cohort}
+
+                          </span>
+
+                        )}
+
+                      </div>
 
                     ) : (
 
@@ -148,7 +345,9 @@ function UserTable({
                     <span
                       className={`role-badge role-${user.role}`}
                     >
+
                       {user.role}
+
                     </span>
 
                   </td>
@@ -163,7 +362,9 @@ function UserTable({
                     <span
                       className={`status-badge status-${user.status}`}
                     >
+
                       {user.status}
+
                     </span>
 
                   </td>
@@ -177,6 +378,11 @@ function UserTable({
 
                     <div className="table-actions">
 
+
+                      {/* =============================
+                          EDIT
+                      ============================= */}
+
                       <button
                         type="button"
                         className="edit-btn"
@@ -185,9 +391,56 @@ function UserTable({
                         }
                         title="Edit User"
                       >
+
                         <FaEdit />
+
                       </button>
 
+
+                      {/* =============================
+                          SUSPEND / UNSUSPEND
+                      ============================= */}
+
+                      {user.status === "suspended" ? (
+
+                        <button
+                          type="button"
+                          className="activate-btn"
+                          onClick={() =>
+                            handleStatusChange(
+                              user
+                            )
+                          }
+                          title="Reactivate User"
+                        >
+
+                          <FaCheckCircle />
+
+                        </button>
+
+                      ) : (
+
+                        <button
+                          type="button"
+                          className="suspend-btn"
+                          onClick={() =>
+                            handleStatusChange(
+                              user
+                            )
+                          }
+                          title="Suspend User"
+                        >
+
+                          <FaBan />
+
+                        </button>
+
+                      )}
+
+
+                      {/* =============================
+                          DELETE
+                      ============================= */}
 
                       <button
                         type="button"
@@ -199,7 +452,9 @@ function UserTable({
                         }
                         title="Delete User"
                       >
+
                         <FaTrash />
+
                       </button>
 
                     </div>

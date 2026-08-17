@@ -21,12 +21,19 @@ function UserForm({
   // =====================================
 
   const initialState = {
+    // ===================================
+    // ACCOUNT INFORMATION
+    // ===================================
+
     name: "",
     email: "",
     password: "",
     role: "student",
 
-    // General user information
+    // ===================================
+    // PERSONAL INFORMATION
+    // ===================================
+
     gender: "",
     dateOfBirth: "",
     phone: "",
@@ -35,11 +42,24 @@ function UserForm({
     bio: "",
     avatar: "",
 
-    // Student information
+    // ===================================
+    // STUDENT INFORMATION
+    // ===================================
+
     program: "",
     cohort: "",
 
-    // Account status
+    // ===================================
+    // PARENT / GUARDIAN INFORMATION
+    // ===================================
+
+    parentPhone: "",
+    guardianPhone: "",
+
+    // ===================================
+    // ACCOUNT STATUS
+    // ===================================
+
     status: "active",
   };
 
@@ -56,12 +76,14 @@ function UserForm({
       ...prev,
       [name]: value,
 
-      // Clear student-only fields
+      // Clear student-only information
       // when changing to another role
       ...(name === "role" && value !== "student"
         ? {
             program: "",
             cohort: "",
+            parentPhone: "",
+            guardianPhone: "",
           }
         : {}),
     }));
@@ -94,12 +116,15 @@ function UserForm({
         );
       }
 
+      // Refresh user table
       await refreshUsers();
 
+      // Reset form
       setFormData({
         ...initialState,
       });
 
+      // Close drawer
       closeDrawer();
 
     } catch (error) {
@@ -138,7 +163,6 @@ function UserForm({
         required
       />
 
-
       {/* EMAIL */}
 
       <input
@@ -149,7 +173,6 @@ function UserForm({
         onChange={handleChange}
         required
       />
-
 
       {/* PASSWORD */}
 
@@ -165,7 +188,6 @@ function UserForm({
         onChange={handleChange}
         required={!editingUser}
       />
-
 
       {/* ROLE */}
 
@@ -197,7 +219,6 @@ function UserForm({
 
       <h2>Personal Information</h2>
 
-
       {/* GENDER */}
 
       <select
@@ -222,7 +243,6 @@ function UserForm({
         </option>
       </select>
 
-
       {/* DATE OF BIRTH */}
 
       <input
@@ -234,17 +254,15 @@ function UserForm({
         onChange={handleChange}
       />
 
-
       {/* PHONE */}
 
       <input
-        type="text"
+        type="tel"
         name="phone"
-        placeholder="Phone Number"
+        placeholder="Student Phone Number"
         value={formData.phone || ""}
         onChange={handleChange}
       />
-
 
       {/* NATIONALITY */}
 
@@ -257,7 +275,6 @@ function UserForm({
         }
         onChange={handleChange}
       />
-
 
       {/* ADDRESS */}
 
@@ -282,10 +299,7 @@ function UserForm({
             Student Information
           </h2>
 
-
-          {/* =================================
-              PROGRAM
-          ================================= */}
+          {/* PROGRAM */}
 
           <select
             name="program"
@@ -321,9 +335,7 @@ function UserForm({
           </select>
 
 
-          {/* =================================
-              COHORT
-          ================================= */}
+          {/* COHORT */}
 
           <select
             name="cohort"
@@ -353,6 +365,39 @@ function UserForm({
               October 2026
             </option>
           </select>
+
+
+          {/* =================================
+              PARENT / GUARDIAN
+          ================================= */}
+
+          <h3>
+            Parent & Guardian Information
+          </h3>
+
+          {/* PARENT PHONE */}
+
+          <input
+            type="tel"
+            name="parentPhone"
+            placeholder="Parent Phone Number"
+            value={
+              formData.parentPhone || ""
+            }
+            onChange={handleChange}
+          />
+
+          {/* GUARDIAN PHONE */}
+
+          <input
+            type="tel"
+            name="guardianPhone"
+            placeholder="Guardian Phone Number"
+            value={
+              formData.guardianPhone || ""
+            }
+            onChange={handleChange}
+          />
         </>
       )}
 

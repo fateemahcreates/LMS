@@ -9,16 +9,16 @@ import {
 import UserTable from "../components/UserTable";
 import UserForm from "../components/UserForm";
 
-import {
-  getUsers,
-} from "../services/userService";
+import { getUsers } from "../services/userService";
 
 import { notify } from "../utils/notify";
 
 import "../styles/Users.css";
 import "../styles/Drawer.css";
 
+
 function Users() {
+
   // ==========================================
   // INITIAL STATE
   // ==========================================
@@ -38,6 +38,10 @@ function Users() {
     bio: "",
     avatar: "",
 
+    // Parent / Guardian
+    parentPhone: "",
+    guardianPhone: "",
+
     // Student information
     program: "",
     cohort: "",
@@ -46,7 +50,17 @@ function Users() {
     status: "active",
   };
 
+
+  // ==========================================
+  // USERS
+  // ==========================================
+
   const [users, setUsers] = useState([]);
+
+
+  // ==========================================
+  // FORM
+  // ==========================================
 
   const [formData, setFormData] =
     useState(initialState);
@@ -57,11 +71,13 @@ function Users() {
   const [drawerOpen, setDrawerOpen] =
     useState(false);
 
+
   // ==========================================
   // FILTERS
   // ==========================================
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] =
+    useState("");
 
   const [roleFilter, setRoleFilter] =
     useState("All");
@@ -69,35 +85,65 @@ function Users() {
   const [statusFilter, setStatusFilter] =
     useState("All");
 
+  const [programFilter, setProgramFilter] =
+    useState("All");
+
+  const [courseFilter, setCourseFilter] =
+    useState("All");
+
+
   // ==========================================
   // FETCH USERS
   // ==========================================
 
   const fetchUsers = async () => {
+
     try {
+
       const res = await getUsers();
 
-      setUsers(res.data);
+      /*
+       * Your API currently returns the users
+       * directly as res.data.
+       */
+
+      setUsers(
+        Array.isArray(res.data)
+          ? res.data
+          : []
+      );
 
     } catch (error) {
+
       console.error(
         "Fetch users error:",
         error
       );
 
       notify.apiError(error);
+
     }
+
   };
 
+
+  // ==========================================
+  // INITIAL FETCH
+  // ==========================================
+
   useEffect(() => {
+
     fetchUsers();
+
   }, []);
+
 
   // ==========================================
   // OPEN CREATE USER DRAWER
   // ==========================================
 
   const handleNewUser = () => {
+
     setEditingUser(null);
 
     setFormData({
@@ -105,32 +151,38 @@ function Users() {
     });
 
     setDrawerOpen(true);
+
   };
+
 
   // ==========================================
   // EDIT USER
   // ==========================================
 
   const handleEdit = (user) => {
+
     setEditingUser(user);
 
     setFormData({
+
       ...initialState,
 
       ...user,
 
-      // Never populate password when editing
+      // Never populate password
       password: "",
 
-      // Make sure optional fields don't
-      // become undefined
-      phone: user.phone || "",
+      // General information
+      phone:
+        user.phone || "",
 
-      gender: user.gender || "",
+      gender:
+        user.gender || "",
 
-      dateOfBirth: user.dateOfBirth
-        ? user.dateOfBirth.split("T")[0]
-        : "",
+      dateOfBirth:
+        user.dateOfBirth
+          ? user.dateOfBirth.split("T")[0]
+          : "",
 
       nationality:
         user.nationality || "",
@@ -144,29 +196,114 @@ function Users() {
       avatar:
         user.avatar || "",
 
+
+      // Parent / Guardian
+      parentPhone:
+        user.parentPhone || "",
+
+      guardianPhone:
+        user.guardianPhone || "",
+
+
+      // Student information
       program:
         user.program || "",
 
       cohort:
         user.cohort || "",
 
+
+      // Status
       status:
         user.status || "active",
+
     });
 
     setDrawerOpen(true);
+
   };
+
+
+  // ==========================================
+  // PROGRAM OPTIONS
+  // ==========================================
+
+  const programs = [
+    ...new Set(
+
+      users
+        .filter(
+          (user) =>
+            user.role === "student" &&
+            user.program
+        )
+        .map(
+          (user) =>
+            user.program
+        )
+
+    ),
+  ];
+
+
+  // ==========================================
+  // COURSE OPTIONS
+  // ==========================================
+
+  const courses = [];
+
+
+  users.forEach((user) => {
+
+    if (
+      user.role === "student" &&
+      Array.isArray(user.courses)
+    ) {
+
+      user.courses.forEach(
+        (course) => {
+
+          if (
+            course?._id &&
+            !courses.some(
+              (existingCourse) =>
+                existingCourse._id ===
+                course._id
+            )
+          ) {
+
+            courses.push(course);
+
+          }
+
+        }
+      );
+
+    }
+
+  });
+
 
   // ==========================================
   // FILTER USERS
   // ==========================================
 
-  const filteredUsers = users.filter(
-    (user) => {
+  const filteredUsers =
+    users.filter((user) => {
+
       const searchValue =
-        search.toLowerCase().trim();
+        search
+          .toLowerCase()
+          .trim();
+
+
+      // ========================================
+      // SEARCH
+      // ========================================
 
       const matchesSearch =
+        !searchValue ||
+
         user.name
           ?.toLowerCase()
           .includes(searchValue) ||
@@ -177,25 +314,73 @@ function Users() {
 
         user.studentId
           ?.toLowerCase()
+          .includes(searchValue) ||
+
+        user.phone
+          ?.toLowerCase()
           .includes(searchValue);
+
+
+      // ========================================
+      // ROLE
+      // ========================================
 
       const matchesRole =
         roleFilter === "All" ||
         user.role ===
           roleFilter.toLowerCase();
 
+
+      // ========================================
+      // STATUS
+      // ========================================
+
       const matchesStatus =
         statusFilter === "All" ||
         user.status ===
           statusFilter.toLowerCase();
 
+
+      // ========================================
+      // PROGRAM
+      // ========================================
+
+      const matchesProgram =
+        programFilter === "All" ||
+        user.program ===
+          programFilter;
+
+
+      // ========================================
+      // COURSE
+      // ========================================
+
+      const matchesCourse =
+        courseFilter === "All" ||
+        (
+          Array.isArray(user.courses) &&
+          user.courses.some(
+            (course) =>
+              course?._id ===
+              courseFilter
+          )
+        );
+
+
+      // ========================================
+      // FINAL RESULT
+      // ========================================
+
       return (
         matchesSearch &&
         matchesRole &&
-        matchesStatus
+        matchesStatus &&
+        matchesProgram &&
+        matchesCourse
       );
-    }
-  );
+
+    });
+
 
   // ==========================================
   // STATS
@@ -207,11 +392,13 @@ function Users() {
         user.role === "student"
     ).length;
 
+
   const instructors =
     users.filter(
       (user) =>
         user.role === "instructor"
     ).length;
+
 
   const admins =
     users.filter(
@@ -219,16 +406,54 @@ function Users() {
         user.role === "admin"
     ).length;
 
+
+  // ==========================================
+  // ACTIVE USERS
+  // ==========================================
+
+  const activeUsers =
+    users.filter(
+      (user) =>
+        user.status === "active"
+    ).length;
+
+
+  // ==========================================
+  // SUSPENDED USERS
+  // ==========================================
+
+  const suspendedUsers =
+    users.filter(
+      (user) =>
+        user.status === "suspended"
+    ).length;
+
+
+  // ==========================================
+  // CLOSE DRAWER
+  // ==========================================
+
+  const closeDrawer = () => {
+
+    setDrawerOpen(false);
+
+    setEditingUser(null);
+
+  };
+
+
   // ==========================================
   // RENDER
   // ==========================================
 
   return (
+
     <main className="users-page">
 
-      {/* ==========================
+
+      {/* =====================================
           HEADER
-      ========================== */}
+      ====================================== */}
 
       <div className="users-page-header">
 
@@ -246,23 +471,31 @@ function Users() {
 
         </div>
 
+
         <button
+          type="button"
           className="new-user-btn"
           onClick={handleNewUser}
         >
+
           <FaPlus />
 
           New User
+
         </button>
 
       </div>
 
 
-      {/* ==========================
+
+      {/* =====================================
           STATS
-      ========================== */}
+      ====================================== */}
 
       <div className="user-stats">
+
+
+        {/* TOTAL */}
 
         <div className="stat-card">
 
@@ -277,6 +510,8 @@ function Users() {
         </div>
 
 
+        {/* STUDENTS */}
+
         <div className="stat-card">
 
           <h2>
@@ -289,6 +524,8 @@ function Users() {
 
         </div>
 
+
+        {/* INSTRUCTORS */}
 
         <div className="stat-card">
 
@@ -303,6 +540,8 @@ function Users() {
         </div>
 
 
+        {/* ADMINS */}
+
         <div className="stat-card">
 
           <h2>
@@ -315,14 +554,48 @@ function Users() {
 
         </div>
 
+
+        {/* ACTIVE */}
+
+        <div className="stat-card">
+
+          <h2>
+            {activeUsers}
+          </h2>
+
+          <span>
+            Active Users
+          </span>
+
+        </div>
+
+
+        {/* SUSPENDED */}
+
+        <div className="stat-card">
+
+          <h2>
+            {suspendedUsers}
+          </h2>
+
+          <span>
+            Suspended
+          </span>
+
+        </div>
+
       </div>
 
 
-      {/* ==========================
+
+      {/* =====================================
           SEARCH + FILTERS
-      ========================== */}
+      ====================================== */}
 
       <div className="users-toolbar">
+
+
+        {/* SEARCH */}
 
         <div className="gmt-users-search">
 
@@ -335,18 +608,25 @@ function Users() {
             placeholder="Search users..."
             value={search}
             onChange={(e) =>
-              setSearch(e.target.value)
+              setSearch(
+                e.target.value
+              )
             }
           />
 
         </div>
 
 
+
+        {/* ROLE FILTER */}
+
         <select
           className="gmt-users-select"
           value={roleFilter}
           onChange={(e) =>
-            setRoleFilter(e.target.value)
+            setRoleFilter(
+              e.target.value
+            )
           }
         >
 
@@ -369,11 +649,16 @@ function Users() {
         </select>
 
 
+
+        {/* STATUS FILTER */}
+
         <select
           className="gmt-users-select"
           value={statusFilter}
           onChange={(e) =>
-            setStatusFilter(e.target.value)
+            setStatusFilter(
+              e.target.value
+            )
           }
         >
 
@@ -395,12 +680,79 @@ function Users() {
 
         </select>
 
+
+
+        {/* PROGRAM FILTER */}
+
+        <select
+          className="gmt-users-select"
+          value={programFilter}
+          onChange={(e) =>
+            setProgramFilter(
+              e.target.value
+            )
+          }
+        >
+
+          <option value="All">
+            All Programs
+          </option>
+
+          {programs.map(
+            (program) => (
+
+              <option
+                key={program}
+                value={program}
+              >
+                {program}
+              </option>
+
+            )
+          )}
+
+        </select>
+
+
+
+        {/* COURSE FILTER */}
+
+        <select
+          className="gmt-users-select"
+          value={courseFilter}
+          onChange={(e) =>
+            setCourseFilter(
+              e.target.value
+            )
+          }
+        >
+
+          <option value="All">
+            All Courses
+          </option>
+
+          {courses.map(
+            (course) => (
+
+              <option
+                key={course._id}
+                value={course._id}
+              >
+                {course.title}
+              </option>
+
+            )
+          )}
+
+        </select>
+
       </div>
 
 
-      {/* ==========================
+
+      {/* =====================================
           TABLE
-      ========================== */}
+      ====================================== */}
 
       <UserTable
         users={filteredUsers}
@@ -409,44 +761,55 @@ function Users() {
       />
 
 
-      {/* ==========================
-          BACKDROP
-      ========================== */}
+
+      {/* =====================================
+          DRAWER BACKDROP
+      ====================================== */}
 
       {drawerOpen && (
+
         <div
           className="drawer-backdrop"
-          onClick={() =>
-            setDrawerOpen(false)
-          }
+          onClick={closeDrawer}
         />
+
       )}
 
 
-      {/* ==========================
-          DRAWER
-      ========================== */}
+
+      {/* =====================================
+          USER DRAWER
+      ====================================== */}
 
       <div
         className={`side-drawer ${
-          drawerOpen ? "open" : ""
+          drawerOpen
+            ? "open"
+            : ""
         }`}
       >
+
+
+        {/* DRAWER HEADER */}
 
         <div className="drawer-header">
 
           <div>
 
             <h2>
+
               {editingUser
                 ? "Edit User"
                 : "Create User"}
+
             </h2>
 
             <p>
+
               {editingUser
                 ? "Update platform user information."
                 : "Create or manage platform users."}
+
             </p>
 
           </div>
@@ -455,30 +818,34 @@ function Users() {
           <button
             type="button"
             className="close-btn"
-            onClick={() =>
-              setDrawerOpen(false)
-            }
+            onClick={closeDrawer}
           >
+
             <FaTimes />
+
           </button>
 
         </div>
 
+
+
+        {/* USER FORM */}
 
         <UserForm
           formData={formData}
           setFormData={setFormData}
           editingUser={editingUser}
           refreshUsers={fetchUsers}
-          closeDrawer={() =>
-            setDrawerOpen(false)
-          }
+          closeDrawer={closeDrawer}
         />
 
       </div>
 
     </main>
+
   );
+
 }
+
 
 export default Users;

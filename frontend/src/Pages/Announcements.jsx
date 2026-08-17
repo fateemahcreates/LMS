@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { notify } from "../utils/notify";
 
 import AnnouncementForm from "../components/AnnouncementForm";
 import AnnouncementTable from "../components/AnnouncementTable";
@@ -58,52 +59,121 @@ function Announcements() {
   });
 };
 
-  // ==========================
-  // Submit
-  // ==========================
+ // ==========================
+// Submit
+// ==========================
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      if (editingAnnouncement) {
-        await updateAnnouncement(
-          editingAnnouncement._id,
-          formData
+  const isEditing = Boolean(editingAnnouncement);
+
+  notify.confirmAction({
+
+    title: isEditing
+      ? "Update Announcement"
+      : "Publish Announcement",
+
+    message: isEditing
+      ? "Are you sure you want to update this announcement?"
+      : "Are you sure you want to publish this announcement?",
+
+    confirmText: isEditing
+      ? "Update"
+      : "Publish",
+
+    cancelText: "Cancel",
+
+    type: isEditing
+      ? "info"
+      : "success",
+
+    onConfirm: async () => {
+
+      try {
+
+        // ==========================================
+        // UPDATE
+        // ==========================================
+
+        if (editingAnnouncement) {
+
+          await updateAnnouncement(
+            editingAnnouncement._id,
+            formData
+          );
+
+          notify.success(
+            "Announcement updated successfully."
+          );
+
+        }
+
+        // ==========================================
+        // CREATE / PUBLISH
+        // ==========================================
+
+        else {
+
+          await createAnnouncement(
+            formData
+          );
+
+          notify.success(
+            "Announcement published successfully."
+          );
+
+        }
+
+        // ==========================================
+        // RESET FORM
+        // ==========================================
+
+        setFormData({
+          title: "",
+          description: "",
+          type: "General",
+          audience: "Everyone",
+          course: "",
+          isPinned: false,
+          status: "Active",
+          expiresAt: "",
+        });
+
+        setEditingAnnouncement(null);
+
+        // ==========================================
+        // REFRESH ANNOUNCEMENTS
+        // ==========================================
+
+        fetchAnnouncements();
+
+      } catch (error) {
+
+        console.error(
+          "Announcement submit error:",
+          error
         );
-      } else {
-        await createAnnouncement(formData);
+
+        if (error.response) {
+
+          console.log(
+            "Status:",
+            error.response.status
+          );
+
+          console.log(
+            "Response:",
+            error.response.data
+          );
+
+        }
+
+        notify.apiError(error);
       }
-
-      setFormData({
-        title: "",
-        description: "",
-        type: "General",
-        audience: "Everyone",
-        course: "",
-        isPinned: false,
-        status: "Active",
-        expiresAt: "",
-      });
-
-      setEditingAnnouncement(null);
-
-      fetchAnnouncements();
-
-    } catch (error) {
-  console.error(error);
-
-  if (error.response) {
-    console.log("Status:", error.response.status);
-    console.log("Response:", error.response.data);
-  }
-
-  alert(
-    error.response?.data?.message ||
-    "Unable to save announcement."
-  );
-}
-  };
+    },
+  });
+};
 
   // ==========================
   // Edit

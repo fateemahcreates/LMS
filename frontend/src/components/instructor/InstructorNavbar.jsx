@@ -10,17 +10,27 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 
+import { useNavigate } from "react-router-dom";
+
 import logo from "../../assets/GMT Software logo.jpeg";
 
 import "../../styles/InstructorNavbar.css";
 
 import NotificationDropdown from "../NotificationDropdown";
+
 import api from "../../services/api";
+
+import { notify } from "../../utils/notify";
+
 
 function InstructorNavbar({
   sidebarOpen,
   setSidebarOpen,
 }) {
+
+  const navigate = useNavigate();
+
+
   // ============================================================
   // STATE
   // ============================================================
@@ -34,103 +44,202 @@ function InstructorNavbar({
   const [unreadCount, setUnreadCount] =
     useState(0);
 
+
+  // ============================================================
+  // CURRENT USER
+  // ============================================================
+
   const user =
     JSON.parse(
       localStorage.getItem("user")
     ) || {};
+
 
   // ============================================================
   // GET UNREAD NOTIFICATION COUNT
   // ============================================================
 
   const fetchUnreadCount = async () => {
+
     try {
+
       const response =
         await api.get(
           "/notifications/unread-count"
         );
 
+
       setUnreadCount(
-        response.data?.count || 0
+        Number(
+          response.data?.count || 0
+        )
       );
 
     } catch (error) {
+
       console.error(
         "Failed to load notification count:",
         error
       );
+
     }
+
   };
+
 
   // ============================================================
   // LOAD NOTIFICATION COUNT
   // ============================================================
 
   useEffect(() => {
+
     fetchUnreadCount();
 
+
     // Refresh every 30 seconds
+
     const interval =
       setInterval(() => {
+
         fetchUnreadCount();
+
       }, 30000);
 
+
     return () => {
+
       clearInterval(interval);
+
     };
+
   }, []);
 
+
   // ============================================================
-  // HANDLE NOTIFICATION OPEN
+  // HANDLE NOTIFICATION TOGGLE
   // ============================================================
 
   const handleNotificationToggle = () => {
+
     setNotificationOpen(
       (previous) => !previous
     );
 
+
     // Close profile dropdown
+
     setProfileOpen(false);
+
   };
 
+
   // ============================================================
-  // HANDLE NOTIFICATION READ
+  // HANDLE NOTIFICATION UPDATE
   // ============================================================
 
   const handleNotificationUpdate = () => {
+
     fetchUnreadCount();
+
   };
+
 
   // ============================================================
   // HANDLE LOGOUT
   // ============================================================
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
 
-    window.location.href = "/login";
+    // ----------------------------------------------------------
+    // CLOSE PROFILE DROPDOWN
+    // ----------------------------------------------------------
+
+    setProfileOpen(false);
+
+
+    // ----------------------------------------------------------
+    // SHOW CONFIRMATION
+    // ----------------------------------------------------------
+
+    notify.confirmLogout(() => {
+
+      // --------------------------------------------------------
+      // ONLY LOGOUT AFTER USER CONFIRMS
+      // --------------------------------------------------------
+
+      localStorage.removeItem("token");
+
+      localStorage.removeItem("user");
+
+
+      // --------------------------------------------------------
+      // REDIRECT TO LOGIN
+      // --------------------------------------------------------
+
+      navigate("/login", {
+        replace: true,
+      });
+
+    });
+
   };
+
+
+  // ============================================================
+  // HANDLE SETTINGS
+  // ============================================================
+
+  const openSettings = (section = "account") => {
+
+    setProfileOpen(false);
+
+    setNotificationOpen(false);
+
+
+    navigate(
+      `/instructor-settings?section=${section}`
+    );
+
+  };
+
+
+  // ============================================================
+  // HANDLE PROFILE TOGGLE
+  // ============================================================
+
+  const handleProfileToggle = () => {
+
+    setProfileOpen(
+      (previous) => !previous
+    );
+
+
+    // Close notifications
+
+    setNotificationOpen(false);
+
+  };
+
 
   // ============================================================
   // HANDLE PROFILE
   // ============================================================
 
-  const handleProfileToggle = () => {
-    setProfileOpen(
-      (previous) => !previous
-    );
+  const handleOpenProfile = () => {
 
-    // Close notifications
-    setNotificationOpen(false);
+    openSettings("profile");
+
   };
+
 
   // ============================================================
   // RENDER
   // ============================================================
 
   return (
+
     <header className="instructor-navbar">
+
 
       {/* =====================================================
           LEFT SECTION
@@ -138,19 +247,34 @@ function InstructorNavbar({
 
       <div className="instructor-navbar-left">
 
+
+        {/* ===================================================
+            SIDEBAR BUTTON
+        =================================================== */}
+
         <button
           type="button"
           className="instructor-navbar-menu-btn"
           onClick={() =>
-            setSidebarOpen(!sidebarOpen)
+            setSidebarOpen(
+              !sidebarOpen
+            )
           }
           aria-label="Toggle sidebar"
+          title="Toggle sidebar"
         >
+
           <FaBars />
+
         </button>
 
 
+        {/* ===================================================
+            BRAND
+        =================================================== */}
+
         <div className="instructor-navbar-brand">
+
 
           <img
             src={logo}
@@ -164,6 +288,7 @@ function InstructorNavbar({
             <h3>
               GMT Software Academy
             </h3>
+
 
             <span>
               Instructor Portal
@@ -184,6 +309,7 @@ function InstructorNavbar({
 
         <FaSearch />
 
+
         <input
           type="text"
           placeholder="Search courses, students..."
@@ -203,7 +329,11 @@ function InstructorNavbar({
             NOTIFICATIONS
         =================================================== */}
 
-        <div className="instructor-navbar-notification-wrapper">
+        <div
+          className=
+            "instructor-navbar-notification-wrapper"
+        >
+
 
           <button
             type="button"
@@ -221,9 +351,17 @@ function InstructorNavbar({
 
             <FaBell />
 
+
+            {/* =================================================
+                UNREAD BADGE
+            ================================================= */}
+
             {unreadCount > 0 && (
 
-              <span className="instructor-navbar-notification-badge">
+              <span
+                className=
+                  "instructor-navbar-notification-badge"
+              >
 
                 {unreadCount > 99
                   ? "99+"
@@ -261,26 +399,43 @@ function InstructorNavbar({
         =================================================== */}
 
         <div
-          className="instructor-navbar-profile"
+          className=
+            "instructor-navbar-profile"
         >
+
 
           <button
             type="button"
-            className="instructor-navbar-profile-btn"
+            className=
+              "instructor-navbar-profile-btn"
             onClick={
               handleProfileToggle
             }
+            aria-label="Open instructor profile menu"
           >
+
+
+            {/* =================================================
+                PROFILE ICON
+            ================================================= */}
 
             <FaUserCircle />
 
 
-            <div className="instructor-navbar-user-info">
+            {/* =================================================
+                USER INFO
+            ================================================= */}
+
+            <div
+              className=
+                "instructor-navbar-user-info"
+            >
 
               <strong>
                 {user?.name ||
                   "Instructor"}
               </strong>
+
 
               <small>
                 Instructor
@@ -288,6 +443,10 @@ function InstructorNavbar({
 
             </div>
 
+
+            {/* =================================================
+                CHEVRON
+            ================================================= */}
 
             <FaChevronDown />
 
@@ -300,14 +459,23 @@ function InstructorNavbar({
 
           {profileOpen && (
 
-            <div className="instructor-navbar-dropdown">
+            <div
+              className=
+                "instructor-navbar-dropdown"
+            >
 
 
-              {/* HEADER */}
+              {/* ===============================================
+                  DROPDOWN HEADER
+              =============================================== */}
 
-              <div className="instructor-navbar-dropdown-header">
+              <div
+                className=
+                  "instructor-navbar-dropdown-header"
+              >
 
                 <FaUserCircle />
+
 
                 <div>
 
@@ -315,6 +483,7 @@ function InstructorNavbar({
                     {user?.name ||
                       "Instructor"}
                   </strong>
+
 
                   <span>
                     {user?.email ||
@@ -326,24 +495,34 @@ function InstructorNavbar({
               </div>
 
 
-              {/* PROFILE */}
+              {/* ===============================================
+                  PROFILE
+              =============================================== */}
 
               <button
                 type="button"
+                onClick={
+                  handleOpenProfile
+                }
               >
 
                 <FaUserCircle />
 
-                Profile
+                <span>
+                  Profile
+                </span>
 
               </button>
 
 
-              {/* SETTINGS */}
+              {/* ===============================================
+                  SETTINGS
+              =============================================== */}
 
-               <button
+              <button
                 type="button"
-                className="gmt-instructor-navbar-dropdown-item"
+                className=
+                  "gmt-instructor-navbar-dropdown-item"
                 onClick={() =>
                   openSettings("account")
                 }
@@ -358,11 +537,14 @@ function InstructorNavbar({
               </button>
 
 
-              {/* LOGOUT */}
+              {/* ===============================================
+                  LOGOUT
+              =============================================== */}
 
               <button
                 type="button"
-                className="instructor-navbar-logout"
+                className=
+                  "instructor-navbar-logout"
                 onClick={
                   handleLogout
                 }
@@ -370,7 +552,9 @@ function InstructorNavbar({
 
                 <FaSignOutAlt />
 
-                Logout
+                <span>
+                  Logout
+                </span>
 
               </button>
 
@@ -381,10 +565,15 @@ function InstructorNavbar({
 
         </div>
 
+
       </div>
 
+
     </header>
+
   );
+
 }
+
 
 export default InstructorNavbar;

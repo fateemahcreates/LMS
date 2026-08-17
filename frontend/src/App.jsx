@@ -36,6 +36,8 @@ import Users from "./Pages/Users";
 import Settings from "./Pages/settings/Settings";
 import Enrollments from "./Pages/Enrollments";
 import AdminCertificates from "./Pages/AdminCertificates";
+import AdminClassSessions from "./Pages/AdminClassSessions"; 
+import AdminAttendance from "./Pages/AdminAttendance";
 
 // ===========================
 // Instructor Pages
@@ -47,6 +49,9 @@ import CreateCourse from "./Pages/instructor/CreateCourse";
 import InstructorStudents from "./Pages/instructor/InstructorStudents"; 
 import InstructorAssignments from "./Pages/instructor/InstructorAssignments"; 
 import InstructorAnnouncements from "./Pages/instructor/InstructorAnnouncements";
+import InstructorAttendance from "./Pages/instructor/InstructorAttendance";
+import InstructorClassSessions from "./Pages/instructor/InstructorClassSessions";
+
 // ===========================
 // Student Pages
 // ===========================
@@ -58,6 +63,7 @@ import Announcements from "./Pages/student/Announcements";
 import Certification from "./Pages/student/Certification";
 import StudentProfile from "./Pages/student/StudentProfile";
 import StudentSettings from "./Pages/student/StudentSettings";
+import StudentAttendance from "./Pages/student/StudentAttendance";
 
 
 function App() {
@@ -132,6 +138,28 @@ function App() {
             }
           />
 
+
+  <Route
+  path="/attendance"
+  element={
+    <ProtectedRoute
+      allowedRoles={["admin"]}
+    >
+      <AdminAttendance />
+    </ProtectedRoute>
+  }
+/>
+
+         <Route
+  path="/class-sessions"
+  element={
+    <ProtectedRoute
+      allowedRoles={["admin"]}
+    >
+      <AdminClassSessions />
+    </ProtectedRoute>
+  }
+/>
 
           <Route
             path="/admin/announcements"
@@ -208,68 +236,84 @@ function App() {
 
 
 
+      
         {/* ===========================
-            INSTRUCTOR PORTAL
-        =========================== */}
+    INSTRUCTOR PORTAL
+=========================== */}
 
-        <Route
-          path="/instructor"
-          element={
-            <ProtectedRoute
-              allowedRoles={["instructor"]}
-            >
-              <InstructorLayout />
-            </ProtectedRoute>
-          }
-        >
+<Route
+  path="/instructor"
+  element={
+    <ProtectedRoute
+      allowedRoles={["instructor"]}
+    >
+      <InstructorLayout />
+    </ProtectedRoute>
+  }
+>
 
-          <Route
-  index
-  element={<InstructorDashboard />}
-/>
+  <Route
+    index
+    element={<InstructorDashboard />}
+  />
 
-          <Route
-            path="courses"
-            element={
-              <InstructorCourses />
-            }
-          />
-          
+  <Route
+    path="courses"
+    element={
+      <InstructorCourses />
+    }
+  />
 
-          <Route
-  path="/instructor/create-course"
-  element={<CreateCourse />}
-/>
+  <Route
+    path="/instructor/create-course"
+    element={<CreateCourse />}
+  />
 
-          <Route
-            path="course/:courseId"
-            element={
-              <InstructorCourseDetails />
-            }
-          />
-         
-         <Route
+  <Route
+    path="course/:courseId"
+    element={
+      <InstructorCourseDetails />
+    }
+  />
+
+  <Route
+    path="attendance"
+    element={<InstructorAttendance />}
+  />
+
+  {/* ==========================================
+      CLASS SESSIONS
+  ========================================== */}
+
+  <Route
+    path="class-sessions"
+    element={<InstructorClassSessions />}
+  />
+
+  <Route
     path="students"
     element={<InstructorStudents />}
   />
 
-<Route
-  path="assignments"
-  element={<InstructorAssignments />}
-/>
+  <Route
+    path="assignments"
+    element={<InstructorAssignments />}
+  />
 
-<Route
-  path="announcements"
-  element={
-    <InstructorAnnouncements />
-  }
-/>
+  <Route
+    path="announcements"
+    element={
+      <InstructorAnnouncements />
+    }
+  />
 
-<Route
-  path="settings"
-  element={<Settings />}
-/>
-        </Route>
+  <Route
+    path="settings"
+    element={<Settings />}
+  />
+
+</Route>
+
 
         
 
@@ -365,6 +409,11 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+  path="/student/attendance"
+  element={<StudentAttendance />}
+/>
 
 
           <Route

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { notify } from "../../utils/notify";
 
 import {
   FaClipboardList,
@@ -402,107 +403,106 @@ function InstructorAssignments() {
   // ==========================================
   // SAVE ASSIGNMENT
   // ==========================================
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  if (
+    !formData.title.trim() ||
+    !formData.course ||
+    !formData.dueDate
+  ) {
+    notify.warning(
+      "Assignment title, course and due date are required."
+    );
 
-    if (
-      !formData.title.trim() ||
-      !formData.course ||
-      !formData.dueDate
-    ) {
-      alert(
-        "Assignment title, course and due date are required."
+    return;
+  }
+
+  try {
+    setSaving(true);
+
+    if (editingAssignment) {
+      await updateInstructorAssignment(
+        editingAssignment._id,
+        formData
       );
 
-      return;
+      notify.success(
+        "Assignment updated successfully."
+      );
+    } else {
+      await createInstructorAssignment(
+        formData
+      );
+
+      notify.success(
+        "Assignment created successfully."
+      );
     }
 
-    try {
-      setSaving(true);
+    setShowForm(false);
 
-      if (editingAssignment) {
-        await updateInstructorAssignment(
-          editingAssignment._id,
-          formData
-        );
+    setEditingAssignment(null);
 
-        alert(
-          "Assignment updated successfully."
-        );
-      } else {
-        await createInstructorAssignment(
-          formData
-        );
+    setFormData({
+      title: "",
+      description: "",
+      course: "",
+      dueDate: "",
+      totalMarks: 100,
+      submissionType: "Online",
+      attachment: "",
+      status: "Active",
+    });
 
-        alert(
-          "Assignment created successfully."
-        );
-      }
+    await loadAssignments();
 
-      setShowForm(false);
+  } catch (error) {
 
-      setEditingAssignment(null);
+    console.error(
+      "SAVE INSTRUCTOR ASSIGNMENT ERROR:",
+      error
+    );
 
-      setFormData({
-        title: "",
-        description: "",
-        course: "",
-        dueDate: "",
-        totalMarks: 100,
-        submissionType: "Online",
-        attachment: "",
-        status: "Active",
-      });
+    notify.apiError(error);
 
-      await loadAssignments();
-    } catch (error) {
-      console.error(
-        "SAVE INSTRUCTOR ASSIGNMENT ERROR:",
-        error
-      );
-
-      alert(
-        error.response?.data?.message ||
-          "Unable to save assignment."
-      );
-    } finally {
-      setSaving(false);
-    }
-  };
+  } finally {
+    setSaving(false);
+  }
+};
 
   // ==========================================
   // DELETE
   // ==========================================
 
-  const handleDelete = async (id) => {
-    const confirmed =
-      window.confirm(
-        "Are you sure you want to delete this assignment?"
-      );
+ const handleDelete = (id) => {
 
-    if (!confirmed) return;
+  notify.confirmDelete(async () => {
 
     try {
+
       await deleteInstructorAssignment(id);
 
-      alert(
+      notify.success(
         "Assignment deleted successfully."
       );
 
       await loadAssignments();
+
     } catch (error) {
+
       console.error(
         "DELETE INSTRUCTOR ASSIGNMENT ERROR:",
         error
       );
 
-      alert(
-        error.response?.data?.message ||
-          "Unable to delete assignment."
-      );
+      notify.apiError(error);
+
     }
-  };
+
+  });
+
+};
 
   // ==========================================
   // GET ASSIGNMENT SUBMISSIONS
@@ -641,10 +641,9 @@ function InstructorAssignments() {
         gradeData.score === "" ||
         gradeData.score === null
       ) {
-        alert(
-          "Please enter a score."
-        );
-
+       notify.warning(
+  "Please enter a score."
+);
         return;
       }
 
@@ -666,9 +665,9 @@ function InstructorAssignments() {
         numericScore >
           Number(maxMarks)
       ) {
-        alert(
-          `Score must be between 0 and ${maxMarks}.`
-        );
+        notify.warning(
+  `Score must be between 0 and ${maxMarks}.`
+);
 
         return;
       }
@@ -687,10 +686,9 @@ function InstructorAssignments() {
               "",
           }
         );
-
-        alert(
-          "Submission graded successfully."
-        );
+notify.success(
+  "Submission graded successfully."
+);
 
         await loadSubmissions();
 
@@ -717,12 +715,7 @@ function InstructorAssignments() {
           "GRADE SUBMISSION ERROR:",
           error
         );
-
-        alert(
-          error.response?.data
-            ?.message ||
-            "Unable to grade submission."
-        );
+notify.apiError(error);
       } finally {
         setGrading(false);
       }

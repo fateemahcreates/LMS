@@ -12,7 +12,10 @@ import {
   FaCog,
   FaSignOutAlt,
   FaTimes,
+  FaCalendarCheck,
 } from "react-icons/fa";
+
+import { notify } from "../utils/notify";
 
 import "../styles/AdminSidebar.css";
 
@@ -36,21 +39,43 @@ const menuSections = [
         path: "/students",
         icon: FaUserGraduate,
       },
+
+      // ==========================================
+      // CLASS SESSIONS
+      // ==========================================
+      {
+        label: "Class Sessions",
+        path: "/class-sessions",
+        icon: FaCalendarCheck,
+      },
+
+      // ==========================================
+      // ATTENDANCE
+      // ==========================================
+      {
+        label: "Attendance",
+        path: "/attendance",
+        icon: FaCalendarCheck,
+      },
+
       {
         label: "Courses",
         path: "/courses",
         icon: FaBookOpen,
       },
+
       {
         label: "Assignments",
         path: "/assignments",
         icon: FaClipboardList,
       },
+
       {
         label: "Enrollments",
         path: "/enrollments",
         icon: FaClipboardCheck,
       },
+
       {
         label: "Certificates",
         path: "/admin/certificates",
@@ -78,6 +103,7 @@ const menuSections = [
         path: "/users",
         icon: FaUsers,
       },
+
       {
         label: "Settings",
         path: "/settings",
@@ -89,12 +115,22 @@ const menuSections = [
 function AdminSidebar({ sidebarOpen, closeSidebar }) {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+  // ==========================================
+  // LOGOUT
+  // ==========================================
 
-    navigate("/login");
+  const handleLogout = () => {
+    notify.confirmLogout(() => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
+      navigate("/login");
+    });
   };
+
+  // ==========================================
+  // CLOSE SIDEBAR ON MOBILE
+  // ==========================================
 
   const handleLinkClick = () => {
     if (window.innerWidth <= 992) {
@@ -110,11 +146,13 @@ function AdminSidebar({ sidebarOpen, closeSidebar }) {
           : "gmt-admin-sidebar-closed"
       }`}
     >
+
       {/* ==========================
-          Mobile Close Button
+          MOBILE CLOSE BUTTON
       ========================== */}
 
       <button
+        type="button"
         className="gmt-admin-sidebar-close"
         onClick={closeSidebar}
       >
@@ -122,7 +160,7 @@ function AdminSidebar({ sidebarOpen, closeSidebar }) {
       </button>
 
       {/* ==========================
-          Logo
+          LOGO
       ========================== */}
 
       <div className="gmt-admin-sidebar-brand">
@@ -132,76 +170,82 @@ function AdminSidebar({ sidebarOpen, closeSidebar }) {
         </div>
 
         <div>
-
           <h2>GMT Software</h2>
 
-          <p>Learning Management System</p>
-
+          <p>
+            Learning Management System
+          </p>
         </div>
 
       </div>
 
+      {/* ==========================
+          NAVIGATION
+      ========================== */}
+
       <nav className="gmt-admin-sidebar-menu">
 
-  {menuSections.map((section) => (
+        {menuSections.map((section) => (
 
-    <div
-      key={section.title}
-      className="gmt-admin-sidebar-section"
-    >
-
-      <span className="gmt-admin-sidebar-heading">
-        {section.title}
-      </span>
-
-      {section.items.map((item) => {
-
-        const Icon = item.icon;
-
-        return (
-
-          <NavLink
-            key={item.path}
-            to={item.path}
-            end={item.path === "/"}
-            onClick={handleLinkClick}
-            className={({ isActive }) =>
-              `gmt-admin-sidebar-link ${
-                isActive
-                  ? "gmt-admin-sidebar-link-active"
-                  : ""
-              }`
-            }
+          <div
+            key={section.title}
+            className="gmt-admin-sidebar-section"
           >
 
-            <Icon />
+            <span className="gmt-admin-sidebar-heading">
+              {section.title}
+            </span>
 
-            <span>{item.label}</span>
+            {section.items.map((item) => {
 
-          </NavLink>
+              const Icon = item.icon;
 
-        );
+              return (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  end={item.path === "/"}
+                  onClick={handleLinkClick}
+                  className={({ isActive }) =>
+                    `gmt-admin-sidebar-link ${
+                      isActive
+                        ? "gmt-admin-sidebar-link-active"
+                        : ""
+                    }`
+                  }
+                >
 
-      })}
+                  <Icon />
 
-    </div>
+                  <span>
+                    {item.label}
+                  </span>
 
-  ))}
+                </NavLink>
+              );
+            })}
 
-</nav>
+          </div>
+        ))}
+
+      </nav>
 
       {/* ==========================
-          Footer
+          FOOTER
       ========================== */}
 
       <div className="gmt-admin-sidebar-footer">
 
         <button
+          type="button"
           className="gmt-admin-sidebar-logout"
           onClick={handleLogout}
         >
           <FaSignOutAlt />
-          <span>Logout</span>
+
+          <span>
+            Logout
+          </span>
         </button>
 
       </div>

@@ -569,47 +569,212 @@
 
 
 /* ============================================================
-   NOTIFICATION BADGE
+   NOTIFICATION
+============================================================ */
+
+.instructor-navbar-notification-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+
+/* ============================================================
+   NOTIFICATION BUTTON
+============================================================ */
+
+.instructor-navbar-icon-btn {
+  position: relative;
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #4b5563;
+
+  cursor: pointer;
+
+  font-size: 17px;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* HOVER */
+
+.instructor-navbar-icon-btn:hover {
+  background: #fef2f2;
+  color: #c91f26;
+  border-color: #fecaca;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+
+/* ACTIVE / OPEN */
+
+.instructor-navbar-icon-btn.active {
+  background: #fef2f2;
+  color: #c91f26;
+  border-color: #fecaca;
+
+  box-shadow:
+    0 0 0 3px rgba(201, 31, 38, 0.08);
+}
+
+
+/* ============================================================
+   RED NOTIFICATION COUNT
 ============================================================ */
 
 .instructor-navbar-notification-badge {
-
   position: absolute;
 
-  top: 3px;
+  top: -6px;
+  right: -6px;
 
-  right: 2px;
+  min-width: 20px;
+  height: 20px;
 
-  min-width: 17px;
-
-  height: 17px;
+  padding: 0 5px;
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
-  padding: 0 4px;
-
   background: #c91f26;
-
   color: #ffffff;
 
   border: 2px solid #ffffff;
-
   border-radius: 999px;
 
-  font-size: 9px;
-
-  font-weight: 700;
+  font-size: 10px;
+  font-weight: 800;
 
   line-height: 1;
 
-  box-sizing: border-box;
+  box-shadow:
+    0 3px 8px rgba(201, 31, 38, 0.35);
+
+  z-index: 10;
+
+  animation: instructorNotificationBadgePop 0.25s ease-out;
+}
+
+
+/* ============================================================
+   BADGE POP ANIMATION
+============================================================ */
+
+@keyframes instructorNotificationBadgePop {
+
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  70% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 
 }
 
+
+/* ============================================================
+   99+ BADGE
+============================================================ */
+
+.instructor-navbar-notification-badge {
+  white-space: nowrap;
+}
+
+
+/* ============================================================
+   NOTIFICATION DROPDOWN POSITION
+============================================================ */
+
+.instructor-navbar-notification-wrapper
+  .notification-dropdown {
+  position: absolute;
+
+  top: calc(100% + 12px);
+  right: 0;
+
+  z-index: 1000;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media (max-width: 768px) {
+
+  .instructor-navbar-icon-btn {
+    width: 40px;
+    height: 40px;
+
+    font-size: 16px;
+  }
+
+  .instructor-navbar-notification-badge {
+    top: -5px;
+    right: -5px;
+
+    min-width: 18px;
+    height: 18px;
+
+    padding: 0 4px;
+
+    font-size: 9px;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .instructor-navbar-icon-btn {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 9px;
+  }
+
+  .instructor-navbar-notification-badge {
+    top: -4px;
+    right: -4px;
+
+    min-width: 17px;
+    height: 17px;
+
+    font-size: 8px;
+
+    border-width: 2px;
+  }
+
+}
 
 /* ============================================================
    MOBILE
