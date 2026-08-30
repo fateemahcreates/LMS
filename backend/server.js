@@ -25,7 +25,8 @@ const instructorRoutes = require("./routes/instructorRoutes");
 const settingsRoutes = require("./routes/settingsRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
-
+const attendanceRoutes = require("./routes/attendanceRoutes");
+const classSessionRoutes = require("./routes/classSessionRoutes");
 
 // ============================================================
 // APP
@@ -131,6 +132,13 @@ app.use(
 app.use(
   "/api/notifications",
   notificationRoutes
+);
+
+app.use("/api/attendance", attendanceRoutes);
+
+app.use(
+  "/api/class-sessions",
+  classSessionRoutes
 );
 
 

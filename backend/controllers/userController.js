@@ -3,463 +3,285 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const Student = require("../models/Student");
 
-const sendEmail = require("../utils/sendEmail");
-
 // ==========================================
 // GENERATE STUDENT ID
 // ==========================================
-const generateStudentId = async () => {
-  let studentId;
-  let exists = true;
+//
+// Format:
+// GMT-STU-2026-000001
+// GMT-STU-2026-000002
+// GMT-STU-2026-000003
+//
+// The number increases sequentially.
+// ==========================================
 
-  while (exists) {
-    const randomNumber = Math.floor(
-      100000 + Math.random() * 900000
+const generateStudentId = async () => {
+  const currentYear = new Date().getFullYear();
+
+  const prefix = `GMT-STU-${currentYear}-`;
+
+  // ==========================================
+  // FIND STUDENT IDs FOR CURRENT YEAR
+  // ==========================================
+
+  const students = await Student.find({
+    studentId: {
+      $regex: `^GMT-STU-${currentYear}-\\d{6}$`,
+    },
+  })
+    .select("studentId")
+    .lean();
+
+  // ==========================================
+  // FIND HIGHEST SEQUENCE NUMBER
+  // ==========================================
+
+  let highestNumber = 0;
+
+  students.forEach((student) => {
+    const numberPart = student.studentId.replace(
+      prefix,
+      ""
     );
 
-    studentId = `GMT-STU-${new Date().getFullYear()}-${randomNumber}`;
+    const number = parseInt(
+      numberPart,
+      10
+    );
 
-    exists = await Student.exists({
+    if (
+      !isNaN(number) &&
+      number > highestNumber
+    ) {
+      highestNumber = number;
+    }
+  });
+
+  // ==========================================
+  // NEXT NUMBER
+  // ==========================================
+
+  const nextNumber =
+    highestNumber + 1;
+
+  // ==========================================
+  // FORMAT AS 6 DIGITS
+  // ==========================================
+
+  const sequence =
+    String(nextNumber).padStart(
+      6,
+      "0"
+    );
+
+  const studentId =
+    `${prefix}${sequence}`;
+
+  // ==========================================
+  // SAFETY CHECK
+  // ==========================================
+
+  const exists =
+    await Student.exists({
       studentId,
     });
+
+  if (exists) {
+    return generateStudentId();
   }
 
   return studentId;
 };
 
 // ==========================================
-// SEND NEW USER LOGIN EMAIL
-// ==========================================
-const sendNewUserCredentialsEmail = async ({
-  user,
-  password,
-}) => {
-  try {
-    if (!user || !user.email) {
-      throw new Error(
-        "User email is required to send login details."
-      );
-    }
-
-    const clientUrl =
-      process.env.CLIENT_URL ||
-      "http://localhost:5173";
-
-    // ========================================
-    // ROLE DISPLAY
-    // ========================================
-
-    const roleLabel =
-      user.role === "admin"
-        ? "Administrator"
-        : user.role === "instructor"
-        ? "Instructor"
-        : "Student";
-
-    // ========================================
-    // STUDENT ID
-    // ========================================
-
-    const studentIdSection =
-      user.studentId
-        ? `
-          <div
-            style="
-              margin-top:18px;
-              padding:14px 16px;
-              background:#f9fafb;
-              border:1px solid #e5e7eb;
-              border-radius:8px;
-            "
-          >
-            <p
-              style="
-                margin:0;
-                font-size:13px;
-                color:#6b7280;
-              "
-            >
-              Student ID
-            </p>
-
-            <p
-              style="
-                margin:5px 0 0;
-                font-size:16px;
-                font-weight:bold;
-                color:#111827;
-              "
-            >
-              ${user.studentId}
-            </p>
-          </div>
-        `
-        : "";
-
-    // ========================================
-    // EMAIL HTML
-    // ========================================
-
-    const html = `
-      <!DOCTYPE html>
-
-      <html>
-
-      <head>
-
-        <meta
-          charset="UTF-8"
-        />
-
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0"
-        />
-
-        <title>
-          GMT LMS Account
-        </title>
-
-      </head>
-
-      <body
-        style="
-          margin:0;
-          padding:0;
-          background:#f5f7fb;
-          font-family:Arial,Helvetica,sans-serif;
-        "
-      >
-
-        <div
-          style="
-            max-width:650px;
-            margin:40px auto;
-            background:#ffffff;
-            border-radius:12px;
-            overflow:hidden;
-            border:1px solid #e5e7eb;
-          "
-        >
-
-          <!-- HEADER -->
-
-          <div
-            style="
-              padding:30px 32px;
-              background:#C91F26;
-              color:#ffffff;
-            "
-          >
-
-            <h1
-              style="
-                margin:0;
-                font-size:26px;
-              "
-            >
-              GMT LMS
-            </h1>
-
-            <p
-              style="
-                margin:8px 0 0;
-                font-size:14px;
-                opacity:0.9;
-              "
-            >
-              Learning Management System
-            </p>
-
-          </div>
-
-
-          <!-- CONTENT -->
-
-          <div
-            style="
-              padding:32px;
-              color:#111827;
-            "
-          >
-
-            <h2
-              style="
-                margin:0 0 16px;
-                font-size:23px;
-              "
-            >
-              Welcome to GMT LMS
-            </h2>
-
-
-            <p
-              style="
-                margin:0;
-                font-size:15px;
-                line-height:1.7;
-                color:#4b5563;
-              "
-            >
-              Hello ${user.name || "User"},
-            </p>
-
-
-            <p
-              style="
-                margin:16px 0 0;
-                font-size:15px;
-                line-height:1.7;
-                color:#4b5563;
-              "
-            >
-              Your GMT LMS account has been created successfully.
-              You can use the login details below to access your account.
-            </p>
-
-
-            <!-- ACCOUNT DETAILS -->
-
-            <div
-              style="
-                margin-top:25px;
-                padding:20px;
-                background:#f9fafb;
-                border:1px solid #e5e7eb;
-                border-radius:10px;
-              "
-            >
-
-              <h3
-                style="
-                  margin:0 0 16px;
-                  font-size:17px;
-                  color:#111827;
-                "
-              >
-                Your Login Details
-              </h3>
-
-
-              <!-- NAME -->
-
-              <p
-                style="
-                  margin:8px 0;
-                  font-size:14px;
-                  color:#4b5563;
-                "
-              >
-                <strong>Name:</strong>
-                ${user.name}
-              </p>
-
-
-              <!-- EMAIL -->
-
-              <p
-                style="
-                  margin:8px 0;
-                  font-size:14px;
-                  color:#4b5563;
-                "
-              >
-                <strong>Email:</strong>
-                ${user.email}
-              </p>
-
-
-              <!-- ROLE -->
-
-              <p
-                style="
-                  margin:8px 0;
-                  font-size:14px;
-                  color:#4b5563;
-                "
-              >
-                <strong>Role:</strong>
-                ${roleLabel}
-              </p>
-
-
-              <!-- PASSWORD -->
-
-              <p
-                style="
-                  margin:8px 0;
-                  font-size:14px;
-                  color:#4b5563;
-                "
-              >
-                <strong>Password:</strong>
-                ${password}
-              </p>
-
-              ${studentIdSection}
-
-            </div>
-
-
-            <!-- SECURITY NOTICE -->
-
-            <div
-              style="
-                margin-top:22px;
-                padding:15px 17px;
-                background:#fff7ed;
-                border:1px solid #fed7aa;
-                border-radius:8px;
-              "
-            >
-
-              <p
-                style="
-                  margin:0;
-                  font-size:13px;
-                  line-height:1.6;
-                  color:#9a3412;
-                "
-              >
-                For your security, please change your password
-                after your first login and do not share your
-                login credentials with anyone.
-              </p>
-
-            </div>
-
-
-            <!-- LOGIN BUTTON -->
-
-            <div
-              style="
-                margin-top:28px;
-              "
-            >
-
-              <a
-                href="${clientUrl}/login"
-                style="
-                  display:inline-block;
-                  padding:13px 24px;
-                  background:#C91F26;
-                  color:#ffffff;
-                  text-decoration:none;
-                  border-radius:7px;
-                  font-size:14px;
-                  font-weight:bold;
-                "
-              >
-                Login to GMT LMS
-              </a>
-
-            </div>
-
-
-            <p
-              style="
-                margin:25px 0 0;
-                font-size:13px;
-                line-height:1.6;
-                color:#9ca3af;
-              "
-            >
-              If you did not expect this account to be created,
-              please contact the GMT LMS administrator.
-            </p>
-
-          </div>
-
-
-          <!-- FOOTER -->
-
-          <div
-            style="
-              padding:20px 32px;
-              border-top:1px solid #e5e7eb;
-              background:#fafafa;
-            "
-          >
-
-            <p
-              style="
-                margin:0;
-                font-size:12px;
-                color:#9ca3af;
-                line-height:1.6;
-              "
-            >
-              This email was sent automatically by GMT LMS.
-            </p>
-
-            <p
-              style="
-                margin:8px 0 0;
-                font-size:12px;
-                color:#9ca3af;
-              "
-            >
-              GMT LMS Team
-            </p>
-
-          </div>
-
-        </div>
-
-      </body>
-
-      </html>
-    `;
-
-    // ========================================
-    // SEND EMAIL
-    // ========================================
-
-    await sendEmail({
-      to: user.email,
-      subject: "Welcome to GMT LMS - Your Login Details",
-      html,
-    });
-
-    console.log(
-      `New user login email sent to ${user.email}`
-    );
-
-    return {
-      sent: true,
-      error: null,
-    };
-
-  } catch (error) {
-
-    console.error(
-      "New user email error:",
-      error.message
-    );
-
-    return {
-      sent: false,
-      error: error.message,
-    };
-  }
-};
-
-
-// ==========================================
 // GET ALL USERS
 // GET /api/users
 // ==========================================
+
 const getUsers = async (req, res) => {
   try {
+    // ==========================================
+    // GET USERS WITHOUT PASSWORD
+    // ==========================================
 
-    const users =
-      await User.find()
-        .select("-password");
+    const users = await User.find()
+      .select("-password")
+      .lean();
 
-    res.status(200).json(users);
+    // ==========================================
+    // GET STUDENT PROFILES
+    // ==========================================
+
+    const studentIds = users
+      .filter(
+        (user) =>
+          user.role === "student"
+      )
+      .map(
+        (user) => user._id
+      );
+
+    const students =
+      await Student.find({
+        user: {
+          $in: studentIds,
+        },
+      })
+        .select(
+          "user studentId program cohort phone parentPhone guardianPhone address avatar status"
+        )
+        .lean();
+
+    // ==========================================
+    // GET COURSES
+    // ==========================================
+
+    const Course =
+      require("../models/Course");
+
+    const courses =
+      await Course.find({
+        students: {
+          $in: students.map(
+            (student) =>
+              student._id
+          ),
+        },
+      })
+        .select(
+          "title code category level status students"
+        )
+        .lean();
+
+    // ==========================================
+    // CREATE STUDENT PROFILE MAP
+    // ==========================================
+
+    const studentMap =
+      new Map();
+
+    students.forEach(
+      (student) => {
+        studentMap.set(
+          student.user.toString(),
+          student
+        );
+      }
+    );
+
+    // ==========================================
+    // ATTACH STUDENT + COURSE DATA
+    // ==========================================
+
+    const formattedUsers =
+      users.map((user) => {
+        const userData = {
+          ...user,
+          courses: [],
+        };
+
+        // ========================================
+        // STUDENT DATA
+        // ========================================
+
+        if (
+          user.role === "student"
+        ) {
+          const student =
+            studentMap.get(
+              user._id.toString()
+            );
+
+          if (student) {
+            userData.studentId =
+              student.studentId ||
+              user.studentId ||
+              null;
+
+            userData.program =
+              student.program || "";
+
+            userData.cohort =
+              student.cohort || "";
+
+            userData.phone =
+              student.phone ||
+              user.phone ||
+              "";
+
+            userData.parentPhone =
+              student.parentPhone ||
+              user.parentPhone ||
+              "";
+
+            userData.guardianPhone =
+              student.guardianPhone ||
+              user.guardianPhone ||
+              "";
+
+            userData.address =
+              student.address ||
+              user.address ||
+              "";
+
+            userData.avatar =
+              student.avatar ||
+              user.avatar ||
+              "";
+
+            userData.studentStatus =
+              student.status ||
+              "active";
+
+            // ====================================
+            // FIND STUDENT COURSES
+            // ====================================
+
+            userData.courses =
+              courses
+                .filter((course) =>
+                  course.students?.some(
+                    (studentId) =>
+                      studentId.toString() ===
+                      student._id.toString()
+                  )
+                )
+                .map(
+                  (course) => ({
+                    _id:
+                      course._id,
+
+                    title:
+                      course.title,
+
+                    code:
+                      course.code,
+
+                    category:
+                      course.category,
+
+                    level:
+                      course.level,
+
+                    status:
+                      course.status,
+                  })
+                );
+          }
+        }
+
+        return userData;
+      });
+
+    // ==========================================
+    // RESPONSE
+    // ==========================================
+
+    res.status(200).json(
+      formattedUsers
+    );
 
   } catch (error) {
-
     console.error(
       "Get users error:",
       error
@@ -468,35 +290,54 @@ const getUsers = async (req, res) => {
     res.status(500).json({
       message: "Server Error",
     });
-
   }
 };
-
 
 // ==========================================
 // GET SINGLE USER
 // GET /api/users/:id
 // ==========================================
-const getUser = async (req, res) => {
-  try {
 
+const getUser = async (
+  req,
+  res
+) => {
+  try {
     const user =
       await User.findById(
         req.params.id
-      ).select("-password");
+      )
+        .select("-password")
+        .lean();
 
     if (!user) {
-
       return res.status(404).json({
-        message: "User not found.",
+        message:
+          "User not found.",
       });
-
     }
 
-    res.status(200).json(user);
+    // ==========================================
+    // GET STUDENT PROFILE
+    // ==========================================
+
+    let student = null;
+
+    if (
+      user.role === "student"
+    ) {
+      student =
+        await Student.findOne({
+          user: user._id,
+        }).lean();
+    }
+
+    res.status(200).json({
+      ...user,
+      student,
+    });
 
   } catch (error) {
-
     console.error(
       "Get user error:",
       error
@@ -505,16 +346,18 @@ const getUser = async (req, res) => {
     res.status(500).json({
       message: "Server Error",
     });
-
   }
 };
-
 
 // ==========================================
 // CREATE USER
 // POST /api/users
 // ==========================================
-const createUser = async (req, res) => {
+
+const createUser = async (
+  req,
+  res
+) => {
   try {
 
     const {
@@ -523,7 +366,10 @@ const createUser = async (req, res) => {
       password,
       role,
 
-      // General user information
+      // ====================================
+      // GENERAL USER INFORMATION
+      // ====================================
+
       phone,
       gender,
       dateOfBirth,
@@ -532,19 +378,26 @@ const createUser = async (req, res) => {
       bio,
       avatar,
 
-      // Student information
+      // ====================================
+      // STUDENT INFORMATION
+      // ====================================
+
       program,
       cohort,
+      parentPhone,
+      guardianPhone,
 
-      // Account status
+      // ====================================
+      // ACCOUNT STATUS
+      // ====================================
+
       status,
 
     } = req.body;
 
-
-    // ========================================
-    // VALIDATE COMMON FIELDS
-    // ========================================
+    // ==========================================
+    // VALIDATE BASIC REQUIRED FIELDS
+    // ==========================================
 
     if (
       !name ||
@@ -552,18 +405,15 @@ const createUser = async (req, res) => {
       !password ||
       !role
     ) {
-
       return res.status(400).json({
         message:
           "Please fill in all required fields.",
       });
-
     }
 
-
-    // ========================================
+    // ==========================================
     // VALIDATE ROLE
-    // ========================================
+    // ==========================================
 
     if (
       ![
@@ -572,18 +422,82 @@ const createUser = async (req, res) => {
         "instructor",
       ].includes(role)
     ) {
-
       return res.status(400).json({
         message:
           "Invalid user role.",
       });
-
     }
 
+    // ==========================================
+    // VALIDATE STATUS
+    // ==========================================
 
-    // ========================================
+    if (
+      status !== undefined &&
+      ![
+        "active",
+        "inactive",
+        "suspended",
+      ].includes(status)
+    ) {
+      return res.status(400).json({
+        message:
+          "Invalid user status.",
+      });
+    }
+
+    // ==========================================
+    // STUDENT REQUIRED INFORMATION
+    // ==========================================
+
+    if (
+      role === "student"
+    ) {
+
+      if (
+        !parentPhone ||
+        !parentPhone.trim()
+      ) {
+        return res.status(400).json({
+          message:
+            "Parent phone number is required for students.",
+        });
+      }
+
+      if (
+        !guardianPhone ||
+        !guardianPhone.trim()
+      ) {
+        return res.status(400).json({
+          message:
+            "Guardian phone number is required for students.",
+        });
+      }
+
+      if (
+        !program ||
+        !program.trim()
+      ) {
+        return res.status(400).json({
+          message:
+            "Program is required for students.",
+        });
+      }
+
+      if (
+        !cohort ||
+        !cohort.trim()
+      ) {
+        return res.status(400).json({
+          message:
+            "Cohort is required for students.",
+        });
+      }
+    }
+
+    // ==========================================
     // CHECK EXISTING EMAIL
-    // ========================================
+    // ==========================================
 
     const normalizedEmail =
       email.toLowerCase().trim();
@@ -594,45 +508,25 @@ const createUser = async (req, res) => {
       });
 
     if (existingUser) {
-
       return res.status(400).json({
         message:
           "Email already exists.",
       });
-
     }
 
-
-    // ========================================
-    // KEEP ORIGINAL PASSWORD
-    // ========================================
-    //
-    // IMPORTANT:
-    // We need the original password for
-    // the welcome email.
-    //
-    // We NEVER save this plain password
-    // in MongoDB.
-    // ========================================
-
-    const originalPassword =
-      password;
-
-
-    // ========================================
+    // ==========================================
     // HASH PASSWORD
-    // ========================================
+    // ==========================================
 
     const hashedPassword =
       await bcrypt.hash(
-        originalPassword,
+        password,
         10
       );
 
-
-    // ========================================
+    // ==========================================
     // CREATE USER
-    // ========================================
+    // ==========================================
 
     const user =
       await User.create({
@@ -648,8 +542,13 @@ const createUser = async (req, res) => {
 
         role,
 
-        phone:
-          phone || "",
+        // ====================================
+        // GENERAL INFORMATION
+        // ====================================
+
+        phone: phone
+          ? phone.trim()
+          : "",
 
         gender:
           gender || "",
@@ -658,122 +557,149 @@ const createUser = async (req, res) => {
           dateOfBirth || null,
 
         nationality:
-          nationality || "",
+          nationality
+            ? nationality.trim()
+            : "",
 
         address:
-          address || "",
+          address
+            ? address.trim()
+            : "",
 
         bio:
-          bio || "",
+          bio
+            ? bio.trim()
+            : "",
 
         avatar:
           avatar || "",
 
+        // ====================================
+        // PARENT / GUARDIAN
+        // ====================================
+
+        parentPhone:
+          role === "student"
+            ? parentPhone.trim()
+            : "",
+
+        guardianPhone:
+          role === "student"
+            ? guardianPhone.trim()
+            : "",
+
+        // ====================================
+        // STATUS
+        // ====================================
+
         status:
           status || "active",
-
       });
 
-
-    // ========================================
-    // STUDENT PROFILE
-    // ========================================
+    // ==========================================
+    // CREATE STUDENT PROFILE
+    // ==========================================
 
     let student = null;
 
+    if (
+      role === "student"
+    ) {
 
-    if (role === "student") {
-
-      // ======================================
+      // ========================================
       // GENERATE STUDENT ID
-      // ======================================
+      // ========================================
 
       const studentId =
         await generateStudentId();
 
-
-      // ======================================
+      // ========================================
       // SAVE STUDENT ID TO USER
-      // ======================================
+      // ========================================
 
       user.studentId =
         studentId;
 
       await user.save();
 
-
-      // ======================================
+      // ========================================
       // CREATE STUDENT PROFILE
-      // ======================================
+      // ========================================
 
       student =
         await Student.create({
 
+          // ==================================
+          // USER LINK
+          // ==================================
+
           user:
             user._id,
 
+          // ==================================
+          // STUDENT ID
+          // ==================================
+
           studentId,
 
+          // ==================================
+          // PROGRAM
+          // ==================================
+
           program:
-            program || "",
+            program.trim(),
+
+          // ==================================
+          // COHORT
+          // ==================================
 
           cohort:
-            cohort || "",
+            cohort.trim(),
+
+          // ==================================
+          // PHONE
+          // ==================================
 
           phone:
-            phone || "",
+            phone
+              ? phone.trim()
+              : "",
+
+          // ==================================
+          // ADDRESS
+          // ==================================
 
           address:
-            address || "",
+            address
+              ? address.trim()
+              : "",
+
+          // ==================================
+          // AVATAR
+          // ==================================
 
           avatar:
             avatar || "",
+
+          // ==================================
+          // STUDENT STATUS
+          // ==================================
 
           status:
             status === "inactive"
               ? "inactive"
               : "active",
-
         });
-
     }
 
-
-    // ========================================
-    // SEND WELCOME EMAIL
-    // ========================================
-    //
-    // This happens AFTER the account has
-    // successfully been created.
-    //
-    // If email fails, the account remains
-    // created.
-    // ========================================
-
-    const emailResult =
-      await sendNewUserCredentialsEmail({
-        user,
-        password:
-          originalPassword,
-      });
-
-
-    // ========================================
+    // ==========================================
     // SUCCESS RESPONSE
-    // ========================================
+    // ==========================================
 
     res.status(201).json({
 
       message:
-        emailResult.sent
-          ? "User created successfully. Login details have been sent to the user's email."
-          : "User created successfully, but the login email could not be sent.",
-
-      emailSent:
-        emailResult.sent,
-
-      emailError:
-        emailResult.error || null,
+        "User created successfully.",
 
       user: {
 
@@ -790,11 +716,23 @@ const createUser = async (req, res) => {
           user.role,
 
         studentId:
-          user.studentId || null,
+          user.studentId ||
+          null,
+
+        phone:
+          user.phone ||
+          "",
+
+        parentPhone:
+          user.parentPhone ||
+          "",
+
+        guardianPhone:
+          user.guardianPhone ||
+          "",
 
         status:
           user.status,
-
       },
 
       student,
@@ -811,51 +749,486 @@ const createUser = async (req, res) => {
     res.status(500).json({
       message:
         "Server Error",
-      error:
-        error.message,
     });
-
   }
 };
-
 
 // ==========================================
 // UPDATE USER
 // PUT /api/users/:id
 // ==========================================
-const updateUser = async (req, res) => {
+
+const updateUser = async (
+  req,
+  res
+) => {
   try {
 
     const { id } =
       req.params;
 
-    const user =
-      await User.findByIdAndUpdate(
-        id,
-        req.body,
-        {
-          new: true,
-          runValidators: true,
-        }
-      ).select("-password");
+    const {
+      name,
+      email,
+      password,
+      role,
 
+      phone,
+      gender,
+      dateOfBirth,
+      nationality,
+      address,
+      bio,
+      avatar,
+
+      program,
+      cohort,
+
+      parentPhone,
+      guardianPhone,
+
+      status,
+
+    } = req.body;
+
+    // ==========================================
+    // FIND USER
+    // ==========================================
+
+    const user =
+      await User.findById(id);
 
     if (!user) {
-
       return res.status(404).json({
         message:
           "User not found.",
       });
-
     }
 
+    // ==========================================
+    // DETERMINE FINAL ROLE
+    // ==========================================
+
+    const finalRole =
+      role !== undefined
+        ? role
+        : user.role;
+
+    // ==========================================
+    // VALIDATE ROLE
+    // ==========================================
+
+    if (
+      ![
+        "admin",
+        "student",
+        "instructor",
+      ].includes(finalRole)
+    ) {
+      return res.status(400).json({
+        message:
+          "Invalid user role.",
+      });
+    }
+
+    // ==========================================
+    // VALIDATE STATUS
+    // ==========================================
+
+    if (
+      status !== undefined &&
+      ![
+        "active",
+        "inactive",
+        "suspended",
+      ].includes(status)
+    ) {
+      return res.status(400).json({
+        message:
+          "Invalid user status.",
+      });
+    }
+
+    // ==========================================
+    // STUDENT VALIDATION
+    // ==========================================
+
+    if (
+      finalRole === "student"
+    ) {
+
+      const finalParentPhone =
+        parentPhone !== undefined
+          ? parentPhone
+          : user.parentPhone;
+
+      const finalGuardianPhone =
+        guardianPhone !== undefined
+          ? guardianPhone
+          : user.guardianPhone;
+
+      const finalProgram =
+        program !== undefined
+          ? program
+          : null;
+
+      const finalCohort =
+        cohort !== undefined
+          ? cohort
+          : null;
+
+      // ========================================
+      // PARENT PHONE
+      // ========================================
+
+      if (
+        !finalParentPhone ||
+        !finalParentPhone.trim()
+      ) {
+        return res.status(400).json({
+          message:
+            "Parent phone number is required for students.",
+        });
+      }
+
+      // ========================================
+      // GUARDIAN PHONE
+      // ========================================
+
+      if (
+        !finalGuardianPhone ||
+        !finalGuardianPhone.trim()
+      ) {
+        return res.status(400).json({
+          message:
+            "Guardian phone number is required for students.",
+        });
+      }
+
+      // ========================================
+      // PROGRAM
+      // ========================================
+
+      if (
+        finalProgram !== null &&
+        finalProgram !== undefined &&
+        !finalProgram.trim()
+      ) {
+        return res.status(400).json({
+          message:
+            "Program cannot be empty for students.",
+        });
+      }
+
+      // ========================================
+      // COHORT
+      // ========================================
+
+      if (
+        finalCohort !== null &&
+        finalCohort !== undefined &&
+        !finalCohort.trim()
+      ) {
+        return res.status(400).json({
+          message:
+            "Cohort cannot be empty for students.",
+        });
+      }
+    }
+
+    // ==========================================
+    // CHECK EMAIL
+    // ==========================================
+
+    if (email) {
+
+      const normalizedEmail =
+        email.toLowerCase().trim();
+
+      const existingUser =
+        await User.findOne({
+          email:
+            normalizedEmail,
+
+          _id: {
+            $ne: id,
+          },
+        });
+
+      if (existingUser) {
+        return res.status(400).json({
+          message:
+            "Email already exists.",
+        });
+      }
+
+      user.email =
+        normalizedEmail;
+    }
+
+    // ==========================================
+    // BASIC INFORMATION
+    // ==========================================
+
+    if (
+      name !== undefined
+    ) {
+      user.name =
+        name.trim();
+    }
+
+    if (
+      role !== undefined
+    ) {
+      user.role =
+        role;
+    }
+
+    // ==========================================
+    // PERSONAL INFORMATION
+    // ==========================================
+
+    if (
+      phone !== undefined
+    ) {
+      user.phone =
+        phone.trim();
+    }
+
+    if (
+      gender !== undefined
+    ) {
+      user.gender =
+        gender;
+    }
+
+    if (
+      dateOfBirth !== undefined
+    ) {
+      user.dateOfBirth =
+        dateOfBirth || null;
+    }
+
+    if (
+      nationality !== undefined
+    ) {
+      user.nationality =
+        nationality.trim();
+    }
+
+    if (
+      address !== undefined
+    ) {
+      user.address =
+        address.trim();
+    }
+
+    if (
+      bio !== undefined
+    ) {
+      user.bio =
+        bio.trim();
+    }
+
+    if (
+      avatar !== undefined
+    ) {
+      user.avatar =
+        avatar;
+    }
+
+    // ==========================================
+    // PARENT / GUARDIAN
+    // ==========================================
+
+    if (
+      parentPhone !== undefined
+    ) {
+      user.parentPhone =
+        parentPhone.trim();
+    }
+
+    if (
+      guardianPhone !== undefined
+    ) {
+      user.guardianPhone =
+        guardianPhone.trim();
+    }
+
+    // ==========================================
+    // STATUS
+    // ==========================================
+
+    if (
+      status !== undefined
+    ) {
+      user.status =
+        status;
+    }
+
+    // ==========================================
+    // PASSWORD
+    // ==========================================
+
+    if (
+      password &&
+      password.trim() !== ""
+    ) {
+      user.password =
+        await bcrypt.hash(
+          password,
+          10
+        );
+    }
+
+    // ==========================================
+    // STUDENT PROFILE
+    // ==========================================
+
+    let student = null;
+
+    if (
+      user.role === "student"
+    ) {
+
+      student =
+        await Student.findOne({
+          user:
+            user._id,
+        });
+
+      // ========================================
+      // CREATE PROFILE IF IT DOES NOT EXIST
+      // ========================================
+
+      if (!student) {
+
+        const studentId =
+          user.studentId ||
+          await generateStudentId();
+
+        user.studentId =
+          studentId;
+
+        student =
+          await Student.create({
+
+            user:
+              user._id,
+
+            studentId,
+
+            program:
+              program
+                ? program.trim()
+                : "",
+
+            cohort:
+              cohort
+                ? cohort.trim()
+                : "",
+
+            phone:
+              phone
+                ? phone.trim()
+                : "",
+
+            address:
+              address
+                ? address.trim()
+                : "",
+
+            avatar:
+              avatar || "",
+
+            status:
+              status === "inactive"
+                ? "inactive"
+                : "active",
+          });
+
+      } else {
+
+        // ======================================
+        // UPDATE EXISTING STUDENT PROFILE
+        // ======================================
+
+        if (
+          program !== undefined
+        ) {
+          student.program =
+            program.trim();
+        }
+
+        if (
+          cohort !== undefined
+        ) {
+          student.cohort =
+            cohort.trim();
+        }
+
+        if (
+          phone !== undefined
+        ) {
+          student.phone =
+            phone.trim();
+        }
+
+        if (
+          address !== undefined
+        ) {
+          student.address =
+            address.trim();
+        }
+
+        if (
+          avatar !== undefined
+        ) {
+          student.avatar =
+            avatar;
+        }
+
+        if (
+          status !== undefined
+        ) {
+          student.status =
+            status === "inactive"
+              ? "inactive"
+              : "active";
+        }
+
+        await student.save();
+      }
+    }
+
+    // ==========================================
+    // SAVE USER
+    // ==========================================
+
+    await user.save();
+
+    // ==========================================
+    // REMOVE PASSWORD FROM RESPONSE
+    // ==========================================
+
+    const userResponse =
+      user.toObject();
+
+    delete userResponse.password;
+
+    // ==========================================
+    // SUCCESS RESPONSE
+    // ==========================================
 
     res.status(200).json({
 
       message:
         "User updated successfully.",
 
-      user,
+      user:
+        userResponse,
+
+      student,
 
     });
 
@@ -870,21 +1243,26 @@ const updateUser = async (req, res) => {
       message:
         "Server Error",
     });
-
   }
 };
-
 
 // ==========================================
 // CHANGE USER ROLE
 // PATCH /api/users/:id/role
 // ==========================================
-const changeUserRole = async (req, res) => {
+
+const changeUserRole = async (
+  req,
+  res
+) => {
   try {
 
     const { role } =
       req.body;
 
+    // ==========================================
+    // VALIDATE ROLE
+    // ==========================================
 
     if (
       ![
@@ -893,43 +1271,78 @@ const changeUserRole = async (req, res) => {
         "instructor",
       ].includes(role)
     ) {
-
       return res.status(400).json({
         message:
           "Invalid role.",
       });
-
     }
 
+    // ==========================================
+    // FIND USER
+    // ==========================================
 
     const user =
       await User.findById(
         req.params.id
       );
 
-
     if (!user) {
-
       return res.status(404).json({
         message:
           "User not found.",
       });
-
     }
 
+    // ==========================================
+    // PREVENT INVALID STUDENT CONVERSION
+    // ==========================================
+
+    if (
+      role === "student"
+    ) {
+
+      if (
+        !user.parentPhone ||
+        !user.parentPhone.trim()
+      ) {
+        return res.status(400).json({
+          message:
+            "Parent phone number is required before changing this user to a student.",
+        });
+      }
+
+      if (
+        !user.guardianPhone ||
+        !user.guardianPhone.trim()
+      ) {
+        return res.status(400).json({
+          message:
+            "Guardian phone number is required before changing this user to a student.",
+        });
+      }
+    }
 
     user.role =
       role;
 
     await user.save();
 
+    // ==========================================
+    // SUCCESS RESPONSE
+    // ==========================================
+
+    const userResponse =
+      user.toObject();
+
+    delete userResponse.password;
 
     res.status(200).json({
 
       message:
         "Role updated successfully.",
 
-      user,
+      user:
+        userResponse,
 
     });
 
@@ -944,207 +1357,269 @@ const changeUserRole = async (req, res) => {
       message:
         "Server Error",
     });
-
   }
 };
-
 
 // ==========================================
 // CHANGE USER STATUS
 // PATCH /api/users/:id/status
 // ==========================================
-const changeUserStatus = async (req, res) => {
-  try {
 
-    const { status } =
-      req.body;
+const changeUserStatus =
+  async (
+    req,
+    res
+  ) => {
+    try {
 
+      const { status } =
+        req.body;
 
-    if (
-      ![
-        "active",
-        "inactive",
-        "suspended",
-      ].includes(status)
-    ) {
+      // ==========================================
+      // VALIDATE STATUS
+      // ==========================================
 
-      return res.status(400).json({
+      if (
+        ![
+          "active",
+          "inactive",
+          "suspended",
+        ].includes(status)
+      ) {
+        return res.status(400).json({
+          message:
+            "Invalid user status.",
+        });
+      }
+
+      // ==========================================
+      // FIND USER
+      // ==========================================
+
+      const user =
+        await User.findById(
+          req.params.id
+        );
+
+      if (!user) {
+        return res.status(404).json({
+          message:
+            "User not found.",
+        });
+      }
+
+      // ==========================================
+      // UPDATE USER STATUS
+      // ==========================================
+
+      user.status =
+        status;
+
+      await user.save();
+
+      // ==========================================
+      // KEEP STUDENT PROFILE STATUS IN SYNC
+      // ==========================================
+
+      if (
+        user.role === "student"
+      ) {
+
+        const student =
+          await Student.findOne({
+            user:
+              user._id,
+          });
+
+        if (student) {
+
+          /*
+           * Student model only supports:
+           * active / inactive.
+           *
+           * suspended users remain active
+           * in the Student profile because
+           * suspension is controlled by the
+           * User account.
+           */
+
+          student.status =
+            status === "inactive"
+              ? "inactive"
+              : "active";
+
+          await student.save();
+        }
+      }
+
+      // ==========================================
+      // REMOVE PASSWORD
+      // ==========================================
+
+      const userResponse =
+        user.toObject();
+
+      delete userResponse.password;
+
+      // ==========================================
+      // SUCCESS RESPONSE
+      // ==========================================
+
+      return res.status(200).json({
+
         message:
-          "Invalid status.",
+          status === "suspended"
+            ? "User suspended successfully."
+            : status === "active"
+            ? "User reactivated successfully."
+            : "User status updated successfully.",
+
+        user:
+          userResponse,
+
       });
 
-    }
+    } catch (error) {
 
-
-    const user =
-      await User.findById(
-        req.params.id
+      console.error(
+        "Change status error:",
+        error
       );
 
-
-    if (!user) {
-
-      return res.status(404).json({
+      return res.status(500).json({
         message:
-          "User not found.",
+          "Server Error",
       });
-
     }
-
-
-    user.status =
-      status;
-
-    await user.save();
-
-
-    res.status(200).json({
-
-      message:
-        "Status updated successfully.",
-
-      user,
-
-    });
-
-  } catch (error) {
-
-    console.error(
-      "Change status error:",
-      error
-    );
-
-    res.status(500).json({
-      message:
-        "Server Error",
-    });
-
-  }
-};
-
+  };
 
 // ==========================================
 // GET ALL INSTRUCTORS
 // GET /api/users/instructors
 // ==========================================
-const getInstructors = async (req, res) => {
-  try {
 
-    const instructors =
-      await User.find({
+const getInstructors =
+  async (
+    req,
+    res
+  ) => {
+    try {
 
-        role:
-          "instructor",
+      const instructors =
+        await User.find({
+          role:
+            "instructor",
 
-        status:
-          "active",
+          status:
+            "active",
+        }).select(
+          "name email"
+        );
 
-      }).select(
-        "name email"
+      res.status(200).json(
+        instructors
       );
 
+    } catch (error) {
 
-    res.status(200).json(
-      instructors
-    );
+      console.error(
+        "Get instructors error:",
+        error
+      );
 
-  } catch (error) {
-
-    console.error(
-      "Get instructors error:",
-      error
-    );
-
-    res.status(500).json({
-      message:
-        "Server Error",
-    });
-
-  }
-};
-
+      res.status(500).json({
+        message:
+          "Server Error",
+      });
+    }
+  };
 
 // ==========================================
 // DELETE USER
 // DELETE /api/users/:id
 // ==========================================
-const deleteUser = async (req, res) => {
-  try {
 
-    const { id } =
-      req.params;
+const deleteUser =
+  async (
+    req,
+    res
+  ) => {
+    try {
 
+      const { id } =
+        req.params;
 
-    const user =
-      await User.findById(id);
+      // ==========================================
+      // FIND USER
+      // ==========================================
 
+      const user =
+        await User.findById(id);
 
-    if (!user) {
+      if (!user) {
+        return res.status(404).json({
+          message:
+            "User not found.",
+        });
+      }
 
-      return res.status(404).json({
+      // ==========================================
+      // DELETE STUDENT PROFILE
+      // ==========================================
+
+      if (
+        user.role === "student"
+      ) {
+
+        await Student.findOneAndDelete({
+          user:
+            user._id,
+        });
+      }
+
+      // ==========================================
+      // DELETE USER
+      // ==========================================
+
+      await user.deleteOne();
+
+      // ==========================================
+      // SUCCESS RESPONSE
+      // ==========================================
+
+      res.status(200).json({
+
         message:
-          "User not found.",
+          "User deleted successfully.",
+
       });
 
-    }
+    } catch (error) {
 
+      console.error(
+        "Delete user error:",
+        error
+      );
 
-    // ======================================
-    // DELETE STUDENT PROFILE
-    // ======================================
-
-    if (
-      user.role === "student"
-    ) {
-
-      await Student.findOneAndDelete({
-        user:
-          user._id,
+      res.status(500).json({
+        message:
+          "Server Error",
       });
-
     }
-
-
-    // ======================================
-    // DELETE USER
-    // ======================================
-
-    await user.deleteOne();
-
-
-    res.status(200).json({
-
-      message:
-        "User deleted successfully.",
-
-    });
-
-  } catch (error) {
-
-    console.error(
-      "Delete user error:",
-      error
-    );
-
-    res.status(500).json({
-      message:
-        "Server Error",
-    });
-
-  }
-};
-
+  };
 
 // ==========================================
 // EXPORT
 // ==========================================
+
 module.exports = {
 
   getUsers,
   getUser,
-  createUser,
 
+  createUser,
   updateUser,
+
   deleteUser,
 
   changeUserRole,

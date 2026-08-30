@@ -44,7 +44,10 @@ const registerUser = async (req, res) => {
     // ==============================
     // Hash Password
     // ==============================
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(
+      password,
+      10
+    );
 
     // ==============================
     // Create User
@@ -74,7 +77,8 @@ const registerUser = async (req, res) => {
     // ==============================
     // Welcome Email
     // ==============================
-    const loginUrl = `${process.env.CLIENT_URL}/login`;
+    const loginUrl =
+      `${process.env.CLIENT_URL}/login`;
 
     await sendEmail({
       to: user.email,
@@ -90,7 +94,8 @@ const registerUser = async (req, res) => {
     // Response
     // ==============================
     res.status(201).json({
-      message: "User registered successfully.",
+      message:
+        "User registered successfully.",
 
       user: {
         id: user._id,
@@ -100,8 +105,12 @@ const registerUser = async (req, res) => {
         role: user.role,
       },
     });
+
   } catch (error) {
-    console.error("Register error:", error);
+    console.error(
+      "Register error:",
+      error
+    );
 
     res.status(500).json({
       message: error.message,
@@ -117,40 +126,93 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    console.log("Email entered:", email);
+    console.log(
+      "Email entered:",
+      email
+    );
 
     // ==============================
-    // Find User
+    // FIND USER
     // ==============================
-    const user = await User.findOne({ email });
 
-    console.log("User found:", user ? user._id : null);
+    const user = await User.findOne({
+      email: email.toLowerCase().trim(),
+    });
+
+    console.log(
+      "User found:",
+      user ? user._id : null
+    );
 
     if (!user) {
       return res.status(400).json({
-        message: "Invalid email or password",
+        message:
+          "Invalid email or password",
       });
     }
 
     // ==============================
-    // Compare Password
+    // COMPARE PASSWORD
     // ==============================
-    const isMatch = await bcrypt.compare(
-      password,
-      user.password
-    );
 
-    console.log("Password match:", isMatch);
+    const isMatch =
+      await bcrypt.compare(
+        password,
+        user.password
+      );
+
+    console.log(
+      "Password match:",
+      isMatch
+    );
 
     if (!isMatch) {
       return res.status(400).json({
-        message: "Invalid email or password",
+        message:
+          "Invalid email or password",
+      });
+    }
+
+    // ==========================================================
+    // CHECK ACCOUNT STATUS
+    // ==========================================================
+
+    // ==============================
+    // SUSPENDED ACCOUNT
+    // ==============================
+
+    if (user.status === "suspended") {
+      console.log(
+        "LOGIN BLOCKED: ACCOUNT SUSPENDED"
+      );
+
+      return res.status(403).json({
+        message:
+          "Your account has been suspended. Please contact an administrator.",
+        code: "ACCOUNT_SUSPENDED",
       });
     }
 
     // ==============================
-    // Generate JWT
+    // INACTIVE ACCOUNT
     // ==============================
+
+    if (user.status === "inactive") {
+      console.log(
+        "LOGIN BLOCKED: ACCOUNT INACTIVE"
+      );
+
+      return res.status(403).json({
+        message:
+          "Your account is inactive. Please contact an administrator.",
+        code: "ACCOUNT_INACTIVE",
+      });
+    }
+
+    // ==========================================================
+    // GENERATE JWT
+    // ==========================================================
+
     const token = jwt.sign(
       {
         id: user._id,
@@ -163,26 +225,97 @@ const loginUser = async (req, res) => {
     );
 
     // ==============================
-    // Login Response
+    // LOGIN RESPONSE
     // ==============================
-    res.status(200).json({
-      message: "Login Successful",
+
+    return res.status(200).json({
+      message:
+        "Login Successful",
 
       token,
 
       user: {
         id: user._id,
-        studentId: user.studentId,
+        studentId:
+          user.studentId,
         name: user.name,
         email: user.email,
         role: user.role,
+        status: user.status,
       },
     });
-  } catch (error) {
-    console.error("Login error:", error);
 
-    res.status(500).json({
-      message: "Server Error",
+  } catch (error) {
+
+    console.error(
+      "Login error:",
+      error
+    );
+
+    return res.status(500).json({
+      message:
+        "Server Error",
+    });
+  }
+};
+// ============================================================
+// GET CURRENT USER
+// GET /api/auth/me
+// ============================================================
+const getCurrentUser = async (
+  req,
+  res
+) => {
+  try {
+
+    // ==========================================
+    // GET USER FROM DATABASE
+    // ==========================================
+
+    const user =
+      await User.findById(
+        req.user._id
+      ).select("-password");
+
+    // ==========================================
+    // USER NOT FOUND
+    // ==========================================
+
+    if (!user) {
+      return res.status(404).json({
+        message:
+          "User not found.",
+      });
+    }
+
+    // ==========================================
+    // RETURN CURRENT USER
+    // ==========================================
+
+    return res.status(200).json({
+
+      user: {
+        id: user._id,
+        studentId:
+          user.studentId,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        status: user.status,
+      },
+
+    });
+
+  } catch (error) {
+
+    console.error(
+      "Get current user error:",
+      error
+    );
+
+    return res.status(500).json({
+      message:
+        "Server Error",
     });
   }
 };
@@ -191,42 +324,54 @@ const loginUser = async (req, res) => {
 // FORGOT PASSWORD
 // POST /api/auth/forgot-password
 // ============================================================
-const forgotPassword = async (req, res) => {
+const forgotPassword = async (
+  req,
+  res
+) => {
   try {
-    const { email } = req.body;
+
+    const { email } =
+      req.body;
 
     // ==============================
     // Check Email
     // ==============================
-    const user = await User.findOne({ email });
+    const user =
+      await User.findOne({
+        email,
+      });
 
     if (!user) {
       return res.status(404).json({
-        message: "No account found with that email.",
+        message:
+          "No account found with that email.",
       });
     }
 
     // ==============================
     // Generate Reset Token
     // ==============================
-    const resetToken = crypto
-      .randomBytes(32)
-      .toString("hex");
+    const resetToken =
+      crypto
+        .randomBytes(32)
+        .toString("hex");
 
     // ==============================
     // Hash Token Before Saving
     // ==============================
-    user.resetPasswordToken = crypto
-      .createHash("sha256")
-      .update(resetToken)
-      .digest("hex");
+    user.resetPasswordToken =
+      crypto
+        .createHash("sha256")
+        .update(resetToken)
+        .digest("hex");
 
     // ==============================
     // Token Expiry
     // 10 Minutes
     // ==============================
     user.resetPasswordExpires =
-      Date.now() + 10 * 60 * 1000;
+      Date.now() +
+      10 * 60 * 1000;
 
     await user.save();
 
@@ -301,7 +446,8 @@ const forgotPassword = async (req, res) => {
     // ==============================
     await sendEmail({
       to: user.email,
-      subject: "Reset Your Password",
+      subject:
+        "Reset Your Password",
       html,
     });
 
@@ -312,14 +458,17 @@ const forgotPassword = async (req, res) => {
       message:
         "Password reset link sent successfully.",
     });
+
   } catch (error) {
+
     console.error(
       "Forgot password error:",
       error
     );
 
     res.status(500).json({
-      message: "Server Error",
+      message:
+        "Server Error",
     });
   }
 };
@@ -328,37 +477,48 @@ const forgotPassword = async (req, res) => {
 // RESET PASSWORD
 // PUT /api/auth/reset-password/:token
 // ============================================================
-const resetPassword = async (req, res) => {
+const resetPassword = async (
+  req,
+  res
+) => {
   try {
-    const { password } = req.body;
+
+    const { password } =
+      req.body;
 
     // ==============================
     // Validate Password
     // ==============================
     if (!password) {
       return res.status(400).json({
-        message: "Please provide a new password.",
+        message:
+          "Please provide a new password.",
       });
     }
 
     // ==============================
     // Hash Token From URL
     // ==============================
-    const hashedToken = crypto
-      .createHash("sha256")
-      .update(req.params.token)
-      .digest("hex");
+    const hashedToken =
+      crypto
+        .createHash("sha256")
+        .update(req.params.token)
+        .digest("hex");
 
     // ==============================
     // Find User With Valid Token
     // ==============================
-    const user = await User.findOne({
-      resetPasswordToken: hashedToken,
+    const user =
+      await User.findOne({
 
-      resetPasswordExpires: {
-        $gt: Date.now(),
-      },
-    });
+        resetPasswordToken:
+          hashedToken,
+
+        resetPasswordExpires: {
+          $gt: Date.now(),
+        },
+
+      });
 
     if (!user) {
       return res.status(400).json({
@@ -370,18 +530,23 @@ const resetPassword = async (req, res) => {
     // ==============================
     // Hash New Password
     // ==============================
-    const salt = await bcrypt.genSalt(10);
+    const salt =
+      await bcrypt.genSalt(10);
 
-    user.password = await bcrypt.hash(
-      password,
-      salt
-    );
+    user.password =
+      await bcrypt.hash(
+        password,
+        salt
+      );
 
     // ==============================
     // Clear Reset Fields
     // ==============================
-    user.resetPasswordToken = null;
-    user.resetPasswordExpires = null;
+    user.resetPasswordToken =
+      null;
+
+    user.resetPasswordExpires =
+      null;
 
     await user.save();
 
@@ -392,14 +557,17 @@ const resetPassword = async (req, res) => {
       message:
         "Password reset successfully.",
     });
+
   } catch (error) {
+
     console.error(
       "Reset password error:",
       error
     );
 
     res.status(500).json({
-      message: "Server Error",
+      message:
+        "Server Error",
     });
   }
 };
@@ -410,6 +578,7 @@ const resetPassword = async (req, res) => {
 module.exports = {
   registerUser,
   loginUser,
+  getCurrentUser,
   forgotPassword,
   resetPassword,
 };

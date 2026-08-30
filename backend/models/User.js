@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
+    // ==========================================
+    // BASIC INFORMATION
+    // ==========================================
+
     name: {
       type: String,
       required: true,
@@ -21,11 +25,19 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
 
+    // ==========================================
+    // ROLE
+    // ==========================================
+
     role: {
       type: String,
       enum: ["admin", "student", "instructor"],
       default: "student",
     },
+
+    // ==========================================
+    // ACCOUNT VERIFICATION
+    // ==========================================
 
     verified: {
       type: Boolean,
@@ -37,6 +49,10 @@ const userSchema = new mongoose.Schema(
       default: null,
     },
 
+    // ==========================================
+    // PASSWORD RESET
+    // ==========================================
+
     resetPasswordToken: {
       type: String,
       default: null,
@@ -47,74 +63,120 @@ const userSchema = new mongoose.Schema(
       default: null,
     },
 
+    // ==========================================
+    // ACCOUNT STATUS
+    // ==========================================
+
     status: {
       type: String,
       enum: ["active", "inactive", "suspended"],
       default: "inactive",
     },
+
+    // ==========================================
+    // STUDENT ID
+    // ==========================================
+
     studentId: {
-  type: String,
-  unique: true,
-  sparse: true,
-},
+      type: String,
+      unique: true,
+      sparse: true,
+    },
 
-phone: {
-  type: String,
-  default: "",
-},
+    // ==========================================
+    // CONTACT INFORMATION
+    // ==========================================
 
-gender: {
-  type: String,
-  enum: ["", "Male", "Female", "Other"],
-  default: "",
-},
+    phone: {
+      type: String,
+      default: "",
+      trim: true,
+    },
 
-dateOfBirth: {
-  type: Date,
-  default: null,
-},
+    // ==========================================
+    // PARENT / GUARDIAN INFORMATION
+    // ==========================================
 
-nationality: {
-  type: String,
-  default: "",
-},
+    parentPhone: {
+      type: String,
+      default: "",
+      trim: true,
+    },
 
-address: {
-  type: String,
-  default: "",
-},
+    guardianPhone: {
+      type: String,
+      default: "",
+      trim: true,
+    },
 
-bio: {
-  type: String,
-  default: "",
-},
+    // ==========================================
+    // PERSONAL INFORMATION
+    // ==========================================
 
-avatar: {
-  type: String,
-  default: "",
-},
+    gender: {
+      type: String,
+      enum: ["", "Male", "Female", "Other"],
+      default: "",
+    },
 
-notificationPreferences: {
-  emailNotifications: {
-    type: Boolean,
-    default: true,
-  },
+    dateOfBirth: {
+      type: Date,
+      default: null,
+    },
 
-  assignmentNotifications: {
-    type: Boolean,
-    default: true,
-  },
+    nationality: {
+      type: String,
+      default: "",
+      trim: true,
+    },
 
-  announcementNotifications: {
-    type: Boolean,
-    default: true,
-  },
+    address: {
+      type: String,
+      default: "",
+      trim: true,
+    },
 
-  systemNotifications: {
-    type: Boolean,
-    default: true,
-  },
-},
+    bio: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+
+    avatar: {
+      type: String,
+      default: "",
+    },
+
+    // ==========================================
+    // NOTIFICATION PREFERENCES
+    // ==========================================
+
+    notificationPreferences: {
+      emailNotifications: {
+        type: Boolean,
+        default: true,
+      },
+
+      assignmentNotifications: {
+        type: Boolean,
+        default: true,
+      },
+
+      announcementNotifications: {
+        type: Boolean,
+        default: true,
+      },
+
+      courseNotifications: {
+        type: Boolean,
+        default: true,
+      },
+
+      systemNotifications: {
+        type: Boolean,
+        default: true,
+      },
+    },
   },
   {
     timestamps: true,

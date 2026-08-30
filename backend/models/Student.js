@@ -40,9 +40,27 @@ const studentSchema = new mongoose.Schema(
     },
 
     // ==========================================
-    // PHONE
+    // STUDENT PHONE
     // ==========================================
     phone: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+
+    // ==========================================
+    // PARENT PHONE
+    // ==========================================
+    parentPhone: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+
+    // ==========================================
+    // GUARDIAN PHONE
+    // ==========================================
+    guardianPhone: {
       type: String,
       default: "",
       trim: true,

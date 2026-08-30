@@ -10,6 +10,9 @@ const Certificate = require("../models/Certificate");
 // ==========================================
 // CREATE STUDENT
 // ==========================================
+// ==========================================
+// CREATE STUDENT
+// ==========================================
 
 const createStudent = async (req, res) => {
   try {
@@ -17,16 +20,18 @@ const createStudent = async (req, res) => {
       name,
       email,
       password,
-      studentId,
       program,
       phone,
     } = req.body;
+
+    // ==========================================
+    // VALIDATE REQUIRED FIELDS
+    // ==========================================
 
     if (
       !name ||
       !email ||
       !password ||
-      !studentId ||
       !program
     ) {
       return res.status(400).json({
@@ -34,7 +39,13 @@ const createStudent = async (req, res) => {
       });
     }
 
-    const existingUser = await User.findOne({ email });
+    // ==========================================
+    // CHECK EMAIL
+    // ==========================================
+
+    const existingUser = await User.findOne({
+      email,
+    });
 
     if (existingUser) {
       return res.status(400).json({
@@ -42,17 +53,42 @@ const createStudent = async (req, res) => {
       });
     }
 
-    const existingStudent = await Student.findOne({
-      studentId,
-    });
+    // ==========================================
+    // GENERATE STUDENT ID
+    // ==========================================
 
-    if (existingStudent) {
-      return res.status(400).json({
-        message: "Student ID already exists.",
-      });
+    const currentYear = new Date().getFullYear();
+
+    let studentNumber = 1;
+    let studentId;
+
+    while (true) {
+      studentId = `GMT-STU-${currentYear}-${String(
+        studentNumber
+      ).padStart(6, "0")}`;
+
+      const existingStudent =
+        await Student.findOne({
+          studentId,
+        });
+
+      if (!existingStudent) {
+        break;
+      }
+
+      studentNumber++;
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // ==========================================
+    // HASH PASSWORD
+    // ==========================================
+
+    const hashedPassword =
+      await bcrypt.hash(password, 10);
+
+    // ==========================================
+    // CREATE USER
+    // ==========================================
 
     const user = await User.create({
       name,
@@ -62,6 +98,10 @@ const createStudent = async (req, res) => {
       status: "active",
     });
 
+    // ==========================================
+    // CREATE STUDENT
+    // ==========================================
+
     const student = await Student.create({
       user: user._id,
       studentId,
@@ -69,11 +109,24 @@ const createStudent = async (req, res) => {
       phone,
     });
 
-    const populatedStudent = await Student.findById(student._id)
-      .populate("user", "name email role");
+    // ==========================================
+    // POPULATE STUDENT
+    // ==========================================
+
+    const populatedStudent =
+      await Student.findById(student._id)
+        .populate(
+          "user",
+          "name email role"
+        );
+
+    // ==========================================
+    // RESPONSE
+    // ==========================================
 
     res.status(201).json({
-      message: "Student created successfully.",
+      message:
+        "Student created successfully.",
       student: populatedStudent,
     });
 
